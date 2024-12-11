@@ -679,7 +679,7 @@ rightside-bottom: 100px
 # canvas_ribbon (静止彩带背景)
 # See: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
-  enable: false
+  enable: true
   size: 150
   alpha: 0.6
   zIndex: -1
@@ -811,16 +811,16 @@ aside:
     category: true
   card_author:
     enable: true
-    description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">芦叶满汀洲，寒沙带浅流</b>。<b style="color:#fff">二十年重过南楼</b>。<b style="color:#fff">柳下系船犹未稳，能几日，又中秋</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">黄鹤断矶头，故人今在否</b>？<b style="color:#fff">旧江山浑是新愁</b>。<b style="color:#fff">欲买桂花同载酒，终不似，少年游~</b></div> # 默认为站点描述
+    description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">芦叶满汀洲，寒沙带浅流。二十年重过南楼。柳下系船犹未稳，能几日，又中秋。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">黄鹤断矶头，故人今在否？旧江山浑是新愁。<b style="color:#fff">欲买桂花同载酒，终不似，少年游~</b></div> # 默认为站点描述
     name_link: /
 
   card_announcement:
-    enable: false
-    content: 欢迎来看我的博客鸭~
+    enable: true
+    content: <div>岁岁平 年年安</div> <div>岁岁年年 平平安安</div>
   card_weixin:
     enable: true
-    face: https://bu.dusays.com/2023/01/13/63c02edf44033.png
-    backFace: https://bu.dusays.com/2023/05/13/645fa415e8694.png
+    face: https://pic.imgdb.cn/item/67594c56d0e0a243d4e1c320.png
+    backFace: https://pic.imgdb.cn/item/67594b24d0e0a243d4e1c290.png
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all
@@ -863,7 +863,7 @@ busuanzi:
 # Formal: Month/Day/Year Time or Year/Month/Day Time
 runtimeshow:
   enable: true
-  publish_date: 4/1/2021 00:00:00
+  publish_date: 12/11/2024 00:00:00
 
 # Console - Newest Comments
 newest_comments:
@@ -1053,17 +1053,17 @@ css_prefix: true
 home_top:
   enable: true # 开关
   timemode: date #date/updated
-  title: 生活明朗
-  subTitle: 万物可爱。
-  siteText: anheyu.com
+  title: 岁岁年年
+  subTitle: 平平安安
+  siteText: smalljia.site
   category:
-    - name: 前端
-      path: /categories/前端开发/
+    - name: 运营
+      path: /categories/运营知识/
       shadow: var(--anzhiyu-shadow-blue)
       class: blue
       icon: anzhiyu-icon-dove
-    - name: 大学
-      path: /categories/大学生涯/
+    - name: 网站
+      path: /categories/建站细节/
       shadow: var(--anzhiyu-shadow-red)
       class: red
       icon: anzhiyu-icon-fire
@@ -1078,8 +1078,8 @@ home_top:
     swiper_css: https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css #swiper css依赖
     swiper_js: https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.js #swiper js依赖
   banner:
-    tips: 新品主题
-    title: Theme-AnZhiYu
+    tips: 更多细节
+    title: 关于我的更多细节
     image: https://bu.dusays.com/2023/05/13/645fa3cf90d70.webp
     link: https://docs.anheyu.com/
 
@@ -1101,7 +1101,7 @@ bubble:
 
 #  控制台打印信息
 console:
-  enable: true
+  enable: false
 
 # 51a统计配置
 LA:
@@ -1112,8 +1112,8 @@ LA:
 # 标签卖萌
 diytitle:
   enable: true
-  leaveTitle: w(ﾟДﾟ)w 不要走！再看看嘛！
-  backTitle: ♪(^∇^*)欢迎肥来！
+  leaveTitle: 断线中！
+  backTitle: 对接成功！
 
 # 留言弹幕配置
 comment_barrage_config:
