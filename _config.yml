@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: SmallJia's Blog
-subtitle: 'SmallJia Blog'
-description: '寻一心安地，度千载光阴'
-keywords: 小贾的个人博客
-author: Small Jia
+title: 
+subtitle: ''
+description: ''
+keywords: 
+author: 
 language: zh-CN
 timezone: ''
 
@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true #false- true
 relative_link: false
 future: true
 syntax_highlighter: highlight.js
