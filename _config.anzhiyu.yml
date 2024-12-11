@@ -71,18 +71,19 @@ social:
 
 # 作者卡片 状态
 author_status:
-  enable: false
+  enable: true
   # 可以是任何图片，建议放表情包或者emoji图片，效果都很好，[表情包速查](https://emotion.xiaokang.me/)
-  statusImg: "https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png"
+  statusImg: "https://twikoo-magic.oss-cn-hangzhou.aliyuncs.com/Heybox/expression_cube_cangsang.png"
   skills:
-    # - 🤖️ 数码科技爱好者
-    # - 🔍 分享与热心帮助
-    # - 🏠 智能家居小能手
-    # - 🔨 设计开发一条龙
-    # - 🤝 专修交互与设计
-    # - 🏃 脚踏实地行动派
-    # - 🧱 团队小组发动机
-    # - 💢 壮汉人狠话不多
+     - 
+     -  🤖️ 外星人驻地球分部
+     -  🔍 百度百科人性外挂
+     -  🏠 宅家修炼百年大师
+     -  🔨 装修搬砖工地能手
+     -  🤝 礼貌用语先进标兵
+     -  🏃  下班准时打卡第一
+     -  🧱  少林寺铁头功满级
+     -  💢  情绪超不稳定患者
 
 # search (搜索)
 # see https://blog.anheyu.com/posts/c27d.html#搜索系统
@@ -140,14 +141,14 @@ favicon: /favicon.ico
 
 # Avatar (头像)
 avatar:
-  img: https://bu.dusays.com/2023/04/27/64496e511b09c.jpg
+  img: https://pic.imgdb.cn/item/67592b0fd0e0a243d4e1af4c.jpg
   effect: false
 
 # Disable all banner image
 disable_top_img: false
 
 # The banner image of home page
-index_img: false # "background: url() top / cover no-repeat"
+index_img: "background: url(https://pic.imgdb.cn/item/67593100d0e0a243d4e1b1d0.jpg) top / cover no-repeat" # "background: url() top / cover no-repeat"
 
 # If the banner of page not setting, it will show the top_img
 default_top_img: false
@@ -162,6 +163,9 @@ cover:
   position: left
   # When cover is not set, the default cover is displayed (当没有设置cover时，默认的封面显示)
   default_cover:
+  - https://file.crazywong.com/gh/jerryc127/CDN@latest/cover/default_bg.png
+  - https://file.crazywong.com/gh/jerryc127/CDN@latest/cover/default_bg2.png
+  - https://file.crazywong.com/gh/jerryc127/CDN@latest/cover/default_bg3.png
     # - /img/default_cover.jpg
 
 # Replace Broken Images (替换无法显示的图片)
