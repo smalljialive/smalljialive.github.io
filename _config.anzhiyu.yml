@@ -1,24 +1,24 @@
 menu:
-   文章:
-    隧道: /archives/ || anzhiyu-icon-box-archive
-    分类: /categories/ || anzhiyu-icon-shapes
-    标签: /tags/ || anzhiyu-icon-tags
+   文库:
+    文章列表: /archives/ || anzhiyu-icon-box-archive
+    文章分类: /categories/ || anzhiyu-icon-shapes
+    文章标签: /tags/ || anzhiyu-icon-tags
 
-  # 友链:
-  #   友人帐: /link/ || anzhiyu-icon-link
-  #   朋友圈: /fcircle/ || anzhiyu-icon-artstation
-  #   留言板: /comments/ || anzhiyu-icon-envelope
+   #友链:
+     #友人帐: /link/ || anzhiyu-icon-link
+     #朋友圈: /fcircle/ || anzhiyu-icon-artstation
+     #留言板: /comments/ || anzhiyu-icon-envelope
 
-   #我的:
-    # 音乐馆: /music/ || anzhiyu-icon-music
-    # 追番页: /bangumis/ || anzhiyu-icon-bilibili
-    # 相册集: /album/ || anzhiyu-icon-images
-    # 小空调: /air-conditioner/ || anzhiyu-icon-fan
+  # 我的:
+   #  音乐馆: /music/ || anzhiyu-icon-music
+   #  追番页: /bangumis/ || anzhiyu-icon-bilibili
+   #  相册集: /album/ || anzhiyu-icon-images
+   #  小空调: /air-conditioner/ || anzhiyu-icon-fan
 
   # 关于:
-  #   关于本人: /about/ || anzhiyu-icon-paper-plane
-  #   闲言碎语: /essay/ || anzhiyu-icon-lightbulb
-  #   随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1
+   #  关于本人: /about/ || anzhiyu-icon-paper-plane
+   #  闲言碎语: /essay/ || anzhiyu-icon-lightbulb
+   #  随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1
 
 # nav相关配置
 nav:
@@ -46,12 +46,12 @@ mourn:
 # Code Blocks (代码相关)
 # --------------------------------------
 
-highlight_theme: light #  darker / pale night / light / ocean / mac / mac light / false
+highlight_theme: mac #  darker / pale night / light / ocean / mac / mac light / false
 highlight_copy: true # copy button
 highlight_lang: true # show the code language
-highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
+highlight_shrink: true # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
 highlight_height_limit: 330 # unit: px
-code_word_wrap: false
+code_word_wrap: true
 
 # copy settings
 # copyright: Add the copyright information after copied content (複制的内容后面加上版权信息)
@@ -808,7 +808,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description: # <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">产品、设计、开发</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div> # 默认为站点描述
+    description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">芦叶满汀洲，寒沙带浅流</b>。<b style="color:#fff">二十年重过南楼</b>。<b style="color:#fff">柳下系船犹未稳，能几日，又中秋</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">黄鹤断矶头，故人今在否</b>？<b style="color:#fff">旧江山浑是新愁</b>。<b style="color:#fff">欲买桂花同载酒，终不似，少年游~</b></div> # 默认为站点描述
     name_link: /
 
   card_announcement:
