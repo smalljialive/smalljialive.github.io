@@ -1,24 +1,28 @@
 menu:
-   文库:
+   笔记文库: 
     文章列表: /archives/ || anzhiyu-icon-box-archive
     文章分类: /categories/ || anzhiyu-icon-shapes
     文章标签: /tags/ || anzhiyu-icon-tags
 
-   收藏:
-    网址收藏: /link/ || anzhiyu-icon-link
+   优质网站:  /link/ || anzhiyu-icon-link
+     #网址收藏: /link/ || anzhiyu-icon-link
      #朋友圈: /fcircle/ || anzhiyu-icon-artstation
      #留言板: /comments/ || anzhiyu-icon-envelope
 
-   我的:
-    音乐馆: /music/ || anzhiyu-icon-music
+   音乐现场: /music/ || anzhiyu-icon-music
+   #  来首BGM: /music/ || anzhiyu-icon-music
    #  追番页: /bangumis/ || anzhiyu-icon-bilibili
    #  相册集: /album/ || anzhiyu-icon-images
    #  小空调: /air-conditioner/ || anzhiyu-icon-fan
 
-   关于:
-     关于本人: /about/ || anzhiyu-icon-paper-plane
-     闲言碎语: /essay/ || anzhiyu-icon-lightbulb
+   关于本人: /about/ || anzhiyu-icon-paper-plane
+     #关于本人: /about/ || anzhiyu-icon-paper-plane  
+     #闲言碎语: /essay/ || anzhiyu-icon-lightbulb
      #随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1
+
+   碎碎念: /essay/ || anzhiyu-icon-lightbulb
+     #闲言碎语: /essay/ || anzhiyu-icon-lightbulb
+     #随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1  
 
 # nav相关配置
 nav:
@@ -47,9 +51,9 @@ mourn:
 # --------------------------------------
 
 highlight_theme: mac #  darker / pale night / light / ocean / mac / mac light / false
-highlight_copy: false # copy button
+highlight_copy: true # copy button
 highlight_lang: true # show the code language
-highlight_shrink: true # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
+highlight_shrink: false # true: shrink the code blocks / false: expand the code blocks | none: expand code blocks and hide the button
 highlight_height_limit: 330 # unit: px
 code_word_wrap: true
 
@@ -1062,8 +1066,8 @@ home_top:
       shadow: var(--anzhiyu-shadow-blue)
       class: blue
       icon: anzhiyu-icon-dove
-    - name: 网站
-      path: /categories/建站细节/
+    - name: 代码
+      path: /categories/代码细节/
       shadow: var(--anzhiyu-shadow-red)
       class: red
       icon: anzhiyu-icon-fire
@@ -1132,10 +1136,10 @@ comment_barrage_config:
 nav_music:
   enable: true
   console_widescreen_music: false # 宽屏状态控制台显示音乐而不是标签 enable为true 控制台依然会显示
-  id: 8325650845
+  id: 8152976493
   server: netease
   volume: 0.5 # 默认音量
-  all_playlist: https://music.163.com/#/playlist?id=8325650845
+  all_playlist: https://y.qq.com/n/ryqq/playlist/8802438608
   autoplay: false
 
 # 路径为 /music 的音乐页面默认加载的歌单 1. nav_music 2. custom
