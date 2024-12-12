@@ -4,6 +4,57 @@
   
     
     <entry>
+      <title>测试是否有新文章生成</title>
+      <link href="/2024/12/12/%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%9C%89%E6%96%B0%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90/%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%9C%89%E6%96%B0%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90/"/>
+      <url>/2024/12/12/%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%9C%89%E6%96%B0%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90/%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E6%9C%89%E6%96%B0%E6%96%87%E7%AB%A0%E7%94%9F%E6%88%90/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>这是一篇关于生活日常分类下的文章</title>
+      <link href="/2024/12/12/%E8%BF%99%E6%98%AF%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8E%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E6%96%87%E7%AB%A0/%E8%BF%99%E6%98%AF%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8E%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/12/12/%E8%BF%99%E6%98%AF%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8E%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E6%96%87%E7%AB%A0/%E8%BF%99%E6%98%AF%E4%B8%80%E7%AF%87%E5%85%B3%E4%BA%8E%E7%94%9F%E6%B4%BB%E6%97%A5%E5%B8%B8%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 生活日常 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>这是有关代码分类下的一篇文章</title>
+      <link href="/2024/12/12/%E8%BF%99%E6%98%AF%E6%9C%89%E5%85%B3%E4%BB%A3%E7%A0%81%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/%E8%BF%99%E6%98%AF%E6%9C%89%E5%85%B3%E4%BB%A3%E7%A0%81%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/"/>
+      <url>/2024/12/12/%E8%BF%99%E6%98%AF%E6%9C%89%E5%85%B3%E4%BB%A3%E7%A0%81%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/%E8%BF%99%E6%98%AF%E6%9C%89%E5%85%B3%E4%BB%A3%E7%A0%81%E5%88%86%E7%B1%BB%E4%B8%8B%E7%9A%84%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 代码细节 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2024/12/11/hello-world/"/>
       <url>/2024/12/11/hello-world/</url>
