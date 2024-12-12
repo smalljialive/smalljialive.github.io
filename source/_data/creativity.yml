@@ -1,0 +1,35 @@
+- class_name: 开启创造力
+  creativity_list:
+    - name: Google
+      color: "#fff"
+      icon: https://pic.imgdb.cn/item/675a4946d0e0a243d4e230a2.jpg
+    - name: WordPress
+      color: "#57b6e6"
+      icon: https://pic.imgdb.cn/item/675a49e9d0e0a243d4e23275.jpg
+    - name: Photoshop
+      color: "#4082c3"
+      icon: https://pic.imgdb.cn/item/675a4622d0e0a243d4e229b0.jpg
+    - name: PR
+      color: "#333"
+      icon: https://pic.imgdb.cn/item/675a4622d0e0a243d4e229af.jpg
+    - name: AE
+      color: "#2e3a41"
+      icon: https://pic.imgdb.cn/item/675a4614d0e0a243d4e2296f.jpg
+    - name: AI
+      color: "#fff"
+      icon: https://pic.imgdb.cn/item/675a4614d0e0a243d4e22971.jpg
+    - name: AU
+      color: "#fff"
+      icon: https://pic.imgdb.cn/item/675a4614d0e0a243d4e22973.jpg
+    - name: CSS3
+      color: "#2c51db"
+      icon: https://pic.imgdb.cn/item/675a4615d0e0a243d4e22974.png
+    - name: JS
+      color: "#f7cb4f"
+      icon: https://pic.imgdb.cn/item/675a4622d0e0a243d4e229ad.png
+    - name: HTML
+      color: "#e9572b"
+      icon: https://pic.imgdb.cn/item/675a4622d0e0a243d4e229ac.png
+    - name: Git
+      color: "#df5b40"
+      icon: https://pic.imgdb.cn/item/675a4615d0e0a243d4e22977.webp

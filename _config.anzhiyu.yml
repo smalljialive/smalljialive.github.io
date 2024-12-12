@@ -9,16 +9,16 @@ menu:
      #朋友圈: /fcircle/ || anzhiyu-icon-artstation
      #留言板: /comments/ || anzhiyu-icon-envelope
 
-  # 我的:
-   #  音乐馆: /music/ || anzhiyu-icon-music
+  #我的:
+     #音乐馆: /music/ || anzhiyu-icon-music
    #  追番页: /bangumis/ || anzhiyu-icon-bilibili
    #  相册集: /album/ || anzhiyu-icon-images
    #  小空调: /air-conditioner/ || anzhiyu-icon-fan
 
-  # 关于:
-   #  关于本人: /about/ || anzhiyu-icon-paper-plane
-   #  闲言碎语: /essay/ || anzhiyu-icon-lightbulb
-   #  随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1
+   关于:
+     关于本人: /about/ || anzhiyu-icon-paper-plane
+     闲言碎语: /essay/ || anzhiyu-icon-lightbulb
+     #随便逛逛: javascript:toRandomPost() || anzhiyu-icon-shoe-prints1
 
 # nav相关配置
 nav:
@@ -28,14 +28,14 @@ nav:
   menu:
     - title: 个人相关
       item:
-        - name: SmallJia's Website
+        - name: 个人网站
           link: https://www.smalljia.site/
           icon: /img/favicon.ico
-    - title: 项目
+    - title: 项目相关
       item:
-        - name: 安知鱼图床
-          link: https://image.anheyu.com/
-          icon: https://image.anheyu.com/favicon.ico
+        - name: 聚合图床  
+          link: https://www.superbed.cn/
+          icon: https://www.superbed.cn/favicon.ico
 
 # mourn （哀悼日，指定日期网站简单变灰，不包括滚动条）
 # 注意： 仅网站首页变灰，其他页面正常显示
@@ -679,7 +679,7 @@ rightside-bottom: 100px
 # canvas_ribbon (静止彩带背景)
 # See: https://github.com/hustcc/ribbon.js
 canvas_ribbon:
-  enable: true
+  enable: false
   size: 150
   alpha: 0.6
   zIndex: -1
@@ -1053,9 +1053,9 @@ css_prefix: true
 home_top:
   enable: true # 开关
   timemode: date #date/updated
-  title: 岁岁年年
-  subTitle: 平平安安
-  siteText: smalljia.site
+  title: 安静向上
+  subTitle: 不争不抢
+  siteText: SMALLJIA.SITE
   category:
     - name: 运营
       path: /categories/运营知识/
@@ -1112,8 +1112,8 @@ LA:
 # 标签卖萌
 diytitle:
   enable: true
-  leaveTitle: 断线中！
-  backTitle: 对接成功！
+  leaveTitle: 空间站断线中！
+  backTitle: 手动对接成功！
 
 # 留言弹幕配置
 comment_barrage_config:
@@ -1132,10 +1132,11 @@ comment_barrage_config:
 nav_music:
   enable: true
   console_widescreen_music: false # 宽屏状态控制台显示音乐而不是标签 enable为true 控制台依然会显示
-  id: 8152976493
+  id: 8325650845
   server: netease
-  volume: 0.7 # 默认音量
-  all_playlist: https://y.qq.com/n/ryqq/playlist/8802438608
+  volume: 0.5 # 默认音量
+  all_playlist: https://music.163.com/#/playlist?id=8325650845
+  autoplay: false
 
 # 路径为 /music 的音乐页面默认加载的歌单 1. nav_music 2. custom
 music_page_default: nav_music
@@ -1149,7 +1150,7 @@ visitorMail:
 ptool:
   enable: true
   share_mobile: true
-  share_weibo: true
+  share_weibo: false
   share_copyurl: true
   categories: false # 是否显示分类
   mode: # 运营模式与责任，不配置不显示
@@ -1159,30 +1160,30 @@ greetingBox:
   enable: false #开启后必须配置下面的list对应的时间段，不然会出现小白条
   default: 晚上好👋
   list:
-    # - greeting: 晚安😴
-    #   startTime: 0
-    #   endTime: 5
-    # - greeting: 早上好鸭👋, 祝你一天好心情！
-    #   startTime: 6
-    #   endTime: 9
-    # - greeting: 上午好👋, 状态很好，鼓励一下～
-    #   startTime: 10
-    #   endTime: 10
-    # - greeting: 11点多啦, 在坚持一下就吃饭啦～
-    #   startTime: 11
-    #   endTime: 11
-    # - greeting: 午安👋, 宝贝
-    #   startTime: 12
-    #   endTime: 14
-    # - greeting: 🌈充实的一天辛苦啦！
-    #   startTime: 14
-    #   endTime: 18
-    # - greeting: 19点喽, 奖励一顿丰盛的大餐吧🍔。
-    #   startTime: 19
-    #   endTime: 19
-    # - greeting: 晚上好👋, 在属于自己的时间好好放松😌~
-    #   startTime: 20
-    #   endTime: 24
+     - greeting: 晚安😴
+       startTime: 0
+       endTime: 5
+     - greeting: 早上好鸭👋, 祝你一天好心情！
+       startTime: 6
+       endTime: 9
+     - greeting: 上午好👋, 状态很好，鼓励一下～
+       startTime: 10
+       endTime: 10
+     - greeting: 11点多啦, 在坚持一下就吃饭啦～
+       startTime: 11
+       endTime: 11
+     - greeting: 午安👋, 宝贝
+       startTime: 12
+       endTime: 14
+     - greeting: 🌈充实的一天辛苦啦！
+       startTime: 14
+       endTime: 18
+     - greeting: 19点喽, 奖励一顿丰盛的大餐吧🍔。
+       startTime: 19
+       endTime: 19
+     - greeting: 晚上好👋, 在属于自己的时间好好放松😌~
+       startTime: 20
+       endTime: 24
 
 # 文章顶部ai摘要
 post_head_ai_description:
@@ -1214,7 +1215,7 @@ linkPageTop:
   addFriendPlaceholder: "昵称（请勿包含博客等字样）：\n网站地址（要求博客地址，请勿提交个人主页）：\n头像图片url（请提供尽可能清晰的图片，我会上传到我自己的图床）：\n描述：\n站点截图（可选）：\n"
 
 # 缩略图后缀 archive/tag/category 页面单独开启后缀
-pageThumbnailSuffix: ""
+pageThumbnailSuffix: "!page_thumbnail"
 
 # 隐私协议弹窗
 agreementPopup:
@@ -1227,13 +1228,13 @@ rightClickMenu:
 
 # 首页随便逛逛people模式 而非技能点模式，关闭后为技能点模式需要配置creativity.yml
 peoplecanvas:
-  enable: true
+  enable: false
   img: https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png
 
 # 动效
 dynamicEffect:
   postTopWave: true # 文章顶部波浪效果
-  postTopRollZoomInfo: false # 文章顶部滚动时缩放
+  postTopRollZoomInfo: true # 文章顶部滚动时缩放
   pageCommentsRollZoom: false # 非文章页面评论滚动时缩放显示（仅仅Twikoo生效）
 
 # Inject
