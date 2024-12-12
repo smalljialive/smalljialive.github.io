@@ -9,7 +9,7 @@ menu:
      #朋友圈: /fcircle/ || anzhiyu-icon-artstation
      #留言板: /comments/ || anzhiyu-icon-envelope
 
-   音乐现场: /music/ || anzhiyu-icon-music
+   音乐曲库: /music/ || anzhiyu-icon-music
    #  来首BGM: /music/ || anzhiyu-icon-music
    #  追番页: /bangumis/ || anzhiyu-icon-bilibili
    #  相册集: /album/ || anzhiyu-icon-images
@@ -1084,8 +1084,8 @@ home_top:
   banner:
     tips: 更多细节
     title: 关于我的更多细节
-    image: https://bu.dusays.com/2023/05/13/645fa3cf90d70.webp
-    link: https://docs.anheyu.com/
+    image: https://pic.imgdb.cn/item/675a9b33d0e0a243d4e2b73c.jpg
+    link: /about/
 
 # 朋友圈配置
 friends_vue:
