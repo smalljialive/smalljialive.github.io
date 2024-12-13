@@ -59,7 +59,7 @@
   personalities:
     author_name: 提倡者
     personality_type: INFJ-A
-    photo_url: https://bu.dusays.com/2023/07/05/64a4c63495ac5.jpg
+    photo_url: https://pic.imgdb.cn/item/675a9b33d0e0a243d4e2b73c.jpg
     personality_img: https://pic.imgdb.cn/item/675aa8d5d0e0a243d4e2d2a7.png
     name_url: https://www.16personalities.com/ch/infj-%E4%BA%BA%E6%A0%BC
   maxim:
@@ -79,31 +79,31 @@
     comic_tips: 爱好番剧
     comic_title: 追番
     comic_list:
-      - name: 约定的梦幻岛
-        href: https://www.bilibili.com/bangumi/media/md5267750/?spm_id_from=666.25.b_6d656469615f6d6f64756c65.1
-        cover: https://bu.dusays.com/2023/05/27/647166c44b414.webp
+      - name: 凡人修仙传
+        href: https://www.bilibili.com/bangumi/media/md28223043
+        cover: https://pic.imgdb.cn/item/675b82aed0e0a243d4e31160.webp
       - name: 咒术回战
         href: https://www.bilibili.com/bangumi/media/md28229899/?spm_id_from=666.25.b_6d656469615f6d6f64756c65.1
-        cover: https://bu.dusays.com/2023/05/24/646db4398832e.webp
-      - name: 紫罗兰永恒花园
-        href: https://www.bilibili.com/bangumi/media/md8892/?spm_id_from=666.25.b_6d656469615f6d6f64756c65.1
-        cover: https://bu.dusays.com/2023/05/24/646db43983d99.webp
+        cover: https://pic.imgdb.cn/item/675b8393d0e0a243d4e311b2.webp
+      - name: 凸变英雄
+        href: https://www.bilibili.com/bangumi/media/md5430
+        cover: https://pic.imgdb.cn/item/675b8343d0e0a243d4e31189.webp
       - name: 鬼灭之刃
         href: https://www.bilibili.com/bangumi/media/md22718131/?spm_id_from=666.25.b_6d656469615f6d6f64756c65.1
-        cover: https://bu.dusays.com/2023/05/24/646db439856a0.webp
+        cover: https://pic.imgdb.cn/item/675b8392d0e0a243d4e311b1.webp
       - name: JOJO的奇妙冒险 黄金之风
         href: https://www.bilibili.com/bangumi/media/md135652/?spm_id_from=666.25.b_6d656469615f6d6f64756c65.1
-        cover: https://bu.dusays.com/2023/05/30/64760e38d651a.webp
+        cover: https://pic.imgdb.cn/item/675b8393d0e0a243d4e311b3.webp
   like:
     like_tips: 关注偏好
     like_title: 数码科技
-    like_bg: https://bu.dusays.com/2022/12/06/638f5f05ce1f7.jpg
-    like_bottom: 手机、电脑软硬件
+    like_bg: https://pic.imgdb.cn/item/675b846bd0e0a243d4e311c2.jpg
+    like_bottom: 新奇 软件 科技 数码产品
   music:
     music_tips: 音乐偏好
-    music_title: 许嵩、民谣、华语流行
-    music_bg: https://p2.music.126.net/Mrg1i7DwcwjWBvQPIMt_Mg==/79164837213438.jpg
-    music_link: /music
+    music_title: 放松 流行 民谣
+    music_bg: https://pic.imgdb.cn/item/675b8532d0e0a243d4e311d0.jpg
+    music_link: /music 
   #reward_list:
    # - name: 海阔蓝
    #  amount: 8.8

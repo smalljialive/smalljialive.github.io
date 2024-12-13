@@ -1,3 +1,4 @@
+#flexcard/anzhiyu/telescopic
 - class_name: 优质导航
   class_desc: 优质的导航网站
   flink_style: anzhiyu
@@ -11,13 +12,8 @@
     - name: 海螺AI对话
       link: https://hailuoai.com/
       avatar: https://hailuoai.com/favicon.ico
-      descr: 快速、简单且强大的网站框架    
+      descr: AI全网搜索对话写文 
       recommend: true
-
-- class_name: 
-  flink_style: anzhiyu
-  hundredSuffix: ""
-  link_list:
     - name: Hexo
       link: https://hexo.io/zh-tw/
       avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
