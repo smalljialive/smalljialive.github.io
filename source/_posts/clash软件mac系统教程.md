@@ -1,12 +1,19 @@
 ---
-title: Clash软件Mac系统教程
-tags: []
-id: '311'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - 运营知识
 comments: false
-date: 2024-06-15 10:18:41
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png
+date: '2024-06-15T10:18:41+08:00'
+id: 311
+tags:
+- VPN软件
+- Clash
+title: Clash软件Mac系统教程
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png
+updated: '2024-12-16T14:54:32.450+08:00'
 ---
+Clash软件的安装教程-Mac版本
 
 整体三个步骤：安装软件——导入订阅——打开clash主页的开关：系统代理和开机自启。看完整，一步一步操作！
 
@@ -48,7 +55,9 @@ date: 2024-06-15 10:18:41
 
 ### 第三步：然后在“Proxies”页面，选择Rule规则模式，然后选择节点:点击第一个“贝贝云” 。正常使用不要选【全局Global】模式。需要切换节点则在此切换。
 
-![Snipaste_2023-12-14_00-13-52.png](https://img.imgdd.com/f210f3.c92f1d67-d7f6-4a6f-aeba-2d68bf9a87da.png) 上方的按钮是代理模式，其中Script不常用，其它介绍如下： **Global是全局代理，若选择此项，所有的网站经过代理访问。** **Rule是规则代理，若选择此项，只有国外的网站才会经过代理访问。** **Direct是全部直连，若选择此项，则所有网站都不经过代理。**
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png)
+
+上方的按钮是代理模式，其中Script不常用，其它介绍如下： **Global是全局代理，若选择此项，所有的网站经过代理访问。** **Rule是规则代理，若选择此项，只有国外的网站才会经过代理访问。** **Direct是全部直连，若选择此项，则所有网站都不经过代理。**
 
 ### 第四步：打开代理开关：打开clash首页的系统代理（System Proxy），打开开机自启(Start with Start with Windows)！这是开关 ，后续需要关闭就关这。
 
@@ -58,7 +67,7 @@ date: 2024-06-15 10:18:41
 
 ### 0.参考
 
-https://www.zhihu.com/question/426686387
+[https://www.zhihu.com/question/426686387](https://www.zhihu.com/question/426686387)
 
 ### 1.请务必确保关闭并后台退出了其他代理软件比如clahsx、 v2rayu和360等安全软件，所有代理软件都是不能同时使用的且和众多安全软件冲突。
 
