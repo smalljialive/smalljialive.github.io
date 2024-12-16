@@ -117,7 +117,7 @@ function create_product_taxonomies() {
 
 ```
 
-大家可以把上面的代码添加到当前wordpress建站主题的functions.php文件中，或者是添加到Code Snippets插件中，效果一样。
+大家可以把上面的代码添加到当前wordpress建站主题的**functions.php**文件中，或者是添加到Code Snippets插件中，效果一样。
 
 然后我们来看看效果，wordpress建站后台多出了一个产品中心，这里可以单独添加产品分类和产品，产品默认的是经典编辑器，和WooCommerce插件基本一样，不过可编辑的属性基本没有，使用方法和写文章差不多。这种方法比较适合对产品展示效果要求不高的用户，当然你也可以继续完善上面的代码，或者是使用CSS来美化，但这样就背离的简单方便的本意了，所以还是看下面吧。
 
