@@ -59,8 +59,56 @@
       avatar: https://www.tboxn.com/favicon.ico
       descr: 优质工具在线导航网站
       recommend: true    
-      
-      
+    - name: 万有导航
+      link: https://wanyouw.com/
+      avatar: https://wanyouw.com/favicon.ico
+      descr: 互联网全职业聚合导航
+      recommend: true  
+    - name: 奥兔导航
+      link: https://www.aotusss.com/
+      avatar: https://www.aotusss.com/favicon.ico
+      descr: 垂直分离搜索性导航
+      recommend: true   
+    - name: 掌酷导航
+      link: https://www.zkdh.net/
+      avatar: https://www.zkdh.net/favicon.ico
+      descr: 影音娱乐专用导航
+      recommend: true   
+    - name: 快导航
+      link: https://www.hifast.cn/
+      avatar: https://www.hifast.cn/favicon.ico
+      descr: 工具软件集合导航
+      recommend: true  
+    - name: 迷鹿导航
+      link: https://www.plnav.com/
+      avatar: https://www.plnav.com/favicon.ico
+      descr: 方便快捷实用的网址导航
+      recommend: true  
+    - name: 一流导航
+      link: https://16map.com/
+      avatar: https://16map.com/favicon.ico
+      descr: 设计素材搜索导航
+      recommend: true  
+    - name: 小呆导航
+      link: https://www.webjike.com
+      avatar: https://www.webjike.com/favicon.ico
+      descr: 设计素材搜索导航
+      recommend: true    
+    - name: 机场导航
+      link: https://tz.oxoxm.com/
+      avatar: https://tz.oxoxm.com/favicon.ico
+      descr: 各种机场梯子网址
+      recommend: true  
+    - name: 外贸先生
+      link: https://www.globalsir.com/tools/
+      avatar: https://www.globalsir.com/favicon.ico
+      descr: 外贸工具库
+      recommend: true    
+    - name: 外贸导航
+      link: https://www.fob123.com/
+      avatar: https://www.fob123.com/favicon.ico
+      descr: 外贸工具大全
+      recommend: true    
       
       
       
