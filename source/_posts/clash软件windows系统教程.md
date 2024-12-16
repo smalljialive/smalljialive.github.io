@@ -7,10 +7,11 @@ cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png
 date: '2024-06-15T10:17:22+08:00'
 id: 309
 tags:
-- VPN搭建
+- VPN软件
+- Clash
 title: Clash软件Windows系统教程
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png
-updated: '2024-12-16T14:58:29.064+08:00'
+updated: '2024-12-16T15:01:01.010+08:00'
 ---
 Windows-Clash for Windows使用教程
 
