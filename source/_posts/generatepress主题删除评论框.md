@@ -1,16 +1,26 @@
 ---
-title: GeneratePress主题删除评论框
-tags: []
-id: '413'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - 代码细节
+- - WordPress
 comments: false
-date: 2024-09-10 17:15:25
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/34.jpg
+date: '2024-09-10T17:15:25+08:00'
+id: 413
+tags:
+- WordPress
+- 网站建设
+title: GeneratePress主题删除评论框
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/34.jpg
+updated: '2024-12-16T15:06:37.893+08:00'
 ---
-
 # GeneratePress主题删除评论框
 
-文件代码在inc-structure下面的conmments.php中（conmments.php为显示评论代码） ![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240910171500.jpg)
+generatepress主题可通过在文章页面直接取消评论，若遇到取消评论后，前端页面还会显示评论模块，可通过代码方式禁用（不推荐）
+
+文件代码在**inc-structure**下面的**conmments.php**中（conmments.php为显示评论代码）
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/34.jpg)
 
 删除评论方法网上很多，这里记录下GeneratePress主题删除评论框的操作，只是删除底部评论框，不影响文章插入评论，方便了自定义文章模板，比如文章插入tab标签添加评论的方法，
 
