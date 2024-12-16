@@ -1,22 +1,29 @@
 ---
-title: 有哪些免费的AE模板网站？
-tags: []
-id: '241'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - AE特效
+- - 运营知识
 comments: false
-date: 2024-06-14 17:12:57
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/14.png
+date: '2024-06-14T17:12:57+08:00'
+id: 241
+tags:
+- AE特效
+- AE模版
+- 新媒体运营
+title: 有哪些免费的AE模板网站？
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/14.png
+updated: '2024-12-16T11:16:15.499+08:00'
 ---
+作为新媒体运营，必不能绕过去的一座大山肯定是AE特效制作，无论是广告片还是短视频，适当的特效总会加分不少，而AE对大多数同学来说还是比较难学习的，所以我们采用一种取巧的方法：直接套用模板，毕竟普通的剪辑，效率才是王道，至于大部分精力则应该放在剧本的撰写和人物情绪、场景布置和拍摄上，千万不要本末倒置哦！
 
-本文转载至知乎回答：[https://www.zhihu.com/question/30888588](https://www.zhihu.com/question/30888588) 如果你是做[广告片](https://www.zhihu.com/search?q=%E5%B9%BF%E5%91%8A%E7%89%87&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)的，那么精细化的定制绝对是主流，所以绝对不会想到用AE模板的操作，因为素材会非常琐碎，甚至对具体的贴图和其它元素有具体的要求。但是呢，如果你做的是短视频，那么其实只有片头片尾会用到AE模板的特效，这样子其实直接套用模板就可以了，毕竟普通的剪辑，效率才是王道，至于大部分精力则应该放在剧本的撰写和人物情绪、场景布置和拍摄上，千万不要本末倒置哦！
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/14.png)
+
+本文转载至知乎回答：[https://www.zhihu.com/question/30888588](https://www.zhihu.com/question/30888588)
 
 当然啦，发一个新闻稿件，传播效果肯定是秒杀图文的，比起一个简短的视频，谁愿意去看几千字的图文呢？总之，如果只是为了满足领导的普通需求，模板绝对是最有效率的啦！
 
-现在很多企业购买视频的时候，大多数走的也是中低端市场，报价从50到200都有【哭了！~】，而且要求还不少，审核两三次没过甚至不给你结账233。。。这种情况下套用模板，甚至还不能保证不亏，但是至少不会亏那么多啊！
-
 如果你平时想做一个简单的视频相册，例如公司年会的制作等，套用一个模板速度也是非常快的，完全没有必要自己去折腾大半天的AE具体技巧。至于第一次套用AE模板，可能对新手来讲会有点难度，我在文中也给大家准备了一系列B站教程，只要你看完视频，就可以轻松上手啦！当然啦，后期也是一个竞争大、需求也大的行业，具体来讲就是两极分化会非常的严重，做的好的月薪几万、甚至十几万的都有，做不好的实习期都有可能被炒鱿鱼（别问我为什么知道的orz...）
-
-![](https://picx.zhimg.com/50/v2-e54937f5431875925550793773c60692_720w.jpg?source=1def8aca)
 
 **话不多说，Let’s rock！还没时间看的同学，记得先花费1秒收藏下哦！下面是我最新的回答，希望也能帮到你：**
 
@@ -34,21 +41,19 @@ date: 2024-06-14 17:12:57
 
 **直达链接：**[https://ibaotu.com/shipin/?spm=zhjj6](https://link.zhihu.com/?target=https%3A//ibaotu.com/shipin/%3Fspm%3Dzhjj6)
 
-如果你在其他网站上找到的素材比较旧，那么我建议你来这个网站[康康](https://www.zhihu.com/search?q=%E5%BA%B7%E5%BA%B7&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)，持续更新大量最新、最热门的素材，并且目前提供了**非常丰富的高质量素材，包括最新的AE模板、PR模板、背景视频、实拍视频等，**以及设计中常用到的**海报、画册、宣传单、LOGO设计、海量字体库和PPT模板**，你都可以在这里轻松找到！简直不能再良心！
+如果你在其他网站上找到的素材比较旧，那么我建议你来这个网站康康，持续更新大量最新、最热门的素材，并且目前提供了**非常丰富的高质量素材，包括最新的AE模板、PR模板、背景视频、实拍视频等，**以及设计中常用到的**海报、画册、宣传单、LOGO设计、海量字体库和PPT模板**，你都可以在这里轻松找到！简直不能再良心！
 
 ![](https://pica.zhimg.com/50/v2-5400ebb90af929f7041f7ffaf49cf8a2_720w.jpg?source=1def8aca)
 
 ![](https://pica.zhimg.com/80/v2-5400ebb90af929f7041f7ffaf49cf8a2_720w.webp?source=1def8aca)
 
-当然啦，这个网站还提供了**[大量国外的图片、视频、配乐、插画和矢量图素材](https://link.zhihu.com/?target=https%3A//ibaotu.com/shipin/%3Fspm%3Dzhjj6)**，质量都非常高，简直是视频剪辑爱好者和[设计师](https://www.zhihu.com/search?q=%E8%AE%BE%E8%AE%A1%E5%B8%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)最大的福音，再也不用去令人头秃的外文网站找素材啦，**一键就可快速检索，下载速度也非常快！**相信总能帮到你的！
+当然啦，这个网站还提供了大量国外的图片、视频、配乐、插画和矢量图素材，质量都非常高，简直是视频剪辑爱好者和设计师最大的福音，再也不用去令人头秃的外文网站找素材啦，一键就可快速检索，下载速度也非常快！相信总能帮到你的！
 
 ![](https://pica.zhimg.com/50/v2-5293a6b63cbc7b749f53d2a542285ff7_720w.jpg?source=1def8aca)
 
 ![](https://pica.zhimg.com/80/v2-5293a6b63cbc7b749f53d2a542285ff7_720w.webp?source=1def8aca)
 
-随意截了个图，各位同学可以看到网站的设计也非常[小清新](https://www.zhihu.com/search?q=%E5%B0%8F%E6%B8%85%E6%96%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)，颜狗真的太爱啦！**每次没灵感的时候，都会来这里逛逛，总是能找到不一样的设计创意，**这个网站真的私藏了好久哦，今天偷偷分享给大家（平时朋友拿刀架在我脖子上，我都不一定告诉他~）！赶紧进入叭：**[【原创】高清视频素材模板免费下载](https://link.zhihu.com/?target=https%3A//ibaotu.com/shipin/%3Fspm%3Dzhjj6)**
-
-![](https://pic1.zhimg.com/50/v2-ecee440575d88138466a89921350c5b6_720w.jpg?source=1def8aca)
+随意截了个图，各位同学可以看到网站的设计也非常小清新，颜狗真的太爱啦！每次没灵感的时候，都会来这里逛逛，总是能找到不一样的设计创意，这个网站真的私藏了好久哦，今天偷偷分享给大家（平时朋友拿刀架在我脖子上，我都不一定告诉他~）！
 
 ![](https://pic1.zhimg.com/80/v2-ecee440575d88138466a89921350c5b6_720w.webp?source=1def8aca)
 
@@ -78,7 +83,7 @@ date: 2024-06-14 17:12:57
 
 ![](https://picx.zhimg.com/80/v2-d27c2225e31dea85c2bcbbd0e0f57817_720w.webp?source=1def8aca)
 
-可以免费下载的素材类型不仅有AE模板，还有**视频素材、AE模板、PR模板、[会声会影](https://www.zhihu.com/search?q=%E4%BC%9A%E5%A3%B0%E4%BC%9A%E5%BD%B1&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)、EDIUS模板和舞台背景**等，总有一款适合你！
+可以免费下载的素材类型不仅有AE模板，还有**视频素材、AE模板、PR模板、会声会影、EDIUS模板和舞台背景**等，总有一款适合你！
 
 ![](https://pic1.zhimg.com/50/v2-b55e93707b02429cf5f3cb4bf226652d_720w.jpg?source=1def8aca)
 
@@ -156,17 +161,9 @@ date: 2024-06-14 17:12:57
 
 做过视觉设计的同学肯定都知道这个网站了，不仅提供了大量免费高质量的AE模板，并且还有国内外的CG佳作可供参考，很多甚至质量比付费网站的质量还高，非常值得拥有的一个网站。
 
-![](https://picx.zhimg.com/50/v2-81de074d46be293503a46768e3b95cf1_720w.jpg?source=1def8aca)
+**8.AE模板库**
 
-![](https://picx.zhimg.com/80/v2-81de074d46be293503a46768e3b95cf1_720w.webp?source=1def8aca)
-
-**8.AE[模板库](https://www.zhihu.com/search?q=%E6%A8%A1%E6%9D%BF%E5%BA%93&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)**
-
-AE模板库同样是一个模板非常丰富的网站，包括**企业宣传、产品推广、电视包装、[婚礼相册](https://www.zhihu.com/search?q=%E5%A9%9A%E7%A4%BC%E7%9B%B8%E5%86%8C&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)**的相关类型，你都可以在这里找到非常高质量的模板。
-
-![](https://picx.zhimg.com/50/v2-2ff081f63fc202b6967a5bb0ad88dd67_720w.jpg?source=1def8aca)
-
-![](https://picx.zhimg.com/80/v2-2ff081f63fc202b6967a5bb0ad88dd67_720w.webp?source=1def8aca)
+AE模板库同样是一个模板非常丰富的网站，包括**企业宣传、产品推广、电视包装、婚礼相册**的相关类型，你都可以在这里找到非常高质量的模板。
 
 **9.93CG网**
 
@@ -192,7 +189,7 @@ AE模板库同样是一个模板非常丰富的网站，包括**企业宣传、�
 
 **三、AE视频制作教程**
 
-很多同学还在问有没有AE制作的视频教程，之前我也给大家写过一篇攻略，包括抠像、调色、[关键帧](https://www.zhihu.com/search?q=%E5%85%B3%E9%94%AE%E5%B8%A7&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)、摄像机与反求和MG动画的教程，你都可以在这里找到：
+很多同学还在问有没有AE制作的视频教程，之前我也给大家写过一篇攻略，包括抠像、调色、关键帧、摄像机与反求和MG动画的教程，你都可以在这里找到：
 
 [一个萌新小白如何系统地学习AE？305 赞同 · 5 评论回答](https://www.zhihu.com/question/57408641/answer/1509861480)
 
@@ -202,15 +199,15 @@ AE模板库同样是一个模板非常丰富的网站，包括**企业宣传、�
 
 另外，在特效制作中，我们也会用到各种风格的素材，包括**影视、动漫、动画和生活类**的素材，你都有可能用到，之前也给大家写过相关的推荐，有兴趣的同学也可以看下：
 
-[视频剪辑中的视频素材是从哪里找的？9379 赞同 · 162 评论回答![](https://pic2.zhimg.com/v2-6a5d05e2d6d57be4281dd39028789af9_180x120.jpg)](https://www.zhihu.com/question/308982522/answer/1655460884)
+[视频剪辑中的视频素材是从哪里找的？9379 赞同 · 162 评论回答!](https://www.zhihu.com/question/308982522/answer/1655460884)
 
-[请问B站up主们的剪辑素材是从哪里获得？2507 赞同 · 31 评论回答![](https://pic2.zhimg.com/v2-6a5d05e2d6d57be4281dd39028789af9_180x120.jpg)](https://www.zhihu.com/question/368291589/answer/1340525893)
+[请问B站up主们的剪辑素材是从哪里获得？2507 赞同 · 31 评论回答!](https://www.zhihu.com/question/368291589/answer/1340525893)
 
 **2.图片素材网站**
 
 图片素材的版权问题也受到设计师和剪辑师的关注，之前我也给各位同学介绍过一系列网站，国内和国外的都有，大部分都是免费无版权可商用的，希望也能帮到你：
 
-[有哪些无版权、免费、高清图片素材网站？1479 赞同 · 26 评论回答![](https://pic2.zhimg.com/v2-55c559f4ca4c619c7a0add6b76589f59_180x120.jpg)](https://www.zhihu.com/question/318961106/answer/1027472992)
+[有哪些无版权、免费、高清图片素材网站？1479 赞同 · 26 评论回答!](https://www.zhihu.com/question/318961106/answer/1027472992)
 
 **3.音效素材网站**
 
@@ -226,7 +223,7 @@ AE模板库同样是一个模板非常丰富的网站，包括**企业宣传、�
 
 **更多免费音效和BGM素材，也可以看下我之前的回答哦：**
 
-[大家知不知道免费的音效网?647 赞同 · 9 评论回答![](https://pic2.zhimg.com/v2-f2dc5d11b34b0f37507cf8fb72835c65_180x120.jpg)](https://www.zhihu.com/question/302411162/answer/1541643196)
+[大家知不知道免费的音效网?647 赞同 · 9 评论回答!](https://www.zhihu.com/question/302411162/answer/1541643196)
 
 [有什么适合剪辑的BGM？294 赞同 · 10 评论回答](https://www.zhihu.com/question/317233646/answer/1609783374)
 
@@ -240,36 +237,5 @@ AE模板库同样是一个模板非常丰富的网站，包括**企业宣传、�
 
 03.觅元素：免费、免扣素材，支持中文检索；
 
-**\====丑丑的分割线====**
 
-**Ok，以上就是我常用到的一些AE相关模板素材网站了，你还用过哪些好用的网站呢？欢迎留言区补充哦~**
-
-**看在小哥我这篇回答写了[一个下午](https://www.zhihu.com/search?q=%E4%B8%80%E4%B8%AA%E4%B8%8B%E5%8D%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1511385043%7D)的份上，各位小可爱能不能给我点个小小的赞呢？谢谢你们啦！下面是我最新的回答，希望也能帮到你：**
-
-[视频剪辑中的视频素材是从哪里找的？9379 赞同 · 162 评论回答![](https://pic1.zhimg.com/v2-eb90b26a6a57e8bca3de826b85e19bb0_180x120.jpg)](https://www.zhihu.com/question/308982522/answer/1655460884)
-
-[想做视频剪辑挣点零花钱，哪里有活呢？2316 赞同 · 83 评论回答![](https://pic1.zhimg.com/v2-1525b4f833bc592b0207def23aa60294_180x120.jpg)](https://www.zhihu.com/question/394160425/answer/1588139565)
-
-[用什么电脑配置做视频剪辑比较好？1532 赞同 · 136 评论回答](https://www.zhihu.com/question/296346272/answer/1652310926)
-
-[学习Ps，Pr和Ae的正确顺序是什么？2380 赞同 · 64 评论回答![](https://pic4.zhimg.com/v2-3c5fb0c9ecd65826bb023a849fb069af_180x120.jpg)](https://www.zhihu.com/question/372750907/answer/1634294632)
-
-[剪辑行业真的很累吗？2569 赞同 · 90 评论回答![](https://pic1.zhimg.com/v2-c3285c2b77d88892d03604c38de79254_180x120.jpg)](https://www.zhihu.com/question/264257968/answer/1613695621)
-
-[如何自学pr视频剪辑？2199 赞同 · 57 评论回答](https://www.zhihu.com/question/316613304/answer/1503954319)
-
-[请问什么软件可以给视频加字幕？1408 赞同 · 29 评论回答![](https://pic1.zhimg.com/v2-b95d25ef9359e716b1e92ec7ef489788_180x120.jpg)](https://www.zhihu.com/question/277773648/answer/1470233718)
-
-[自学视频剪辑可行吗，大概需要多久？3806 赞同 · 124 评论回答![](https://pic1.zhimg.com/v2-c3285c2b77d88892d03604c38de79254_180x120.jpg)](https://www.zhihu.com/question/387578035/answer/1486053865)
-
-[剪辑师应该怎样训练自己的剪辑思维？792 赞同 · 19 评论回答](https://www.zhihu.com/question/299238934/answer/1530355313)
-
-[想学剪辑，请问有什么书籍推荐?828 赞同 · 22 评论回答](https://www.zhihu.com/question/365831284/answer/1411961064)
-
-[B站上有哪些非常完整的Pr教程？746 赞同 · 15 评论回答![](https://pic1.zhimg.com/v2-d98a7af2ba1ca938db97aa207f4e1054_180x120.jpg)](https://www.zhihu.com/question/399059994/answer/1587642209)
-
-[如何选择拍摄视频的相机，主要是做自媒体？675 赞同 · 29 评论回答](https://www.zhihu.com/question/265623772/answer/1457672455)
-
-[剪辑新人应该如何拉片子？616 赞同 · 11 评论回答![](https://pic3.zhimg.com/v2-0f24d42b78c081c44daf9963041eded2_180x120.jpg)](https://www.zhihu.com/question/22796823/answer/1557382720)
-
-[视频剪辑师工资怎么样？216 赞同 · 12 评论回答](https://www.zhihu.com/question/305426973/answer/1682560789)
+**Ok，以上就是我常用到的一些AE相关模板素材网站了。**
