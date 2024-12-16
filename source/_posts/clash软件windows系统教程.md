@@ -1,14 +1,18 @@
 ---
-title: Clash软件Windows系统教程
-tags: []
-id: '309'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - 运营知识
 comments: false
-date: 2024-06-15 10:17:22
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png
+date: '2024-06-15T10:17:22+08:00'
+id: 309
+tags:
+- VPN搭建
+title: Clash软件Windows系统教程
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png
+updated: '2024-12-16T14:58:29.064+08:00'
 ---
-
-✔️✔️✔️Windows-Clash for Windows使用教程
+Windows-Clash for Windows使用教程
 
 # 整体就三个步骤：安装软件——导入订阅——打开clash开关：首页系统代理（System proxy）和开机自启!
 
@@ -48,7 +52,7 @@ date: 2024-06-15 10:17:22
 
 ### 如果导入失败，需要手动复制订阅导入
 
-手动导入具体教程，点击展开复制您的订阅地址： https://bbdingyue.top/api/v1/client/subscribe?token=ba7cc28f8cd01610cd6324ee9d5a1e3e 打开 clash 页面粘贴订阅地址。 粘贴操作如下：打开【配置/Profiles】--粘贴订阅url到输入框--点击\[下载/download\] ![](https://storage.crisp.chat/users/helpdesk/website/de54da2065412800/4_11yfjrh.png) 
+手动导入具体教程，点击展开复制您的订阅地址： https://bbdingyue.top/api/v1/client/subscribe?token=ba7cc28f8cd01610cd6324ee9d5a1e3e 打开 clash 页面粘贴订阅地址。 粘贴操作如下：打开【配置/Profiles】--粘贴订阅url到输入框--点击\[下载/download\] ![](https://storage.crisp.chat/users/helpdesk/website/de54da2065412800/4_11yfjrh.png)
 
 ### 还不行？排查和解决方法：
 
@@ -56,7 +60,9 @@ date: 2024-06-15 10:17:22
 
 ### 导入成功后点击\[Profiels/配置\]选择刚刚下载的这个配置订阅文件
 
-### 第三步：然后在【代理】【Proxys】页面，选择【规则/Rule】模式！正常使用不要选【全局Global】模式。需要切换节点则在此切换。![Snipaste_2023-12-14_00-13-52.png](https://img.imgdd.com/f210f3.c92f1d67-d7f6-4a6f-aeba-2d68bf9a87da.png)
+### 第三步：然后在【代理】【Proxys】页面，选择【规则/Rule】模式！正常使用不要选【全局Global】模式。需要切换节点则在此切换。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/30.png)
 
 上方的按钮是代理模式，正常情况下,推荐默认Rule模式！！！！！！！其中Script不常用，其它介绍如下： **Global是全局代理，若选择此项，所有的网站经过代理访问。** **Rule是规则代理，若选择此项，只有国外的网站才会经过代理访问。** **Direct是全部直连，若选择此项，则所有网站都不经过代理。**
 
@@ -86,7 +92,29 @@ date: 2024-06-15 10:17:22
 
 ### 7.如果系统代理开启无效：重置系统代理
 
-参考：https://www.volcengine.com/theme/1425847-W-7-1 先试试： 一、使用命令行进行重置操作 1.首先打开“命令提示符”，进入管理员模式。 2.在命令行中输入：netsh winhttp reset proxy 3.按下“Enter”键，等待命令完成。 重新打开clash系统代理试试 二、如果也不行： 键盘按 win+r 输入regedit 回车，打开注册表： HKEY\_CURRENT\_USER/\\SOFTWARE/\\Microsoft/\\Windows/\\CurrentVersion/\\Internet Settings 将“ProxyEnable”和“ProxyServer”键的值均设置为“0”。 然后再使用管理员重新打开clash系统代理。不行就重启后打开系统代理。或者重启电脑试试。
+参考：https://www.volcengine.com/theme/1425847-W-7-1
+
+先试试： 一、使用命令行进行重置操作
+
+1.首先打开“命令提示符”，进入管理员模式。
+
+2.在命令行中输入：netsh winhttp reset proxy
+
+3.按下“Enter”键，等待命令完成。
+
+重新打开clash系统代理试试
+
+二、如果也不行：
+
+键盘按 win+r 输入regedit 回车，
+
+打开注册表： HKEY\_CURRENT\_USER/\\SOFTWARE/\\Microsoft/\\Windows/\\CurrentVersion/\\Internet Settings
+
+将“ProxyEnable”和“ProxyServer”键的值均设置为“0”。
+
+然后再使用管理员重新打开clash系统代理。
+
+不行就重启后打开系统代理。或者重启电脑试试。
 
 ### 8.检查浏览器代理选择，如果你使用了switch omega记得选择系统代理。
 
