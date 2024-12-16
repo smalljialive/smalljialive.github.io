@@ -10,7 +10,7 @@ id: 321
 tags:
 - WordPress
 - 网站建设
-title: Wordpress页面滚动时固定某一部件
+title: 页面滚动时固定某一模块
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/22.png
 updated: '2024-12-16T13:44:23.883+08:00'
 ---
