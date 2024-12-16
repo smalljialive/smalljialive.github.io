@@ -131,6 +131,10 @@ function create_product_taxonomies() {
 
 ### YITH WooCommerce Catalog Mode（需安装woocommerce）
 
-YITH WooCommerce Catalog Mode是一款WordPress插件，主要作用就是为WooCommerce开启目录模式，隐藏添加到购物车和结账按钮。 使用方法很简单，下载插件并且安装，然后进入插件设置开启对应的选项即可。 或者
+YITH WooCommerce Catalog Mode是一款WordPress插件，主要作用就是为WooCommerce开启目录模式，隐藏添加到购物车和结账按钮。 使用方法很简单，下载插件并且安装，然后进入插件设置开启对应的选项即可。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/16.png)
 
 ### MMWD Remove Add To Cart for WooCommerce插件也可以（需安装woocommerce）
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/17.png)
