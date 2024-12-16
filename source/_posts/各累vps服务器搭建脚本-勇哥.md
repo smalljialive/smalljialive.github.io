@@ -14,7 +14,7 @@ updated: '2024-12-16T11:40:58.969+08:00'
 ---
 VPS作为外贸常会用到的工具，有时候需要个人按照公司实际情况进行搭建。
 
-本文整理了一些关于搭建VPS使用x-ui脚本过程中会遇到的问题与解决方法。
+本文整理了一些关于搭建VPS使用x-ui脚本的搭建方法
 
 本文部分内容转载至Github代码库：[https://github.com/yonggekkk/x-ui-yg](https://github.com/yonggekkk/x-ui-yg)
 
