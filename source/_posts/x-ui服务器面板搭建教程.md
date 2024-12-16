@@ -1,39 +1,45 @@
 ---
-title: X-ui服务器面板搭建教程
-tags: []
-id: '365'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - 代码细节
 comments: false
-date: 2024-06-15 15:51:54
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/20.png
+date: '2024-06-15T15:51:54+08:00'
+id: 365
+tags:
+- Vps搭建
+title: X-ui服务器面板搭建教程
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/20.png
+updated: '2024-12-16T13:41:09.773+08:00'
 ---
-
-本文转载至Github代码库：[https://github.com/97381736/dajian](https://github.com/97381736/dajian)
-
 # 科学上网：VPS 搭建 X-UI 面板
 
 使用X-UI搭建代理服务，具有以下优点：
 
-*   支持系统状态监控：如CPU、内存、硬盘等状态
-*   支持多用户多协议，网页可视化操作
-*   支持流量统计
-*   支持自定义Xray配置模板
-*   支持HTTPS访问面板
-*   支持面板自定义端口，账号与密码
-*   快速生成分享连接或二维码
-*   支持CDN套用
-*   支持Fallback分流设置
+* 支持系统状态监控：如CPU、内存、硬盘等状态
+* 支持多用户多协议，网页可视化操作
+* 支持流量统计
+* 支持自定义Xray配置模板
+* 支持HTTPS访问面板
+* 支持面板自定义端口，账号与密码
+* 快速生成分享连接或二维码
+* 支持CDN套用
+* 支持Fallback分流设置
+
+  ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/20.png)
 
 点此进入>>[搭建X-UI视频教程](https://youtu.be/n5koU-pj094)
 
+本文转载至Github代码库：[https://github.com/97381736/dajian](https://github.com/97381736/dajian)
+
 ## 准备工作
 
-*   1、已经解析的域名，Win+R输入CMD 回车：键入ping 空格输入你的域名，检查一下是否可以ping通
-*   2、一台境外VPS主流系统，例如：Debian/Ubuntu/CentOS
+* 1、已经解析的域名，Win+R输入CMD 回车：键入ping 空格输入你的域名，检查一下是否可以ping通
+* 2、一台境外VPS主流系统，例如：Debian/Ubuntu/CentOS
 
 [Vultr 购买地址，点此进入](https://www.vultr.com/?ref=8941832-8H)：按时计费，最低6$/月。
 
-*   3、下载并安装FinalShell SSH工具
+* 3、下载并安装FinalShell SSH工具
 
 Windows版下载地址：[点此下载](http://www.hostbuf.com/downloads/finalshell_install.exe)
 
@@ -73,7 +79,7 @@ curl https://get.acme.sh  sh
 ~/.acme.sh/acme.sh --register-account -m xxxx@gmail.com
 ```
 
-* * *
+---
 
 ```
 ~/.acme.sh/acme.sh  --issue -d 输入你的域名  --standalone
@@ -104,7 +110,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/vaxilu/x-ui/master/install.sh)
 
 ## 注意事项
 
-*   1、如何在申请证书及密钥这一步搭建失败，检查并放行端口，口令如下：
+* 1、如何在申请证书及密钥这一步搭建失败，检查并放行端口，口令如下：
 
 ### 放行80端口
 
@@ -142,10 +148,8 @@ firewall-cmd --reload
 systemctl stop firewalld
 ```
 
-*   2、如果是全新安装，默认网页端口为 54321，用户名和密码默认都是 admin ， 如何遇到打不开的情况，可能是端口没有放行，用【方法1】键入停止防火墙代码，或键入开放端口代码。
-    
-*   3、V2ray软件：设置——参数设置——V2rayN设置——Core类型改为Xray\_Core
-    
+* 2、如果是全新安装，默认网页端口为 54321，用户名和密码默认都是 admin ， 如何遇到打不开的情况，可能是端口没有放行，用【方法1】键入停止防火墙代码，或键入开放端口代码。
+* 3、V2ray软件：设置——参数设置——V2rayN设置——Core类型改为Xray\_Core
 
 ## 更新证书
 
