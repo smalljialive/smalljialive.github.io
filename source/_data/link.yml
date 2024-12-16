@@ -144,6 +144,11 @@
       
       
 #分界线-------------------------------------------------AI工具      
+- class_name: 优质导航
+  class_desc: 优质的导航网站
+  flink_style: flexcard
+  hundredSuffix: ""
+  link_list:
     - name: 海螺AI对话
       link: https://hailuoai.com/
       avatar: https://hailuoai.com/favicon.ico
