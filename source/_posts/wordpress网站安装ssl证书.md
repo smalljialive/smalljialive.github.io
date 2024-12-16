@@ -1,17 +1,23 @@
 ---
-title: WordPress网站安装SSL证书
-tags: []
-id: '376'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - 代码细节
+- - WordPress
 comments: false
-date: 2024-07-29 16:04:56
+cover: https://aikenote.com/images/2022/08/1660366793-image.png
+date: '2024-07-29T16:04:56+08:00'
+id: 376
+tags:
+- WordPress
+- 网站建设
+title: WordPress的SSL证书插件
+top_img: https://aikenote.com/images/2022/08/1660366793-image.png
+updated: '2024-12-16T13:56:02.897+08:00'
 ---
-
 WordPress网站免费安装Let's Encrypt SSL证书教程。 网站ssl（https）证书的重要性不言而喻，尤其对含有交易功能的网站来说。 我们为WordPress搭建的网站安装Let's Encrypt证书需要启用下面插件。 [Really Simple SSL](https://cn.wordpress.org/plugins/really-simple-ssl/) 该插件不仅可以免费安装ssl证书，还可以把所有http链接重定向到https包含图片链接等，安装步骤：
 
-*   [安装证书](https://aikenote.com/wordpress/4611.html#a)
-*   [更新证书](https://aikenote.com/wordpress/4611.html#g)
+* 安装证书
+* 更新证书
 
 网站启用插件后会在设置中看到一个SSL图标。
 
@@ -27,7 +33,7 @@ WordPress网站免费安装Let's Encrypt SSL证书教程。 网站ssl（https）
 
 [![1660367525 image - 为WordPress网站安装免费的SSL证书（Let's Encrypt）教程](https://aikenote.com/images/2022/08/1660367525-image.png "为WordPress网站安装免费的SSL证书（Let's Encrypt）教程")](https://aikenote.com/images/2022/08/1660367525-image.png)
 
-  如果没有自动安装，查看[这篇文章](https://really-simple-ssl.com/installing-ssl-on-cpanel/)在cPanel面板进行手动安装。
+  如果没有自动安装，查看这篇文章在cPanel面板进行手动安装。
 
 ## 更新证书
 
