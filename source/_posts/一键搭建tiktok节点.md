@@ -1,32 +1,34 @@
 ---
-title: 一键搭建TIKTOK节点
-tags: []
-id: '301'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - 代码细节
 comments: false
-date: 2024-06-15 10:04:10
+cover: https://github.com/KEJIXIAOLU/Trojan/raw/main/%E6%9C%AA%E6%A0%87%E9%A2%98-3.jpg
+date: '2024-06-15T10:04:10+08:00'
+id: 301
+tags:
+- Vps搭建
+title: 一键搭建TIKTOK节点
+top_img: https://github.com/KEJIXIAOLU/Trojan/raw/main/%E6%9C%AA%E6%A0%87%E9%A2%98-3.jpg
+updated: '2024-12-16T13:35:08.428+08:00'
 ---
-
-本文转载至Github代码库：[https://github.com/KEJIXIAOLU/Trojan](https://github.com/KEJIXIAOLU/Trojan)
-
 # 一键搭建Trojan-Go面板，配合使用CDN+Websocket，免费开启CDN隐藏自己VPS的真实IP，保护VPS永不被墙
 
- 
+ 本文转载至Github代码库：[https://github.com/KEJIXIAOLU/Trojan](https://github.com/KEJIXIAOLU/Trojan)
 
 ### trojan多用户管理功能
 
-*   在线web页面和命令行两种方式管理trojan多用户
-*   启动 / 停止 / 重启 trojan 服务端
-*   支持流量统计和流量限制
-*   命令行模式管理, 支持命令补全
-*   集成acme.sh证书申请
-*   生成客户端配置文件
-*   在线实时查看trojan日志
-*   在线trojan和trojan-go随时切换
-*   支持trojan://分享链接和二维码分享(仅限web页面)
-*   支持转化为clash订阅地址并导入到clash\_for\_windows(仅限web页面)
-*   限制用户使用期限
+* 在线web页面和命令行两种方式管理trojan多用户
+* 启动 / 停止 / 重启 trojan 服务端
+* 支持流量统计和流量限制
+* 命令行模式管理, 支持命令补全
+* 集成acme.sh证书申请
+* 生成客户端配置文件
+* 在线实时查看trojan日志
+* 在线trojan和trojan-go随时切换
+* 支持trojan://分享链接和二维码分享(仅限web页面)
+* 支持转化为clash订阅地址并导入到clash\_for\_windows(仅限web页面)
+* 限制用户使用期限
 
 一键搭建Trojan-Go教程：[https://youtu.be/6SVkVnX8ymY](https://youtu.be/6SVkVnX8ymY)
 
@@ -40,7 +42,7 @@ date: 2024-06-15 10:04:10
 
 2、域名一个（已经解析的域名，Win+R输入CMD 回车：键入ping 空格输入你的域名，检查一下是否可以ping通）
 
-*   如果要使用Trojan-Go开启CND隐藏IP功能，需要将域名托管到CDN。 点此>>[Cloudflare接管域名解析教程](https://youtu.be/1GtDTWybJNM)
+* 如果要使用Trojan-Go开启CND隐藏IP功能，需要将域名托管到CDN。 点此>>[Cloudflare接管域名解析教程](https://youtu.be/1GtDTWybJNM)
 
 3、下载并安装FinalShell SSH工具
 
@@ -62,6 +64,16 @@ echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 
 lsmod  grep bbr
+
+echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
+
+echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
+
+sysctl -p
+
+lsmod  grep bbr
+
+
 ```
 
 ## 更新系统安装环境
@@ -70,12 +82,20 @@ lsmod  grep bbr
 
 ```
 apt update -y && apt install -y curl
+
+apt update -y && apt install -y curl
+
+
 ```
 
 2、CentOS系统执行以下命令：
 
 ```
 yum update -y && yum install -y curl 
+
+yum update -y && yum install -y curl
+
+
 ```
 
 ## Jrohy的一键Trojan面板脚本
@@ -84,20 +104,26 @@ yum update -y && yum install -y curl
 
 ```
 source <(curl -sL https://git.io/trojan-install)
+
+source <(curl -sL https://git.io/trojan-install)
+
+
 ```
 
 ### #卸载
 
 ```
 source <(curl -sL https://git.io/trojan-install) --remove
+
+source <(curl -sL https://git.io/trojan-install) --remove
+
+
 ```
 
 ### 安装过程中，会出现3次提示，请根据以下选项进行：
 
-*   1、第一次需要选择1. Let’s Encrypt证书 请输入申请证书的域名：host.kjxlu.com
-    
-*   2、选择‘1. 安装docker版mysql’ 回车或手动输入用户名
-    
+* 1、第一次需要选择1. Let’s Encrypt证书 请输入申请证书的域名：host.kjxlu.com
+* 2、选择‘1. 安装docker版mysql’ 回车或手动输入用户名
 
 注：跑完以上代码后，最后会出现一个选择菜单，不用理会，直接回车退出即可，即回到#提示符的状态下。至此，Trojan-Go面板搭建完成。
 
@@ -107,13 +133,13 @@ source <(curl -sL https://git.io/trojan-install) --remove
 
 第一次登陆面板时，会让您输入登陆密码，输入完后请使用用户名‘admin’及您设置的密码登陆。
 
-* * *
+---
 
 ## Trojan-Go 设置
 
 ### 登陆面板，修改Trojan类型为Trojan-Go
 
-[![](https://github.com/KEJIXIAOLU/Trojan/raw/main/%E6%9C%AA%E6%A0%87%E9%A2%98-3.jpg)](https://github.com/KEJIXIAOLU/Trojan/blob/main/%E6%9C%AA%E6%A0%87%E9%A2%98-3.jpg)
+![](https://github.com/KEJIXIAOLU/Trojan/raw/main/%E6%9C%AA%E6%A0%87%E9%A2%98-3.jpg)
 
 ## 更改Trojan-Go配置文件
 
@@ -136,6 +162,19 @@ source <(curl -sL https://git.io/trojan-install) --remove
     "concurrency": 8,
     "idle_timeout": 60
     }
+
+ "websocket": {
+"enabled": true,
+"path": "/DFE4545DFDED/",
+"host": "你的域名"
+},
+"mux": {
+"enabled": true,
+"concurrency": 8,
+"idle_timeout": 60
+}
+
+
 ```
 
 [![](https://github.com/KEJIXIAOLU/Trojan/raw/main/%E6%9C%AA%E6%A0%87%E9%A2%981.png)](https://github.com/KEJIXIAOLU/Trojan/blob/main/%E6%9C%AA%E6%A0%87%E9%A2%981.png)
@@ -152,7 +191,7 @@ source <(curl -sL https://git.io/trojan-install) --remove
 
 [https://github.com/V2RaySSR/Trojan\_panel\_web/releases/tag/trojanqt5](https://github.com/V2RaySSR/Trojan_panel_web/releases/tag/trojanqt5)
 
-*   如果Windows安装出错，请下载右上方的附件： Trojan-Qt5-Windows 压缩包
+* 如果Windows安装出错，请下载右上方的附件： Trojan-Qt5-Windows 压缩包
 
 [![](https://github.com/KEJIXIAOLU/Trojan/raw/main/%E6%9C%AA%E6%A0%87%E9%A2%98-2.png)](https://github.com/KEJIXIAOLU/Trojan/blob/main/%E6%9C%AA%E6%A0%87%E9%A2%98-2.png)
 
