@@ -1,11 +1,36 @@
 ---
-title: Wordpress的Generatepress主题取消默认分页，替换为插件Wp_pagenavi的样式
-tags: []
-id: '432'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - WordPress
+- - 代码细节
 comments: false
-date: 2024-09-30 10:17:20
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/23.jpg
+date: '2024-09-30T10:17:20+08:00'
+id: 432
+tags:
+- WordPress
+- 网站建设
+title: Wordpress的Generatepress主题取消默认分页，替换为插件Wp_pagenavi的样式
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/23.jpg
+updated: '2024-12-16T13:59:43.483+08:00'
 ---
+WordPress的GeneratePress主题自带的分类按钮中英文需要按照后台的语言设置同步，这就导致如果我们后台用的中文后台，但是做的外贸英文网站，在前端的分页显示的为中文的“上一页”和“下一页”，为了解决这个问题，我们一般会采用第三方插件解决。
 
-Wordpress的Generatepress主题取消默认分页，替换为插件Wp\_pagenavi的样式 wp默认的分页为：上一页，下一页的样式，中英文根据系统更改。 采用wp\_pagenavi插件则可以自由定制样式与内容 ![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240930101134.jpg)/\*将此段代码添加到funtion函数文件中\*/ add\_action( 'generate\_paging\_navigation', function() { if ( function\_exists( 'wp\_pagenavi' ) ) { wp\_pagenavi(); } } ); /\*将此样式表添加到自定义css中\*/ .page-numbers { display: none; }
+### Wp_pagenavi插件
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/23.jpg)
+
+
+
+将此段代码添加到funtion函数文件中
+
+```
+add_action( 'generate_paging_navigation', function() { if ( function_exists( 'wp_pagenavi' ) ) { wp_pagenavi(); } } );
+```
+
+将此样式表添加到自定义css中
+
+```
+.page-numbers { display: none; }
+
+```
