@@ -20,4 +20,6 @@
       date: 2024/12/14
       address: 郑州
       from: SmallJia
+      image:
+         - !https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/67.jpg
       
