@@ -118,7 +118,7 @@
 #分界线-------------------------------------------------优质博主      
 - class_name: 优质博主
   class_desc: 优质的网络博主
-  flink_style: telescopic
+  flink_style: flexcard
   hundredSuffix: ""
   link_list: 
     - name: 安知鱼
@@ -148,7 +148,7 @@
 #分界线-------------------------------------------------AI工具      
 - class_name: AI工具
   class_desc: 各类常用的AI工具
-  flink_style: flexcard
+  flink_style: anzhiyu
   hundredSuffix: ""
   link_list:
     - name: 海螺AI对话
