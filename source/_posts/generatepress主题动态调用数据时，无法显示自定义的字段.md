@@ -1,18 +1,30 @@
 ---
-title: Generatepress主题动态调用数据时，无法显示自定义的字段
-tags: []
-id: '417'
+abbrlink: ''
 categories:
-  - - 问题大全
+- - WordPress
+- - 代码细节
 comments: false
-date: 2024-09-12 16:00:44
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/35.jpg
+date: '2024-09-12T16:00:44+08:00'
+id: 417
+tags:
+- WordPress
+- 网站建设
+title: Generatepress主题动态调用数据时，无法显示自定义的字段
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/35.jpg
+updated: '2024-12-16T15:09:15.009+08:00'
 ---
-
 在使用 GeneratePress 主题时，如果你在动态数据中看到自定义字段没有显示，而在选择“post meta”时只显示 `footnotes`，这可能与自定义字段的注册、Gutenberg 编辑器的配置以及主题的兼容性有关。以下是一些可能的解决方案和步骤，以确保自定义字段能够正常显示。
 
 ### 1\. 文章内生成自定义字段
 
-![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240912155453.jpg) 如果文章最底部不显示自定义字段，则在设置里打开![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240912155519.jpg) ![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240912155528.jpg)
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/36.jpg)
+
+如果文章最底部不显示自定义字段，则在设置里打开
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/35.jpg)
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/38.jpg)
 
 ### 2\. 确保自定义字段已正确注册
 
@@ -51,8 +63,12 @@ function my_register_custom_meta() {
 add_action('init', 'my_register_custom_meta');
 ```
 
-在functions函数文件里添加，将字段名称更换为自定义字段的名称![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240912155732.jpg)
+在functions函数文件里添加，将字段名称更换为自定义字段的名称
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/39.jpg)
 
 ### 3\. 在网站前端编辑时调用post meta
 
-在前端需要动态展示自定义字段内容处调用post meta，并选择自定义字段的名称即可 ![](http://www.smalljia.site/wp-content/uploads/2024/09/微信截图_20240912155948.jpg)
+在前端需要动态展示自定义字段内容处调用post meta，并选择自定义字段的名称即可
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/37.jpg)
