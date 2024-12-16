@@ -8,7 +8,7 @@
   top_background: https://pic.imgdb.cn/item/675a5cd7d0e0a243d4e28386.jpg
   essay_list:
     - content: 不知不觉就过完了整个夏天
-      date: 2021/12/11
+      date: 2021/11/25
       video:
         - https://player.bilibili.com/player.html?aid=591993504&bvid=BV1fq4y1B7ie&cid=448704632&p=1&autoplay=0
     - content: 终于搭建好自己的个人博客大纲了！
@@ -16,3 +16,8 @@
       address: 郑州
       from: SmallJia
       link: https://smalljialive.github.io
+    - content: 明知现状不对，没有能力改变的纠结心态
+      date: 2024/12/16
+      address: 郑州
+      from: SmallJia
+      
