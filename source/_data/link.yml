@@ -110,6 +110,11 @@
       avatar: https://www.fob123.com/favicon.ico
       descr: 外贸工具大全
       recommend: true 
+    - name: 香菇备忘录
+      link: https://siitake.cn/
+      avatar: https://siitake.cn/favicon.ico
+      descr: 香菇的个人导航网站
+      recommend: true    
 #分界线-------------------------------------------------优质博主      
 - class_name: 优质博主
   class_desc: 优质的网络博主
@@ -133,11 +138,7 @@
       avatar: https://aikenote.com/favicon.ico
       descr: 跨境谷歌各类知识 
       recommend: true   
-    - name: 香菇的小屋
-      link: https://siitake.cn/
-      avatar: https://siitake.cn/favicon.ico
-      descr: 香菇的个人分享小屋 
-      recommend: true   
+     
       
       
       
