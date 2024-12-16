@@ -13,10 +13,20 @@
       
       <categories>
           
-          <category> 问题大全 </category>
+          <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
+      
+        <tags>
+            
+            <tag> WordPress </tag>
+            
+            <tag> 网站建设 </tag>
+            
+        </tags>
       
     </entry>
     
