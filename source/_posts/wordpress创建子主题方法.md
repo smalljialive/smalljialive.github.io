@@ -1,15 +1,18 @@
 ---
 abbrlink: ''
 categories:
-- - 问题大全
+- - 代码细节
+- - WordPress
 comments: false
 cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/25.png
 date: '2024-11-28T09:47:53+08:00'
 id: 460
-tags: []
+tags:
+- WordPress
+- 网站建设
 title: Wordpress创建子主题方法
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/25.png
-updated: '2024-12-16T14:16:04.110+08:00'
+updated: '2024-12-16T16:00:17.664+08:00'
 ---
 使用WordPress建站时，常被建议使用**子主题**进行自定义，子主题是继承父主题功能、特性和代码的WordPress主题，无需直接修改父主题，以保留样式不被更新覆盖。
 
