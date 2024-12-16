@@ -127,8 +127,23 @@
       avatar: https://www.xueshengke.cn/favicon.ico
       descr: 小林同学个人主页 
       recommend: true  
+    - name: 艾克笔记
+      link: https://aikenote.com/
+      avatar: https://aikenote.com/favicon.ico
+      descr: 跨境谷歌各类知识 
+      recommend: true   
+    - name: 香菇的小屋
+      link: https://siitake.cn/
+      avatar: https://siitake.cn/favicon.ico
+      descr: 香菇的个人分享小屋 
+      recommend: true   
       
       
+      
+      
+      
+      
+#分界线-------------------------------------------------AI工具      
     - name: 海螺AI对话
       link: https://hailuoai.com/
       avatar: https://hailuoai.com/favicon.ico
