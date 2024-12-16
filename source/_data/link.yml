@@ -1,4 +1,5 @@
 #flexcard/anzhiyu/telescopic
+#分界线-------------------------------------------------优质导航
 - class_name: 优质导航
   class_desc: 优质的导航网站
   flink_style: anzhiyu
@@ -108,9 +109,17 @@
       link: https://www.fob123.com/
       avatar: https://www.fob123.com/favicon.ico
       descr: 外贸工具大全
-      recommend: true    
-      
-      
+      recommend: true 
+#分界线-------------------------------------------------优质博主      
+- class_name: 优质博主
+  flink_style: telescopic
+  hundredSuffix: ""
+  link_list:      
+    - name: 小林同学
+      link: https://www.xueshengke.cn/
+      avatar: https://www.xueshengke.cn/favicon.ico
+      descr: 小林同学个人主页 
+      recommend: true  
       
       
     - name: 海螺AI对话
