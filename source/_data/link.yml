@@ -112,6 +112,7 @@
       recommend: true 
 #分界线-------------------------------------------------优质博主      
 - class_name: 优质博主
+  class_desc: 优质的网络博主
   flink_style: telescopic
   hundredSuffix: ""
   link_list: 
@@ -144,8 +145,8 @@
       
       
 #分界线-------------------------------------------------AI工具      
-- class_name: 优质导航
-  class_desc: 优质的导航网站
+- class_name: AI工具
+  class_desc: 各类常用的AI工具
   flink_style: flexcard
   hundredSuffix: ""
   link_list:
@@ -158,11 +159,7 @@
       link: https://hexo.io/zh-tw/
       avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
       descr: 快速、简单且强大的网站框架
-    - name: anzhiyu主题
-      link: https://blog.anheyu.com/
-      avatar: https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg
-      descr: 个人博客主题推荐
-      siteshot: https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg
+    
     
 
 - class_name: 推荐博客
