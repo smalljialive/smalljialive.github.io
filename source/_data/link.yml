@@ -174,26 +174,50 @@
       avatar: https://www.xcole.cn/favicon.ico
       descr: AI绘画，文字图片生成绘画
       recommend: true
+#分界线-------------------------------------------------小工具站       
+- class_name: 小工具站
+  class_desc: 各种好用的小工具
+  flink_style: anzhiyu
+  hundredSuffix: ""
+  link_list:
+    - name: H5+C3+JS小组件
+      link: https://github.com/front-end-study-GoGoGo/template-html-css-js
+      avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico
+      descr: 国内外WordPress主题插件  
+      recommend: true
       
       
       
       
-- class_name: 推荐博客
+      
+      
+      
+#分界线-------------------------------------------------强大插件
+- class_name: 强大插件
+  class_desc: 各种插件与框架网站
   flink_style: telescopic
   hundredSuffix: ""
   link_list:
-    - name: 安知鱼
-      link: https://blog.anheyu.com/
-      avatar: https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg
-      descr: 生活明朗，万物可爱
-      siteshot: https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg
-      color: vip
-      tag: 技术
     - name: Hexo
       link: https://hexo.io/zh-tw/
       avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
       descr: 快速、简单且强大的网站框架  
-
+    - name: Freewplugin
+      link: https://www.freewplugin.com/
+      avatar: https://www.freewplugin.com/favicon.ico
+      descr: 国内外WordPress主题插件
+    - name: Freewplugin
+      link: https://www.freewplugin.com/
+      avatar: https://www.freewplugin.com/favicon.ico
+      descr: 国内外WordPress主题插件
+    
+    
+    
+    
+    
+    
+    
+    
 - class_name: 小伙伴
   class_desc: 那些人，那些事
   flink_style: anzhiyu
