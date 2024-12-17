@@ -564,6 +564,55 @@
       avatar: https://www.maccms.la/favicon.ico
       descr: 苹果影视采集站
       recommend: true    
+#分界线-------------------------------------------------资源大全
+- class_name: 资源大全
+  class_desc: 各类图片视频等资源网站
+  flink_style: anzhiyu
+  hundredSuffix: ""
+  link_list:
+    - name: 八零电子书下载
+      link: https://wap.txt80.com/
+      avatar: https://wap.txt80.com/favicon.ico
+      descr: 全本电子书下载网站
+      recommend: true
+    - name: 淘声
+      link: https://www.tosound.com/
+      avatar: https://www.tosound.com/favicon.ico
+      descr: 搜索全球声音资源
+      recommend: true  
+    - name: 矢量图标库
+      link: https://www.iconfont.cn/?spm=a313x.home_index.i3.d4d0a486a.56373a813ShSXn
+      avatar: https://www.iconfont.cn/favicon.ico
+      descr: 多种矢量图标，各种图标库集合
+      recommend: true    
+    - name: 3D影像生成
+      link: https://alteredqualia.com/
+      avatar: https://alteredqualia.com/favicon.ico
+      descr: 图片生成3D影像，多种场景3D模拟
+      recommend: true      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 #分界线-------------------------------------------------新奇网站       
 - class_name: 新奇网站
   class_desc: 网络上的各种新奇网站
