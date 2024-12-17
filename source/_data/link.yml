@@ -133,6 +133,11 @@
       avatar: https://www.xueshengke.cn/favicon.ico
       descr: 小林同学个人主页 
       recommend: true  
+    - name: Mengru的拾遗
+      link: https://mengru.space/
+      avatar: https://mengru.space/favicon.ico
+      descr: mengru的无聊人生拾遗
+      recommend: true    
     - name: 艾克笔记
       link: https://aikenote.com/
       avatar: https://aikenote.com/favicon.ico
@@ -483,7 +488,20 @@
       avatar: https://music.alang.run/favicon.ico
       descr: 在线听歌的音乐室
       recommend: true      
-      
+    - name: 抓鱼呀
+      link: https://www.zhuayuya.com/
+      avatar: https://www.zhuayuya.com/favicon.ico
+      descr: 抓鱼呀官方网站，聊天摸鱼
+      recommend: true  
+    - name: 抓鱼呀
+      link: https://www.zhuayuya.com/
+      avatar: https://www.zhuayuya.com/favicon.ico
+      descr: 抓鱼呀官方网站，聊天摸鱼
+      recommend: true
+    
+    
+    
+    
       
       
     
