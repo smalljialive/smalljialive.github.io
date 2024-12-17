@@ -356,8 +356,8 @@
       descr: AMZ123关键词工具箱，各种关键词小工具
       recommend: true   
 #分界线-------------------------------------------------视频解析       
-- class_name: 小工具站
-  class_desc: 各种好用的小工具
+- class_name: 视频工具
+  class_desc: 各类视频解析网站
   flink_style: anzhiyu
   hundredSuffix: ""
   link_list:
