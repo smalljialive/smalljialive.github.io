@@ -233,28 +233,111 @@
       avatar: https://www.cloudflare.com/favicon.ico
       descr: 域名DNS修改遮挡
       recommend: true
-    - name: 996工具箱
-      link: http://www.video996.com/
-      avatar: http://www.video996.com/favicon.ico
-      descr: 996工具箱，各种办公常用工具在线使用
-      recommend: true
     - name: Khroma
       link: http://khroma.co
       avatar: http://khroma.co/favicon.ico
       descr: Khroma多个颜色自定义搭配方案
+      recommend: true
+    - name: Sejda文件格式转换
+      link: https://www.sejda.com/compress-pdf
+      avatar: https://www.sejda.com/favicon.ico
+      descr: 文件格式转换，文件压缩
+      recommend: true
+    - name: Right-PDF文件格式转换
+      link: https://online.rightpdf.com/cn/home
+      avatar: https://online.rightpdf.com/favicon.ico
+      descr: PDF文件转换各类格式，PDF转Word
+      recommend: true
+    - name: 迅捷格式转换器
+      link: https://app.xunjiepdf.com/
+      avatar: https://app.xunjiepdf.com/favicon.ico
+      descr: 迅捷格式转换器，各类文件格式转换
+      recommend: true  
+    - name: 图片拼接工具
+      link: http://join-screenshots.zhanghai.me/
+      avatar: http://join-screenshots.zhanghai.me/favicon.ico
+      descr: 多张图片在线拼接
+      recommend: true
+    - name: 图片转格式
+      link: https://www.aconvert.com/cn/image/
+      avatar: https://www.aconvert.com/favicon.ico
+      descr: 图片格式转换
+      recommend: true
+    - name: 图片压缩    
+      link: https://tinypng.com/
+      avatar: https://tinypng.com/favicon.ico
+      descr: 图片在线压缩，图片格式转换
+      recommend: true
+    - name: 图片转表格   
+      link: https://web.baimiaoapp.com/
+      avatar: https://web.baimiaoapp.com/favicon.ico
+      descr: 实拍图片表格扫描为电子表格
+      recommend: true  
+    - name: 小马文字转声音    
+      link: http://peiyin.xiaomawenku.com
+      avatar: http://peiyin.xiaomawenku.com/favicon.ico
+      descr: 文案在线配音，文字转换各种声音
+      recommend: true  
+    - name: 996工具箱
+      link: http://www.video996.com/
+      avatar: http://www.video996.com/favicon.ico
+      descr: 996工具箱，各种办公常用工具在线使用
       recommend: true
     - name: 综合工具库
       link: https://tool.lu/nav/
       avatar: https://tool.lu/favicon.ico
       descr: 各类在线工具，设计系统，设计教程
       recommend: true
-    
-    
-    
-    
-      
-      
-      
+    - name: Bejson工具箱
+      link: https://www.bejson.com/ui/compress_img/
+      avatar: https://www.bejson.com/favicon.ico
+      descr: 网站前后端代码工具，图片压缩工具
+      recommend: true
+    - name: 菜鸟工具箱
+      link: https://www.jyshare.com/
+      avatar: https://www.jyshare.com/favicon.ico
+      descr: 菜鸟工具， 多种工具在线使用
+      recommend: true
+    - name: AMC工具箱
+      link: https://tkstart.com/
+      avatar: https://tkstart.com/favicon.ico
+      descr: AMC工具箱，小工具在线使用
+      recommend: true
+    - name: 七七工具箱
+      link: https://www.tool77.com/
+      avatar: https://www.tool77.com/favicon.ico
+      descr: 七七小工具在线使用
+      recommend: true
+    - name: 国际工具箱
+      link: https://www.toolfk.com/
+      avatar: https://www.toolfk.com/favicon.ico
+      descr: 外网各类小工具在线使用
+      recommend: true
+    - name: 孟坤工具箱
+      link: http://tool.mkblog.cn/
+      avatar: http://tool.mkblog.cn/favicon.ico
+      descr: 各种办公生活小工具在线使用
+      recommend: true
+    - name: 在线工具箱
+      link: http://www.atoolbox.net/
+      avatar: http://www.atoolbox.net/favicon.ico
+      descr: 各种在线小工具集合
+      recommend: true  
+    - name: 刘明野工具箱
+      link: https://tools.liumingye.cn/
+      avatar: https://tools.liumingye.cn/favicon.ico
+      descr: 图片，视频，音频小工具在线使用
+      recommend: true  
+    - name: 123工具箱
+      link: https://123apps.com/
+      avatar: https://123apps.com/favicon.ico
+      descr: 123工具箱小工具在线使用
+      recommend: true   
+    - name: AMZ123关键词工具箱
+      link: https://www.amz123.com/
+      avatar: https://www.amz123.com/favicon.ico
+      descr: AMZ123关键词工具箱，各种关键词小工具
+      recommend: true   
 #分界线-------------------------------------------------视频解析       
 - class_name: 小工具站
   class_desc: 各种好用的小工具
@@ -296,16 +379,21 @@
       avatar: https://dirpy.link/favicon.ico
       descr: Dirpy外媒视频解析
       recommend: true 
-    - name: Spapi
+    - name: Spapi视频解析
       link: https://api.spapi.cn/dsp.html
       avatar: https://api.spapi.cn/favicon.ico
       descr: Spapi短视频解析
       recommend: true 
-    - name: Imyshare
+    - name: Imyshare视频解析
       link: https://imyshare.com/parsevideo/
       avatar: https://imyshare.com/favicon.ico
       descr: Imyshare短视频解析
-      recommend: true   
+      recommend: true 
+    - name: Nopapp视频解析
+      link: http://www.nopapp.com/
+      avatar: http://www.nopapp.com/favicon.ico
+      descr: 视频在线解析网站
+      recommend: true  
     - name: 贝贝视频解析
       link: https://xbeibeix.com/bilibili/
       avatar: https://xbeibeix.com/favicon.ico
@@ -340,10 +428,14 @@
       link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
       avatar: https://www.gcertificationcourse.com/favicon.ico
       descr: 谷歌Ads技能题库，学习谷歌竞价
-    - name: 谷歌Ads题库
-      link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
-      avatar: https://www.gcertificationcourse.com/favicon.ico
-      descr: 谷歌Ads技能题库，学习谷歌竞价
+    - name: 谷歌Ads技能学堂
+      link: https://skillshop.exceedlms.com/student/catalog
+      avatar: https://skillshop.exceedlms.com/favicon.ico
+      descr: 谷歌Ads技能学堂，学习竞价操作
+    - name: 谷歌关键词排名检查器
+      link: https://www.thehoth.com/search-engine-rankings/
+      avatar: https://www.thehoth.com/favicon.ico
+      descr: 谷歌关键词排名检查器
       
       
       
