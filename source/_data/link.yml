@@ -500,7 +500,52 @@
       link: https://api.spapi.cn/
       avatar: https://api.spapi.cn/favicon.ico
       descr: 短视频在线解析
-      recommend: true      
+      recommend: true 
+    - name: Tweek影视采集站
+      link: https://dy.iweek.gay/
+      avatar: https://dy.iweek.gay/favicon.ico
+      descr: Tweek影视采集站
+      recommend: true   
+    - name: 乐视影视采集站
+      link: https://www.leshizy1.com/
+      avatar: https://www.leshizy1.com/favicon.ico
+      descr: 乐视影视采集站
+      recommend: true     
+    - name: 快看影视采集站
+      link: https://kuaikanzy.net/
+      avatar: https://kuaikanzy.net/favicon.ico
+      descr: 快看影视采集站
+      recommend: true   
+    - name: 非凡影视采集站
+      link: http://ffzy5.tv/
+      avatar: http://ffzy5.tv/favicon.ico
+      descr: 非凡影视采集站
+      recommend: true     
+    - name: 暴风影视采集站
+      link: https://publish.bfzy.tv/
+      avatar: https://publish.bfzy.tv/favicon.ico
+      descr: 暴风影视采集站
+      recommend: true   
+    - name: 赞片影视采集站
+      link: https://www.zanpiancms.com/
+      avatar: https://www.zanpiancms.com/favicon.ico
+      descr: 赞片影视采集站
+      recommend: true   
+    - name: 飞飞影视采集站
+      link: http://www.feifeicms.vip/portal.php
+      avatar: http://www.feifeicms.vip/favicon.ico
+      descr: 飞飞影视采集站
+      recommend: true    
+    - name: 海洋影视采集站
+      link: https://www.seacms.net/
+      avatar: https://www.seacms.net/favicon.ico
+      descr: 海洋影视采集站
+      recommend: true    
+    - name: 苹果影视采集站
+      link: https://www.maccms.la/
+      avatar: https://www.maccms.la/favicon.ico
+      descr: 苹果影视采集站
+      recommend: true    
 #分界线-------------------------------------------------新奇网站       
 - class_name: 新奇网站
   class_desc: 网络上的各种新奇网站
@@ -532,6 +577,11 @@
       avatar: https://asoftmurmur.com/favicon.ico
       descr: 自定义白噪音网站
       recommend: true
+    - name: Defonic白噪音
+      link: https://defonic.com/
+      avatar: https://defonic.com/favicon.ico
+      descr: 白噪音在线模拟，自定义各类白噪音
+      recommend: true   
     - name: 拉普达日记分享
       link: https://www.lapuda.org/
       avatar: https://www.lapuda.org/favicon.ico
@@ -567,11 +617,88 @@
       avatar: https://www.dbbqb.com/favicon.ico
       descr: 各种表情包搜索下载
       recommend: true   
-    - name: 表情包搜索
-      link: https://www.dbbqb.com/
-      avatar: https://www.dbbqb.com/favicon.ico
-      descr: 各种表情包搜索下载
+    - name: 租房搜索地图
+      link: https://house-map.cn/#/
+      avatar: https://house-map.cn/favicon.ico
+      descr: 地图找房，低价查询各地出租房
       recommend: true     
+    - name: 四季声音模拟
+      link: https://rainyscope.com/
+      avatar: https://rainyscope.com/favicon.ico
+      descr: 一年四季环境音模拟，下雨天声音模拟
+      recommend: true   
+    - name: 雨天声音模拟
+      link: https://www.rainymood.com/
+      avatar: https://www.rainymood.com/favicon.ico
+      descr: 雨天声音模拟，自由模拟各类雨天环境音
+      recommend: true     
+    - name: 吐司网
+      link: https://www.tucia.net/
+      avatar: https://www.tucia.net/favicon.ico
+      descr: 全国摄影师自由上传拍摄图片，制作人物肖像画
+      recommend: true   
+    - name: 流星雨
+      link: https://www.meteorshowers.org/
+      avatar: https://www.meteorshowers.org/favicon.ico
+      descr: 太空各星座模拟流星雨
+      recommend: true   
+    - name: 乐器模拟
+      link: https://learningmusic.ableton.com/ 
+      avatar: https://learningmusic.ableton.com/favicon.ico
+      descr: 各类乐器在线模拟，自由组合创作乐曲
+      recommend: true   
+    - name: 镜像炫光生成
+      link: http://weavesilk.com/ 
+      avatar: http://weavesilk.com/favicon.ico
+      descr: 鼠标点击滑动，自由创作镜像炫光图片
+      recommend: true     
+    - name: 人物卡通形象
+      link: https://toonme.com/result
+      avatar: https://toonme.com/favicon.ico
+      descr: 图片生成卡通人物形象，自由创作人物卡通形象
+      recommend: true   
+    - name: 文案狗谐音
+      link: http://www.wenangou.com/
+      avatar: http://www.wenangou.com/favicon.ico
+      descr: 文案生成藏头诗，各类谐音
+      recommend: true    
+    - name: 解压网站
+      link: https://aidn.jp/mikutap/
+      avatar: https://aidn.jp/favicon.ico
+      descr: 鼠标点击在线解压网站
+      recommend: true   
+    - name: SCP基金会
+      link: https://scp-wiki-cn.wikidot.com/
+      avatar: https://scp-wiki-cn.wikidot.com/favicon.ico
+      descr: SCP基金会，全球科幻迷基地
+      recommend: true  
+    - name: 纪妖
+      link: http://www.cbaigui.com/
+      avatar: http://www.cbaigui.com/favicon.ico
+      descr: 中国各类妖怪资料档案
+      recommend: true  
+    - name: 纪妖
+      link: http://www.cbaigui.com/
+      avatar: http://www.cbaigui.com/favicon.ico
+      descr: 中国各类妖怪资料档案
+      recommend: true
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       
       
       
