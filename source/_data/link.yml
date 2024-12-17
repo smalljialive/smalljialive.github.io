@@ -238,6 +238,73 @@
       avatar: http://www.video996.com/favicon.ico
       descr: 996工具箱，各种办公常用工具在线使用
       recommend: true
+    - name: Khroma
+      link: http://khroma.co
+      avatar: http://khroma.co/favicon.ico
+      descr: Khroma多个颜色自定义搭配方案
+      recommend: true
+#分界线-------------------------------------------------视频解析       
+- class_name: 小工具站
+  class_desc: 各种好用的小工具
+  flink_style: anzhiyu
+  hundredSuffix: ""
+  link_list:
+    - name: Video Downloader
+      link: http://fetchvideo.com/
+      avatar: http://fetchvideo.com/favicon.ico
+      descr: Video Downloader外媒各类网站视频下载
+      recommend: true
+    - name: Clip
+      link: http://www.clipconverter.cc/
+      avatar: http://www.clipconverter.cc/favicon.ico
+      descr: Clip-外媒视频解析，YouTube视频解析
+      recommend: true    
+    - name: Y2-mate
+      link: https://www.y2mate.com/
+      avatar: https://www.y2mate.com/favicon.ico
+      descr: Y2-mate外媒视频解析
+      recommend: true  
+    - name: Savideo
+      link: https://www.savido.net/
+      avatar: https://www.savido.net/favicon.ico
+      descr: Savideo外媒视频解析
+      recommend: true  
+    - name: 10-Downloader
+      link: https://pickvideo.net/
+      avatar: https://pickvideo.net/favicon.ico
+      descr: 10downloader外媒视频解析
+      recommend: true  
+    - name: YT-Mp3
+      link: https://ytmp3.cc
+      avatar: https://ytmp3.cc/favicon.ico
+      descr: Ytmp3外媒视频解析
+      recommend: true 
+    - name: Dirpy
+      link: https://dirpy.link/
+      avatar: https://dirpy.link/favicon.ico
+      descr: Dirpy外媒视频解析
+      recommend: true 
+    - name: Spapi
+      link: https://api.spapi.cn/dsp.html
+      avatar: https://api.spapi.cn/favicon.ico
+      descr: Spapi短视频解析
+      recommend: true 
+    - name: Imyshare
+      link: https://imyshare.com/parsevideo/
+      avatar: https://imyshare.com/favicon.ico
+      descr: Imyshare短视频解析
+      recommend: true   
+    - name: 贝贝视频解析
+      link: https://xbeibeix.com/bilibili/
+      avatar: https://xbeibeix.com/favicon.ico
+      descr: 贝贝B站视频解析，B站视频在线解析
+      recommend: true  
+      
+      
+      
+      
+      
+    
     
     
     
@@ -273,7 +340,7 @@
       
       
     
-#分界线-------------------------------------------------强大插件    
+#分界线-------------------------------------------------游戏大全    
 - class_name: 小伙伴
   class_desc: 那些人，那些事
   flink_style: anzhiyu
