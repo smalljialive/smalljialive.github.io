@@ -241,6 +241,14 @@
       link: https://www.vps234.com/
       avatar: https://www.vps234.com/favicon.ico
       descr: Vps服务器评测，多个国家服务器  
+    - name: 极速云机场
+      link: https://512.jsy.lol
+      avatar: https://512.jsy.lol/favicon.ico
+      descr: 极速云机场官网，低价每月10块机场节点
+    - name: 贝贝云机场
+      link: https://beibeicloud.shop/
+      avatar: https://beibeicloud.shop/favicon.ico
+      descr: 低价机场节点，贝贝云低价机场
 #分界线-------------------------------------------------小工具站       
 - class_name: 小工具站
   class_desc: 各种好用的小工具
@@ -272,6 +280,16 @@
       avatar: http://khroma.co/favicon.ico
       descr: Khroma多个颜色自定义搭配方案
       recommend: true
+    - name: 盘多多
+      link: http://www.panduoduo.top/
+      avatar: http://www.panduoduo.top/favicon.ico
+      descr: 网盘内容在线检索下载
+      recommend: true  
+    - name: 简历制作
+      link: https://www.polebrief.com/
+      avatar: https://www.polebrief.com/favicon.ico
+      descr: 个人简易版简历在线制作
+      recommend: true    
     - name: Sejda文件格式转换
       link: https://www.sejda.com/compress-pdf
       avatar: https://www.sejda.com/favicon.ico
@@ -677,13 +695,21 @@
       avatar: http://www.cbaigui.com/favicon.ico
       descr: 中国各类妖怪资料档案
       recommend: true  
-    - name: 纪妖
-      link: http://www.cbaigui.com/
-      avatar: http://www.cbaigui.com/favicon.ico
-      descr: 中国各类妖怪资料档案
+    - name: Wk小说阅读器
+      link: http://www.bloguan.com/?id=596#commentszbplb
+      avatar: http://www.bloguan.com/favicon.ico
+      descr: WK阅读器在线教程及下载
       recommend: true
-      
-      
+    - name: Wallhaven壁纸网
+      link: https://wallhaven.cc/
+      avatar: https://wallhaven.cc/favicon.ico
+      descr: 电脑手机平板各类壁纸下载
+      recommend: true  
+    - name: 搜图神器
+      link: https://www.soutushenqi.com
+      avatar: https://www.soutushenqi.com/favicon.ico
+      descr: 壁纸，图片素材，全网检索下载
+      recommend: true   
       
       
       
