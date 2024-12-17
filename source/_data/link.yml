@@ -404,7 +404,11 @@
       avatar: https://xbeibeix.com/favicon.ico
       descr: 贝贝B站视频解析，B站视频在线解析
       recommend: true  
-      
+    - name: 短视频解析
+      link: https://api.spapi.cn/
+      avatar: https://api.spapi.cn/favicon.ico
+      descr: 短视频在线解析
+      recommend: true    
       
       
       
