@@ -416,6 +416,14 @@
   flink_style: telescopic
   hundredSuffix: ""
   link_list:
+    - name: 谷歌Ads
+      link: https://ads.google.com/
+      avatar: https://ads.google.com/favicon.ico
+      descr: 谷歌竞价官网
+    - name: 阿里国际站
+      link: https://en.alibaba.com/
+      avatar: https://en.alibaba.com/favicon.ico
+      descr: 阿里巴巴国际站  
     - name: 谷歌分析-GA4
       link: https://analytics.google.com/
       avatar: https://analytics.google.com/favicon.ico
@@ -424,6 +432,10 @@
       link: https://tagmanager.google.com/
       avatar: https://tagmanager.google.com/favicon.ico
       descr: 谷歌代码管理器，管理网站关联代码
+    - name: 谷歌搜索控制台
+      link: https://search.google.com/
+      avatar: https://search.google.com/favicon.ico
+      descr: 谷歌搜索控制台
     - name: 谷歌Ads题库
       link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
       avatar: https://www.gcertificationcourse.com/favicon.ico
@@ -436,7 +448,14 @@
       link: https://www.thehoth.com/search-engine-rankings/
       avatar: https://www.thehoth.com/favicon.ico
       descr: 谷歌关键词排名检查器
-      
+    - name: 各渠道关键词获取
+      link: http://keywordtool.io
+      avatar: http://keywordtool.io/favicon.ico
+      descr: 外媒各渠道关键词获取 
+    - name: 全球网站分析
+      link: https://marketfinder.thinkwithgoogle.com/intl/zh-CN_cn
+      avatar: https://marketfinder.thinkwithgoogle.com/favicon.ico
+      descr: 全球各类网站流量热度分析
       
       
       
