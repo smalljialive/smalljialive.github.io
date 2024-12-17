@@ -411,6 +411,10 @@
       link: https://smallseotools.com/zh/
       avatar: https://smallseotools.com/favicon.ico
       descr: SEO工具大全   
+    - name: 搜索模拟器
+      link: http://isearchfrom.com/
+      avatar: http://isearchfrom.com/favicon.ico
+      descr: 模拟世界各地进行谷歌搜索  
     - name: 谷歌Ads题库
       link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
       avatar: https://www.gcertificationcourse.com/favicon.ico
@@ -533,14 +537,53 @@
       avatar: https://www.lapuda.org/favicon.ico
       descr: 不能说的日记
       recommend: true
-    - name: 拉普达日记分享
-      link: https://www.lapuda.org/
-      avatar: https://www.lapuda.org/favicon.ico
-      descr: 不能说的日记
+    - name: 梦境分享网
+      link: http://yume.ly/
+      avatar: http://yume.ly/favicon.ico
+      descr: 在线分享每日梦境
       recommend: true
+    - name: 窗外美景
+      link: https://window-swap.com/
+      avatar: https://window-swap.com/favicon.ico
+      descr: 推开世界各地的窗户
+      recommend: true  
+    - name: 日本车站
+      link: https://seaside-station.com/
+      avatar: https://seaside-station.com/favicon.ico
+      descr: 日本海边车站在线看
+      recommend: true   
+    - name: 天际线全球摄像头
+      link: https://www.skylinewebcams.com/
+      avatar: https://www.skylinewebcams.com/favicon.ico
+      descr: 世界各地在线查看
+      recommend: true
+    - name: 在线投喂金鱼
+      link: https://goldfishies.com/
+      avatar: https://goldfishies.com/favicon.ico
+      descr: 在线投喂金鱼
+      recommend: true  
+    - name: 表情包搜索
+      link: https://www.dbbqb.com/
+      avatar: https://www.dbbqb.com/favicon.ico
+      descr: 各种表情包搜索下载
+      recommend: true   
+    - name: 表情包搜索
+      link: https://www.dbbqb.com/
+      avatar: https://www.dbbqb.com/favicon.ico
+      descr: 各种表情包搜索下载
+      recommend: true     
       
       
-    
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 #分界线-------------------------------------------------知识学堂    
 - class_name: 知识学堂
   class_desc: 技能知识在线学习
