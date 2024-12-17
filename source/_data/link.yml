@@ -436,6 +436,10 @@
       link: https://search.google.com/
       avatar: https://search.google.com/favicon.ico
       descr: 谷歌搜索控制台
+    - name: 网站速度洞察
+      link: https://pagespeed.web.dev/
+      avatar: https://pagespeed.web.dev/favicon.ico
+      descr: 网站速度洞察  
     - name: 谷歌Ads题库
       link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
       avatar: https://www.gcertificationcourse.com/favicon.ico
