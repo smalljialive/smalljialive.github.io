@@ -243,6 +243,18 @@
       avatar: http://khroma.co/favicon.ico
       descr: Khroma多个颜色自定义搭配方案
       recommend: true
+    - name: 综合工具库
+      link: https://tool.lu/nav/
+      avatar: https://tool.lu/favicon.ico
+      descr: 各类在线工具，设计系统，设计教程
+      recommend: true
+    
+    
+    
+    
+      
+      
+      
 #分界线-------------------------------------------------视频解析       
 - class_name: 小工具站
   class_desc: 各种好用的小工具
