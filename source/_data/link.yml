@@ -153,6 +153,11 @@
       avatar: https://aikenote.com/favicon.ico
       descr: 跨境谷歌各类知识 
       recommend: true
+    - name: 利民工作室
+      link: https://www.limin.studio/
+      avatar: https://www.limin.studio/favicon.ico
+      descr: 各类信息教程
+      recommend: true  
     - name: 所有博客
       link: https://blogwe.com/
       avatar: https://blogwe.com/favicon.ico
