@@ -193,6 +193,10 @@
       link: https://www.freewplugin.com/
       avatar: https://www.freewplugin.com/favicon.ico
       descr: 国内外WordPress主题插件
+    - name: Bootstrap icon
+      link: https://icons.bootcss.com/
+      avatar: https://icons.bootcss.com/favicon.ico
+      descr: Bootstrap官方图标库  
     - name: Prowhost
       link: https://prowhost.com/
       avatar: https://prowhost.com/favicon.ico
@@ -221,7 +225,7 @@
     - name: H5+C3+JS小组件
       link: https://github.com/front-end-study-GoGoGo/template-html-css-js
       avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico
-      descr: 国内外WordPress主题插件  
+      descr: 各类代码小组件源码库
       recommend: true
     - name: 机场节点
       link: https://github.com/githubvpn007/v2rayNvpn
