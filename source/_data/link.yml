@@ -302,6 +302,11 @@
       avatar: https://tinypng.com/favicon.ico
       descr: 图片在线压缩，图片格式转换
       recommend: true
+    - name: Logo生成    
+      link: https://www.logosc.cn/start
+      avatar: https://www.logosc.cn/favicon.ico
+      descr: 在线生成logo，可选多种方案
+      recommend: true  
     - name: 图片转表格   
       link: https://web.baimiaoapp.com/
       avatar: https://web.baimiaoapp.com/favicon.ico
@@ -508,15 +513,31 @@
       avatar: https://www.zhuayuya.com/favicon.ico
       descr: 抓鱼呀官方网站，聊天摸鱼
       recommend: true  
-    - name: 抓鱼呀
-      link: https://www.zhuayuya.com/
-      avatar: https://www.zhuayuya.com/favicon.ico
-      descr: 抓鱼呀官方网站，聊天摸鱼
+    - name: 有意思吧
+      link: https://www.youyisi8.com/
+      avatar: https://www.youyisi8.com/favicon.ico
+      descr: 一个分享各种信息的图文网站
       recommend: true
-    
-    
-    
-    
+    - name: 蒸汽机网站
+      link: https://magiconch.com/vaporwave/
+      avatar: https://magiconch.com/vaporwave/favicon.ico
+      descr: 90年代的色彩像素网站
+      recommend: true
+    - name: 白噪音网站
+      link: https://asoftmurmur.com/
+      avatar: https://asoftmurmur.com/favicon.ico
+      descr: 自定义白噪音网站
+      recommend: true
+    - name: 拉普达日记分享
+      link: https://www.lapuda.org/
+      avatar: https://www.lapuda.org/favicon.ico
+      descr: 不能说的日记
+      recommend: true
+    - name: 拉普达日记分享
+      link: https://www.lapuda.org/
+      avatar: https://www.lapuda.org/favicon.ico
+      descr: 不能说的日记
+      recommend: true
       
       
     
