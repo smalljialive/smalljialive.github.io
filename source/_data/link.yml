@@ -548,6 +548,34 @@
       avatar: https://www.woshipm.com/favicon.ico
       descr: 产品经理课程在线学习，产品经理思路
       recommend: true 
-    
-    
-    
+#分界线-------------------------------------------------游戏大全      
+- class_name: 游戏大全
+  class_desc: 各类单机3A游戏大全
+  flink_style: flexcard
+  hundredSuffix: ""
+  link_list: 
+    - name: Koyso单机游戏库
+      link: https://koyso.com/
+      avatar: https://koyso.com/favicon.ico
+      descr: 大型3A单机游戏下载
+      recommend: true 
+    - name: Switch游戏库
+      link: https://switch520.com/
+      avatar: https://switch520.com/favicon.ico
+      descr: Switch游戏下载
+      recommend: true      
+    - name:  Steam游戏库
+      link: https://steamunlocked.net/
+      avatar: https://steamunlocked.net/favicon.ico
+      descr: Steam游戏下载（挂梯子）
+      recommend: true
+    - name:  GBT游戏库
+      link: http://gbtgame.ysepan.com/ 
+      avatar: http://gbtgame.ysepan.com/favicon.ico
+      descr: GBT游戏下载
+      recommend: true
+    - name:  资源避难所
+      link: https://www.flysheep6.com/
+      avatar: https://www.flysheep6.com/favicon.ico
+      descr: 全网单机游戏资源库
+      recommend: true  
