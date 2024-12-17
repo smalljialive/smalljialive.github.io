@@ -137,14 +137,7 @@
       link: https://aikenote.com/
       avatar: https://aikenote.com/favicon.ico
       descr: 跨境谷歌各类知识 
-      recommend: true   
-     
-      
-      
-      
-      
-      
-      
+      recommend: true  
 #分界线-------------------------------------------------AI工具      
 - class_name: AI工具
   class_desc: 各类常用的AI工具
@@ -156,13 +149,35 @@
       avatar: https://hailuoai.com/favicon.ico
       descr: AI全网搜索对话写文 
       recommend: true
-    - name: Hexo
-      link: https://hexo.io/zh-tw/
-      avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
-      descr: 快速、简单且强大的网站框架
-    
-    
-
+    - name: AIchatOs2
+      link: https://chat18.aichatos68.com/
+      avatar: https://chat18.aichatos68.com/favicon.ico
+      descr: AI生成文章 
+      recommend: true
+    - name: ChatGpt
+      link: https://chatgpt.com/
+      avatar: https://chatgpt.com/favicon.ico
+      descr: ChatGpt官网，AI对话
+      recommend: true  
+    - name: OpenAi对话模型
+      link: https://openai.com/
+      avatar: https://openai.com/favicon.ico
+      descr: 开放式API接口，成长训练模型
+      recommend: true
+    - name: ChatGpt国内自制网站
+      link: https://chatgai.lovepor.cn/
+      avatar: https://chatgai.lovepor.cn/favicon.ico
+      descr: ChatGpt国内自制网站，多种AI对话工具
+      recommend: true
+    - name: AI生成图片
+      link: https://www.xcole.cn/draw/opt?type=ttp
+      avatar: https://www.xcole.cn/favicon.ico
+      descr: AI绘画，文字图片生成绘画
+      recommend: true
+      
+      
+      
+      
 - class_name: 推荐博客
   flink_style: telescopic
   hundredSuffix: ""
@@ -174,6 +189,10 @@
       siteshot: https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg
       color: vip
       tag: 技术
+    - name: Hexo
+      link: https://hexo.io/zh-tw/
+      avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
+      descr: 快速、简单且强大的网站框架  
 
 - class_name: 小伙伴
   class_desc: 那些人，那些事
