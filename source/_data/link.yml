@@ -579,3 +579,38 @@
       avatar: https://www.flysheep6.com/favicon.ico
       descr: 全网单机游戏资源库
       recommend: true  
+#分界线-------------------------------------------------影视仓库    
+- class_name: 影视仓库
+  class_desc: 电影电视剧在线观看
+  flink_style: anzhiyu
+  hundredSuffix: ""
+  link_list:
+    - name: 每日电影推荐
+      link: https://www.cikeee.com/
+      avatar: https://www.cikeee.com/favicon.ico
+      descr: 此刻每日电影推荐
+      recommend: true   
+    - name: 臭蛋蛋影视
+      link: https://cddys.com/
+      avatar: https://cddys.com/favicon.ico
+      descr: 臭蛋蛋影视，多种资源在线观看
+      recommend: true     
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
