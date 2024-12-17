@@ -154,6 +154,11 @@
       avatar: https://chat18.aichatos68.com/favicon.ico
       descr: AI生成文章 
       recommend: true
+    - name: AI写作猫
+      link: https://xiezuocat.com/
+      avatar: https://xiezuocat.com/favicon.ico
+      descr: AI量子速写
+      recommend: true  
     - name: ChatGpt
       link: https://chatgpt.com/
       avatar: https://chatgpt.com/favicon.ico
@@ -440,6 +445,10 @@
       link: https://pagespeed.web.dev/
       avatar: https://pagespeed.web.dev/favicon.ico
       descr: 网站速度洞察  
+    - name: SEO工具大全
+      link: https://smallseotools.com/zh/
+      avatar: https://smallseotools.com/favicon.ico
+      descr: SEO工具大全   
     - name: 谷歌Ads题库
       link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
       avatar: https://www.gcertificationcourse.com/favicon.ico
