@@ -842,8 +842,8 @@
       descr: 各种表情包搜索下载
       recommend: true   
     - name: 租房搜索地图
-      link: https://house-map.cn/#/
-      avatar: https://house-map.cn/favicon.ico
+      link: https://house2048.cn/app/house-map/
+      avatar: https://house2048.cn/app/house-map/favicon.ico
       descr: 地图找房，低价查询各地出租房
       recommend: true     
     - name: 四季声音模拟
