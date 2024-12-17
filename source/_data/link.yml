@@ -221,9 +221,6 @@
       link: https://www.vps234.com/
       avatar: https://www.vps234.com/favicon.ico
       descr: Vps服务器评测，多个国家服务器  
-    
-      
-      
 #分界线-------------------------------------------------小工具站       
 - class_name: 小工具站
   class_desc: 各种好用的小工具
@@ -355,6 +352,60 @@
       avatar: https://www.amz123.com/favicon.ico
       descr: AMZ123关键词工具箱，各种关键词小工具
       recommend: true   
+#分界线-------------------------------------------------运营专属      
+- class_name: 运营专属
+  class_desc: 运营专属的各种网站
+  flink_style: telescopic
+  hundredSuffix: ""
+  link_list:
+    - name: 谷歌Ads
+      link: https://ads.google.com/
+      avatar: https://ads.google.com/favicon.ico
+      descr: 谷歌竞价官网
+    - name: 阿里国际站
+      link: https://en.alibaba.com/
+      avatar: https://en.alibaba.com/favicon.ico
+      descr: 阿里巴巴国际站  
+    - name: 谷歌分析-GA4
+      link: https://analytics.google.com/
+      avatar: https://analytics.google.com/favicon.ico
+      descr: 谷歌官方数据分析网站-GA4        
+    - name: 谷歌代码管理器
+      link: https://tagmanager.google.com/
+      avatar: https://tagmanager.google.com/favicon.ico
+      descr: 谷歌代码管理器，管理网站关联代码
+    - name: 谷歌搜索控制台
+      link: https://search.google.com/
+      avatar: https://search.google.com/favicon.ico
+      descr: 谷歌搜索控制台
+    - name: 网站速度洞察
+      link: https://pagespeed.web.dev/
+      avatar: https://pagespeed.web.dev/favicon.ico
+      descr: 网站速度洞察  
+    - name: SEO工具大全
+      link: https://smallseotools.com/zh/
+      avatar: https://smallseotools.com/favicon.ico
+      descr: SEO工具大全   
+    - name: 谷歌Ads题库
+      link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
+      avatar: https://www.gcertificationcourse.com/favicon.ico
+      descr: 谷歌Ads技能题库，学习谷歌竞价
+    - name: 谷歌Ads技能学堂
+      link: https://skillshop.exceedlms.com/student/catalog
+      avatar: https://skillshop.exceedlms.com/favicon.ico
+      descr: 谷歌Ads技能学堂，学习竞价操作
+    - name: 谷歌关键词排名检查器
+      link: https://www.thehoth.com/search-engine-rankings/
+      avatar: https://www.thehoth.com/favicon.ico
+      descr: 谷歌关键词排名检查器
+    - name: 各渠道关键词获取
+      link: http://keywordtool.io
+      avatar: http://keywordtool.io/favicon.ico
+      descr: 外媒各渠道关键词获取 
+    - name: 全球网站分析
+      link: https://marketfinder.thinkwithgoogle.com/intl/zh-CN_cn
+      avatar: https://marketfinder.thinkwithgoogle.com/favicon.ico
+      descr: 全球各类网站流量热度分析
 #分界线-------------------------------------------------视频解析       
 - class_name: 视频工具
   class_desc: 各类视频解析网站
@@ -420,90 +471,83 @@
       link: https://api.spapi.cn/
       avatar: https://api.spapi.cn/favicon.ico
       descr: 短视频在线解析
-      recommend: true    
-      
-      
-      
-      
-    
-    
-    
-    
-    
-
-#分界线-------------------------------------------------运营专属      
-- class_name: 运营专属
-  class_desc: 运营专属的各种网站
+      recommend: true      
+#分界线-------------------------------------------------新奇网站       
+- class_name: 新奇网站
+  class_desc: 网络上的各种新奇网站
   flink_style: telescopic
   hundredSuffix: ""
   link_list:
-    - name: 谷歌Ads
-      link: https://ads.google.com/
-      avatar: https://ads.google.com/favicon.ico
-      descr: 谷歌竞价官网
-    - name: 阿里国际站
-      link: https://en.alibaba.com/
-      avatar: https://en.alibaba.com/favicon.ico
-      descr: 阿里巴巴国际站  
-    - name: 谷歌分析-GA4
-      link: https://analytics.google.com/
-      avatar: https://analytics.google.com/favicon.ico
-      descr: 谷歌官方数据分析网站-GA4        
-    - name: 谷歌代码管理器
-      link: https://tagmanager.google.com/
-      avatar: https://tagmanager.google.com/favicon.ico
-      descr: 谷歌代码管理器，管理网站关联代码
-    - name: 谷歌搜索控制台
-      link: https://search.google.com/
-      avatar: https://search.google.com/favicon.ico
-      descr: 谷歌搜索控制台
-    - name: 网站速度洞察
-      link: https://pagespeed.web.dev/
-      avatar: https://pagespeed.web.dev/favicon.ico
-      descr: 网站速度洞察  
-    - name: SEO工具大全
-      link: https://smallseotools.com/zh/
-      avatar: https://smallseotools.com/favicon.ico
-      descr: SEO工具大全   
-    - name: 谷歌Ads题库
-      link: https://www.gcertificationcourse.com/google-ads-search-certification-answers/
-      avatar: https://www.gcertificationcourse.com/favicon.ico
-      descr: 谷歌Ads技能题库，学习谷歌竞价
-    - name: 谷歌Ads技能学堂
-      link: https://skillshop.exceedlms.com/student/catalog
-      avatar: https://skillshop.exceedlms.com/favicon.ico
-      descr: 谷歌Ads技能学堂，学习竞价操作
-    - name: 谷歌关键词排名检查器
-      link: https://www.thehoth.com/search-engine-rankings/
-      avatar: https://www.thehoth.com/favicon.ico
-      descr: 谷歌关键词排名检查器
-    - name: 各渠道关键词获取
-      link: http://keywordtool.io
-      avatar: http://keywordtool.io/favicon.ico
-      descr: 外媒各渠道关键词获取 
-    - name: 全球网站分析
-      link: https://marketfinder.thinkwithgoogle.com/intl/zh-CN_cn
-      avatar: https://marketfinder.thinkwithgoogle.com/favicon.ico
-      descr: 全球各类网站流量热度分析
-      
-      
-      
+    - name: 一起听歌吧
+      link: https://music.alang.run/
+      avatar: https://music.alang.run/favicon.ico
+      descr: 在线听歌的音乐室
+      recommend: true      
       
       
       
     
-#分界线-------------------------------------------------游戏大全    
-- class_name: 小伙伴
-  class_desc: 那些人，那些事
+#分界线-------------------------------------------------知识学堂    
+- class_name: 知识学堂
+  class_desc: 技能知识在线学习
   flink_style: anzhiyu
   hundredSuffix: ""
   link_list:
-    - name: 安知鱼
-      link: https://blog.anheyu.com/
-      avatar: https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg
-      descr: 生活明朗，万物可爱
+    - name: 在线大学
+      link: https://www.edx.org/
+      avatar: https://www.edx.org/favicon.ico
+      descr: 大学课程在线学习，多种专业课知识在线学习
       recommend: true
-      
-      
-      
- 
+    - name: 历史学堂
+      link: https://www.allhistory.com/
+      avatar: https://www.allhistory.com/favicon.ico
+      descr: 世界编年史，历史进程学习
+      recommend: true  
+    - name: 语言学堂
+      link: https://www.duolingo.cn
+      avatar: https://www.duolingo.cn/favicon.ico
+      descr: 在线学习各类语言，外语，粤语学习
+      recommend: true   
+    - name: 英语学堂
+      link: http://www.goethe-verlag.com
+      avatar: http://www.goethe-verlag.com/favicon.ico
+      descr: 在线学习外语
+      recommend: true    
+    - name: 菜鸟编程
+      link: https://www.runoob.com/
+      avatar: https://www.runoob.com/favicon.ico
+      descr: 前后端编程代码在线学习
+      recommend: true 
+    - name: 吴师兄算法
+      link: https://www.cxyxiaowu.com/
+      avatar: https://www.cxyxiaowu.com/favicon.ico
+      descr: 计算机算法在线学习
+      recommend: true 
+    - name: 科技大学
+      link: https://www.udacity.com/
+      avatar: https://www.udacity.com/favicon.ico
+      descr: 人工智能编程代码逻辑学习
+      recommend: true 
+    - name: 蓝铅笔手绘
+      link: https://www.lanqb.com/
+      avatar: https://www.lanqb.com/favicon.ico
+      descr: 蓝铅笔手绘学习，大佬在线教学
+      recommend: true 
+    - name: WPS学堂
+      link: https://www.wps.cn/learning
+      avatar: https://www.wps.cn/favicon.ico
+      descr: WPS各类知识在线学习
+      recommend: true 
+    - name: Adobe学堂
+      link: https://www.doyoudo.com/
+      avatar: https://www.doyoudo.com/favicon.ico
+      descr: Adobe各类软件学习，PS,PR,AE,CAD,C4D在线学习
+      recommend: true 
+    - name: 产品经理学堂
+      link: https://www.woshipm.com/
+      avatar: https://www.woshipm.com/favicon.ico
+      descr: 产品经理课程在线学习，产品经理思路
+      recommend: true 
+    
+    
+    
