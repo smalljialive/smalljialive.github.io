@@ -189,10 +189,18 @@
       link: https://hexo.io/zh-tw/
       avatar: https://d33wubrfki0l68.cloudfront.net/6657ba50e702d84afb32fe846bed54fba1a77add/827ae/logo.svg
       descr: 快速、简单且强大的网站框架  
+    - name: WordPress
+      link: https://wordpress.org/
+      avatar: https://wordpress.org/favicon.ico
+      descr: WordPress网站框架  
     - name: Freewplugin
       link: https://www.freewplugin.com/
       avatar: https://www.freewplugin.com/favicon.ico
       descr: 国内外WordPress主题插件
+    - name: WPTD
+      link: https://www.wpthemedetector.com/
+      avatar: https://www.wpthemedetector.com/favicon.ico
+      descr: 网站wp主题插件查询  
     - name: Bootstrap icon
       link: https://icons.bootcss.com/
       avatar: https://icons.bootcss.com/favicon.ico
