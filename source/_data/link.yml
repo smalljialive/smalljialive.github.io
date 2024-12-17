@@ -128,6 +128,16 @@
       siteshot: https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg
       color: vip
       tag: 技术
+    - name: 猫奴日记
+      link: https://mao.nu/
+      avatar: https://mao.nu/favicon.ico
+      descr: 猫奴日记 
+      recommend: true   
+    - name: 孙老四的博客
+      link: https://lao.si/
+      avatar: https://lao.si/favicon.ico
+      descr: 孙老四的每日生活记录 
+      recommend: true  
     - name: 小林同学
       link: https://www.xueshengke.cn/
       avatar: https://www.xueshengke.cn/favicon.ico
@@ -142,7 +152,12 @@
       link: https://aikenote.com/
       avatar: https://aikenote.com/favicon.ico
       descr: 跨境谷歌各类知识 
-      recommend: true  
+      recommend: true
+    - name: 所有博客
+      link: https://blogwe.com/
+      avatar: https://blogwe.com/favicon.ico
+      descr: 优质博客收录网站 
+      recommend: true    
 #分界线-------------------------------------------------AI工具      
 - class_name: AI工具
   class_desc: 各类常用的AI工具
