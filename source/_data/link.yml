@@ -260,16 +260,31 @@
       avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico
       descr: 各类代码小组件源码库
       recommend: true
-    - name: 机场节点
-      link: https://github.com/githubvpn007/v2rayNvpn
-      avatar: https://github.com/githubvpn007/favicon.ico
-      descr: 国内外WordPress主题插件  
+    - name: 小飞兔网站下载器
+      link: https://www.xftsoft.com/
+      avatar: https://www.xftsoft.com/favicon.ico
+      descr: 小飞兔网站下载器，网站仿站准用下载器
+      recommend: true  
+    - name: CSS3模版站
+      link: https://www.free-css.com/free-css-templates?start=60
+      avatar: https://www.free-css.com/favicon.ico
+      descr: 网站建站各类模块，Css样式展示，代码下载
+      recommend: true  
+    - name: 云速成美站模版库
+      link: https://moban.wezhan.cn
+      avatar: https://moban.wezhan.cn/favicon.ico
+      descr: 网络建站模版库，整套公司官网模版
       recommend: true
     - name: 全球IP查询
       link: https://scamalytics.com/
       avatar: https://scamalytics.com/favicon.ico
       descr: 可查询全球服务器IP地址
       recommend: true
+    - name: 机场节点
+      link: https://github.com/githubvpn007/v2rayNvpn
+      avatar: https://github.com/githubvpn007/favicon.ico
+      descr: 机场节点分享  
+      recommend: true  
     - name: Cloudflare
       link: https://www.cloudflare.com/zh-cn/
       avatar: https://www.cloudflare.com/favicon.ico
@@ -575,10 +590,10 @@
       avatar: https://wap.txt80.com/favicon.ico
       descr: 全本电子书下载网站
       recommend: true
-    - name: 淘声
-      link: https://www.tosound.com/
-      avatar: https://www.tosound.com/favicon.ico
-      descr: 搜索全球声音资源
+    - name: 中国色
+      link: http://zhongguose.com
+      avatar: http://zhongguose.com/favicon.ico
+      descr: 中国颜色，中国颜色在线获取
       recommend: true  
     - name: 矢量图标库
       link: https://www.iconfont.cn/?spm=a313x.home_index.i3.d4d0a486a.56373a813ShSXn
@@ -590,29 +605,171 @@
       avatar: https://alteredqualia.com/favicon.ico
       descr: 图片生成3D影像，多种场景3D模拟
       recommend: true      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+    - name: 在线生成故障图片
+      link: https://photomosh.com/
+      avatar: https://photomosh.com/favicon.ico
+      descr: 在线生成故障图片，模拟各类故障图片
+      recommend: true       
+    - name: 乐学多思资料库
+      link: http://www.lexueduosi.com/
+      avatar: http://www.lexueduosi.com/favicon.ico
+      descr: 乐学多思资料库，千万文档检索免费下载
+      recommend: true    
+    - name: 手游分享
+      link: https://www.shareae.cn/
+      avatar: https://www.shareae.cn/favicon.ico
+      descr: 各类手机游戏攻略与资料
+      recommend: true  
+    - name: 字体天下
+      link: https://www.fonts.net.cn/
+      avatar: https://www.fonts.net.cn/favicon.ico
+      descr: 字体天下，各类免费商用字体下载
+      recommend: true  
+    - name: 大作设计网
+      link: https://www.bigbigwork.com/
+      avatar: https://www.bigbigwork.com/favicon.ico
+      descr: 在线设计网站，设计师免费图片素材，找灵感
+      recommend: true  
+    - name: 稿定设计
+      link: https://www.gaoding.com/
+      avatar: https://www.gaoding.com/favicon.ico
+      descr: 稿定设计，设计师在线平面设计，各类图片素材在线
+      recommend: true   
+    - name: 可画在线画布
+      link: https://www.canva.cn
+      avatar: https://www.canva.cn/favicon.ico
+      descr: 可画在线画布，平面设计在线作图
+      recommend: true
+    - name: 爱给素材网
+      link: https://www.aigei.com/
+      avatar: https://www.aigei.com/favicon.ico
+      descr: 爱给素材网，设计专用图片素材
+      recommend: true
+    - name: 站长素材网
+      link: https://sc.chinaz.com/
+      avatar: https://sc.chinaz.com/favicon.ico
+      descr: 平面设计图片素材库
+      recommend: true  
+    - name: 菜鸟图库
+      link: https://www.sucai999.com/search/ppt/0_226_0_0.html
+      avatar: https://www.sucai999.com/favicon.ico
+      descr: 菜鸟图库，多种图片素材资料
+      recommend: true  
+    - name: CCO图片搜索
+      link: https://www.cc0.cn/image/photock/
+      avatar: https://www.cc0.cn/favicon.ico
+      descr: CCO图片搜索，各类图片在线搜索
+      recommend: true    
+    - name: 生活图片库
+      link: https://www.lifeofpix.com/
+      avatar: https://www.lifeofpix.com/favicon.ico
+      descr: 生活图片素材库，各类生活图片灵感
+      recommend: true  
+    - name:  Magdeleine图片库
+      link: https://magdeleine.co/
+      avatar: https://magdeleine.co/favicon.ico
+      descr: Magdeleine图片素材大全
+      recommend: true    
+    - name: Unsplash图片库
+      link: https://unsplash.com/
+      avatar: https://unsplash.com/favicon.ico
+      descr: Unsplash图片素材库
+      recommend: true     
+    - name: Shutterstock图片库
+      link: https://gratisography.com/
+      avatar: https://gratisography.com/favicon.ico
+      descr: Shutterstock图片素材大全
+      recommend: true    
+    - name: Photock图片库
+      link: https://photock.jp/
+      avatar: https://photock.jp/favicon.ico
+      descr: Photock图片素材下载库
+      recommend: true     
+    - name: Stocksnap图片库
+      link: https://stocksnap.io/
+      avatar: https://stocksnap.io/favicon.ico
+      descr: Stocksnap图片素材库
+      recommend: true   
+    - name: Pixabay图片库
+      link: https://safesearch.pixabay.com/
+      avatar: https://safesearch.pixabay.com/favicon.ico
+      descr: Pixabay图片素材库
+      recommend: true   
+    - name: Pexel图片库
+      link: https://www.pexels.com/zh-cn/
+      avatar: https://www.pexels.com/favicon.ico
+      descr: Pexel图片素材库
+      recommend: true    
+    - name: 淘声
+      link: https://www.tosound.com/
+      avatar: https://www.tosound.com/favicon.ico
+      descr: 搜索全球声音资源
+      recommend: true  
+    - name: 声音网
+      link: http://www.shengyin.com/
+      avatar: http://www.shengyin.com/favicon.ico
+      descr: 声音网，各类音频素材在线试听下载
+      recommend: true  
+    - name: 声音网
+      link: http://www.shengyin.com/
+      avatar: http://www.shengyin.com/favicon.ico
+      descr: 声音网，各类音频素材在线试听下载
+      recommend: true   
+    - name: 吾道PPT制作
+      link: https://www.woodo.cn/
+      avatar: https://www.woodo.cn/favicon.ico
+      descr: PPT模版在线制作下载
+      recommend: true    
+    - name: 爱PPT素材网
+      link: https://www.2ppt.com/
+      avatar: https://www.2ppt.com/favicon.ico
+      descr: PPT各种模版在线查看下载
+      recommend: true   
+    - name: Panzoid特效素材
+      link: https://panzoid.com/
+      avatar: https://panzoid.com/favicon.ico
+      descr: 特效Cg插件下载，特效模版下载
+      recommend: true   
+    - name: CG爱好者AE素材
+      link: http://www.cgahz.com/aemoban/
+      avatar: http://www.cgahz.com/favicon.ico
+      descr: CG，特效，AE动态效果模版下载
+      recommend: true  
+    - name: 龋齿一号AE模版
+      link: http://www.gfxcamp.com/
+      avatar: http://www.gfxcamp.com/favicon.ico
+      descr: AE动态效果模版库
+      recommend: true   
+    - name: CG动态效果资源网
+      link: https://www.cgown.com/ 
+      avatar: https://www.cgown.com/favicon.ico
+      descr: Cg动态效果资源网
+      recommend: true    
+    - name: CG素材商城
+      link: http://www.lookae.com/
+      avatar: http://www.lookae.com/favicon.ico
+      descr: 成品CG特效素材在线下载
+      recommend: true     
+    - name: 书生CG资源库
+      link: http://c4dsky.com/
+      avatar: http://c4dsky.com/favicon.ico
+      descr: CG特效资源素材库
+      recommend: true   
+    - name: AE模版精品站
+      link: http://www.adobeae.com/
+      avatar: http://www.adobeae.com/favicon.ico
+      descr: AE精品模版库，AE效果下载
+      recommend: true   
+    - name: 新CG素材网
+      link: http://www.newcger.com/
+      avatar: http://www.newcger.com/favicon.ico
+      descr: 新CG素材网，动态效果素材网
+      recommend: true     
+    - name: 微境映画资源网
+      link: http://www.microlensyh.com/
+      avatar: http://www.microlensyh.com/favicon.ico
+      descr: 微境映画资源网，各类影视软件教程
+      recommend: true    
 #分界线-------------------------------------------------新奇网站       
 - class_name: 新奇网站
   class_desc: 网络上的各种新奇网站
