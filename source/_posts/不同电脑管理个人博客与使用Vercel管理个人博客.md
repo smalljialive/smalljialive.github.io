@@ -1,10 +1,13 @@
 ---
 abbrlink: ''
-categories: []
+categories:
+- - 代码细节
 cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/74.avif
 date: '2024-12-18T10:43:42.311704+08:00'
-tags: []
-title: title
+tags:
+- 网站建设
+- 个人博客
+title: 不同电脑管理个人博客与使用Vercel+Qexo管理个人博客
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/74.avif
 updated: '2024-12-18T10:43:43.753+08:00'
 ---
@@ -130,3 +133,151 @@ npm install hexo-deployer-git
 ```
 
 ## 谨记：无论在哪台设备更新文章后，都要记得推送到Github上，然后在下一次更新前，先从Github仓库拉取最新的文章！
+
+
+## 以上方法可以在不同的电脑上更新我们的个人博客，但是我们觉得还是不太方便，每次都要拉取最新的内容，而且在新电脑上每次都需要安装Hexo和各种环境，为了解决这个问题，我们可采用Vercel+Qexo来作为我们的数据库与博客后台。
+
+Qexo一个为 Hexo 增加后台功能的工具，它让发布博客变得像发微博一样简单。它非常强大，不仅可以在不同设备发表文章，还可以用手机随时随地发表文章。
+
+**Qexo** 是一个快速、美观且功能丰富的在线 Hexo 管理器，支持通过 Vercel 免费部署，仅需配置一个数据库即可使用。
+
+# 一、配置 GitHub 自动化部署
+
+## 1. 获取 GitHub Token
+
+1. 点击右上角的头像打开 **settings** ->最下面的 **Developer settings** -> **Personal access tokens**
+2. 设置权限为 **repo** 和 **public repo**
+3. 创建一个文本，保存生成的 Token（丢失后无法恢复，只能重新生成）
+4. 打开个人博客仓库，在博客代码仓库**settings**的 **Secrets** 中添加名为 **PERSONAL\_TOKEN** 的变量，后续步骤将用到。
+
+   ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/76.avif)
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/77.avif)
+
+## 2. 创建 GitHub Actions
+
+1. 在博客仓库页面，点击 **Actions**。
+2. 选择 **Set up a workflow yourself**。
+3. 输入以下 YAML 配置并点击 **Start commit** ：
+
+   ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/78.avif)
+
+```
+name: Deploy Hexo to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master # 或你使用的默认分支名称
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout blog source
+        uses: actions/checkout@v2
+        with:
+          path: blog
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16" # 设置 Node.js 版本
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./blog
+
+      - name: Install Hexo CLI
+        run: npm install -g hexo-cli
+        working-directory: ./blog
+
+      - name: Generate static pages
+        run: hexo generate
+        working-directory: ./blog
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: ./blog/public
+          external_repository: username/username.github.io # 更改为你的 GitHub Pages 仓库, username 是你的用户名
+          publish_branch: main # GitHub Pages 分支
+```
+
+参考文档：
+
+* [Hexo 自动化部署教程](https://www.oplog.cn/archives/24998.html)
+* [利用 GitHub Actions 实现自动化部署 Hexo 到 Github Pages](https://hackergavin.com/2024/01/11/hexo-automate-deploy/)
+
+---
+
+# 二、通过 Vercel 部署 Qexo
+
+## 1. 一键部署
+
+点击以下按钮完成一键部署：[Vercel 一键部署](https://vercel.com/new/clone?repository-url=https://github.com/am-abudu/Qexo)
+
+> **注意**：首次部署可能会出现错误提示，可忽略并继续后续步骤。
+
+## 2. 修改 Node.js 版本
+
+由于 **[Vercel 的已知问题](https://vercel.com/docs/functions/runtimes/python#python-dependencies)，需将项目的 Node.js 版本调整为** **18.x**。
+路径：**Settings -> General -> Node.js Version**
+
+## 3. 创建 Vercel 数据库
+
+1. 进入[Vercel Storage 页面](https://vercel.com/dashboard/stores)。
+2. 点击 \***Create Database**，选择 **Neon** ，设置区域为 **Washington, DC., USA - iad1**，创建免费数据库。
+
+## 4. 绑定项目
+
+在 **Projects** 页面选择对应项目，点击 **Connect Project** 进行绑定。
+
+## 5. 部署 Qexo
+
+回到项目页面，点击**Redeploy** 开始部署。部署完成后，无报错即可访问域名进入初始化页面。
+
+---
+
+# 初始化配置
+
+## GitHub 配置
+
+填写博客源码所在仓库的分支名称（注意是我们部署到github的程序分支，不是静态页面那个分支），例如：
+
+```
+hexo
+```
+
+## GitHub 密钥
+
+填写生成的 GitHub Token，例如：
+
+```
+wrq_P8sYPlYA9fjMlOPEYSKA84xxxxxxxxxxxxxx
+```
+
+## 仓库路径
+
+若 Hexo 源码在仓库根目录，则留空；否则填写路径：
+
+```
+path/
+```
+
+## Vercel 配置
+
+* **VERCEL\_TOKEN**：在[Vercel 账户设置](https://vercel.com/account/tokens) 中生成。
+* **PROJECT\_ID**：在 **Project Settings -> General -> Project ID** 中找到。
+
+配置完成后，即可登录后台管理博客内容。
