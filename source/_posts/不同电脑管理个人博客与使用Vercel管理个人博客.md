@@ -227,25 +227,35 @@ jobs:
 
 点击以下按钮完成一键部署：[Vercel 一键部署](https://vercel.com/new/clone?repository-url=https://github.com/am-abudu/Qexo)
 
-> **注意**：首次部署可能会出现错误提示，可忽略并继续后续步骤。
+> **注意**：首次部署可能会出现错误提示，可忽略并继续后续步骤。(my-repository随意填写，自己可以分清楚即可)
+>
+> ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/79.png)
 
 ## 2. 修改 Node.js 版本
 
 由于 **[Vercel 的已知问题](https://vercel.com/docs/functions/runtimes/python#python-dependencies)，需将项目的 Node.js 版本调整为** **18.x**。
 路径：**Settings -> General -> Node.js Version**
 
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/80.png)
+
 ## 3. 创建 Vercel 数据库
 
 1. 进入[Vercel Storage 页面](https://vercel.com/dashboard/stores)。
 2. 点击 \***Create Database**，选择 **Neon** ，设置区域为 **Washington, DC., USA - iad1**，创建免费数据库。
 
+   ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/81.png)
+
 ## 4. 绑定项目
 
-在 **Projects** 页面选择对应项目，点击 **Connect Project** 进行绑定。
+创建成功后往下滑动，在 **Projects** 模块选择对应项目，点击 **Connect Project** 进行绑定。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/82.png)
 
 ## 5. 部署 Qexo
 
-回到项目页面，点击**Redeploy** 开始部署。部署完成后，无报错即可访问域名进入初始化页面。
+回到项目页面，切换至Deployments，选择创建的项目，点击**Redeploy** 开始部署。部署完成后，无报错即可访问域名进入初始化页面。点击Visit即可进入后台。（若是后台报错，更换浏览器即可）
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/83.png)
 
 ---
 
@@ -281,3 +291,7 @@ path/
 * **PROJECT\_ID**：在 **Project Settings -> General -> Project ID** 中找到。
 
 配置完成后，即可登录后台管理博客内容。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/84.avif)
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/85.png)
