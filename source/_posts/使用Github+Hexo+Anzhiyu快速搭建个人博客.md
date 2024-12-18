@@ -20,10 +20,8 @@ updated: '2024-12-18T09:14:36.653+08:00'
 3. [Github](https://www.github.com)（**必备**）
 4. [VSCode](https://code.visualstudio.com/)（**可选，代码编辑工具，提供终端连接服务**）
 5. 域名，建议配置一个域名以避免被防火墙阻挡。（**若没有展示需求，可不用**）
-6. 配置 Cloudflare，托管域名
-7. 创建免费图床
-8. 注册cloudflare
-9. [Hexo](https://hexo.io/themes/)官方主题展示
+6. 创建免费图床
+7. [Hexo](https://hexo.io/themes/)官方主题展示
 
 ## 2.开始搭建
 
@@ -108,128 +106,82 @@ ssh -T git@github.com
 
 1. 创建文件夹保存博客源码：在你的电脑的任意盘内创建一个文件夹用于保存源码（C/D/E....盘均可）
 2. 打开Git终端，在创建好的空白文件夹内右键打开 **Open git bash here**
-3. 开始安装Hexo，在打开的git终端内输入
+3. 开始安装Hexo，在打开的git终端内输入以下代码进行安装
 
 ```
 npm install -g hexo-cli && hexo -v
 ```
 
+安装完毕Hexo框架后，需要**初始化 Hexo 项目安装依赖**，继续在终端内输入以下代码
 
-bash
+```
+hexo init 
+npm i
+```
 
+经过以上的安装后，我们的本地文件夹内应该已经有了Hexo博客的初始代码，我们可以启动项目并验证：继续在终端内输入一下代码启动项目并在本地打开
 
-| `1`<br/>`2`<br/>`3`<br/> | `hexo init blog-demo`<br/>`cd blog-demo`<br/>`npm i`<br/> |
-| ------------------------ | --------------------------------------------------------- |
+```
+hexo cl; hexo s
+```
 
-[![abm](https://13fe9ff.webp.li/2024/10/d17588a07ad38a5285fc42d4c781f9cd.png)](https://13fe9ff.webp.li/2024/10/d17588a07ad38a5285fc42d4c781f9cd.png)
+在浏览器中访问 [http://localhost:4000/](http://localhost:4000/) 以查看效果。此时会显示一个简易的博客内容（只有本地显示）
 
-现在你的文件夹会有这些内容
-[![abm](https://13fe9ff.webp.li/2024/10/94f0f93b98c067b27d235830032d56ae.png)](https://13fe9ff.webp.li/2024/10/94f0f93b98c067b27d235830032d56ae.png)
+## 6. 将静态博客挂载到 GitHub
 
-4. 启动项目并验证：
+1. 打开你的本地文件夹，修改 `_config.yml` 文件，配置 `repository` 为你的 GitHub 地址，分支改为 `main`
 
-bash
+```
+deploy:
+type: git
+repository: git@github.com:你的用户名/你的用户名.github.io.git
+branch: main
+```
 
+2. 安装 `hexo-deployer-git`：（为了将本地文件推送至Github）
 
-| `1`<br/> | `hexo cl && hexo s`<br/> |
-| -------- | ------------------------ |
+```
+npm install hexo-deployer-git --save
+```
 
-在浏览器中访问 [http://localhost:4000/](http://localhost:4000/) 以查看效果。
+3. 部署到 GitHub（以下代码意思为启动本地服务，生成页面，上传至仓库，可按照实际情况输入）
 
-[![abm](https://13fe9ff.webp.li/2024/10/5f1f08bb49c8f8d7f63c0bee92e3587b.png)](https://13fe9ff.webp.li/2024/10/5f1f08bb49c8f8d7f63c0bee92e3587b.png)
+   ```
+   // Git BASH终端
+   hexo clean && hexo generate && hexo deploy  
 
-[![abm](https://13fe9ff.webp.li/2024/10/d05ef82a66a25f7eeb37c0d14abdd9f0.png)](https://13fe9ff.webp.li/2024/10/d05ef82a66a25f7eeb37c0d14abdd9f0.png)
+   // VSCODE终端
+   hexo cl; hexo g; hexo d
+   ```
 
-## 5. 将静态博客挂载到 GitHub Pages
-
-1. 修改 `_config.yml` 文件，配置 `repository` 为你的 GitHub 地址，分支改为 `main`：
-
-yaml
-
-
-| `1`<br/>`2`<br/>`3`<br/>`4`<br/> | `deploy:`<br/>`  type: git`<br/>`  repository: git@github.com:你的用户名/你的用户名.github.io.git`<br/>`  branch: main`<br/> |
-| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-
-[![abm](https://13fe9ff.webp.li/2024/10/712da669873ad288ded87d76aa202596.png)](https://13fe9ff.webp.li/2024/10/712da669873ad288ded87d76aa202596.png)
-
-2. 安装 `hexo-deployer-git`：
-
-bash
-
-
-| `1`<br/> | `npm install hexo-deployer-git --save`<br/> |
-| -------- | ------------------------------------------- |
-
-3. 部署到 GitHub：
-
-bash
-
-
-| `1`<br/>`2`<br/>`3`<br/>`4`<br/>`5`<br/>`6`<br/>`7`<br/> | `// Git BASH终端`<br/>`hexo clean && hexo generate && hexo deploy  `<br/>`// 或者`<br/>`// VSCODE终端`<br/>`hexo cl; hexo g; hexo d`<br/> |
-| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-
-访问 `https://<用户名>.github.io/` 以查看博客。
-
-[![abm](https://13fe9ff.webp.li/2024/10/cd3b9d1e923f62809bdf96cd336076a9.png)](https://13fe9ff.webp.li/2024/10/cd3b9d1e923f62809bdf96cd336076a9.png)
-
-## 6. 将静态博客挂载到 Cloudflare Pages
-
-1. 通过 Cloudflare Pages 连接 Git 仓库。
-2. 登录 GitHub，点击保存并部署。
-3. 部署成功后，访问 Cloudflare 提供的链接。
-
-如有自定义域名，可以在 Cloudflare Pages 中绑定。没有建议去申请，这样博客就不被墙了。
-
-[![abm](https://13fe9ff.webp.li/2024/10/ca110c9b2c7b14a5a0fd9093135c8c63.png)](https://13fe9ff.webp.li/2024/10/ca110c9b2c7b14a5a0fd9093135c8c63.png)
-
-[![abm](https://13fe9ff.webp.li/2024/10/c0f9422b145506e4f632ac7b898e9a63.png)](https://13fe9ff.webp.li/2024/10/c0f9422b145506e4f632ac7b898e9a63.png)
-
-[![abm](https://13fe9ff.webp.li/2024/10/c0b23c4d1f602e6682069169144e95c3.png)](https://13fe9ff.webp.li/2024/10/c0b23c4d1f602e6682069169144e95c3.png)
-
-[![abm](https://13fe9ff.webp.li/2024/10/ce6befcb5c21f13a92d7d8644dcf7484.png)](https://13fe9ff.webp.li/2024/10/ce6befcb5c21f13a92d7d8644dcf7484.png)
-
-[![abm](https://13fe9ff.webp.li/2024/10/cd797e905a9b8bde871dfb29bc6d055c.png)](https://13fe9ff.webp.li/2024/10/cd797e905a9b8bde871dfb29bc6d055c.png)
+#### 上传完毕后，通过访问 `https://<用户名>.github.io/` 以查看博客。
 
 ## 如何使用
 
 ### 新建一篇博文
 
-bash
-
-
-| `1`<br/> | `hexo new 这是一篇新的博文`<br/> |
-| -------- | -------------------------------- |
+```
+hexo new 这是一篇新的博文
+```
 
 编辑 `_posts` 文件夹中的新建文章，使用 Markdown 语法编写内容。
 
 ### 本地预览
 
-bash
-
-
-| `1`<br/> | `hexo cl && hexo s`<br/> |
-| -------- | ------------------------ |
+```
+hexo cl && hexo s
+```
 
 ### 推送到 GitHub
 
-bash
-
-
-| `1`<br/> | `hexo cl && hexo g && hexo d`<br/> |
-| -------- | ---------------------------------- |
-
-## 进阶教程预告
-
-接下来会介绍 Hexo 主题美化 文章写作 赶紧订阅我吧！
+```
+hexo cl && hexo g && hexo d
+```
 
 ## 解决 VSCODE 报错
 
 如果首次执行 VSCODE 终端出现报错，可以使用管理员身份打开 PowerShell，并执行以下命令：
 
-bash
-
-
-| `1`<br/> | `Set-ExecutionPolicy RemoteSigned`<br/> |
-| -------- | --------------------------------------- |
-
-[![头像](https://a0d7da0.webp.li/2024/10/channels4_profile.jpg "头像")![头像](https://a0d7da0.webp.li/2024/10/channels4_profile.jpg "头像")](https://www.limin.studio/ "头像")Limin
+```
+Set-ExecutionPolicy RemoteSigned
+```
