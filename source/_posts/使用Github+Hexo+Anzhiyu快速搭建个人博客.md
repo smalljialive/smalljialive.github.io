@@ -2,11 +2,13 @@
 abbrlink: ''
 categories:
 - - 代码细节
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/72.png
 date: '2024-12-17T17:17:06.203780+08:00'
 tags:
 - 网站建设
 - 个人博客
 title: 使用Github+Hexo+Anzhiyu快速搭建个人博客
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/72.png
 updated: '2024-12-18T09:14:36.653+08:00'
 ---
 #### 个人博客作为互联网冲浪选手的技能展示，是最直观的一种方式，常见的博客搭建方式是通过服务器安装网站程序，然后通过域名解析到的服务器的网站程序，从而达成访问。
