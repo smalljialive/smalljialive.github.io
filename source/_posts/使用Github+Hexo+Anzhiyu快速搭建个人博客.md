@@ -189,3 +189,122 @@ hexo cl && hexo g && hexo d
 ```
 Set-ExecutionPolicy RemoteSigned
 ```
+
+## 经过上述步骤，我们已经成功通过Github自带的github.io方式部署了我们的博客，但是还需要进一步的美化
+
+### 安装Hexo的“安知鱼”的主题
+
+HEXO的官方主题有很多种可以选择[点击跳转](https://hexo.io/themes/)，我们这次使用Anzhiyu的主题 [安装方法](https://github.com/anzhiyu-c/hexo-theme-anzhiyu?tab=readme-ov-file)
+
+### 1. Git 安装
+
+在博客根目录里打开Git bash终端，安装最新版：
+
+```
+git clone -b main https://github.com/anzhiyu-c/hexo-theme-anzhiyu.git themes/anzhiyu
+```
+
+### 2.安装 Pug 和 Stylus 渲染插件
+
+运行以下命令：
+
+```
+npm install hexo-renderer-pug hexo-renderer-stylus --save
+```
+
+### 3. 使用主题
+
+修改 Hexo 配置文件 `_config.yml`，将主题改为 `anzhiyu`。
+
+```
+theme: anzhiyu
+```
+
+### 4. 覆盖配置
+
+覆盖配置可以使`主题配置`放置在 anzhiyu 目录之外，避免在更新主题时丢失自定义的配置。
+
+通过 Npm 安装主题的用户可忽略，其他用户建议学习使用。
+
+* macos/linux 在博客根目录运行
+
+```shell
+cp -rf ./themes/anzhiyu/_config.yml ./_config.anzhiyu.yml
+```
+
+* windows 复制`/themes/anzhiyu/_config.yml`此文件到 hexo 根目录，并重命名为`_config.anzhiyu.yml`
+
+以后如果修改任何主题配置，都只需修改 \_config.anzhiyu.yml 的配置即可。
+
+注意：
+
+* 只要存在于 `_config.anzhiyu.yml` 的配置都是高优先级，修改原 `_config.yml` 是无效的。
+* 每次更新主题可能存在配置变更，请注意更新说明，可能需要手动对 `_config.anzhiyu.yml` 同步修改。
+* 想查看覆盖配置有没有生效，可以通过 `hexo g --debug` 查看命令行输出。
+* 如果想将某些配置覆盖为空，注意不要把主键删掉，不然是无法覆盖的
+
+### 5. 主题部署完成，推送上线
+
+```
+hexo cl; hexo g; hexo d
+```
+
+## 更多功能特性看访问安知鱼的[开发手册](https://docs.anheyu.com/initall.html)
+
+### 例如生成标签页和分类页
+
+#### 生成标签页：
+
+1. 前往你的 Hexo 博客的根目录
+2. 在 Hexo 博客根目录下打开终端，输入
+   **bash**
+
+   ```
+   hexo new page tags
+   ```
+3. 你会找到 `source/tags/index.md` 这个文件
+4. 修改这个文件： 记得添加 `type: "tags"`
+   **markdown**
+
+   ```
+   ---
+   title: 标签
+   date: 2021-04-06 12:01:51
+   type: "tags"
+   comments: false
+   top_img: false
+   ---
+   ```
+
+   | 参数     | 解释                                                             |
+   | -------- | ---------------------------------------------------------------- |
+   | type     | 【必须】页面类型，必须为 tags                                    |
+   | comments | 【可选】是否显示评论                                             |
+   | top\_img | 【可选】是否显示顶部图                                           |
+   | orderby  | 【可选】排序方式 ：random/name/length                            |
+   | order    | 【可选】排序次序： 1, asc for ascending; -1, desc for descending |
+   |          |                                                                  |
+
+   #### 生成分类页：
+
+
+   1. 前往你的 Hexo 博客的根目录
+   2. 在 Hexo 博客根目录 `[blog]`下打开终端，输入
+      **bash**
+      ```
+      hexo new page categories
+      ```
+   3. 你会找到 `source/categories/index.md` 这个文件
+   4. 修改这个文件： 记得添加 `type: "categories"`
+
+   **markdown**
+
+   ```
+   ---
+   title: 分类
+   date: 2022-02-23 17:56:00
+   aside: false
+   top_img: false
+   type: "categories"
+   ---
+   ```
