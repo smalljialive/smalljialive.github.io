@@ -7,7 +7,7 @@ tags:
 - 网站建设
 - 个人博客
 title: 使用Github+Hexo+Anzhiyu快速搭建个人博客
-updated: '2024-12-17T17:17:07.271+08:00'
+updated: '2024-12-18T09:14:36.653+08:00'
 ---
 #### 个人博客作为互联网冲浪选手的技能展示，是最直观的一种方式，常见的博客搭建方式是通过服务器安装网站程序，然后通过域名解析到的服务器的网站程序，从而达成访问。
 
@@ -22,7 +22,7 @@ updated: '2024-12-17T17:17:07.271+08:00'
 5. 域名，建议配置一个域名以避免被防火墙阻挡。（**若没有展示需求，可不用**）
 6. 配置 Cloudflare，托管域名
 7. 创建免费图床
-8. 注册cloudflare怕被扣费，推荐用myfine有50张虚拟卡（需要护照）
+8. 注册cloudflare
 9. [Hexo](https://hexo.io/themes/)官方主题展示
 
 ## 2.开始搭建
@@ -42,100 +42,78 @@ updated: '2024-12-17T17:17:07.271+08:00'
 2. Windows 用户可使用默认目录安装 Git，苹果用户则按提示在终端操作。
 3. 验证安装完毕后，Windows 用户会在开始菜单中看到 `Git Bash` 等应用。
 
-### 3. 配置 Git 密钥并连接至 Github
+### 2.3 申请注册Github账号
 
-常用 Git 命令:
+1.从Github官网注册账号
 
-bash
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/68.png)
 
+## 3. 配置 Git 密钥并连接至 Github
 
-| `1`<br/>`2`<br/>`3`<br/> | `git config -l`<br/>`git config --system --list`<br/>`git config --global --list`<br/> |
-| ------------------------ | -------------------------------------------------------------------------------------- |
+**Git 常见的命令（不是必须输入）:**
 
-#### 3.1. 配置用户名和邮箱
+```
+git config -l
+git config --system --list
+git config --global --list
+```
 
-bash
+### 3.1. 配置用户名和邮箱 并验证是否成功（Github的用户名和邮箱）
 
+从电脑的开始菜单打开**Git bash**，然后输入Git命令
 
-| `1`<br/>`2`<br/> | `git config --global user.name "你的用户名"`<br/>`git config --global user.email "你的邮箱"`<br/> |
-| ---------------- | ------------------------------------------------------------------------------------------------- |
+```
+git config --global user.name 你的用户名
+git config --global user.email 你的邮箱
+```
 
-通过 `git config -l` 验证是否成功。
-[![abd](https://13fe9ff.webp.li/2024/10/1d37926686d18e0ac468ce6d00c07a50.png)](https://13fe9ff.webp.li/2024/10/1d37926686d18e0ac468ce6d00c07a50.png)
+然后输入`git config -l`验证是否成功配置了用户名和邮箱
 
-#### 3.2. 配置公钥连接 Github
+### 3.2. 生成 SSH 公钥，并配置秘钥连接 Github
 
-1. 生成 SSH 公钥：
+ssh-keygen -t rsa -C 你的邮箱名ssh-keygen -t rsa -C 你的邮箱名
 
-bash
+一直回车生成密钥，然后进入电脑的 **.ssh**文件夹复制 **id_rsa.pub**公钥内容，配置到 Github 的 SSH 设置中。（直接使用记事本打开文件复制内容即可）
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/69.png)
 
+### 3.3将SSH秘钥配置连接至Github
 
-| `1`<br/> | `ssh-keygen -t rsa -C "你的邮箱"`<br/> |
-| -------- | -------------------------------------- |
+打开Github网站，点击右上角头像 选择**settings**
 
-一路回车生成密钥，进入 `.ssh` 文件夹复制 `id_rsa.pub` 公钥内容，配置到 Github 的 SSH 设置中。
-[![abm](https://13fe9ff.webp.li/2024/10/d2ec687d4c21887ffc96e96687630d7d.png)](https://13fe9ff.webp.li/2024/10/d2ec687d4c21887ffc96e96687630d7d.png)
+进入设置页后选择 **SSH and GPG keys**，填写名称，后期自己能分清楚即可
 
-### 在苹果电脑上，如果你知道文件的路径，可以通过以下几种方式快速找到文件：
+将复制的秘钥填到Key那一栏。
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/70.png)
 
-打开Finder。
-按下 Command + Shift + G，在弹出的对话框中输入文件路径，然后按 Enter。这样可以直接跳转到该路径下的文件。
-[![abm](https://13fe9ff.webp.li/2024/10/1efba3fa54bedcba6059cc88a8daf717.png)](https://13fe9ff.webp.li/2024/10/1efba3fa54bedcba6059cc88a8daf717.png)
+### 3.4测试是否成功连接电脑和Github
 
-### 在windows电脑上：
-
-打开C盘下用户文件夹下的.ssh的文件夹，会看到以下文件
-id\_rsa 私钥
-id\_rsa.pub 公钥
-
-找到公钥匙，并复制，打开GitHub开始配置
-[![abm](https://13fe9ff.webp.li/2024/10/0557c8ce136c6e43f4c1541d31beba62.png)](https://13fe9ff.webp.li/2024/10/0557c8ce136c6e43f4c1541d31beba62.png)
-
-2. 将 SSH KEY 配置到 GitHub
-   进入github，点击右上角头像 选择settings，进入设置页后选择 SSH and GPG keys，名字随便起，公钥填到Key那一栏。
-   [![abm](https://13fe9ff.webp.li/2024/10/84b777a4f0b9a8a290e1472087ce30e2.png)](https://13fe9ff.webp.li/2024/10/84b777a4f0b9a8a290e1472087ce30e2.png)
-
-[![abm](https://13fe9ff.webp.li/2024/10/ab0ad8dba8ff5ace69b12e9ffa5d8b9d.png)](https://13fe9ff.webp.li/2024/10/ab0ad8dba8ff5ace69b12e9ffa5d8b9d.png)
-
-3. 测试连接：
-
-bash
-
-
-| `1`<br/> | `ssh -T git@github.com`<br/> |
-| -------- | ---------------------------- |
+```
+ssh -T git@github.com
+```
 
 第一次连接会提示Are you sure you want to continue connecting (yes/no/[fingerprint])?，输入yes即可
-[![abm](https://13fe9ff.webp.li/2024/10/db87e8d1e4767b675c03a907c06ecdda.png)](https://13fe9ff.webp.li/2024/10/db87e8d1e4767b675c03a907c06ecdda.png)
 
-#### 3.3. 创建 GitHub.io 仓库
+反馈出现**You've successfully authenticated**即表示成功连接
 
-1. 点击右上角的 `+` 按钮，选择新建仓库，命名格式为 `<用户名>.github.io`，(注意：前缀必须为用户名)选择公开 `Public`。
+## 4. 创建 GitHub.io 仓库
+
+1. 点击右上角的 `+` 按钮，选择新建仓库，命名格式为 `你的用户名.github.io`，(注意：前缀必须为用户名)选择公开 `Public`。
 2. 点击 Creat repository 进行创建即可。
-   [![abm](https://13fe9ff.webp.li/2024/10/aff632548c5c460783916a88a187e76a.png)](https://13fe9ff.webp.li/2024/10/aff632548c5c460783916a88a187e76a.png)
 
-[![abm](https://13fe9ff.webp.li/2024/10/6a6a086ab644e9f9ac5820570686e62c.png)](https://13fe9ff.webp.li/2024/10/6a6a086ab644e9f9ac5820570686e62c.png)
+   ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/71.png)
 
-## 4. 初始化 Hexo 博客
+#### 至此，我们已经通过Github与本地网络连接实现了输入`你的用户名+github.io`访问你的博客地址的操作
 
-1. 创建文件夹保存博客源码：
+## 5. 初始化 Hexo 博客
 
-### 苹果用户随意创建好文件夹后，在文件夹右击，选择“服务”选择“新建终端窗口以便操作”
+1. 创建文件夹保存博客源码：在你的电脑的任意盘内创建一个文件夹用于保存源码（C/D/E....盘均可）
+2. 打开Git终端，在创建好的空白文件夹内右键打开 **Open git bash here**
+3. 开始安装Hexo，在打开的git终端内输入
 
-### Windows用户可以（例如 `D:/Hexo-Blog`），在该文件夹内启动 Git Bash 或终端。
+```
+npm install -g hexo-cli && hexo -v
+```
 
-2. 安装 Hexo：
-
-bash
-
-
-| `1`<br/> | `npm install -g hexo-cli && hexo -v`<br/> |
-| -------- | ----------------------------------------- |
-
-出现此页面代表安装成功
-[![abm](https://13fe9ff.webp.li/2024/10/09dfd08bc762f761b61b4666ac383b99.png)](https://13fe9ff.webp.li/2024/10/09dfd08bc762f761b61b4666ac383b99.png)
-
-3. 初始化 Hexo 项目安装依赖：
 
 bash
 
