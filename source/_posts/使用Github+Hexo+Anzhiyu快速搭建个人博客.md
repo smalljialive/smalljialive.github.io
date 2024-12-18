@@ -9,7 +9,7 @@ tags:
 - 个人博客
 title: 使用Github+Hexo+Anzhiyu快速搭建个人博客
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/72.png
-updated: '2024-12-18T09:14:36.653+08:00'
+updated: '2024-12-18T10:18:53.899+08:00'
 ---
 #### 个人博客作为互联网冲浪选手的技能展示，是最直观的一种方式，常见的博客搭建方式是通过服务器安装网站程序，然后通过域名解析到的服务器的网站程序，从而达成访问。
 
@@ -71,7 +71,9 @@ git config --global user.email 你的邮箱
 
 ### 3.2. 生成 SSH 公钥，并配置秘钥连接 Github
 
-ssh-keygen -t rsa -C 你的邮箱名ssh-keygen -t rsa -C 你的邮箱名
+```
+ssh-keygen -t rsa -C 你的邮箱名
+```
 
 一直回车生成密钥，然后进入电脑的 **.ssh**文件夹复制 **id_rsa.pub**公钥内容，配置到 Github 的 SSH 设置中。（直接使用记事本打开文件复制内容即可）
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/69.png)
