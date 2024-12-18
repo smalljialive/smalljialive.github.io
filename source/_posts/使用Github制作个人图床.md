@@ -9,7 +9,7 @@ tags:
 - 个人博客
 title: ' 使用Github制作个人图床'
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/88.png
-updated: '2024-12-18T13:33:56.446+08:00'
+updated: '2024-12-18T14:21:46.719+08:00'
 ---
 图床的含义是图片存储仓库，市面上的图床有很多平台，可以选择付费平台以及免费平台。作为白嫖党，自然选择GitHub平台，不怕跑路还稳定。
 
