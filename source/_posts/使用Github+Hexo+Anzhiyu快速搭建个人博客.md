@@ -308,3 +308,6 @@ hexo cl; hexo g; hexo d
    type: "categories"
    ---
    ```
+   ### 至此我们就通过Github+Hexo+Anzhiyu搭建好了自己的个人博客！
+
+   ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/72.png)
