@@ -192,6 +192,12 @@ Set-ExecutionPolicy RemoteSigned
 
 ## 经过上述步骤，我们已经成功通过Github自带的github.io方式部署了我们的博客，但是还需要进一步的美化
 
+### 个人图床的搭建
+
+个人图床就是你的个人博客网站上图片的存储地址，因为我们是采用Github作为服务器，所以我们需要创建个人图床用来存储我们的图片，目前网络上的图床有很多，选择合适稳定的图床即可。
+
+或者可以查看我的其他文章，使用Github创建个人图床。
+
 ### 安装Hexo的“安知鱼”的主题
 
 HEXO的官方主题有很多种可以选择[点击跳转](https://hexo.io/themes/)，我们这次使用Anzhiyu的主题 [安装方法](https://github.com/anzhiyu-c/hexo-theme-anzhiyu?tab=readme-ov-file)
