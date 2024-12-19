@@ -168,6 +168,11 @@
       avatar: https://www.limin.studio/favicon.ico
       descr: 各类信息教程
       recommend: true  
+    - name: 一间生活
+      link: https://ncnccn.cn/
+      avatar: https://ncnccn.cn/favicon.ico
+      descr: 摄影图集
+      recommend: true   
     - name: 所有博客
       link: https://blogwe.com/
       avatar: https://blogwe.com/favicon.ico
