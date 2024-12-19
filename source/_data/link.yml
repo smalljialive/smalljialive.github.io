@@ -152,7 +152,12 @@
       link: https://www.velasx.com/
       avatar: https://www.velasx.com/favicon.ico
       descr: 电影小说观后地
-      recommend: true    
+      recommend: true 
+    - name: 流浪天下
+      link: https://maie.name/
+      avatar: https://maie.name/favicon.ico
+      descr: 背包行走流浪天下
+      recommend: true  
     - name: 艾克笔记
       link: https://aikenote.com/
       avatar: https://aikenote.com/favicon.ico
