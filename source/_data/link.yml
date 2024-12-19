@@ -1014,8 +1014,8 @@
       descr: Steam游戏下载（挂梯子）
       recommend: true
     - name:  GBT游戏库
-      link: http://gbtgame.ysepan.com/ 
-      avatar: http://gbtgame.ysepan.com/favicon.ico
+      link: https://pan.gbtgame.me/
+      avatar: https://pan.gbtgame.me/favicon.ico
       descr: GBT游戏下载
       recommend: true
     - name:  资源避难所
