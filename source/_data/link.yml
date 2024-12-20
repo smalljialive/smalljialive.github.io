@@ -453,6 +453,10 @@
       link: https://yandex.ru/business/boost/blueprint/41301891
       avatar: https://yandex.ru/business/favicon.ico
       descr: Yandex的广告制作页面   
+    - name: Yandex网站
+      link: https://webmaster.yandex.ru/
+      avatar: https://webmaster.yandex.ru/favicon.ico
+      descr: Yandex的网站优化页面     
     - name: 谷歌分析-GA4
       link: https://analytics.google.com/
       avatar: https://analytics.google.com/favicon.ico
