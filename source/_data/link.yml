@@ -219,6 +219,11 @@
       avatar: https://www.xcole.cn/favicon.ico
       descr: AI绘画，文字图片生成绘画
       recommend: true
+    - name: 文生图
+      link: https://tti.hamm.cn/
+      avatar: https://tti.hamm.cn/favicon.ico
+      descr: 一个文字生成图片的小工具
+      recommend: true  
 #分界线-------------------------------------------------强大插件
 - class_name: 强大插件
   class_desc: 各种插件与框架网站
