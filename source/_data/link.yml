@@ -476,7 +476,15 @@
     - name: SEO工具大全
       link: https://smallseotools.com/zh/
       avatar: https://smallseotools.com/favicon.ico
-      descr: SEO工具大全   
+      descr: SEO工具大全
+    - name: Semrush官方工具
+      link: https://semrush.com
+      avatar: https://semrush.com/favicon.ico
+      descr: Semrush官方工具  
+    - name: Semrush外租网站
+      link: https://dash.3ue.com/
+      avatar: https://dash.3ue.com/favicon.ico
+      descr: Semrush外租工具网站  
     - name: 搜索模拟器
       link: http://isearchfrom.com/
       avatar: http://isearchfrom.com/favicon.ico
