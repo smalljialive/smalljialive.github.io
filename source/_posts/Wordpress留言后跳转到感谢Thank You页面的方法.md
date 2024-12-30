@@ -8,9 +8,9 @@ date: '2024-12-30T13:55:51.904032+08:00'
 tags:
 - WordPress
 - 网站建设
-title: title
+title: Wordpress留言后跳转到感谢Thank You页面的方法
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20241230140952.png
-updated: '2024-12-30T15:45:37.356+08:00'
+updated: '2024-12-30T16:51:34.420+08:00'
 ---
 ### Wordpress留言表单Contact Form7插件
 
