@@ -112,7 +112,7 @@ Yoast Seo是第一个真正意义上的 WordPress 全能SEO解决方案！包含
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/018.png)
 
-### Fixed widget
+### **Fixed widget**
 
 该插件也叫作固定的widget，使用 fixed widget小工具插件来创建粘性窗口小工具，这些页面在向上或向下滚动页面时会停留在可见的屏幕区域中，从而提高转化率。可设置固定元素离顶部多少像素，遇到底部那个元素停止固定。
 
