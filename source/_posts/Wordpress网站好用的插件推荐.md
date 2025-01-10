@@ -125,3 +125,21 @@ Yoast Seo是第一个真正意义上的 WordPress 全能SEO解决方案！包含
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/020.png)
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/021.png)
+
+### **MetaSlider**
+
+MetaSlider 使您能够在 WordPress 网站上创建精美的幻灯片、轮播或图库。该插件可用于制作产品轮播图，一样也是通过短代码调用，无法在区块中直接使用。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/022.png)
+
+### **Change WordPress Login Logo**
+
+通过简单的设置即可上传您的 WordPress 登录页面徽标，而不是通常的 WordPress 徽标。该插件用于更改登录界面的logo。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/023.png)
+
+### **Advanced Editor Tools**
+
+扩展并增强了区块编辑器（Gutenberg）和经典编辑器（TinyMCE）。该插件增加了编辑器的更多功能，但是会占用内容，一般情况下用处不是很大。若对接第三方公司，需要更换到经典编辑器时可使用，前端编辑起来更直观。
+
+![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/024.png)
