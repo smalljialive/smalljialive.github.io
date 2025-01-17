@@ -163,6 +163,11 @@
       avatar: https://aikenote.com/favicon.ico
       descr: 跨境谷歌各类知识 
       recommend: true
+    - name: 图帕先生
+      link: https://www.yestupa.com/
+      avatar: https://www.yestupa.com/favicon.ico
+      descr: 跨境谷歌广告教程大全
+      recommend: true  
     - name: 利民工作室
       link: https://www.limin.studio/
       avatar: https://www.limin.studio/favicon.ico
@@ -254,6 +259,10 @@
       link: https://icons.bootcss.com/
       avatar: https://icons.bootcss.com/favicon.ico
       descr: Bootstrap官方图标库  
+    - name: 微软Clarity数据分析
+      link: https://clarity.microsoft.com/
+      avatar: https://clarity.microsoft.com/favicon.ico
+      descr: 微软网站分析工具   
     - name: Prowhost
       link: https://prowhost.com/
       avatar: https://prowhost.com/favicon.ico
@@ -473,6 +482,14 @@
       link: https://search.google.com/
       avatar: https://search.google.com/favicon.ico
       descr: 谷歌搜索控制台
+    - name: 谷歌广告信息公开中心
+      link: https://adstransparency.google.com/?authuser=0&region=HK
+      avatar: https://adstransparency.google.com/favicon.ico
+      descr: 谷歌广告信息公开中心，查看同行广告数据  
+    - name: Looker Studio报告
+      link: https://lookerstudio.google.com/u/0/navigation/reporting
+      avatar: https://lookerstudio.google.com/favicon.ico
+      descr: 谷歌广告报告中心，多种报告模板 
     - name: 网站速度洞察
       link: https://pagespeed.web.dev/
       avatar: https://pagespeed.web.dev/favicon.ico
