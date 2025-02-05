@@ -221,7 +221,7 @@
     - name: Deepseek对话
       link: https://chat.deepseek.com/
       avatar: https://chat.deepseek.com/favicon.ico
-      descr: 仿制ChatGpt对话,同类型对话
+      descr: Chatgpt同类型对话
       recommend: true
     - name: AI生成图片
       link: https://www.xcole.cn/draw/opt?type=ttp
