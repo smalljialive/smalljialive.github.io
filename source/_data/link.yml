@@ -697,6 +697,11 @@
       avatar: https://wap.txt80.com/favicon.ico
       descr: 全本电子书下载网站
       recommend: true
+    - name: 有声听书网
+      link: https://www.nianyin.com/
+      avatar: https://www.nianyin.com/favicon.ico
+      descr: 各类电子书收听
+      recommend: true  
     - name: 中国色
       link: http://zhongguose.com
       avatar: http://zhongguose.com/favicon.ico
