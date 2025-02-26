@@ -1089,6 +1089,11 @@
       avatar: https://www.woshipm.com/favicon.ico
       descr: 产品经理课程在线学习，产品经理思路
       recommend: true 
+    - name: 下厨房
+      link: https://www.woshipm.com/
+      avatar: https://www.woshipm.com/favicon.ico
+      descr: 下厨房，多个家常菜谱分享网站
+      recommend: true   
 #分界线-------------------------------------------------游戏大全      
 - class_name: 游戏大全
   class_desc: 各类单机3A游戏大全
@@ -1196,6 +1201,17 @@
       avatar: https://laowang.co/favicon.ico
       descr: 老王电影，免费手机影视大全
       recommend: true   
+    - name: 爱电影  
+      link: https://www.gs4x7nq4.com/
+      avatar: https://www.gs4x7nq4.com/favicon.ico
+      descr: 爱电影，高清影视免费在线播放
+      recommend: true   
+    - name: 八号影视      
+      link: https://www.bahaotv.com/
+      avatar: https://www.bahaotv.com/favicon.ico
+      descr: 八号影视，最新高清热播电影
+      recommend: true     
+
     # - name: 来看点播
     #   link: https://lkvod.us/
     #   avatar: https://lkvod.us/favicon.ico
