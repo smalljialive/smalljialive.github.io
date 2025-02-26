@@ -1100,10 +1100,10 @@
       avatar: https://koyso.com/favicon.ico
       descr: 大型3A单机游戏下载
       recommend: true 
-    - name: Switch游戏库
-      link: https://switch520.com/
-      avatar: https://switch520.com/favicon.ico
-      descr: Switch游戏下载
+    - name: Game520游戏中心
+      link: https://www.gamer520.com/
+      avatar: https://www.gamer520.com/favicon.ico
+      descr: 全球游戏交流中心
       recommend: true      
     - name:  Steam游戏库
       link: https://steamunlocked.net/
