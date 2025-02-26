@@ -110,6 +110,11 @@
       avatar: https://www.fob123.com/favicon.ico
       descr: 外贸工具大全
       recommend: true 
+    - name: 解压网站导航
+      link: https://hu123.cc/
+      avatar: https://hu123.cc/favicon.ico
+      descr: 多种解压小游戏
+      recommend: true   
     - name: 香菇备忘录
       link: https://siitake.cn/
       avatar: https://siitake.cn/favicon.ico
@@ -943,6 +948,11 @@
       avatar: https://www.skylinewebcams.com/favicon.ico
       descr: 世界各地在线查看
       recommend: true
+    - name: 世界遨游
+      link: http://www.airpano.org.cn/
+      avatar: http://www.airpano.org.cn/favicon.ico
+      descr: 足不出户，遨游全世界
+      recommend: true  
     - name: 在线投喂金鱼
       link: https://goldfishies.com/
       avatar: https://goldfishies.com/favicon.ico
