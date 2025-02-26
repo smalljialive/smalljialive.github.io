@@ -953,6 +953,11 @@
       avatar: https://www.dbbqb.com/favicon.ico
       descr: 各种表情包搜索下载
       recommend: true   
+    - name: Web骇客
+      link: https://www.webhek.com/
+      avatar: https://www.webhek.com/favicon.ico
+      descr: Web大佬制作的各种小游戏与工具
+      recommend: true     
     - name: 租房搜索地图
       link: https://house2048.cn/app/house-map/
       avatar: https://house2048.cn/app/house-map/favicon.ico
