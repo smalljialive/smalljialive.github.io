@@ -1058,7 +1058,11 @@
       avatar: https://www.beautifulcarrot.com/favicon.ico
       descr: 一键生成手写文稿
       recommend: true    
-      
+    - name: 有意思  
+      link: https://www.yysv.cn/
+      avatar: https://www.yysv.cn/favicon.ico
+      descr: 发现新奇有意思的内容
+      recommend: true    
 #分界线-------------------------------------------------知识学堂    
 - class_name: 知识学堂
   class_desc: 技能知识在线学习
