@@ -1191,12 +1191,11 @@
       avatar: https://www.tdgo.shop/favicon.ico
       descr: 火车太堵，全网蓝光极速观影
       recommend: true  
-      
-    # - name: 落攻阁影视
-    #   link: https://www.lggys.com/
-    #   avatar: https://www.lggys.com/favicon.ico
-    #   descr: 落攻阁影视，多种资源在线观看
-    #   recommend: true   
+    - name: 老王电影
+      link: https://laowang.co/
+      avatar: https://laowang.co/favicon.ico
+      descr: 老王电影，免费手机影视大全
+      recommend: true   
     # - name: 来看点播
     #   link: https://lkvod.us/
     #   avatar: https://lkvod.us/favicon.ico
