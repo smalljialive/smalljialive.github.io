@@ -1012,7 +1012,12 @@
       link: http://www.wenangou.com/
       avatar: http://www.wenangou.com/favicon.ico
       descr: 文案生成藏头诗，各类谐音
-      recommend: true    
+      recommend: true 
+    - name: 文字雨
+      link: http://gogoame.sumbioun.com/
+      avatar: http://gogoame.sumbioun.com/favicon.ico
+      descr: 文字生成文字雨
+      recommend: true   
     - name: 解压网站
       link: https://aidn.jp/mikutap/
       avatar: https://aidn.jp/favicon.ico
