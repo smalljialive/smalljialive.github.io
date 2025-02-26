@@ -1125,6 +1125,11 @@
       avatar: https://www.xiachufang.com/favicon.ico
       descr: 下厨房，多个家常菜谱分享网站
       recommend: true   
+    - name: 手艺网
+      link: https://www.ehow.com/
+      avatar: https://www.ehow.com/favicon.ico
+      descr: 全球手工艺学习分享网
+      recommend: true    
 #分界线-------------------------------------------------游戏大全      
 - class_name: 游戏大全
   class_desc: 各类单机3A游戏大全
