@@ -1181,6 +1181,17 @@
       avatar: https://dagongren7.com/favicon.ico
       descr: 打工人影院，各类影视资源在线观看
       recommend: true   
+    - name: 7点电影
+      link: https://www.7.movie/
+      avatar: https://www.7.movie/favicon.ico
+      descr: 7点电影，最新最快的视频分享
+      recommend: true   
+    - name: 火车太堵
+      link: https://www.tdgo.shop/
+      avatar: https://www.tdgo.shop/favicon.ico
+      descr: 火车太堵，全网蓝光极速观影
+      recommend: true  
+      
     # - name: 落攻阁影视
     #   link: https://www.lggys.com/
     #   avatar: https://www.lggys.com/favicon.ico
