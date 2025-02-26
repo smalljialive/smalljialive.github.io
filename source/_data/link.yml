@@ -1171,6 +1171,16 @@
       avatar: https://waipian16.com/favicon.ico
       descr: 歪片星球，各类影视资源在线观看
       recommend: true 
+    - name: 想看影院
+      link: https://xiangkanyy.com/
+      avatar: https://xiangkanyy.com/favicon.ico
+      descr: 想看影院，各类影视资源在线观看
+      recommend: true   
+    - name: 打工人影院
+      link: https://dagongren7.com/
+      avatar: https://dagongren7.com/favicon.ico
+      descr: 打工人影院，各类影视资源在线观看
+      recommend: true   
     # - name: 落攻阁影视
     #   link: https://www.lggys.com/
     #   avatar: https://www.lggys.com/favicon.ico
