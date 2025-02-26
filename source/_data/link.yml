@@ -1033,6 +1033,12 @@
       avatar: https://www.yduanzi.com/favicon.ico
       descr: 高效热评段子
       recommend: true  
+    - name: 萝卜工坊  
+      link: https://www.beautifulcarrot.com/
+      avatar: https://www.beautifulcarrot.com/favicon.ico
+      descr: 一键生成手写文稿
+      recommend: true    
+      
 #分界线-------------------------------------------------知识学堂    
 - class_name: 知识学堂
   class_desc: 技能知识在线学习
