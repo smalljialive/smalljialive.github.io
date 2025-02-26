@@ -1136,51 +1136,51 @@
       avatar: https://cddys.com/favicon.ico
       descr: 臭蛋蛋影视，多种资源在线观看
       recommend: true     
-    - name: 落攻阁影视
-      link: https://www.lggys.com/
-      avatar: https://www.lggys.com/favicon.ico
-      descr: 落攻阁影视，多种资源在线观看
-      recommend: true   
-    - name: 来看点播
-      link: https://lkvod.us/
-      avatar: https://lkvod.us/favicon.ico
-      descr: 来看点播，多种资源在线观看
-      recommend: true    
-    - name: 柯南影视
-      link: https://www.knvod.com/
-      avatar: https://www.knvod.com/favicon.ico
-      descr: 柯南影视，多种资源在线观看
-      recommend: true    
+    # - name: 落攻阁影视
+    #   link: https://www.lggys.com/
+    #   avatar: https://www.lggys.com/favicon.ico
+    #   descr: 落攻阁影视，多种资源在线观看
+    #   recommend: true   
+    # - name: 来看点播
+    #   link: https://lkvod.us/
+    #   avatar: https://lkvod.us/favicon.ico
+    #   descr: 来看点播，多种资源在线观看
+    #   recommend: true    
+    # - name: 柯南影视
+    #   link: https://www.knvod.com/
+    #   avatar: https://www.knvod.com/favicon.ico
+    #   descr: 柯南影视，多种资源在线观看
+    #   recommend: true    
     - name: Freeok
       link: https://www.freeok.pro/
       avatar: https://www.freeok.pro/favicon.ico
       descr: Freeok影视，多种资源在线观看
       recommend: true  
-    - name: 八哥电影网
-      link: https://www.portlogistics.com.cn/
-      avatar: https://www.portlogistics.com.cn/favicon.ico
-      descr: 八哥电影网，多种资源在线观看
-      recommend: true  
+    # - name: 八哥电影网
+    #   link: https://www.portlogistics.com.cn/
+    #   avatar: https://www.portlogistics.com.cn/favicon.ico
+    #   descr: 八哥电影网，多种资源在线观看
+    #   recommend: true  
     - name: 茶杯狐
       link: https://cupfox.love/
       avatar: https://cupfox.love/favicon.ico
       descr: 茶杯狐，各种类型电影集合推荐
       recommend: true   
-    - name: 厂长资源
-      link: https://www.hao450.com/
-      avatar: https://www.hao450.com/favicon.ico
-      descr: 厂长资源，各类影视资源在线观看
-      recommend: true  
-    - name: 追影猫
-      link: https://zhuiyingmao4.com/
-      avatar: https://zhuiyingmao4.com/favicon.ico
-      descr: 追影猫，各类影视资源在线观看
-      recommend: true    
-    - name: 第九电影
-      link: https://www.dijiu.net/
-      avatar: https://www.dijiu.net/favicon.ico
-      descr: 第九电影，各类影视资源在线观看
-      recommend: true  
+    # - name: 厂长资源
+    #   link: https://www.hao450.com/
+    #   avatar: https://www.hao450.com/favicon.ico
+    #   descr: 厂长资源，各类影视资源在线观看
+    #   recommend: true  
+    # - name: 追影猫
+    #   link: https://zhuiyingmao4.com/
+    #   avatar: https://zhuiyingmao4.com/favicon.ico
+    #   descr: 追影猫，各类影视资源在线观看
+    #   recommend: true    
+    # - name: 第九电影
+    #   link: https://www.dijiu.net/
+    #   avatar: https://www.dijiu.net/favicon.ico
+    #   descr: 第九电影，各类影视资源在线观看
+    #   recommend: true  
     - name: 4K影视小站
       link: https://4kysxz.net/
       avatar: https://4kysxz.net/favicon.ico
@@ -1191,16 +1191,16 @@
       avatar: https://waipian16.com/favicon.ico
       descr: 歪片星球，各类影视资源在线观看
       recommend: true  
-    - name: 80电影网
-      link: https://www.y80s.tv/
-      avatar: https://www.y80s.tv/favicon.ico
-      descr: 80手机电影，各类影视资源在线观看
-      recommend: true    
-    - name: 155电影网
-      link: https://www.tv155.cn/
-      avatar: https://www.tv155.cn/favicon.ico
-      descr: 155电影网，多种电影资源在线观看
-      recommend: true    
+    # - name: 80电影网
+    #   link: https://www.y80s.tv/
+    #   avatar: https://www.y80s.tv/favicon.ico
+    #   descr: 80手机电影，各类影视资源在线观看
+    #   recommend: true    
+    # - name: 155电影网
+    #   link: https://www.tv155.cn/
+    #   avatar: https://www.tv155.cn/favicon.ico
+    #   descr: 155电影网，多种电影资源在线观看
+    #   recommend: true    
     - name: 追风视频
       link: https://www.zfsp.cc/
       avatar: https://www.zfsp.cc/favicon.ico
