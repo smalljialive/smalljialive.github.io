@@ -1028,6 +1028,11 @@
       avatar: https://www.soutushenqi.com/favicon.ico
       descr: 壁纸，图片素材，全网检索下载
       recommend: true
+    - name: 网易云段子  
+      link: https://www.yduanzi.com/
+      avatar: https://www.yduanzi.com/favicon.ico
+      descr: 高效热评段子
+      recommend: true  
 #分界线-------------------------------------------------知识学堂    
 - class_name: 知识学堂
   class_desc: 技能知识在线学习
