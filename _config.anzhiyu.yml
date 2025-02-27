@@ -815,7 +815,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">芦叶满汀洲，寒沙带浅流。二十年重过南楼。柳下系船犹未稳，能几日，又中秋。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">黄鹤断矶头，故人今在否？旧江山浑是新愁。<b style="color:#fff">欲买桂花同载酒，终不似，少年游~</b></div> # 默认为站点描述
+    description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">不被喜欢的姑娘喜欢，是一件很伤心的事情，可天没有塌下来，。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">该怎么活，还得怎么活</b></div> # 默认为站点描述
     name_link: /
 
   card_announcement:
