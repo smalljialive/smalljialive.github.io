@@ -816,7 +816,7 @@ aside:
   card_author:
     enable: true
     description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">苦难一事，世间何其多，有何奇怪？
-任何一个身世坎坷的孩子，谁缺这个？可奇怪之处，在于吃苦二字，怎么一个吃法。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">人间苦难，不消说也，说不得也</b></div> # 默认为站点描述
+任何一个身世坎坷的孩子，谁缺这个？可奇怪之处，在于吃苦二字，怎么一个吃法</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"><b style="color:#fff">人间苦难，不消说也，说不得也</b></div> # 默认为站点描述
     name_link: /
 
   card_announcement:
