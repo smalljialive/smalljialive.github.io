@@ -815,10 +815,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description:  
-    <b style="color:#fff">
-    人间苦难，不消说也，说不得也
-    </b>
+    description:  <b style="color:#fff">人间苦难，不消说也，说不得也</b>
     name_link: /
 
   card_announcement:
