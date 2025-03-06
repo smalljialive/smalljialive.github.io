@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout blog source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: blog
 
@@ -21,7 +21,7 @@ jobs:
           node-version: "16" # 设置 Node.js 版本
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
