@@ -815,10 +815,10 @@ aside:
     category: true
   card_author:
     enable: true
-    description:  <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);"></div>
-    <div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">
-    <b style="color:#fff">人间苦难，不消说也，说不得也</b>
-    </div>
+    description:  
+    <b style="color:#fff">
+    人间苦难，不消说也，说不得也
+    </b>
     name_link: /
 
   card_announcement:
