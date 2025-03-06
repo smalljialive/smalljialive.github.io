@@ -907,7 +907,27 @@
       link: https://music.alang.run/
       avatar: https://music.alang.run/favicon.ico
       descr: 在线听歌的音乐室
+      recommend: true    
+    - name: 昔枫音乐盒
+      link: https://mu-jie.cc/musicBox/
+      avatar: https://mu-jie.cc/favicon.ico
+      descr: 在线音乐播放器
       recommend: true      
+    - name: 爱听音乐网
+      link: http://music.2t58.com/
+      avatar: http://music.2t58.com/favicon.ico
+      descr: 爱听音乐网
+      recommend: true
+    - name: 好听轻音乐网
+      link: http://www.htqyy.com/
+      avatar: http://www.htqyy.com/favicon.ico
+      descr: 好听轻音乐网
+      recommend: true  
+    - name: 歌曲宝
+      link: https://www.gequbao.com/
+      avatar: https://www.gequbao.com/favicon.ico
+      descr: 歌曲宝音乐播放器
+      recommend: true  
     - name: 抓鱼呀
       link: https://www.zhuayuya.com/
       avatar: https://www.zhuayuya.com/favicon.ico
