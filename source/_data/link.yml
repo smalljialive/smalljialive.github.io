@@ -177,7 +177,12 @@
       link: https://mu-jie.cc/
       avatar: https://mu-jie.cc/favicon.ico
       descr: 昔枫沐杰个人博客网站
-      recommend: true   
+      recommend: true  
+    - name: Typecho合集网站 
+      link: https://typecho.work/
+      avatar: https://typecho.work/favicon.ico
+      descr: Typecho主题插件合集网站
+      recommend: true    
     - name: 利民工作室
       link: https://www.limin.studio/
       avatar: https://www.limin.studio/favicon.ico
