@@ -313,6 +313,11 @@
       avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico
       descr: 各类代码小组件源码库
       recommend: true
+    - name: Miku小工具
+      link: https://tools.miku.ac/
+      avatar: https://tools.miku.ac/favicon.ico
+      descr: 多种小工具集合网站
+      recommend: true  
     - name: 小飞兔网站下载器
       link: https://www.xftsoft.com/
       avatar: https://www.xftsoft.com/favicon.ico
