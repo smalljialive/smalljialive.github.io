@@ -183,6 +183,11 @@
       avatar: https://typecho.work/favicon.ico
       descr: Typecho主题插件合集网站
       recommend: true    
+    - name: 资源整合平台
+      link: https://www.yydsym.com/
+      avatar: https://www.yydsym.com/favicon.ico
+      descr: 各类网络资源整合免费下载
+      recommend: true   
     - name: 利民工作室
       link: https://www.limin.studio/
       avatar: https://www.limin.studio/favicon.ico
