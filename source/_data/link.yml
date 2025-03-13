@@ -775,7 +775,12 @@
       link: https://www.fonts.net.cn/
       avatar: https://www.fonts.net.cn/favicon.ico
       descr: 字体天下，各类免费商用字体下载
-      recommend: true  
+      recommend: true 
+    - name: 求字体
+      link: https://www.qiuziti.com/
+      avatar: https://www.qiuziti.com/favicon.ico
+      descr: 各类字体识别下载
+      recommend: true   
     - name: 大作设计网
       link: https://www.bigbigwork.com/
       avatar: https://www.bigbigwork.com/favicon.ico
