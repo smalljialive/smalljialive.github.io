@@ -527,7 +527,11 @@
     - name: 网站速度洞察
       link: https://pagespeed.web.dev/
       avatar: https://pagespeed.web.dev/favicon.ico
-      descr: 网站速度洞察  
+      descr: 网站速度洞察 
+    - name: 站长工具
+      link: https://tool.chinaz.com/
+      avatar: https://tool.chinaz.com/favicon.ico
+      descr: 网站各种数据统计分析  
     - name: SEO工具大全
       link: https://smallseotools.com/zh/
       avatar: https://smallseotools.com/favicon.ico
