@@ -560,6 +560,10 @@
       link: https://marketfinder.thinkwithgoogle.com/intl/zh-CN_cn
       avatar: https://marketfinder.thinkwithgoogle.com/favicon.ico
       descr: 全球各类网站流量热度分析
+    - name: 国际快递追踪
+      link: https://www.17track.net/zh-cn
+      avatar: https://www.17track.net/favicon.ico
+      descr: 全球各类网站流量热度分析
 #分界线-------------------------------------------------视频解析       
 - class_name: 视频工具
   class_desc: 各类视频解析网站
