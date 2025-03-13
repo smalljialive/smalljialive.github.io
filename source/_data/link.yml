@@ -288,6 +288,10 @@
       link: https://clarity.microsoft.com/
       avatar: https://clarity.microsoft.com/favicon.ico
       descr: 微软网站分析工具   
+    - name: 网站速度分析
+      link: https://gtmetrix.com/
+      avatar: https://gtmetrix.com/favicon.ico
+      descr: GTmetrix网站分析
     - name: Prowhost
       link: https://prowhost.com/
       avatar: https://prowhost.com/favicon.ico
