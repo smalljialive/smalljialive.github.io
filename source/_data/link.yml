@@ -415,7 +415,7 @@
     - name: LOGO制作中心    
       link: https://www.logogenie.com/
       avatar: https://www.logogenie.com/favicon.ico
-      descr: 在线生成logo，自定义关键词
+      descr: 在线生成logo，自定义关键词与行业
       recommend: true  
     - name: 图片转表格   
       link: https://web.baimiaoapp.com/
