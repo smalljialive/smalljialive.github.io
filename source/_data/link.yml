@@ -183,6 +183,11 @@
       avatar: https://mu-jie.cc/favicon.ico
       descr: 昔枫沐杰个人博客网站
       recommend: true  
+    - name: 生猛大蝦
+      link: https://yjyj.net/
+      avatar: https://yjyj.net/favicon.ico
+      descr: 生猛大蝦的网络笔记
+      recommend: true   
     - name: Typecho合集网站 
       link: https://typecho.work/
       avatar: https://typecho.work/favicon.ico
