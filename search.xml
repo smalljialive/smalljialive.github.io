@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>禁用wordpress插件的更新-全部禁用和部分禁用</title>
+      <link href="/2025/04/03/%E7%A6%81%E7%94%A8wordpress%E6%8F%92%E4%BB%B6%E7%9A%84%E6%9B%B4%E6%96%B0-%E5%85%A8%E9%83%A8%E7%A6%81%E7%94%A8%E5%92%8C%E9%83%A8%E5%88%86%E7%A6%81%E7%94%A8/"/>
+      <url>/2025/04/03/%E7%A6%81%E7%94%A8wordpress%E6%8F%92%E4%BB%B6%E7%9A%84%E6%9B%B4%E6%96%B0-%E5%85%A8%E9%83%A8%E7%A6%81%E7%94%A8%E5%92%8C%E9%83%A8%E5%88%86%E7%A6%81%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p>**”主包”**在工作建站的时候，有时候会用一些大佬破解的wordpress插件，这就导致有时候一部分插件会一直显示需要更新到最新版本。</p><p>然而**”主包”**也是稍微有点强迫症，遇到更新必须要点，所以费尽一番功夫后，从代码层面屏蔽掉了插件的更新提醒。</p><p>代码如下:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//禁用某个插件更新</span><br><span class="line">function filter_plugin_updates( $value ) &#123;</span><br><span class="line">    unset( $value-&gt;response[&#x27;watermark-reloaded/watermark-loader.php&#x27;] );</span><br><span class="line">    return $value;</span><br><span class="line">&#125;</span><br><span class="line">add_filter( &#x27;site_transient_update_plugins&#x27;, &#x27;filter_plugin_updates&#x27; );</span><br></pre></td></tr></table></figure><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//禁用全部插件更新</span><br><span class="line">add_filter( &#x27;pre_site_transient_update_plugins&#x27;, create_function( &#x27;$a&#x27;, &quot;return;&quot; ) );</span><br><span class="line"></span><br><span class="line">//第二种禁用全部插件更新，与上面二选一即可</span><br><span class="line">remove_action( &#x27;load-update-core.php&#x27;, &#x27;wp_update_plugins&#x27; ); </span><br><span class="line">add_filter( &#x27;pre_site_transient_update_plugins&#x27;, create_function( &#x27;$b&#x27;, &quot;return null;&quot; ) );</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 代码细节 </category>
+          
+          <category> Wordpress </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Wordpress </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2025-2月的心路历程</title>
       <link href="/2025/03/03/2025-2%E6%9C%88%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/"/>
       <url>/2025/03/03/2025-2%E6%9C%88%E7%9A%84%E5%BF%83%E8%B7%AF%E5%8E%86%E7%A8%8B/</url>
