@@ -2,12 +2,11 @@
 abbrlink: ''
 categories:
 - - 代码细节
-- - Wordpress
+- - WordPress
 date: '2025-04-03T15:56:32.513551+08:00'
-tags:
-- Wordpress
+tags: []
 title: 禁用wordpress插件的更新-全部禁用和部分禁用
-updated: '2025-04-03T15:56:33.450+08:00'
+updated: '2025-04-09T17:20:43.833+08:00'
 ---
 **"主包"**在工作建站的时候，有时候会用一些大佬破解的wordpress插件，这就导致有时候一部分插件会一直显示需要更新到最新版本。
 
