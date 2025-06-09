@@ -351,6 +351,11 @@
       avatar: https://www.free-css.com/favicon.ico
       descr: 网站建站各类模块，Css样式展示，代码下载
       recommend: true  
+    - name: 转化-Convertio
+      link: https://convertio.co/zh/
+      avatar: https://convertio.co/zh/favicon.ico
+      descr: 各类文件在线转化，100mb以内
+      recommend: true
     - name: 云速成美站模版库
       link: https://moban.wezhan.cn
       avatar: https://moban.wezhan.cn/favicon.ico
