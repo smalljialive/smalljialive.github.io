@@ -341,8 +341,12 @@
       descr: 低价机场节点，贝贝云低价机场
     - name: 5sim接码平台
       link: https://5sim.net/
-      avatar: https://5sim.net/
+      avatar: https://5sim.net/favicon.ico
       descr: 全球多个国家的短信接码平台
+    - name: SMSPVA接码平台
+      link: https://smspva.com/
+      avatar: https://smspva.com/favicon.ico
+      descr: 全球多个国家的短信接码平台  
 #分界线-------------------------------------------------小工具站       
 - class_name: 小工具站
   class_desc: 各种好用的小工具
