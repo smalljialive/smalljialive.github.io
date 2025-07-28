@@ -1241,6 +1241,11 @@
       avatar: https://www.doyoudo.com/favicon.ico
       descr: Adobe各类软件学习，PS,PR,AE,CAD,C4D在线学习
       recommend: true 
+    - name: 网易云课堂
+      link: https://study.163.com/
+      avatar: https://study.163.com/favicon.ico
+      descr: 网易云课堂，各种运营推广技能学习
+      recommend: true   
     - name: 产品经理学堂
       link: https://www.woshipm.com/
       avatar: https://www.woshipm.com/favicon.ico
