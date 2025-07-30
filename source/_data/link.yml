@@ -306,7 +306,11 @@
     - name: Bootstrap icon
       link: https://icons.bootcss.com/
       avatar: https://icons.bootcss.com/favicon.ico
-      descr: Bootstrap官方图标库  
+      descr: Bootstrap官方图标库
+    - name: Siteground服务器
+      link: https://world.siteground.com/
+      avatar: https://world.siteground.com/favicon.ico
+      descr: Siteground服务器，速度快，续费贵  
     - name: 微软Clarity数据分析
       link: https://clarity.microsoft.com/
       avatar: https://clarity.microsoft.com/favicon.ico
