@@ -218,6 +218,11 @@
       avatar: https://ncnccn.cn/favicon.ico
       descr: 摄影图集
       recommend: true   
+    - name: 知识星球
+      link: https://www.zsxq.com/
+      avatar: https://www.zsxq.com/favicon.ico
+      descr: 知识星球，高质量付费各种教程与知识咨询
+      recommend: true     
     - name: 所有博客
       link: https://blogwe.com/
       avatar: https://blogwe.com/favicon.ico
