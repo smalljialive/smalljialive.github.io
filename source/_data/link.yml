@@ -662,11 +662,6 @@
       avatar: https://imyshare.com/favicon.ico
       descr: Imyshare短视频解析
       recommend: true 
-    - name: Nopapp视频解析
-      link: http://www.nopapp.com/
-      avatar: http://www.nopapp.com/favicon.ico
-      descr: 视频在线解析网站
-      recommend: true  
     - name: 贝贝视频解析
       link: https://xbeibeix.com/bilibili/
       avatar: https://xbeibeix.com/favicon.ico
