@@ -682,11 +682,6 @@
       avatar: https://dy.kukutool.com/favicon.ico
       descr: 短视频在线解析
       recommend: true 
-    - name: 小二视频解析
-      link: http://www.xiaoervideo.com/
-      avatar: http://www.xiaoervideo.com/favicon.ico
-      descr: 短视频在线解析
-      recommend: true
     - name: 阿森短视频去水印
       link: https://dou.asenl.com/
       avatar: https://dou.asenl.com/favicon.ico
