@@ -642,11 +642,6 @@
       avatar: https://www.savido.net/favicon.ico
       descr: Savideo外媒视频解析
       recommend: true  
-    - name: 10-Downloader
-      link: https://pickvideo.net/
-      avatar: https://pickvideo.net/favicon.ico
-      descr: 10downloader外媒视频解析
-      recommend: true  
     - name: YT-Mp3
       link: https://ytmp3.cc
       avatar: https://ytmp3.cc/favicon.ico
