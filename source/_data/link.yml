@@ -352,6 +352,12 @@
   flink_style: anzhiyu
   hundredSuffix: ""
   link_list:
+    - name: 浏览器网页3D软件
+      link: https://chili3d.com/
+      avatar: https://chili3d.com/favicon.ico
+      descr: 网页版3D软件在线使用
+      recommend: true
+  
     - name: H5+C3+JS小组件
       link: https://github.com/front-end-study-GoGoGo/template-html-css-js
       avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico
@@ -1129,6 +1135,11 @@
       avatar: https://www.yysv.cn/favicon.ico
       descr: 发现新奇有意思的内容
       recommend: true    
+    - name: 以图查番网站  
+      link: https://trace.moe/
+      avatar: https://trace.moe/favicon.ico
+      descr: 番剧截图直接查源
+      recommend: true  
 #分界线-------------------------------------------------知识学堂    
 - class_name: 知识学堂
   class_desc: 技能知识在线学习
