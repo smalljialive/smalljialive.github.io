@@ -702,31 +702,11 @@
       avatar: https://www.xunjieshipin.com/favicon.ico
       descr: 迅捷视频声音消除
       recommend: true
-    - name: 乐视影视采集站
-      link: https://www.leshizy1.com/
-      avatar: https://www.leshizy1.com/favicon.ico
-      descr: 乐视影视采集站
-      recommend: true     
-    - name: 快看影视采集站
-      link: https://kuaikanzy.net/
-      avatar: https://kuaikanzy.net/favicon.ico
-      descr: 快看影视采集站
-      recommend: true   
     - name: 非凡影视采集站
       link: http://ffzy5.tv/
       avatar: http://ffzy5.tv/favicon.ico
       descr: 非凡影视采集站
-      recommend: true     
-    - name: 暴风影视采集站
-      link: https://publish.bfzy.tv/
-      avatar: https://publish.bfzy.tv/favicon.ico
-      descr: 暴风影视采集站
-      recommend: true   
-    - name: 赞片影视采集站
-      link: https://www.zanpiancms.com/
-      avatar: https://www.zanpiancms.com/favicon.ico
-      descr: 赞片影视采集站
-      recommend: true   
+      recommend: true
     - name: 飞飞影视采集站
       link: http://www.feifeicms.vip/portal.php
       avatar: http://www.feifeicms.vip/favicon.ico
@@ -953,11 +933,6 @@
       avatar: http://www.newcger.com/favicon.ico
       descr: 新CG素材网，动态效果素材网
       recommend: true     
-    - name: 微境映画资源网
-      link: http://www.microlensyh.com/
-      avatar: http://www.microlensyh.com/favicon.ico
-      descr: 微境映画资源网，各类影视软件教程
-      recommend: true    
 #分界线-------------------------------------------------新奇网站       
 - class_name: 新奇网站
   class_desc: 网络上的各种新奇网站
@@ -1170,7 +1145,7 @@
       avatar: https://www.allhistory.com/favicon.ico
       descr: 世界编年史，历史进程学习
       recommend: true  
-    - name: 语言学堂
+    - name: 多邻国语言学堂
       link: https://www.duolingo.cn
       avatar: https://www.duolingo.cn/favicon.ico
       descr: 在线学习各类语言，外语，粤语学习
@@ -1292,16 +1267,6 @@
       avatar: https://ikaola.tv/favicon.ico
       descr: 考拉TV，各类影视资源在线观看
       recommend: true    
-    - name: Gaze影视
-      link: https://gaze.run/
-      avatar: https://gaze.run/favicon.ico
-      descr: Gaze影视网，各类影视资源在线观看
-      recommend: true  
-    - name: Freeok
-      link: https://www.freeok.pro/
-      avatar: https://www.freeok.pro/favicon.ico
-      descr: Freeok影视，多种资源在线观看
-      recommend: true  
     - name: 4K影视小站
       link: https://4kysxz.net/
       avatar: https://4kysxz.net/favicon.ico
