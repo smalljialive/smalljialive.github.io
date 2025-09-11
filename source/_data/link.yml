@@ -407,10 +407,10 @@
       avatar: http://khroma.co/favicon.ico
       descr: Khroma多个颜色自定义搭配方案
       recommend: true
-    - name: 盘多多
-      link: http://www.panduoduo.top/
-      avatar: http://www.panduoduo.top/favicon.ico
-      descr: 网盘内容在线检索下载
+    - name: 云铺子
+      link: https://www.yunpz.net/
+      avatar: https://www.yunpz.net/favicon.ico
+      descr: 云铺子资源搜索
       recommend: true  
     - name: 简历制作
       link: https://www.polebrief.com/
