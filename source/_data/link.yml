@@ -973,6 +973,11 @@
       link: https://www.zhuayuya.com/
       avatar: https://www.zhuayuya.com/favicon.ico
       descr: 抓鱼呀官方网站，聊天摸鱼
+      recommend: true
+    - name: 旅法师营地
+      link: https://iyingdi.com/
+      avatar: https://iyingdi.com/favicon.ico
+      descr: 各类游戏攻略总结
       recommend: true  
     - name: 有意思吧
       link: https://www.youyisi8.com/
