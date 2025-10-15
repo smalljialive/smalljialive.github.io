@@ -753,6 +753,11 @@
       avatar: https://www.nianyin.com/favicon.ico
       descr: 各类电子书收听
       recommend: true  
+    - name: 悦听吧听书网
+      link: http://www.yuetingba.cn/
+      avatar: http://www.yuetingba.cn/favicon.ico
+      descr: 各类有声电子书收听
+      recommend: true   
     - name: 中国色
       link: http://zhongguose.com
       avatar: http://zhongguose.com/favicon.ico
