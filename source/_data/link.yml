@@ -352,6 +352,11 @@
   flink_style: anzhiyu
   hundredSuffix: ""
   link_list:
+    - name: 搜百软件下载
+      link: https://zhuaisuan.top/
+      avatar: https://zhuaisuan.top/favicon.ico
+      descr: 搜百软件下载，各类软件大全
+      recommend: true
     - name: 浏览器网页3D软件
       link: https://chili3d.com/
       avatar: https://chili3d.com/favicon.ico
