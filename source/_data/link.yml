@@ -979,6 +979,11 @@
       avatar: https://www.gequbao.com/favicon.ico
       descr: 歌曲宝音乐播放器
       recommend: true  
+    - name: FIZZ音乐下载
+      link: https://www.fizzmusic.net/
+      avatar: https://www.fizzmusic.net/favicon.ico
+      descr: Fizz音乐关键词检索下载
+      recommend: true    
     - name: 抓鱼呀
       link: https://www.zhuayuya.com/
       avatar: https://www.zhuayuya.com/favicon.ico
