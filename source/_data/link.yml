@@ -272,6 +272,11 @@
       avatar: https://tti.hamm.cn/favicon.ico
       descr: 一个文字生成图片的小工具
       recommend: true  
+    - name: 边界AI
+      link: https://yyai8.com/
+      avatar: https://yyai8.com/favicon.ico
+      descr: AI集合体（付费）
+      recommend: true
 #分界线-------------------------------------------------强大插件与框架
 - class_name: 强大插件
   class_desc: 各种插件与框架网站
