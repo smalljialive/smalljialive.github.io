@@ -964,6 +964,12 @@
       avatar: https://mu-jie.cc/favicon.ico
       descr: 在线音乐播放器
       recommend: true      
+    - name: Yity音乐网
+      link: https://music.yity.xyz/
+      avatar: https://music.yity.xyz/favicon.ico
+      descr: Yity在线音乐播放⭐️
+      recommend: true   
+      https://music.yity.xyz/playlist/12978624554
     - name: 爱听音乐网
       link: http://music.2t58.com/
       avatar: http://music.2t58.com/favicon.ico
