@@ -472,6 +472,21 @@
       avatar: https://www.logogenie.com/favicon.ico
       descr: 在线生成logo，自定义关键词与行业
       recommend: true  
+    - name: 美国地址生成器    
+      link: https://usaddressgen.com/
+      avatar: https://usaddressgen.com/favicon.ico
+      descr: 美国地址电话邮编生成
+      recommend: true  
+    - name: 多个国家地址生成    
+      link: https://www.dizhishengcheng.com/
+      avatar: https://www.dizhishengcheng.com/favicon.ico
+      descr: 多个国家的地址生成
+      recommend: true
+    - name: 国外地址生成
+      link: https://www.addressgenerator.net/
+      avatar: https://www.addressgenerator.net/favicon.ico
+      descr: 多个国家的地址生成
+      recommend: true  
     - name: 图片转表格   
       link: https://web.baimiaoapp.com/
       avatar: https://web.baimiaoapp.com/favicon.ico
