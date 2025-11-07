@@ -1024,6 +1024,11 @@
       avatar: https://iyingdi.com/favicon.ico
       descr: 各类游戏攻略总结
       recommend: true  
+    - name: 随机全球旅行攻略
+      link: https://earthroulette.com/zh
+      avatar: https://earthroulette.com/favicon.ico
+      descr: 随机旅行地址与攻略
+      recommend: true  
     - name: 有意思吧
       link: https://www.youyisi8.com/
       avatar: https://www.youyisi8.com/favicon.ico
