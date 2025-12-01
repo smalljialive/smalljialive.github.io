@@ -367,6 +367,11 @@
       avatar: https://zhuaisuan.top/favicon.ico
       descr: 搜百软件下载，各类软件大全
       recommend: true
+    - name: Adobe软件下载https://ps11.15ml.cn
+      link: https://ps11.15ml.cn
+      avatar: https://ps11.15ml.cn/favicon.ico
+      descr: 进入为PS，可通过更换URL里的软件名跳转
+      recommend: true
     - name: 浏览器网页3D软件
       link: https://chili3d.com/
       avatar: https://chili3d.com/favicon.ico
