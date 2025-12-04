@@ -1139,7 +1139,7 @@ nav_music:
   id: 540470546
   server: netease
   volume: 0.5 # 默认音量
-#   all_playlist: https://music.163.com/outchain/player?type=0&id=540470546
+  all_playlist: https://music.163.com/outchain/player?type=0&id=540470546
   autoplay: false
 
 # 路径为 /music 的音乐页面默认加载的歌单 1. nav_music 2. custom
