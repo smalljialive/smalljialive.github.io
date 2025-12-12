@@ -1205,6 +1205,11 @@
   flink_style: anzhiyu
   hundredSuffix: ""
   link_list:
+    - name: Oeasy教程网站
+      link: http://oeasy.org/
+      avatar: http://oeasy.org/favicon.ico
+      descr: 最厉害的各种软件教程网站，五星推荐
+      recommend: true
     - name: 在线大学
       link: https://www.edx.org/
       avatar: https://www.edx.org/favicon.ico
