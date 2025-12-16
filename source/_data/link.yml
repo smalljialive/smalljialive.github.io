@@ -692,11 +692,6 @@
     #  avatar: https://dirpy.link/favicon.ico
     #  descr: Dirpy外媒视频解析
     #  recommend: true 
-    - name: Spapi视频解析
-      link: https://api.spapi.cn/dsp.html
-      avatar: https://api.spapi.cn/favicon.ico
-      descr: Spapi短视频解析
-      recommend: true 
     - name: Imyshare视频解析
       link: https://imyshare.com/parsevideo/
       avatar: https://imyshare.com/favicon.ico
@@ -722,11 +717,11 @@
       avatar: https://dy.kukutool.com/favicon.ico
       descr: 短视频在线解析
       recommend: true 
-    - name: 蜜蜂去水印
-      link: https://video.ciding.cc/
-      avatar: https://video.ciding.cc/favicon.ico
-      descr: 短视频在线解析
-      recommend: true
+    #- name: 蜜蜂去水印
+    #  link: https://video.ciding.cc/
+    #  avatar: https://video.ciding.cc/favicon.ico
+    #  descr: 短视频在线解析
+    #  recommend: true
     - name: 机领视频网
       link: https://3g.gljlw.com/diy/douyin.php
       avatar: https://3g.gljlw.com/favicon.ico
@@ -923,11 +918,6 @@
       avatar: http://www.shengyin.com/favicon.ico
       descr: 声音网，各类音频素材在线试听下载
       recommend: true  
-    - name: 声音网
-      link: http://www.shengyin.com/
-      avatar: http://www.shengyin.com/favicon.ico
-      descr: 声音网，各类音频素材在线试听下载
-      recommend: true   
     - name: 吾道PPT制作
       link: https://www.woodo.cn/
       avatar: https://www.woodo.cn/favicon.ico
@@ -1099,11 +1089,11 @@
       avatar: https://goldfishies.com/favicon.ico
       descr: 在线投喂金鱼
       recommend: true  
-    - name: 表情包搜索
-      link: https://www.dbbqb.com/
-      avatar: https://www.dbbqb.com/favicon.ico
-      descr: 各种表情包搜索下载
-      recommend: true   
+    #- name: 表情包搜索
+    #  link: https://www.dbbqb.com/
+    #  avatar: https://www.dbbqb.com/favicon.ico
+    #  descr: 各种表情包搜索下载
+    #  recommend: true   
     - name: Web骇客
       link: https://www.webhek.com/
       avatar: https://www.webhek.com/favicon.ico
@@ -1149,11 +1139,11 @@
       avatar: https://toonme.com/favicon.ico
       descr: 图片生成卡通人物形象，自由创作人物卡通形象
       recommend: true   
-    - name: 文案狗谐音
-      link: http://www.wenangou.com/
-      avatar: http://www.wenangou.com/favicon.ico
-      descr: 文案生成藏头诗，各类谐音
-      recommend: true 
+    #- name: 文案狗谐音
+    #  link: http://www.wenangou.com/
+    #  avatar: http://www.wenangou.com/favicon.ico
+    #  descr: 文案生成藏头诗，各类谐音
+    #  recommend: true 
     - name: 文字雨
       link: http://gogoame.sumbioun.com/
       avatar: http://gogoame.sumbioun.com/favicon.ico
@@ -1245,11 +1235,11 @@
       avatar: https://www.runoob.com/favicon.ico
       descr: 前后端编程代码在线学习
       recommend: true 
-    - name: 吴师兄算法
-      link: https://www.cxyxiaowu.com/
-      avatar: https://www.cxyxiaowu.com/favicon.ico
-      descr: 计算机算法在线学习
-      recommend: true 
+    #- name: 吴师兄算法
+    #  link: https://www.cxyxiaowu.com/
+    #  avatar: https://www.cxyxiaowu.com/favicon.ico
+    #  descr: 计算机算法在线学习
+    #  recommend: true 
     - name: 科技大学
       link: https://www.udacity.com/
       avatar: https://www.udacity.com/favicon.ico
@@ -1362,16 +1352,16 @@
       avatar: https://waipian16.com/favicon.ico
       descr: 歪片星球，各类影视资源在线观看
       recommend: true 
-    - name: 想看影院
-      link: https://xiangkanyy.com/
-      avatar: https://xiangkanyy.com/favicon.ico
-      descr: 想看影院，各类影视资源在线观看
-      recommend: true   
-    - name: 打工人影院
-      link: https://dagongren7.com/
-      avatar: https://dagongren7.com/favicon.ico
-      descr: 打工人影院，各类影视资源在线观看
-      recommend: true   
+    #- name: 想看影院
+    #  link: https://xiangkanyy.com/
+    #  avatar: https://xiangkanyy.com/favicon.ico
+    #  descr: 想看影院，各类影视资源在线观看
+    #  recommend: true   
+    #- name: 打工人影院
+    #  link: https://dagongren7.com/
+    #  avatar: https://dagongren7.com/favicon.ico
+    #  descr: 打工人影院，各类影视资源在线观看
+    #  recommend: true   
     - name: 7点电影
       link: https://www.7.movie/
       avatar: https://www.7.movie/favicon.ico
@@ -1382,11 +1372,11 @@
       avatar: https://www.tdgo.shop/favicon.ico
       descr: 火车太堵，全网蓝光极速观影
       recommend: true  
-    - name: 老王电影
-      link: https://laowang.co/
-      avatar: https://laowang.co/favicon.ico
-      descr: 老王电影，免费手机影视大全
-      recommend: true   
+    #- name: 老王电影
+    #  link: https://laowang.co/
+    #  avatar: https://laowang.co/favicon.ico
+    #  descr: 老王电影，免费手机影视大全
+    #  recommend: true   
     - name: 爱电影  
       link: https://www.gs4x7nq4.com/
       avatar: https://www.gs4x7nq4.com/favicon.ico
