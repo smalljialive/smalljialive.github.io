@@ -128,11 +128,11 @@
       siteshot: https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg
       color: vip
       tag: 技术
-    - name: 猫奴日记
-      link: https://mao.nu/
-      avatar: https://mao.nu/favicon.ico
-      descr: 猫奴日记 
-      recommend: true   
+    #- name: 猫奴日记
+    #  link: https://mao.nu/
+    #  avatar: https://mao.nu/favicon.ico
+    #  descr: 猫奴日记 
+    #  recommend: true   
     - name: 孙老四的博客
       link: https://lao.si/
       avatar: https://lao.si/favicon.ico
@@ -178,11 +178,11 @@
       avatar: https://www.wpzh.net/favicon.ico
       descr: wordpress插件与主题破解付费
       recommend: true    
-    - name: 昔枫沐杰
-      link: https://mu-jie.cc/
-      avatar: https://mu-jie.cc/favicon.ico
-      descr: 昔枫沐杰个人博客网站
-      recommend: true  
+    #- name: 昔枫沐杰
+    #  link: https://mu-jie.cc/
+    #  avatar: https://mu-jie.cc/favicon.ico
+    #  descr: 昔枫沐杰个人博客网站
+    #  recommend: true  
     - name: 生猛大蝦
       link: https://yjyj.net/
       avatar: https://yjyj.net/favicon.ico
@@ -263,10 +263,10 @@
       avatar: https://chat.deepseek.com/favicon.ico
       descr: Chatgpt同类型对话
       recommend: true
-    - name: AI生成图片
-      link: https://www.xcole.cn/draw/opt?type=ttp
-      avatar: https://www.xcole.cn/favicon.ico
-      descr: AI绘画，文字图片生成绘画
+    #- name: AI生成图片
+    #  link: https://www.xcole.cn/draw/opt?type=ttp
+    #  avatar: https://www.xcole.cn/favicon.ico
+    #  descr: AI绘画，文字图片生成绘画
     - name: AI去除背景
       link:  https://aiimagebg.com/zh?url=heeee.com
       avatar:  https://aiimagebg.com/favicon.ico
@@ -392,11 +392,11 @@
       avatar: https://www.xftsoft.com/favicon.ico
       descr: 小飞兔网站下载器，网站仿站准用下载器
       recommend: true  
-    - name: CSS3模版站
-      link: https://www.free-css.com/free-css-templates?start=60
-      avatar: https://www.free-css.com/favicon.ico
-      descr: 网站建站各类模块，Css样式展示，代码下载
-      recommend: true  
+    #- name: CSS3模版站
+    #  link: https://www.free-css.com/free-css-templates?start=60
+    #  avatar: https://www.free-css.com/favicon.ico
+    #  descr: 网站建站各类模块，Css样式展示，代码下载
+    #  recommend: true  
     - name: 转化-Convertio
       link: https://convertio.co/zh/
       avatar: https://convertio.co/zh/favicon.ico
