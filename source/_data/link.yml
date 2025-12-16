@@ -497,16 +497,16 @@
       avatar: https://web.baimiaoapp.com/favicon.ico
       descr: 实拍图片表格扫描为电子表格
       recommend: true  
-    - name: 小马文字转声音    
-      link: http://peiyin.xiaomawenku.com
-      avatar: http://peiyin.xiaomawenku.com/favicon.ico
-      descr: 文案在线配音，文字转换各种声音
-      recommend: true  
-    - name: 996工具箱
-      link: http://www.video996.com/
-      avatar: http://www.video996.com/favicon.ico
-      descr: 996工具箱，各种办公常用工具在线使用
-      recommend: true
+    #- name: 小马文字转声音    
+    #  link: http://peiyin.xiaomawenku.com
+    #  avatar: http://peiyin.xiaomawenku.com/favicon.ico
+    #  descr: 文案在线配音，文字转换各种声音
+    #  recommend: true  
+    #- name: 996工具箱
+    #  link: http://www.video996.com/
+    #  avatar: http://www.video996.com/favicon.ico
+    #  descr: 996工具箱，各种办公常用工具在线使用
+    #  recommend: true
     - name: 综合工具库
       link: https://tool.lu/nav/
       avatar: https://tool.lu/favicon.ico
@@ -542,11 +542,11 @@
       avatar: http://tool.mkblog.cn/favicon.ico
       descr: 各种办公生活小工具在线使用
       recommend: true
-    - name: 在线工具箱
-      link: http://www.atoolbox.net/
-      avatar: http://www.atoolbox.net/favicon.ico
-      descr: 各种在线小工具集合
-      recommend: true  
+    #- name: 在线工具箱
+    #  link: http://www.atoolbox.net/
+    #  avatar: http://www.atoolbox.net/favicon.ico
+    #  descr: 各种在线小工具集合
+    #  recommend: true  
     - name: 刘明野工具箱
       link: https://tools.liumingye.cn/
       avatar: https://tools.liumingye.cn/favicon.ico
@@ -672,11 +672,11 @@
       avatar: http://www.clipconverter.cc/favicon.ico
       descr: Clip-外媒视频解析，YouTube视频解析
       recommend: true    
-    - name: Y2-mate
-      link: https://www.y2mate.com/
-      avatar: https://www.y2mate.com/favicon.ico
-      descr: Y2-mate外媒视频解析
-      recommend: true  
+    #- name: Y2-mate
+    #  link: https://www.y2mate.com/
+    #  avatar: https://www.y2mate.com/favicon.ico
+    #  descr: Y2-mate外媒视频解析
+    #  recommend: true  
     - name: Savideo
       link: https://www.savido.net/
       avatar: https://www.savido.net/favicon.ico
@@ -687,11 +687,11 @@
       avatar: https://ytmp3.cc/favicon.ico
       descr: Ytmp3外媒视频解析
       recommend: true 
-    - name: Dirpy
-      link: https://dirpy.link/
-      avatar: https://dirpy.link/favicon.ico
-      descr: Dirpy外媒视频解析
-      recommend: true 
+    #- name: Dirpy
+    #  link: https://dirpy.link/
+    #  avatar: https://dirpy.link/favicon.ico
+    #  descr: Dirpy外媒视频解析
+    #  recommend: true 
     - name: Spapi视频解析
       link: https://api.spapi.cn/dsp.html
       avatar: https://api.spapi.cn/favicon.ico
