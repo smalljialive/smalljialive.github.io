@@ -35,7 +35,7 @@
       avatar: https://nav.iowen.cn/favicon.ico
       descr: 导航类网站模版
       recommend: true  
-    - name: 外贸之家
+    - name: 外贸驿站
       link: https://nav8.top/
       avatar: https://nav8.top/favicon.ico
       descr: 外贸小工具集合网站
@@ -50,11 +50,11 @@
       avatar: https://www.xiaozhongjishu.com/favicon.ico
       descr: 小众技术工具库，使用软件工具网站
       recommend: true  
-    - name: 闪电导航
-      link: https://www.shandiandh.com/
-      avatar: https://www.shandiandh.com/favicon.ico
-      descr: 各领域网址集合导航
-      recommend: true  
+    #- name: 闪电导航
+    #  link: https://www.shandiandh.com/
+    #  avatar: https://www.shandiandh.com/favicon.ico
+    #  descr: 各领域网址集合导航
+    #  recommend: true  
     - name: T-box导航
       link: https://www.tboxn.com/
       avatar: https://www.tboxn.com/favicon.ico
