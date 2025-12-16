@@ -1034,6 +1034,16 @@
       avatar: https://earthroulette.com/favicon.ico
       descr: 随机旅行地址与攻略
       recommend: true  
+    - name: 国内旅游攻略
+      link: https://www.qyer.com/
+      avatar: https://www.qyer.com/favicon.ico
+      descr: 穷游网，穷游中国
+      recommend: true
+    - name: 马蜂窝旅游
+      link: https://www.mafengwo.cn/
+      avatar: https://www.mafengwo.cn/favicon.ico
+      descr: 旅游攻略，旅游结伴
+      recommend: true  
     - name: 有意思吧
       link: https://www.youyisi8.com/
       avatar: https://www.youyisi8.com/favicon.ico
