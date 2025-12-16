@@ -1331,7 +1331,12 @@
       link: https://cddys.com/
       avatar: https://cddys.com/favicon.ico
       descr: 臭蛋蛋影视，多种资源在线观看
-      recommend: true    
+      recommend: true
+    - name: 追影猫
+      link: https://zhuiyingmao4.com/
+      avatar: https://zhuiyingmao4.com/favicon.ico
+      descr: 追影猫，各类影视资源在线观看
+      recommend: true     
     - name: 555电影网
       link: https://www.zhenfanjixie.com
       avatar: https://www.zhenfanjixie.com/favicon.ico
