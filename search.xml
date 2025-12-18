@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>一键转换! 将机场节点转换为socks节点，实现一个节点一个端口</title>
+      <link href="/2025/12/18/%E4%B8%80%E9%94%AE%E8%BD%AC%E6%8D%A2%E3%80%91%E5%B0%86%E6%9C%BA%E5%9C%BA%E8%8A%82%E7%82%B9%E8%BD%AC%E6%8D%A2%E4%B8%BAsocks%E8%8A%82%E7%82%B9%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%8A%82%E7%82%B9%E4%B8%80%E4%B8%AA%E7%AB%AF%E5%8F%A3/"/>
+      <url>/2025/12/18/%E4%B8%80%E9%94%AE%E8%BD%AC%E6%8D%A2%E3%80%91%E5%B0%86%E6%9C%BA%E5%9C%BA%E8%8A%82%E7%82%B9%E8%BD%AC%E6%8D%A2%E4%B8%BAsocks%E8%8A%82%E7%82%B9%EF%BC%8C%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E8%8A%82%E7%82%B9%E4%B8%80%E4%B8%AA%E7%AB%AF%E5%8F%A3/</url>
+      
+        <content type="html"><![CDATA[<p><strong>问题：想通过机场节点的VPN搭配指纹浏览器实现不同国家的网络环境（用于Facebook或Tiktok等运营）</strong></p><p><strong>解决方案：机场Vpn节点+指纹浏览器+V2rayN</strong></p><p>主包在运营工作中发现除了购买静态IP（住宅IP）来实现网络环境的干净与稳定以外，发现机场VPN节点也都拥有对应的IP地址，于是尝试通过机场节点的IP地址实现静态IP效果（能实现稳定运营账户的网络环境即可）。</p><p>经过网络搜索各种教程后，最后在**<a href="https://www.youtube.com/watch?v=01F8xUxqmkY">不良林</a>**大佬的视频里找到了解决办法。</p><p>以下附上大佬的视频地址和网站地址：</p><p>Youtube：<a href="%5Bhttps://%5D(https://www.youtube.com/watch?v=01F8xUxqmkY)">https://www.youtube.com/watch?v=01F8xUxqmkY</a></p><p>网站：<a href="https://www.bulianglin.com/category/fan/2/">https://www.bulianglin.com</a></p><p>本期教大家把机场节点或者自建的任意协议节点转换为本地的socks节点，一键生成一个端口对应一个节点的clash配置文件，实现多入口多出口，并且搭配本地订阅转换，实现批量合并生成。</p><h3 id="软件准备"><a href="#软件准备" class="headerlink" title="软件准备"></a>软件准备</h3><p><strong>V2ray</strong>：<a href="%5Bhttps://%5D(https://github.com/2dust/v2rayN/releases/tag/6.23)">https://github.com/2dust/v2rayN/releases/tag/6.23</a>下载带core的版本（之后自定义服务器的专属版本）</p><p><strong>机场节点</strong>：机场节点的订阅地址或者是已经整理好的机场节点文件（yaml文件）</p><p><strong>指纹浏览器</strong>：主包推荐AdsPower（免费版有可设置两个，界面简单）或者VirtualBrowser（免费版随便设置）</p><ol><li>AdsPower：<a href="%5Bhttps://%5D(https://activity.adspower.net/ap/dist/)">https://activity.adspower.net/ap/dist/</a></li><li>VirtualBrowser：<a href="https://virtualbrowser.cc/">https://virtualbrowser.cc/</a></li></ol><h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>首先我们需要将准备好的机场节点整理成Yaml文件，这一步是为了将在一起的节点拆分为每一组数据。</p><p>若是只有订阅链接（节点订阅链接）则需要通过以下步骤，将链接转化为数据文件。</p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_145228_325.png"></p><p>首先复制机场节点订阅链接，然后打开转化工具（可通过百度节点转化网站，无需转换工具）：本文使用的是不良林的网站转化工具：<a href="%5Bhttps://%5D(https://bulianglin.com/archives/51.html)">https://bulianglin.com/archives/51.html</a>（需要下载一个小脚本）</p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_145812_918.png"></p><p>首先需要下载一个订阅转换工具<a href="%5Bhttps://%5D(https://github.com/tindy2013/subconverter/releases)">https://github.com/tindy2013/subconverter/releases</a>  按照需求下载对应的版本即可，下载完成后双击运行会自动打开一个命令提示符，将其放置后台不用理会。</p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_150320_958.png"></p><p>然后将复制好的机场订阅链接输入网站，将格式转换为clash格式。转换完成后会生成clash链接，直接点击链接打开后显示的就是已经整理好的机场节点数据。直接全选复制，在本地创建一个txt文本，粘贴后保存。</p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_150601_891.png"></p><p>然后将保存好的的内容转换为本地socks节点，（若有多个机场，可将文件更改后缀为yaml格式，直接复制多个文件进行转换）将保存内容复制到不良林的网站工具进行转换（主要转换的是clash.meta，这种格式支持多个端口）：<a href="https://www.bulianglin.com/archives/tosocks.html">https://www.bulianglin.com/archives/tosocks.html</a></p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_151258_441.png"></p><p>直接下载转换好的节点文件，打开V2rayN软件，添加自定义服务器并上传下载好的节点文件，注意core类型要选择clash.meta，端口自定义（不为0即可）</p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_151948_504.png"></p><p>设置成功后，在主界面右击配置好的节点，选择设为活动服务器即算配置成功。截止到现在，所有的机场节点均各自占据了一个端口（起始为42000，结束为42058）</p><p>打开我们下载好的指纹浏览器，本文以AdsPower浏览器为例，选择新建浏览器，名称自定义即可。可自由设置浏览器的相关版本，操作系统等。</p><p>在代理类型位置选择socks5或http</p><p>主机端口为127.0.0.1   42000-42058（主机是本地ip，端口则是设置的每个端口），可以通过更换端口来实现不同节点IP的伪装。</p><p><img src="https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_153618_062.png"></p><p>以上就是如何通过指纹浏览器和机场VPN实现网络伪装，适合用于各种对网络环境要求严格的海外网站运营使用。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 运营知识 </category>
+          
+          <category> 代码细节 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> VPN软件 </tag>
+            
+            <tag> 外贸运营 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>谷歌SEO相关工具</title>
       <link href="/2025/08/04/%E8%B0%B7%E6%AD%8CSEO%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7/"/>
       <url>/2025/08/04/%E8%B0%B7%E6%AD%8CSEO%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7/</url>
@@ -154,9 +183,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -208,9 +237,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -264,9 +293,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -401,9 +430,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -430,9 +459,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -459,9 +488,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -515,9 +544,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -571,9 +600,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -600,9 +629,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -658,9 +687,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -687,9 +716,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -768,9 +797,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -826,9 +855,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
@@ -988,9 +1017,9 @@
       
       <categories>
           
-          <category> WordPress </category>
-          
           <category> 代码细节 </category>
+          
+          <category> WordPress </category>
           
       </categories>
       
