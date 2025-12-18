@@ -128,6 +128,11 @@
       siteshot: https://npm.elemecdn.com/anzhiyu-theme-static@1.1.6/img/blog.anheyu.com.jpg
       color: vip
       tag: 技术
+    - name: 不良林
+      link: https://www.bulianglin.com/
+      avatar: https://www.bulianglin.com/favicon.ico
+      descr: 专业的跨境电商网络问题解决大师
+      recommend: true    
     #- name: 猫奴日记
     #  link: https://mao.nu/
     #  avatar: https://mao.nu/favicon.ico
