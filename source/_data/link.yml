@@ -1219,6 +1219,11 @@
       avatar: http://oeasy.org/favicon.ico
       descr: 最厉害的各种软件教程网站，五星推荐
       recommend: true
+    - name: 自学成才网
+      link: https://www.zx-cc.net/25809.html
+      avatar: https://www.zx-cc.net/25809.html/favicon.ico
+      descr: 各类付费运营教程
+      recommend: true
     - name: 在线大学
       link: https://www.edx.org/
       avatar: https://www.edx.org/favicon.ico
