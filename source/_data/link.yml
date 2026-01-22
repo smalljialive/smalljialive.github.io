@@ -1021,7 +1021,12 @@
       link: https://www.fizzmusic.net/
       avatar: https://www.fizzmusic.net/favicon.ico
       descr: Fizz音乐关键词检索下载
-      recommend: true    
+      recommend: true
+    - name: 相声随身听
+      link: https://www.xsmp3.com/
+      avatar: https://www.xsmp3.com/favicon.ico
+      descr: 相声在线听
+      recommend: true  
     - name: 抓鱼呀
       link: https://www.zhuayuya.com/
       avatar: https://www.zhuayuya.com/favicon.ico
