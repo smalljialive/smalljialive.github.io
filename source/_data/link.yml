@@ -121,7 +121,7 @@
   flink_style: flexcard
   hundredSuffix: ""
   link_list: 
-    - name: 安知鱼
+    - name: 安知鱼xi
       link: https://blog.anheyu.com/
       avatar: https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg
       descr: 生活明朗，万物可爱
@@ -991,6 +991,16 @@
   flink_style: telescopic
   hundredSuffix: ""
   link_list:
+    - name: 摸鱼派
+      link: https://fishpi.cn/
+      avatar: https://fishpi.cn/favicon.ico
+      descr: 摸鱼派，白与画科技
+      recommend: true
+    - name: 我爱摸鱼
+      link: https://touchfish.homes/
+      avatar: https://touchfish.homes/favicon.ico
+      descr: 摸鱼聊天室及各类小工具
+      recommend: true  
     - name: 一起听歌吧
       link: https://music.alang.run/
       avatar: https://music.alang.run/favicon.ico
@@ -1035,6 +1045,11 @@
       link: https://www.zhuayuya.com/
       avatar: https://www.zhuayuya.com/favicon.ico
       descr: 抓鱼呀官方网站，聊天摸鱼
+      recommend: true
+    - name: 蔷薇花园
+      link: https://iirose.com/
+      avatar: https://iirose.com/favicon.ico
+      descr: 蔷薇花园聊天室
       recommend: true
     - name: SHIT期刊
       link: https://shitjournal.org/
