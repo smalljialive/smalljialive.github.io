@@ -1363,6 +1363,11 @@
       avatar: https://www.flysheep6.com/favicon.ico
       descr: 全网单机游戏资源库
       recommend: true  
+    - name:  机地单机游戏
+      link: https://jidiyouxi.com/
+      avatar: https://jidiyouxi.com/favicon.ico
+      descr: 各类单机大作免费下载
+      recommend: true  
 #分界线-------------------------------------------------影视仓库    
 - class_name: 影视仓库
   class_desc: 电影电视剧在线观看
