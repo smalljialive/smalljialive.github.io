@@ -3,13 +3,14 @@ abbrlink: ''
 categories:
 - - 运营知识
 - - wordpress
-cover_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/wpmail%E9%85%8D%E7%BD%AE.png
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/wpmail%E9%85%8D%E7%BD%AE.png
 date: '2026-04-15T10:58:29.272278+08:00'
 tags:
 - 网站建设
 - WordPress
 title: wordpress网站使用Gmail邮箱配置SMTP留言邮件
-updated: '2026-04-15T10:58:30.474+08:00'
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/wpmail%E9%85%8D%E7%BD%AE.png
+updated: '2026-04-15T11:18:24.007+08:00'
 ---
 ## WordPress 完美实现 Gmail SMTP 发信指南（含 PHP 8.0 报错解决）
 
