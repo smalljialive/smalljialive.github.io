@@ -12,7 +12,7 @@ tags:
 - 网站建设
 title: contact form 7增加用户ip获取地址
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/32.png
-updated: '2024-12-16T15:03:04.099+08:00'
+updated: '2026-04-15T11:17:42.552+08:00'
 ---
 # Contact Form 7 获取提交IP 和国家地
 
@@ -48,6 +48,49 @@ return '未知';
 return $output;
 }
 add\_filter( 'wpcf7\_special\_mail\_tags', 'wpcf7\_special\_mail\_tag\_new\_add\_ip\_to\_address', 11, 4 );
+```
+
+php8.0以上版本可采用最新版代码：
+
+```
+function wpcf7_special_mail_tag_new_add_ip_to_address( $output, $name, $html, $mail_tag = null ) {
+    // 1. 兼容性检查：确保 $mail_tag 类型正确，避免 PHP 8 抛出类型错误
+    if ( ! ( $mail_tag instanceof WPCF7_MailTag ) ) {
+        return $output;
+    }
+
+    $name = preg_replace( '/^wpcf7\./', '_', $name );
+    $submission = WPCF7_Submission::get_instance();
+  
+    if ( ! $submission ) {
+        return $output;
+    } 
+
+    if ( '_remote_ip_area' == $name ) {
+        $remote_ip = $submission->get_meta( 'remote_ip' );
+        if ( ! $remote_ip ) {
+            return '未知';
+        }
+
+        // 2. 生产环境核心优化：使用 WP 官方 API 替代 file_get_contents
+        // 设置 2 秒强行超时，宁可不显示 IP 所在地，也要保证询盘邮件能准时发出
+        $response = wp_remote_get( "http://ip.globalso.com/?ip=" . $remote_ip, array( 
+            'timeout'    => 2, 
+            'user-agent' => 'WordPress/' . get_bloginfo('version') 
+        ) );
+
+        // 3. 错误处理：如果接口挂了，返回“查询超时”而不是让整个发信流程报错
+        if ( is_wp_error( $response ) ) {
+            return '（IP查询超时）';
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+        return ! empty( $body ) ? $body : '（无查询结果）';
+    }
+
+    return $output;
+}
+add_filter( 'wpcf7_special_mail_tags', 'wpcf7_special_mail_tag_new_add_ip_to_address', 11, 4 );
 ```
 
 #### 这样就可以像使用[_remote_ip]一样使用[_remote_ip_area]
