@@ -134,10 +134,10 @@
       descr: 专业的跨境电商网络问题解决大师
       recommend: true    
     - name: 猫奴日记
-     link: https://mao.nu/
-     avatar: https://mao.nu/favicon.ico
-     descr: 猫奴日记 
-     recommend: true   
+      link: https://mao.nu/
+      avatar: https://mao.nu/favicon.ico
+      descr: 猫奴日记 
+      recommend: true   
     - name: 孙老四的博客
       link: https://lao.si/
       avatar: https://lao.si/favicon.ico
