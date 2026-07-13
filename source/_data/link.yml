@@ -204,8 +204,8 @@
       descr: 各类网络资源整合免费下载
       recommend: true   
     - name: 阿虚同学资源整合
-      link: https://axutongxue.com/
-      avatar: https://axutongxue.com/favicon.ico
+      link: https://axutongxue.net/
+      avatar: https://axutongxue.net/favicon.ico
       descr: 各类资源整理聚合使用
       recommend: true
     - name: 利民工作室
@@ -272,10 +272,10 @@
     #  link: https://www.xcole.cn/draw/opt?type=ttp
     #  avatar: https://www.xcole.cn/favicon.ico
     #  descr: AI绘画，文字图片生成绘画
-    - name: AI去除背景
-      link:  https://aiimagebg.com/zh?url=heeee.com
-      avatar:  https://aiimagebg.com/favicon.ico
-      descr: AI去除背景，AI生成图片 
+    - name: Gemini
+      link:  https://gemini.google.com/app
+      avatar:  https://gemini.google.com/favicon.ico
+      descr: 谷歌官方AI
       recommend: true
     - name: 文生图
       link: https://tti.hamm.cn/
@@ -301,10 +301,10 @@
       link: https://wordpress.org/
       avatar: https://wordpress.org/favicon.ico
       descr: WordPress网站框架  
-    - name: Freewplugin
-      link: https://www.freewplugin.com/
-      avatar: https://www.freewplugin.com/favicon.ico
-      descr: 国内外WordPress主题插件
+    # - name: Freewplugin
+    #   link: https://www.freewplugin.com/
+    #   avatar: https://www.freewplugin.com/favicon.ico
+    #   descr: 国内外WordPress主题插件
     - name: Weadown插件下载
       link: https://weadown.com/
       avatar: https://weadown.com/favicon.ico
