@@ -143,11 +143,11 @@
       avatar: https://lao.si/favicon.ico
       descr: 孙老四的每日生活记录 
       recommend: true  
-    - name: 小林同学
-      link: https://www.xueshengke.cn/
-      avatar: https://www.xueshengke.cn/favicon.ico
-      descr: 小林同学个人主页 
-      recommend: true  
+    # - name: 小林同学
+    #   link: https://www.xueshengke.cn/
+    #   avatar: https://www.xueshengke.cn/favicon.ico
+    #   descr: 小林同学个人主页 
+    #   recommend: true  
     - name: Mengru的拾遗
       link: https://mengru.space/
       avatar: https://mengru.space/favicon.ico
