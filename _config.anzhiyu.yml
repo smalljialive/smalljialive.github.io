@@ -33,7 +33,7 @@ nav:
     - title: 个人相关
       item:
         - name: 个人网站
-          link: smalljia.site.je
+          link: http://smalljia.site.je/
           icon: /img/favicon.ico
     - title: 项目相关
       item:
