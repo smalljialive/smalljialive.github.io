@@ -1,0 +1,117 @@
+name: Phase 17 Validation
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-17
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: fix/site-quality-phase-17
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Apply approved Phase 17 edits
+        run: python .github/phase17_apply.py
+
+      - name: Validate source edits
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('themes/anzhiyu/source/js/main.js')
+          s = p.read_text(encoding='utf-8')
+
+          checks = {
+              'one visibility listener': s.count('document.addEventListener("visibilitychange"') == 1,
+              'one diytitle initializer': s.count('GLOBAL_CONFIG.diytitle && changeDocumentTitle();') == 1,
+              'one nav music click initializer': s.count('anzhiyu.addEventListenerConsoleMusicList();') == 1,
+              'old repeated nav initializer gone': 'anzhiyu.addEventListenerConsoleMusicList(false);' not in s,
+              'bounded nav music polling': 'const maxAttempts = 100;' in s and '}, 100);' in s,
+              'safe meting lookup': 'const navMeting = navMusicEl?.querySelector("meting-js");' in s,
+              'safe aplayer lookup': 'const navAplayer = navMeting?.aplayer;' in s,
+              'old unsafe lookup gone': 'navMusicEl.querySelector("#nav-music meting-js").aplayer' not in s,
+              'stale title overwrite guard': 'if (document.title === temporaryTitle) document.title = restoreTitle;' in s,
+              'title is captured on hide': 'hiddenPageTitle = document.title;' in s,
+              'music timeout warning exists': '导航音乐播放器加载超时，已停止等待' in s,
+          }
+          failed = [name for name, ok in checks.items() if not ok]
+          if failed:
+              raise SystemExit('Source validation failed: ' + ', '.join(failed))
+          print('Source assertions passed')
+          PY
+          node --check themes/anzhiyu/source/js/main.js
+          git diff --check
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=low
+
+      - name: Clean Hexo output
+        run: npx hexo clean
+
+      - name: Generate Hexo site
+        run: npx hexo generate
+
+      - name: Validate generated site
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          files = [p for p in Path('public').rglob('*') if p.is_file()]
+          html = [p for p in files if p.suffix.lower() == '.html']
+          print(f'Generated files: {len(files)} total / {len(html)} HTML')
+          if len(files) != 167:
+              raise SystemExit(f'Expected 167 generated files, found {len(files)}')
+          if len(html) != 138:
+              raise SystemExit(f'Expected 138 HTML files, found {len(html)}')
+
+          main = Path('public/js/main.js')
+          if not main.exists():
+              raise SystemExit('public/js/main.js was not generated')
+          s = main.read_text(encoding='utf-8')
+          required = [
+              'hiddenPageTitle = document.title;',
+              'if (document.title === temporaryTitle) document.title = restoreTitle;',
+              'const maxAttempts = 100;',
+              'const navMeting = navMusicEl?.querySelector("meting-js");',
+              'anzhiyu.addEventListenerConsoleMusicList();',
+          ]
+          missing = [item for item in required if item not in s]
+          if missing:
+              raise SystemExit('Generated main.js missing: ' + repr(missing))
+          if 'anzhiyu.addEventListenerConsoleMusicList(false);' in s:
+              raise SystemExit('Generated main.js still contains repeated nav music binding')
+          if 'navMusicEl.querySelector("#nav-music meting-js").aplayer' in s:
+              raise SystemExit('Generated main.js still contains unsafe nav music lookup')
+          if s.count('document.addEventListener("visibilitychange"') != 1:
+              raise SystemExit('Generated main.js should contain one visibilitychange listener')
+          print('Generated-site assertions passed')
+          PY
+
+      - name: Commit approved edits and remove helpers
+        shell: bash
+        run: |
+          git config user.name "Small Jia"
+          git config user.email "mortysmithfor@gmail.com"
+          git add themes/anzhiyu/source/js/main.js
+          git rm .github/phase17_apply.py .github/workflows/phase17-validate.yml
+          git commit -m "Fix persistent PJAX interaction handlers"
+          git push origin HEAD:fix/site-quality-phase-17
