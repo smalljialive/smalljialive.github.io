@@ -1,7 +1,7 @@
 ---
 abbrlink: ''
 categories:
-- - wordPress
+- - WordPress
 - - 代码细节
 cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20250409170944.png
 date: '2025-04-09T17:17:51.935552+08:00'

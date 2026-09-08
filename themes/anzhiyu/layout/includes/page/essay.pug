@@ -46,9 +46,8 @@ if site.data.essay
                   .bber-bottom
                     .bber-info
                       .bber-info-time
-                        - var datedata = new Date(item.date).toISOString()
                         i.anzhiyufont.anzhiyu-icon-clock
-                        time.datatime(datetime= item.date)= datedata
+                        time.datatime(datetime=date_xml(item.date))= date(item.date, config.date_format)
                       if item.link 
                         a.bber-content-link(title="跳转到短文指引的链接", href=url_for(item.link), rel="external nofollow")
                           i.anzhiyufont.anzhiyu-icon-link
