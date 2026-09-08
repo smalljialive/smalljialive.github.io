@@ -55,6 +55,34 @@ jobs:
           head = head.replace(old_viewport, new_viewport, 1)
           head_path.write_text(head, encoding='utf-8')
 
+          console_path = Path('themes/anzhiyu/layout/includes/anzhiyu/console.pug')
+          console = console_path.read_text(encoding='utf-8')
+          old_console = '''#console
+            .console-card-group-reward
+              ul.reward-all.console-card
+                each item in theme.reward.QR_code
+                  li.reward-item
+                    a(href=url_for(item.link || item.img), target='_blank')
+                      img.post-qr-code-img(alt=item.text, src=url_for(item.img))
+                    .post-qr-code-desc=item.text
+            .console-card-group
+          '''
+          new_console = '''#console
+            if theme.reward && theme.reward.enable && theme.reward.QR_code && theme.reward.QR_code.length
+              .console-card-group-reward
+                ul.reward-all.console-card
+                  each item in theme.reward.QR_code
+                    li.reward-item
+                      a(href=url_for(item.link || item.img), target='_blank')
+                        img.post-qr-code-img(alt=item.text, src=url_for(item.img))
+                      .post-qr-code-desc=item.text
+            .console-card-group
+          '''
+          if old_console not in console:
+              raise SystemExit('Expected console reward block not found; refusing to patch')
+          console = console.replace(old_console, new_console, 1)
+          console_path.write_text(console, encoding='utf-8')
+
           lazyload_path = Path('themes/anzhiyu/scripts/filters/post_lazyload.js')
           lazyload_path.write_text(r'''/**
            * AnZhiYu
@@ -80,7 +108,7 @@ jobs:
               const srcPattern = /\s+src=(["'])(.*?)\1/i;
               if (!srcPattern.test(imgTag)) return imgTag;
 
-              const hasOnerror = /\bonerror\s*=/i.test(imgTag);
+              const hasOnerror = /(?:^|\s)onerror\s*=/i.test(imgTag);
               const errorHandler = hasOnerror
                 ? ""
                 : ` onerror="this.onerror=null,this.src=&quot;${error_img}&quot;"`;
@@ -160,6 +188,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm .github/workflows/apply-phase4-fixes.yml
-          git add _config.anzhiyu.yml themes/anzhiyu/layout/includes/head.pug themes/anzhiyu/scripts/filters/post_lazyload.js
+          git add _config.anzhiyu.yml themes/anzhiyu/layout/includes/head.pug themes/anzhiyu/layout/includes/anzhiyu/console.pug themes/anzhiyu/scripts/filters/post_lazyload.js
           git commit -m "fix: clean inactive UI data and image fallback handling [phase4-applied]"
           git push origin fix/site-quality-phase-4
