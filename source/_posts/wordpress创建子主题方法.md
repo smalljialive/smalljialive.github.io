@@ -10,7 +10,7 @@ id: 460
 tags:
 - WordPress
 - 网站建设
-title: Wordpress创建子主题方法
+title: WordPress创建子主题方法
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/25.png
 updated: '2024-12-16T16:00:17.664+08:00'
 ---

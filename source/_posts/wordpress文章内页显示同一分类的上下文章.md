@@ -10,7 +10,7 @@ id: 435
 tags:
 - WordPress
 - 网站建设
-title: wordpress文章内页显示同一分类的上下文章
+title: WordPress文章内页显示同一分类的上下文章
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/23.png
 updated: '2024-12-16T14:07:20.565+08:00'
 ---

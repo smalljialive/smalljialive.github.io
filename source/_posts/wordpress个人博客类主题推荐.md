@@ -10,15 +10,15 @@ id: 437
 tags:
 - WordPress
 - 网站建设
-title: Wordpress个人博客类主题推荐
+title: WordPress个人博客类主题推荐
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/26.webp
 updated: '2024-12-16T14:22:28.329+08:00'
 ---
 本文转载地址：https://cloud.tencent.com/developer/article/2008499
 
-**WordPress**最重要的就是找一个适合自己的主题了。好一点的**WordPress主题**基本上都是要收费的，而且价格还不便宜，这导致了不少的新手朋友们很为难。而有时我们仅仅根据个人的爱好来搭建一个博客，所以也没有必要去支付高额的费用来购买Wordpress主题。
+**WordPress**最重要的就是找一个适合自己的主题了。好一点的**WordPress主题**基本上都是要收费的，而且价格还不便宜，这导致了不少的新手朋友们很为难。而有时我们仅仅根据个人的爱好来搭建一个博客，所以也没有必要去支付高额的费用来购买WordPress主题。
 
-事实上，**WordPress免费主题**也非常多，而且很多的Wordpress免费主题在功能上和界面美观上已经大大超过了付费的Wordpress主题。加上这些Wordpress主题都是开源的，基本上可以在Github上找得到源码，安全性是没有问题，主题的作者也在不断更新当中。
+事实上，**WordPress免费主题**也非常多，而且很多的WordPress免费主题在功能上和界面美观上已经大大超过了付费的WordPress主题。加上这些WordPress主题都是开源的，基本上可以在Github上找得到源码，安全性是没有问题，主题的作者也在不断更新当中。
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/26.webp)
 
@@ -28,9 +28,9 @@ updated: '2024-12-16T14:22:28.329+08:00'
 
 网站：
 
-1. 官网：[https://gitcafe.net/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgitcafe.net%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 项目：[https://gitee.com/yunluo/git](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgitee.com%2Fyunluo%2Fgit&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 作者：[https://gitcafe.net/archives/3589.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgitcafe.net%2Farchives%2F3589.html&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 官网：[https://gitcafe.net/](https://gitcafe.net/)
+2. 项目：[https://gitee.com/yunluo/git](https://gitee.com/yunluo/git)
+3. 作者：[https://gitcafe.net/archives/3589.html](https://gitcafe.net/archives/3589.html)
 
 **Git**主题:一款比付费主题更像是付费主题的WordPress免费主题，功能强大，适用各种建站。（图片点击放大）
 
@@ -42,8 +42,8 @@ updated: '2024-12-16T14:22:28.329+08:00'
 
 网站：
 
-1. 项目：[https://github.com/ghboke/CorePressWPTheme](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fghboke%2FCorePressWPTheme&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://www.lovestu.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.lovestu.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/ghboke/CorePressWPTheme](https://github.com/ghboke/CorePressWPTheme)
+2. 演示：[https://www.lovestu.com/](https://www.lovestu.com/)
 
 CorePress主题这是一个WordPress高颜值，高性能免费主题。专为极客制作的一款主题，主题功能完善，设置丰富。WordPress深度优化，颜值与性能并存，你想要的功能他都有。
 
@@ -55,15 +55,15 @@ CorePress主题这是一个WordPress高颜值，高性能免费主题。专为�
 
 网站：
 
-1. 演示：[https://sakura.2heng.xin/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fsakura.2heng.xin%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 作者：[https://2heng.xin/theme-sakura/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2F2heng.xin%2Ftheme-sakura%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 项目：[https://github.com/mashirozx/Sakura](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fmashirozx%2FSakura&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 演示：[https://sakura.2heng.xin/](https://sakura.2heng.xin/)
+2. 作者：[https://2heng.xin/theme-sakura/](https://2heng.xin/theme-sakura/)
+3. 项目：[https://github.com/mashirozx/Sakura](https://github.com/mashirozx/Sakura)
 
 Sakura主题的后期开发版：
 
-1. 演示：[https://iro.tw/demo.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Firo.tw%2Fdemo.html&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 项目：[https://github.com/mirai-mamori/Sakurairo](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fmirai-mamori%2FSakurairo&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 网站：[https://iro.tw/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Firo.tw%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 演示：[https://iro.tw/demo.html](https://iro.tw/demo.html)
+2. 项目：[https://github.com/mirai-mamori/Sakurairo](https://github.com/mirai-mamori/Sakurairo)
+3. 网站：[https://iro.tw/](https://iro.tw/)
 
 Sakura: 樱花庄的白猫博客主题。Sakurairo: 一个多彩，轻松上手，体验完善，具有强大自定义功能的WordPress主题（基于 Sakura 主题）。iro 主题——一个多彩，轻松上手，体验完善，具有强大自定义功能的WordPress主题。
 
@@ -75,8 +75,8 @@ Sakura: 樱花庄的白猫博客主题。Sakurairo: 一个多彩，轻松上手�
 
 网站：
 
-1. 项目：[https://github.com/ShawnZeng1996/Memory](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2FShawnZeng1996%2FMemory&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 作者：[https://shawnzeng.com/wordpress-theme-memory.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fshawnzeng.com%2Fwordpress-theme-memory.html&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/ShawnZeng1996/Memory](https://github.com/ShawnZeng1996/Memory)
+2. 作者：[https://shawnzeng.com/wordpress-theme-memory.html](https://shawnzeng.com/wordpress-theme-memory.html)
 
 WordPress响应式主题Memory主题 ，主题特性：
 
@@ -86,10 +86,10 @@ WordPress响应式主题Memory主题 ，主题特性：
 
 网站：
 
-1. 原版：[https://github.com/vtrois/kratos](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fvtrois%2Fkratos&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://www.nbmao.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.nbmao.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 修改：[https://github.com/xb2016/Kratos-pjax](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fxb2016%2FKratos-pjax&objectId=2008499&objectType=1&isNewArticle=undefined)
-4. 作者：[https://moedog.org/787.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fmoedog.org%2F787.html&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 原版：[https://github.com/vtrois/kratos](https://github.com/vtrois/kratos)
+2. 演示：[https://www.nbmao.com/](https://www.nbmao.com/)
+3. 修改：[https://github.com/xb2016/Kratos-pjax](https://github.com/xb2016/Kratos-pjax)
+4. 作者：[https://moedog.org/787.html](https://moedog.org/787.html)
 
 二次元向 WP 主题: kratos主题和Kratos-pjax主题，主题偏向于二次元。
 
@@ -97,9 +97,9 @@ WordPress响应式主题Memory主题 ，主题特性：
 
 网站：
 
-1. 演示：[https://www.boxmoe.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.boxmoe.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 项目：[https://github.com/baomihuahua/boxmoe-dove-](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fbaomihuahua%2Fboxmoe-dove-&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 同款：[https://github.com/baomihuahua/lolimeow2021](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fbaomihuahua%2Flolimeow2021&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 演示：[https://www.boxmoe.com/](https://www.boxmoe.com/)
+2. 项目：[https://github.com/baomihuahua/boxmoe-dove-](https://github.com/baomihuahua/boxmoe-dove-)
+3. 同款：[https://github.com/baomihuahua/lolimeow2021](https://github.com/baomihuahua/lolimeow2021)
 
 boxmoe-dove主题是盒子萌WordPress主题，而Lolimeow是原来的老版重构，更新了一些原来存在的BUG和**UI**的更新，主题非常好看。
 
@@ -107,19 +107,19 @@ boxmoe-dove主题是盒子萌WordPress主题，而Lolimeow是原来的老版重�
 
 Siren-Akina主题 是基于 Akina 和 SirenMaseter 主题修改而来的
 
-1. 项目：[https://github.com/saresam/Asky](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fsaresam%2FAsky&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 原版：[https://www.skyarea.cn/share/466/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.skyarea.cn%2Fshare%2F466%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 演示：[https://xinwei.life/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fxinwei.life%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/saresam/Asky](https://github.com/saresam/Asky)
+2. 原版：[https://www.skyarea.cn/share/466/](https://www.skyarea.cn/share/466/)
+3. 演示：[https://xinwei.life/](https://xinwei.life/)
 
 ### 八、Argon主题
 
 网站：
 
-1. 项目：[https://github.com/solstice23/argon-theme](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fsolstice23%2Fargon-theme&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/solstice23/argon-theme](https://github.com/solstice23/argon-theme)
 2. Hexo 版本 : github.com/solstice23/hexo-theme-argon
-3. 演示：[https://solstice23.top/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fsolstice23.top%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+3. 演示：[https://solstice23.top/](https://solstice23.top/)
 
-[Argon主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Fargon-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined) – 一个轻盈、简洁、美观的 WordPress 主题。主题特性
+[Argon主题](https://www.vpssw.com/aliyun/index/tag/argon-zhuti/) – 一个轻盈、简洁、美观的 WordPress 主题。主题特性
 
 > **轻盈美观** – 使用 Argon Design System 前端框架，细节精致，轻盈美观 **高度可定制化** – 可自定义主题色、布局(双栏/单栏/三栏)、顶栏、侧栏、Banner、背景图、日夜间模式不同背景、背景沉浸、浮动操作按钮等，提供了丰富的自定义选项 **夜间模式** – 支持日间、夜间、纯黑三种模式，并可以根据时间自动切换或跟随系统夜间模式 **功能繁多** – Tag 和分类统计、作者链接、额外链接、文章字数和预计阅读时间、文章过时信息显示 **Pjax** – 支持 Pjax 无刷新加载，提高浏览体验 **友情链接** – 支持使用 WordPress 自带的链接管理器进行友链管理，支持多种友链样式 **“说说” 功能** – 随时发表想法，并在专门的 “说说” 页面展示，也支持说说和首页文章穿插 **评论功能扩展** – Ajax 评论，评论支持 Markdown、**验证码**、再次编辑、显示 UA、悄悄话模式、回复时邮件通知、查看编辑记录、无限加载等功能 **诸多功能** – 文章目录、阅读进度、Mathjax 或 Katex 公式解析、图片放大预览、Pangu.js 文本格式化、平滑滚动等**丰富的短代码** – 支持通过短代码在文章中插入 TODO、标签、警告、提示、折叠区块、Github 信息卡、时间线、隐藏文本、视频等模块 **多语言** – 支持中文、英文、俄文等语言 **其他** – 自适应、精心优化的文章阅读界面 CSS、可切换衬线/非衬线字体、可自定义 CSS 和 JS、支持使用 CDN 加速静态文件访问、SEO 友好、Banner 打字动画、留言板页面、文章脚注等。
 
@@ -127,9 +127,9 @@ Siren-Akina主题 是基于 Akina 和 SirenMaseter 主题修改而来的
 
 网站：
 
-1. 作者：[https://licoy.cn/3477.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Flicoy.cn%2F3477.html&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://licoy.cn/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Flicoy.cn%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 项目：[https://github.com/Licoy/wordpress-theme-puock](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2FLicoy%2Fwordpress-theme-puock&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 作者：[https://licoy.cn/3477.html](https://licoy.cn/3477.html)
+2. 演示：[https://licoy.cn/](https://licoy.cn/)
+3. 项目：[https://github.com/Licoy/wordpress-theme-puock](https://github.com/Licoy/wordpress-theme-puock)
 
 多风格自适应WordPress主题Puock主题，主题特性
 
@@ -139,8 +139,8 @@ Siren-Akina主题 是基于 Akina 和 SirenMaseter 主题修改而来的
 
 网站：
 
-1. 演示：[http://theme.chenxingweb.com/cx-multi/](https://cloud.tencent.com/developer/tools/blog-entry?target=http%3A%2F%2Ftheme.chenxingweb.com%2Fcx-multi%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 作者：[https://www.chenxingweb.com/wordpress-theme-cx-multi.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.chenxingweb.com%2Fwordpress-theme-cx-multi.html&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 演示：[http://theme.chenxingweb.com/cx-multi/](http://theme.chenxingweb.com/cx-multi/)
+2. 作者：[https://www.chenxingweb.com/wordpress-theme-cx-multi.html](https://www.chenxingweb.com/wordpress-theme-cx-multi.html)
 
 CX-MULTI主题由 @小牛爱奋斗 开发制作定位于一款简洁大气的博客杂志类主题，自适应平板和手机等设备，您可以用来搭建您的个人博客，或者作品展示类网站，主题为免费主题，喜欢的朋友可以下载使用！
 
@@ -148,10 +148,10 @@ CX-MULTI主题由 @小牛爱奋斗 开发制作定位于一款简洁大气的博
 
 网站：
 
-1. 演示：[https://xcx.jiangqie.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fxcx.jiangqie.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 项目：[https://github.com/longwenjunjie/jiangqie\_theme](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Flongwenjunjie%2Fjiangqie%25255C_theme&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 演示：[https://xcx.jiangqie.com/](https://xcx.jiangqie.com/)
+2. 项目：[https://github.com/longwenjunjie/jiangqie\_theme](https://github.com/longwenjunjie/jiangqie%255C_theme)
 
-[酱茄Free主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Ffanqie-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)由酱茄开发的一款免费开源的WordPress主题，主题专为WordPress博客、资讯、自媒体网站而设计。主题特点
+[酱茄Free主题](https://www.vpssw.com/aliyun/index/tag/fanqie-zhuti/)由酱茄开发的一款免费开源的WordPress主题，主题专为WordPress博客、资讯、自媒体网站而设计。主题特点
 
 > 和酱茄Free小程序开源版源码配套； 同步酱茄Free小程序开源版浏览/评论/用户头像等信息； 首页幻灯片可分别设置图片和链接； 可隐藏指定分类目录； 列表/文章元素支持（头像/作者/面包屑/浏览/版权信息/猜你喜欢等）开启/停用； 免装SEO插件，文章关键词/描述自动获取； 响应式设计并兼容pc和移动端； 内置标签聚合/友情链接等单页； 内置热门文章/标签云/猜你喜欢/链接等小工具； 文章自动获取正文第一张图为缩略图； 文章列表无限加载； 文章内容结尾可选显示版权说明； 文章支持打赏、点赞、评论。
 
@@ -159,10 +159,10 @@ CX-MULTI主题由 @小牛爱奋斗 开发制作定位于一款简洁大气的博
 
 网站：
 
-1. 项目：[https://github.com/syfxlin/origami](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fsyfxlin%2Forigami&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://origami.ixk.me/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Forigami.ixk.me%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/syfxlin/origami](https://github.com/syfxlin/origami)
+2. 演示：[https://origami.ixk.me/](https://origami.ixk.me/)
 
-[Origami主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Forigami-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)– 简洁轻快的WordPress主题，Origami v2 参考了 Aurora 主题的设计改成了 **半透明 + 背景** 的风格，配色使用了 Spectre.css 默认的配色。
+[Origami主题](https://www.vpssw.com/aliyun/index/tag/origami-zhuti/)– 简洁轻快的WordPress主题，Origami v2 参考了 Aurora 主题的设计改成了 **半透明 + 背景** 的风格，配色使用了 Spectre.css 默认的配色。
 
 主题特性
 
@@ -172,10 +172,10 @@ CX-MULTI主题由 @小牛爱奋斗 开发制作定位于一款简洁大气的博
 
 网站：
 
-1. 项目：[https://github.com/hankin-han/smarty\_hankin](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fhankin-han%2Fsmarty%25255C_hankin&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://www.hankin.cn/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.hankin.cn%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/hankin-han/smarty\_hankin](https://github.com/hankin-han/smarty%255C_hankin)
+2. 演示：[https://www.hankin.cn/](https://www.hankin.cn/)
 
-开源wordpress主题 [smarty\_hankin主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Fsmarty_hankin-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)。主题特性：
+开源wordpress主题 [smarty\_hankin主题](https://www.vpssw.com/aliyun/index/tag/smarty_hankin-zhuti/)。主题特性：
 
 > pjax无刷新体验 12种配色，5种布局，支持暗黑模式 侧边栏小工具，音乐播放器，内置Mac界面代码高亮行号显示， 强大的后台设置 丰富的自定义页面
 
@@ -183,10 +183,10 @@ CX-MULTI主题由 @小牛爱奋斗 开发制作定位于一款简洁大气的博
 
 网站：
 
-1. 演示：[https://mokore.dfjcx.cn/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fmokore.dfjcx.cn%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 项目：[https://github.com/censujiang/Mokore](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fcensujiang%2FMokore&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 演示：[https://mokore.dfjcx.cn/](https://mokore.dfjcx.cn/)
+2. 项目：[https://github.com/censujiang/Mokore](https://github.com/censujiang/Mokore)
 
-WordPress 二次元简约个人博客主题 by 江程训。[Mokore主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Fmokore-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)是由江程训根据Akina-Siren编写的一款Wordpress二次元简约个人博客主题，这是一个灰常好玩的主题，总之用它来搭建您自己的Wordpress站点是最不错的啦。
+WordPress 二次元简约个人博客主题 by 江程训。[Mokore主题](https://www.vpssw.com/aliyun/index/tag/mokore-zhuti/)是由江程训根据Akina-Siren编写的一款WordPress二次元简约个人博客主题，这是一个灰常好玩的主题，总之用它来搭建您自己的WordPress站点是最不错的啦。
 
 > 首页社交组件，让您的Fans轻松联系到您\~ 简洁阅读风格，看屏幕爽到爆炸 随机二次元封面图，拯救选择困难症 三图广告位，助力访客更加了解本站 有趣的提示文字，浓浓的次元风格 文章目录功能，一键导航至所需段落
 
@@ -194,11 +194,11 @@ WordPress 二次元简约个人博客主题 by 江程训。[Mokore主题](https:
 
 网站：
 
-1. 项目：[https://github.com/faganer/info](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Ffaganer%2Finfo&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://getkit.cn/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgetkit.cn%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 作者：[https://wpmore.cn/wordpress-theme-info.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwpmore.cn%2Fwordpress-theme-info.html&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/faganer/info](https://github.com/faganer/info)
+2. 演示：[https://getkit.cn/](https://getkit.cn/)
+3. 作者：[https://wpmore.cn/wordpress-theme-info.html](https://wpmore.cn/wordpress-theme-info.html)
 
-[info主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Finfo-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)主题特色：
+[info主题](https://www.vpssw.com/aliyun/index/tag/info-zhuti/)主题特色：
 
 > 主题采用了面板设置，性能优化就已经超过了30多项 主流浏览器兼容 可用于多用户博客、自媒体网站 插件自动提示安装
 
@@ -206,10 +206,10 @@ WordPress 二次元简约个人博客主题 by 江程训。[Mokore主题](https:
 
 网站：
 
-1. 项目：[https://github.com/Tokinx/Adams](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2FTokinx%2FAdams&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 作者：[https://biji.io/2017/4905.html](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fbiji.io%2F2017%2F4905.html&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/Tokinx/Adams](https://github.com/Tokinx/Adams)
+2. 作者：[https://biji.io/2017/4905.html](https://biji.io/2017/4905.html)
 
-[Adams主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Fadams-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)一套适用于 WordPress 的简洁、轻量的 Theme。主题介绍
+[Adams主题](https://www.vpssw.com/aliyun/index/tag/adams-zhuti/)一套适用于 WordPress 的简洁、轻量的 Theme。主题介绍
 
 > 极简、轻量化的设计风格 深度优化InstantClick的pjax效果 响应式布局，不依赖js的导航响应式 ajax动态加载二维码 前台阅读模式切换（预计1.1.0版本） 强劲的性能优化 Ajax无刷新评论、翻页 来自ViewImage驱动的极简灯箱（1kb） Lately驱动的时间格式化插件（800字节）
 
@@ -217,38 +217,38 @@ WordPress 二次元简约个人博客主题 by 江程训。[Mokore主题](https:
 
 网站：
 
-1. 作者：[https://flyhigher.top/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fflyhigher.top%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 项目：[https://github.com/yrccondor/mdx](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fyrccondor%2Fmdx&objectId=2008499&objectType=1&isNewArticle=undefined)
-3. 演示：[https://flyhigher.top/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fflyhigher.top%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 作者：[https://flyhigher.top/](https://flyhigher.top/)
+2. 项目：[https://github.com/yrccondor/mdx](https://github.com/yrccondor/mdx)
+3. 演示：[https://flyhigher.top/](https://flyhigher.top/)
 
-[MDx 主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Fmdx-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)是一款轻快、优雅且强大的 Material Design 风格的 WordPress 主题。
+[MDx 主题](https://www.vpssw.com/aliyun/index/tag/mdx-zhuti/)是一款轻快、优雅且强大的 Material Design 风格的 WordPress 主题。
 
 ### 十八、L-Talk主题
 
 网站：
 
-1. 项目：[https://github.com/limileo/L-Talk](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Flimileo%2FL-Talk&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://blog.limiabc.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fblog.limiabc.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/limileo/L-Talk](https://github.com/limileo/L-Talk)
+2. 演示：[https://blog.limiabc.com/](https://blog.limiabc.com/)
 
-[L-Talk主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex%2Ftag%2Fl-talk-zhuti%2F&objectId=2008499&objectType=1&isNewArticle=undefined)，一款免费样式简洁精美，适用于开发者于设计师的wordpress主题。主题介绍
+[L-Talk主题](https://www.vpssw.com/aliyun/index/tag/l-talk-zhuti/)，一款免费样式简洁精美，适用于开发者于设计师的wordpress主题。主题介绍
 
 > 极简、轻量化的设计风格 Bootstrap全响应式框架强力驱动 响应式布局，不依赖js的导航响应式，完美适配手机端。 优化文章内容阅读排版 可以定制页面加载动画，支持SVG动画加载 强劲的性能优化 增加作品展示文章类型 增加文章点赞、打赏功能 后台模板设置管理功能 强大的自定义，首页banner，logo，特效文本，底部社交，作品展示数量等全部支持后台设置
 
 ### 十九、Diaspora主题
 
-[Diaspora主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex&objectId=2008499&objectType=1&isNewArticle=undefined)适合喜欢摄影，影评，乐评和玩弄文字的你，干净，清新； 响应式，Ajax，更多好玩的等你来发现。
+[Diaspora主题](https://www.vpssw.com/aliyun/index)适合喜欢摄影，影评，乐评和玩弄文字的你，干净，清新； 响应式，Ajax，更多好玩的等你来发现。
 
-1. 项目：[https://github.com/LoeiFy/Diaspora](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2FLoeiFy%2FDiaspora&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://isujin.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fisujin.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/LoeiFy/Diaspora](https://github.com/LoeiFy/Diaspora)
+2. 演示：[https://isujin.com/](https://isujin.com/)
 
 ### 二十、Rebirth主题
 
 网站：
 
-1. 项目：[https://github.com/yqchilde/rebirth](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fyqchilde%2Frebirth&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://yqqy.top/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fyqqy.top%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/yqchilde/rebirth](https://github.com/yqchilde/rebirth)
+2. 演示：[https://yqqy.top/](https://yqqy.top/)
 
-[Rebirth主题](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fwww.vpssw.com%2Faliyun%2Findex&objectId=2008499&objectType=1&isNewArticle=undefined)的WordPress版本是完全移植过来的，原主题为`JaxsonWang(淮城一只猫)制作`，且是ghost博客主题。主题特色
+[Rebirth主题](https://www.vpssw.com/aliyun/index)的WordPress版本是完全移植过来的，原主题为`JaxsonWang(淮城一只猫)制作`，且是ghost博客主题。主题特色
 
 > 大气、简约、优雅以及强大的响应式布局 原生黑暗模式，支持 macOS 和 window10 黑暗模式 友情链接和关于独立页独特模板，更好展示自己站点 恰到好处的个人社交信息 适合于中文字体阅读个人文章页面，优化到每一个元素 Valine 评论系统的支持 强大的社交分享文章功能 增强模板 SEO 优化
 
@@ -256,7 +256,7 @@ WordPress 二次元简约个人博客主题 by 江程训。[Mokore主题](https:
 
 网站：
 
-1. 项目：[https://github.com/bigfa/Sulli](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Fgithub.com%2Fbigfa%2FSulli&objectId=2008499&objectType=1&isNewArticle=undefined)
-2. 演示：[https://fatesinger.com/](https://cloud.tencent.com/developer/tools/blog-entry?target=https%3A%2F%2Ffatesinger.com%2F&objectId=2008499&objectType=1&isNewArticle=undefined)
+1. 项目：[https://github.com/bigfa/Sulli](https://github.com/bigfa/Sulli)
+2. 演示：[https://fatesinger.com/](https://fatesinger.com/)
 
 简约个人博客风格。
