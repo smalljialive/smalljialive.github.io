@@ -1,0 +1,96 @@
+name: Phase 9 Apply and Validate
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-9
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Apply phase 9 fixes
+        run: python3 scripts/phase9_apply.py
+
+      - name: JavaScript syntax checks
+        run: |
+          node --check themes/anzhiyu/source/js/utils.js
+          node --check themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Security audit
+        run: npm audit --audit-level=low
+
+      - name: Build Hexo site
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: Validate generated output
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          utils = Path("themes/anzhiyu/source/js/utils.js").read_text(encoding="utf-8")
+          right = Path("themes/anzhiyu/source/js/anzhiyu/right_click_menu.js").read_text(encoding="utf-8")
+
+          required = {
+              "async image download": "downloadImage: async function" in utils,
+              "real download success": "图片下载已开始" in utils,
+              "download error path": "图片下载失败，请检查图片地址或跨域限制" in utils,
+              "safe music cache": "音乐缓存已损坏，将重新加载" in utils,
+              "http response check": "if (!response.ok)" in utils,
+              "empty music guard": "暂无可播放的歌曲" in utils,
+              "player readiness guard": "音乐播放器尚未准备完成" in utils,
+              "song switch fallback": "歌单切换失败，已保留当前歌单" in utils,
+              "encoded Baidu search": "encodeURIComponent(selectTextNow)" in right,
+              "bounded comment wait": "setText(attemptsLeft = 30)" in right,
+              "comment wait return": "评论输入框加载超时，已停止等待" in right,
+              "automatic image filename": "downloadImage(domImgSrc);" in right,
+          }
+          missing = [name for name, ok in required.items() if not ok]
+          if missing:
+              raise SystemExit("Missing expected phase 9 behavior: " + ", ".join(missing))
+
+          forbidden = [
+              "图片已添加盲水印",
+              'downloadImage(domImgSrc, "anzhiyu")',
+              'JSON.parse(localStorage.getItem("musicData"))',
+              'window.open("https://www.baidu.com/s?wd=" + selectTextNow)',
+          ]
+          combined = utils + "\n" + right
+          leftovers = [item for item in forbidden if item in combined]
+          if leftovers:
+              raise SystemExit("Legacy phase 9 patterns remain: " + repr(leftovers))
+
+          html_count = sum(1 for _ in Path("public").rglob("*.html"))
+          if html_count < 150:
+              raise SystemExit(f"Unexpectedly low generated HTML count: {html_count}")
+          print(f"Phase 9 generated-output validation passed ({html_count} HTML files)")
+          PY
+
+      - name: Commit validated fixes and remove temporary files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/phase9-apply.yml scripts/phase9_apply.py
+          git add themes/anzhiyu/source/js/utils.js themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
+          git diff --cached --quiet && exit 1 || true
+          git commit -m "fix: harden image downloads and music cache handling [phase9-applied]"
+          git push
