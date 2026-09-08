@@ -2,7 +2,7 @@
 abbrlink: ''
 categories:
 - - 运营知识
-- - wordpress
+- - WordPress
 cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/wpmail%E9%85%8D%E7%BD%AE.png
 date: '2026-04-15T10:58:29.272278+08:00'
 tags:
