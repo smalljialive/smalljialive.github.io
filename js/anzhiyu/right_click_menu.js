@@ -345,21 +345,25 @@ rm.rightMenuCommentText = function (txt) {
   if (!postCommentDom) return;
   var domTop = postCommentDom.offsetTop;
   window.scrollTo(0, domTop - 80);
-  if (txt == "undefined" || txt == "null") txt = "好棒！";
-  function setText() {
+  if (txt === undefined || txt === null || txt === "undefined" || txt === "null") txt = "好棒！";
+
+  function setText(attemptsLeft = 30) {
     setTimeout(() => {
-      var input = document.getElementsByClassName("el-textarea__inner")[0];
-      if (!input) setText();
-      let evt = document.createEvent("HTMLEvents");
+      const input = document.getElementsByClassName("el-textarea__inner")[0];
+      if (!input) {
+        if (attemptsLeft > 1) setText(attemptsLeft - 1);
+        else console.warn("评论输入框加载超时，已停止等待");
+        return;
+      }
+      const evt = document.createEvent("HTMLEvents");
       evt.initEvent("input", true, true);
-      let inputValue = replaceAll(txt, "\n", "\n> ");
+      const inputValue = replaceAll(txt, "\n", "\n> ");
       input.value = "> " + inputValue + "\n\n";
       input.dispatchEvent(evt);
       input.focus();
       input.setSelectionRange(-1, -1);
-      if (document.getElementById("comment-tips")) {
-        document.getElementById("comment-tips").classList.add("show");
-      }
+      const commentTips = document.getElementById("comment-tips");
+      if (commentTips) commentTips.classList.add("show");
     }, 100);
   }
   setText();
@@ -374,7 +378,7 @@ function replaceAll(string, search, replace) {
 rm.searchBaidu = function () {
   anzhiyu.snackbarShow("即将跳转到百度搜索", false, 2000);
   setTimeout(function () {
-    window.open("https://www.baidu.com/s?wd=" + selectTextNow);
+    window.open("https://www.baidu.com/s?wd=" + encodeURIComponent(selectTextNow));
   }, "2000");
   rm.hideRightMenu();
 };
@@ -460,7 +464,7 @@ function addRightMenuClickEvent() {
   document.getElementById("menu-copylink").addEventListener("click", rm.copyLink);
 
   document.getElementById("menu-downloadimg").addEventListener("click", function () {
-    anzhiyu.downloadImage(domImgSrc, "anzhiyu");
+    anzhiyu.downloadImage(domImgSrc);
   });
 
   document.getElementById("menu-newwindowimg").addEventListener("click", function () {
