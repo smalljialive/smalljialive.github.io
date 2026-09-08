@@ -258,11 +258,17 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     const copy = ctx => {
-      if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-        document.execCommand("copy");
-        alertInfo(ctx, GLOBAL_CONFIG.copy.success);
-      } else {
+      if (!(document.queryCommandSupported && document.queryCommandSupported("copy"))) {
         alertInfo(ctx, GLOBAL_CONFIG.copy.noSupport);
+        return;
+      }
+
+      try {
+        const copied = document.execCommand("copy");
+        alertInfo(ctx, copied ? GLOBAL_CONFIG.copy.success : GLOBAL_CONFIG.copy.error);
+      } catch (error) {
+        console.error("复制代码失败:", error);
+        alertInfo(ctx, GLOBAL_CONFIG.copy.error);
       }
     };
 
@@ -1439,8 +1445,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.keyCode === 13) {
           // 如果按下的是回车键，则执行特定的函数
           anzhiyu.toPage();
-          var link = document.getElementById("toPageButton");
-          var href = link.href;
+          const link = document.getElementById("toPageButton");
+          const href = link ? link.getAttribute("href") : "";
+          if (!href || href.startsWith("javascript:")) return;
           pjax.loadUrl(href);
         }
       });
