@@ -50,7 +50,7 @@ updated: '2025-04-09T17:17:52.817+08:00'
    input:focus::placeholder {
       visibility: hidden;
   }
-<style>
+</style>
 <script>
    document.addEventListener('wpcf7mailsent',function(event){
          location='/thank-you/';

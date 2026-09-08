@@ -31,7 +31,13 @@ updated: '2024-12-16T13:44:23.883+08:00'
 编写CSS：使用CSS来定义滚动效果。你需要为该元素创建两种样式，一种是默认样式，另一种是固定在滚动时的样式。例如：
 
 ```
-.scrollfixed { position: fixed; top: 0; left: 0; backgroundcolor: #fff; / 背景颜色可以根据需要进行调整 / boxshadow: 0 2px 4px rgba(0, 0, 0, 0.1); / 可选的阴影效果 / }
+.scrollfixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff; /* 背景颜色可以根据需要进行调整 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 可选的阴影效果 */
+}
 ```
 
 编写JavaScript：使用JavaScript来添加滚动效果的交互。你需要检测页面滚动并根据滚动位置来切换元素的样式类。以下是一个简单的示例：
