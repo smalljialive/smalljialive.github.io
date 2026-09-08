@@ -1,0 +1,81 @@
+name: Apply phase 3 site quality fixes
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-3
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: ${{ !contains(github.event.head_commit.message, '[phase3-applied]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/site-quality-phase-3
+
+      - name: Apply exact replacements
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def replace_exact(path, old, new, expected=1):
+              p = Path(path)
+              data = p.read_bytes()
+              old_b = old.encode('utf-8')
+              new_b = new.encode('utf-8')
+              count = data.count(old_b)
+              if count != expected:
+                  raise SystemExit(f'{path}: expected {expected} occurrence(s), found {count}')
+              p.write_bytes(data.replace(old_b, new_b))
+
+          replace_exact(
+              'source/_data/about.yml',
+              '百度百科人性外挂',
+              '百度百科人形外挂',
+          )
+
+          replace_exact(
+              '_config.anzhiyu.yml',
+              '  skills:\n     - \n     -  🤖️ 外星人驻地球分部',
+              '  skills:\n     -  🤖️ 外星人驻地球分部',
+          )
+
+          replace_exact(
+              'themes/anzhiyu/source/js/utils.js',
+              '''  is_Post: function () {\n    var url = window.location.href; //获取url\n    if (url.indexOf("/posts/") >= 0) {\n      //判断url地址中是否包含code字符串\n      return true;\n    } else {\n      return false;\n    }\n  },''',
+              '''  is_Post: function () {\n    return typeof GLOBAL_CONFIG_SITE !== "undefined" && GLOBAL_CONFIG_SITE.isPost === true;\n  },''',
+          )
+
+      - name: Validate changes
+        shell: bash
+        run: |
+          grep -q '百度百科人形外挂' source/_data/about.yml
+          ! grep -q '百度百科人性外挂' source/_data/about.yml
+          python - <<'PY'
+          from pathlib import Path
+          text = Path('_config.anzhiyu.yml').read_text(encoding='utf-8')
+          block = text.split('author_status:', 1)[1].split('# search', 1)[0]
+          if '\n     - \n' in block:
+              raise SystemExit('blank author status item still present')
+          js = Path('themes/anzhiyu/source/js/utils.js').read_text(encoding='utf-8')
+          if 'url.indexOf("/posts/")' in js:
+              raise SystemExit('old post URL detection still present')
+          if 'GLOBAL_CONFIG_SITE.isPost === true' not in js:
+              raise SystemExit('new post detection missing')
+          PY
+          node --check themes/anzhiyu/source/js/utils.js
+
+      - name: Commit fixes and remove helper
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-phase3-fixes.yml
+          git add source/_data/about.yml _config.anzhiyu.yml themes/anzhiyu/source/js/utils.js
+          git commit -m "fix: correct profile text and post detection [phase3-applied]"
+          git push origin HEAD:fix/site-quality-phase-3
