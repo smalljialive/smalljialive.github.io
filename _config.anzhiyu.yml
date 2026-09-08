@@ -1132,11 +1132,11 @@ comment_barrage_config:
   mailMd5: ""
 
 # 左下角音乐配置项
-# https://github.com/metowolf/MetingJS
+# https://github.com/metowolf/MetingJS  原歌单540470546
 nav_music:
   enable: true
   console_widescreen_music: false # 宽屏状态控制台显示音乐而不是标签 enable为true 控制台依然会显示
-  id: 540470546
+  id: 8307428067
   server: netease
   volume: 0.5 # 默认音量
   all_playlist: https://music.163.com/outchain/player?type=0&id=540470546
