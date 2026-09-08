@@ -3,6 +3,10 @@ window.addEventListener("load", () => {
   let dataObj = [];
   const $searchMask = document.getElementById("search-mask");
 
+  const handleSearchEscape = event => {
+    if (event.code === "Escape") closeSearch();
+  };
+
   const openSearch = () => {
     const bodyStyle = document.body.style;
     bodyStyle.width = "100%";
@@ -16,16 +20,12 @@ window.addEventListener("load", () => {
       search();
       loadFlag = true;
     }
-    // shortcut: ESC
-    document.addEventListener("keydown", function f(event) {
-      if (event.code === "Escape") {
-        closeSearch();
-        document.removeEventListener("keydown", f);
-      }
-    });
+    document.removeEventListener("keydown", handleSearchEscape);
+    document.addEventListener("keydown", handleSearchEscape);
   };
 
   const closeSearch = () => {
+    document.removeEventListener("keydown", handleSearchEscape);
     const bodyStyle = document.body.style;
     bodyStyle.width = "";
     bodyStyle.overflow = "";
