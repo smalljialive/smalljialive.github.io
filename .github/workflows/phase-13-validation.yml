@@ -106,22 +106,49 @@ jobs:
           test -f "${sticky_html}"
 
           python3 - <<'PY'
+          import re
+          from html.parser import HTMLParser
           from pathlib import Path
 
-          redirect = Path("public/2024/12/30/Wordpress留言后跳转到感谢Thank You页面的方法/index.html").read_text(encoding="utf-8")
-          assert redirect.count("document.addEventListener('wpcf7mailsent',function(event){") == 1
-          assert "**wpcf7invalid**" not in redirect
-          assert "<strong><code>wpcf7invalid</code></strong>" in redirect
-          assert "WordPress留言表单Contact Form7插件" in redirect
+          class TextExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.parts = []
 
-          contact = Path("public/2025/04/09/Contact Form7 标准留言代码/index.html").read_text(encoding="utf-8")
-          assert "&lt;/style&gt;" in contact
+              def handle_data(self, data):
+                  self.parts.append(data)
 
-          sticky = Path("public/2024/06/15/wordpress页面滚动时固定某一部件/index.html").read_text(encoding="utf-8")
-          assert "backgroundcolor:" not in sticky
-          assert "boxshadow:" not in sticky
-          assert "background-color: #fff;" in sticky
-          assert "box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" in sticky
+          def read_page(path):
+              raw = Path(path).read_text(encoding="utf-8")
+              parser = TextExtractor()
+              parser.feed(raw)
+              return raw, "".join(parser.parts)
+
+          redirect_raw, redirect_text = read_page(
+              "public/2024/12/30/Wordpress留言后跳转到感谢Thank You页面的方法/index.html"
+          )
+          assert not re.search(
+              r"<script>\s*document\.addEventListener\('wpcf7mailsent'",
+              redirect_raw,
+          ), "Generated article still contains an executable duplicate Contact Form 7 script"
+          assert redirect_text.count("document.addEventListener('wpcf7mailsent',function(event){") == 1
+          assert "**wpcf7invalid**" not in redirect_text
+          assert "wpcf7invalid" in redirect_text
+          assert "WordPress留言表单Contact Form7插件" in redirect_text
+
+          _, contact_text = read_page(
+              "public/2025/04/09/Contact Form7 标准留言代码/index.html"
+          )
+          assert "</style>" in contact_text
+          assert "<style>\n<script>" not in contact_text
+
+          _, sticky_text = read_page(
+              "public/2024/06/15/wordpress页面滚动时固定某一部件/index.html"
+          )
+          assert "backgroundcolor:" not in sticky_text
+          assert "boxshadow:" not in sticky_text
+          assert "background-color: #fff;" in sticky_text
+          assert "box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" in sticky_text
           PY
 
       - name: Commit approved article changes
