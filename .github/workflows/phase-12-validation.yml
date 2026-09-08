@@ -1,0 +1,124 @@
+name: Phase 12 Validation
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-12
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Apply approved phase 12 edits
+        run: python3 .github/phase12_apply.py
+
+      - name: Validate source changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          expected=$(cat <<'EOF'
+          source/_posts/Wordpress网站好用的插件推荐.md
+          source/_posts/Wordpress留言后跳转到感谢Thank You页面的方法.md
+          source/_posts/wordpress个人博客类主题推荐.md
+          source/_posts/wordpress创建子主题方法.md
+          source/_posts/wordpress文章内页显示同一分类的上下文章.md
+          source/_posts/wordpress的generatepress主题取消默认分页，替换为插件wp-pagenavi的样式.md
+          source/_posts/wordpress网站使用Gmail邮箱配置SMTP邮件.md
+          source/_posts/禁用wordpress插件的更新-全部禁用和部分禁用.md
+          EOF
+          )
+          actual=$(git diff --name-only | sort)
+          test "$actual" = "$(printf '%s\n' "$expected" | sort)"
+
+          grep -F '本文转载地址：https://cloud.tencent.com/developer/article/2008499' 'source/_posts/wordpress个人博客类主题推荐.md'
+          if grep -F 'cloud.tencent.com/developer/tools/blog-entry?target=' 'source/_posts/wordpress个人博客类主题推荐.md'; then
+            echo 'Tencent redirect wrapper still exists in source.'
+            exit 1
+          fi
+          if grep -F 'Wordpress' 'source/_posts/wordpress个人博客类主题推荐.md'; then
+            echo 'Old Wordpress casing still exists in the theme-recommendation article.'
+            exit 1
+          fi
+
+          grep -F 'title: WordPress创建子主题方法' 'source/_posts/wordpress创建子主题方法.md'
+          grep -F 'title: WordPress网站好用的插件推荐' 'source/_posts/Wordpress网站好用的插件推荐.md'
+          grep -F 'title: WordPress网站使用Gmail邮箱配置SMTP留言邮件' 'source/_posts/wordpress网站使用Gmail邮箱配置SMTP邮件.md'
+          grep -F 'title: WordPress个人博客类主题推荐' 'source/_posts/wordpress个人博客类主题推荐.md'
+          grep -F 'title: WordPress文章内页显示同一分类的上下文章' 'source/_posts/wordpress文章内页显示同一分类的上下文章.md'
+          grep -F 'title: WordPress留言后跳转到感谢Thank You页面的方法' 'source/_posts/Wordpress留言后跳转到感谢Thank You页面的方法.md'
+          grep -F 'title: WordPress的Generatepress主题取消默认分页，替换为插件Wp_pagenavi的样式' 'source/_posts/wordpress的generatepress主题取消默认分页，替换为插件wp-pagenavi的样式.md'
+          grep -F 'title: 禁用WordPress插件的更新-全部禁用和部分禁用' 'source/_posts/禁用wordpress插件的更新-全部禁用和部分禁用.md'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=low
+
+      - name: Generate Hexo site
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: Validate generated output and historical paths
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          html_count=$(find public -type f -name '*.html' | wc -l)
+          total_count=$(find public -type f | wc -l)
+          echo "Generated HTML files: ${html_count}"
+          echo "Generated total files: ${total_count}"
+          test "${html_count}" -eq 138
+          test "${total_count}" -eq 167
+
+          test -f 'public/2024/11/28/wordpress创建子主题方法/index.html'
+          test -f 'public/2025/01/10/Wordpress网站好用的插件推荐/index.html'
+          test -f 'public/2026/04/15/wordpress网站使用Gmail邮箱配置SMTP邮件/index.html'
+          test -f 'public/2024/08/30/wordpress个人博客类主题推荐/index.html'
+          test -f 'public/2024/06/30/wordpress文章内页显示同一分类的上下文章/index.html'
+          test -f 'public/2024/12/30/Wordpress留言后跳转到感谢Thank You页面的方法/index.html'
+          test -f 'public/2024/09/30/wordpress的generatepress主题取消默认分页，替换为插件wp-pagenavi的样式/index.html'
+          test -f 'public/2025/04/03/禁用wordpress插件的更新-全部禁用和部分禁用/index.html'
+
+          grep -F '<title>WordPress个人博客类主题推荐 | SmallJia Blog</title>' 'public/2024/08/30/wordpress个人博客类主题推荐/index.html'
+          grep -F '<title>WordPress创建子主题方法 | SmallJia Blog</title>' 'public/2024/11/28/wordpress创建子主题方法/index.html'
+          grep -F '<title>WordPress网站好用的插件推荐 | SmallJia Blog</title>' 'public/2025/01/10/Wordpress网站好用的插件推荐/index.html'
+
+          if grep -F 'cloud.tencent.com/developer/tools/blog-entry?target=' 'public/2024/08/30/wordpress个人博客类主题推荐/index.html'; then
+            echo 'Tencent redirect wrapper still exists in generated article.'
+            exit 1
+          fi
+
+      - name: Commit approved article changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add source/_posts
+          git commit -m 'Fix WordPress title casing and imported redirect links'
+          git push
+
+      - name: Remove temporary phase 12 files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/phase12_apply.py .github/workflows/phase-12-validation.yml
+          git commit -m 'Remove temporary phase 12 validation files'
+          git push
