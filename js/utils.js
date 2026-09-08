@@ -326,13 +326,7 @@ const anzhiyu = {
   },
   //是否是文章页
   is_Post: function () {
-    var url = window.location.href; //获取url
-    if (url.indexOf("/posts/") >= 0) {
-      //判断url地址中是否包含code字符串
-      return true;
-    } else {
-      return false;
-    }
+    return typeof GLOBAL_CONFIG_SITE !== "undefined" && GLOBAL_CONFIG_SITE.isPost === true;
   },
   //监测是否在页面开头
   addNavBackgroundInit: function () {
