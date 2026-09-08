@@ -251,13 +251,7 @@ post_copyright:
 # Sponsor/reward
 reward:
   enable: false
-  QR_code:
-    - img: https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png
-      link:
-      text: 微信
-    - img: https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png
-      link:
-      text: 支付宝
+  QR_code: []
 
 # Post edit
 # Easily browse and edit blog source code online.
