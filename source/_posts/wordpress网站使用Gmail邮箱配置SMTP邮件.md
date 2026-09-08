@@ -76,7 +76,7 @@ updated: '2026-04-15T11:18:24.007+08:00'
 
 * **原因**：PHP 找不到根证书文件。
 * **修复方法**：
-  1. 下载 [cacert.pem](https://www.google.com/search?q=https://curl.se/ca/cacert.pem)。
+  1. 下载 [cacert.pem](https://curl.se/ca/cacert.pem)。
   2. 修改 `php.ini`，确保路径正确（注意斜杠方向）：
      **Ini, TOML**
 

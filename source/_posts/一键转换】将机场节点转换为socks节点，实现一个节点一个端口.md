@@ -59,7 +59,7 @@ Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY](https://www.youtube.com/
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_150601_891.png)
 
-然后将保存好的的内容转换为本地socks节点，（若有多个机场，可将文件更改后缀为yaml格式，直接复制多个文件进行转换）将保存内容复制到不良林的网站工具进行转换（主要转换的是clash.meta，这种格式支持多个端口）：[https://www.bulianglin.com/archives/tosocks.html](https://www.bulianglin.com/archives/tosocks.html)
+然后将保存好的内容转换为本地socks节点，（若有多个机场，可将文件更改后缀为yaml格式，直接复制多个文件进行转换）将保存内容复制到不良林的网站工具进行转换（主要转换的是clash.meta，这种格式支持多个端口）：[https://www.bulianglin.com/archives/tosocks.html](https://www.bulianglin.com/archives/tosocks.html)
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_151258_441.png)
 
