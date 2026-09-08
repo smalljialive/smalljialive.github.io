@@ -881,10 +881,10 @@
       avatar: https://www.sucai999.com/favicon.ico
       descr: 菜鸟图库，多种图片素材资料
       recommend: true  
-    - name: CCO图片搜索
+    - name: CC0 图片搜索
       link: https://www.cc0.cn/image/photock/
       avatar: https://www.cc0.cn/favicon.ico
-      descr: CCO图片搜索，各类图片在线搜索
+      descr: CC0 图片搜索，各类图片在线搜索
       recommend: true    
     - name: 生活图片库
       link: https://www.lifeofpix.com/
@@ -901,10 +901,10 @@
       avatar: https://unsplash.com/favicon.ico
       descr: Unsplash图片素材库
       recommend: true     
-    - name: Shutterstock图片库
+    - name: Gratisography 图片库
       link: https://gratisography.com/
       avatar: https://gratisography.com/favicon.ico
-      descr: Shutterstock图片素材大全
+      descr: Gratisography 免费创意图片素材
       recommend: true    
     - name: Photock图片库
       link: https://photock.jp/
@@ -921,7 +921,7 @@
       avatar: https://safesearch.pixabay.com/favicon.ico
       descr: Pixabay图片素材库
       recommend: true   
-    - name: Pexel图片库
+    - name: Pexels 图片库
       link: https://www.pexels.com/zh-cn/
       avatar: https://www.pexels.com/favicon.ico
       descr: Pexel图片素材库
