@@ -839,8 +839,10 @@ const anzhiyu = {
       return;
     }
     const urlParams = new URLSearchParams(window.location.search);
-    const userId = "8152976493";
-    const userServer = "netease";
+    const anMusicPage = document.getElementById("anMusic-page");
+    if (!anMusicPage) return;
+    const userId = anMusicPage.dataset.musicId;
+    const userServer = anMusicPage.dataset.musicServer;
     const anMusicPageMeting = document.getElementById("anMusic-page-meting");
     if (urlParams.get("id") && urlParams.get("server")) {
       const id = urlParams.get("id");
@@ -871,8 +873,10 @@ const anzhiyu = {
     const anMusicRefreshBtn = anMusicPage.querySelector("#anMusicRefreshBtn");
     const anMusicSwitchingBtn = anMusicPage.querySelector("#anMusicSwitching");
     const metingAplayer = anMusicPage.querySelector("meting-js").aplayer;
-    //初始化音量
-    metingAplayer.volume(0.8, true);
+    // 初始化音量，保持与 nav_music.volume 配置一致
+    const configuredVolume = Number(anMusicPage.dataset.musicVolume);
+    if (Number.isFinite(configuredVolume)) musicVolume = configuredVolume;
+    metingAplayer.volume(musicVolume, true);
     metingAplayer.on("loadeddata", function () {
       anzhiyu.changeMusicBg();
     });

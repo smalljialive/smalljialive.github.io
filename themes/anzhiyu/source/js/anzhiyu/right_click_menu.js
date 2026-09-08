@@ -87,7 +87,7 @@ var oncontextmenuFunction = function (event) {
     if (selectTextNow && window.getSelection()) {
       pluginMode = true;
       $rightMenuCopyText.style.display = "block";
-      $rightMenuCommentText.style.display = "block";
+      $rightMenuCommentText.style.display = document.getElementById("post-comment") ? "block" : "none";
       $rightMenuSearch.style.display = "block";
       $rightMenuSearchBaidu.style.display = "block";
     } else {
@@ -332,6 +332,7 @@ rm.pasteText = function () {
 rm.rightMenuCommentText = function (txt) {
   rm.hideRightMenu();
   const postCommentDom = document.getElementById("post-comment");
+  if (!postCommentDom) return;
   var domTop = postCommentDom.offsetTop;
   window.scrollTo(0, domTop - 80);
   if (txt == "undefined" || txt == "null") txt = "好棒！";

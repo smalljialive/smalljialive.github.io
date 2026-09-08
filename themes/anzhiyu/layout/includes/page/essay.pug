@@ -60,7 +60,8 @@ if site.data.essay
                         .bber-info-from
                           i.anzhiyufont.anzhiyu-icon-location-dot
                           span=item.address
-                    .bber-reply(onclick="rm.rightMenuCommentText(" + `'${item.content}'` + ")")
-                      i.anzhiyufont.anzhiyu-icon-message
+                    if page.comments !== false && theme.comments && theme.comments.use
+                      .bber-reply(onclick="rm.rightMenuCommentText(" + `'${item.content}'` + ")")
+                        i.anzhiyufont.anzhiyu-icon-message
       #bber-tips(style='color: var(--anzhiyu-secondtext);')
         ="- 只展示最近" + i.limit + "条短文 -"
