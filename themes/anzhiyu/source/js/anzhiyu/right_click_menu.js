@@ -75,8 +75,10 @@ var oncontextmenuFunction = function (event) {
     const $rightMenuMusicPlaylist = document.querySelector("#menu-music-playlist");
     const $rightMenuMusicCopyMusicName = document.querySelector("#menu-music-copyMusicName");
 
-    let href = event.target.href;
-    let imgsrc = event.target.currentSrc;
+const linkTarget = event.target.closest?.("a[href]");
+const imageTarget = event.target.closest?.("img");
+let href = linkTarget ? linkTarget.href : "";
+let imgsrc = imageTarget ? imageTarget.currentSrc || imageTarget.src : "";
 
     // 判断模式 扩展模式为有事件
     let pluginMode = false;
@@ -177,17 +179,20 @@ window.oncontextmenu = oncontextmenuFunction;
 rm.downloadimging = false;
 
 // 复制图片到剪贴板
-rm.writeClipImg = function (imgsrc) {
-  console.log("按下复制");
+rm.writeClipImg = async function (imgsrc) {
+  if (rm.downloadimging) return;
+
+  rm.downloadimging = true;
   rm.hideRightMenu();
-  anzhiyu.snackbarShow("正在下载中，请稍后", false, 10000);
-  if (rm.downloadimging == false) {
-    rm.downloadimging = true;
-    setTimeout(function () {
-      copyImage(imgsrc);
-      anzhiyu.snackbarShow("复制成功！图片已添加盲水印，请遵守版权协议");
-      rm.downloadimging = false;
-    }, "10000");
+  anzhiyu.snackbarShow("正在复制图片，请稍后", false, 3000);
+  try {
+    await copyImage(imgsrc);
+    anzhiyu.snackbarShow("复制成功！请遵守版权协议", false, 2000);
+  } catch (error) {
+    console.error("复制图片失败:", error);
+    anzhiyu.snackbarShow("复制失败，请检查浏览器权限或图片跨域限制", false, 3000);
+  } finally {
+    rm.downloadimging = false;
   }
 };
 
@@ -195,29 +200,34 @@ function imageToBlob(imageURL) {
   const img = new Image();
   const c = document.createElement("canvas");
   const ctx = c.getContext("2d");
-  img.crossOrigin = "";
-  img.src = imageURL;
-  return new Promise(resolve => {
+  img.crossOrigin = "anonymous";
+
+  return new Promise((resolve, reject) => {
     img.onload = function () {
-      c.width = this.naturalWidth;
-      c.height = this.naturalHeight;
-      ctx.drawImage(this, 0, 0);
-      c.toBlob(
-        blob => {
-          // here the image is a blob
-          resolve(blob);
-        },
-        "image/png",
-        0.75
-      );
+      try {
+        c.width = this.naturalWidth;
+        c.height = this.naturalHeight;
+        ctx.drawImage(this, 0, 0);
+        c.toBlob(blob => {
+          if (blob) resolve(blob);
+          else reject(new Error("无法生成图片数据"));
+        }, "image/png", 0.75);
+      } catch (error) {
+        reject(error);
+      }
     };
+    img.onerror = () => reject(new Error("图片加载失败或不允许跨域读取"));
+    img.src = imageURL;
   });
 }
 
 async function copyImage(imageURL) {
+  if (!navigator.clipboard || typeof ClipboardItem === "undefined") {
+    throw new Error("当前浏览器不支持图片剪贴板 API");
+  }
   const blob = await imageToBlob(imageURL);
   const item = new ClipboardItem({ "image/png": blob });
-  navigator.clipboard.write([item]);
+  await navigator.clipboard.write([item]);
 }
 
 rm.copyUrl = function (id) {
