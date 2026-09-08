@@ -347,35 +347,63 @@ const anzhiyu = {
     }
   },
   // 下载图片
-  downloadImage: function (imgsrc, name) {
-    //下载图片地址和图片名
+  downloadImage: async function (imgsrc, name) {
     rm.hideRightMenu();
-    if (rm.downloadimging == false) {
-      rm.downloadimging = true;
-      anzhiyu.snackbarShow("正在下载中，请稍后", false, 10000);
-      setTimeout(function () {
-        let image = new Image();
-        // 解决跨域 Canvas 污染问题
-        image.setAttribute("crossOrigin", "anonymous");
-        image.onload = function () {
-          let canvas = document.createElement("canvas");
-          canvas.width = image.width;
-          canvas.height = image.height;
-          let context = canvas.getContext("2d");
-          context.drawImage(image, 0, 0, image.width, image.height);
-          let url = canvas.toDataURL("image/png"); //得到图片的base64编码数据
-          let a = document.createElement("a"); // 生成一个a元素
-          let event = new MouseEvent("click"); // 创建一个单击事件
-          a.download = name || "photo"; // 设置图片名称
-          a.href = url; // 将生成的URL设置为a.href属性
-          a.dispatchEvent(event); // 触发a的单击事件
-        };
-        image.src = imgsrc;
-        anzhiyu.snackbarShow("图片已添加盲水印，请遵守版权协议");
-        rm.downloadimging = false;
-      }, "10000");
-    } else {
+    if (rm.downloadimging) {
       anzhiyu.snackbarShow("有正在进行中的下载，请稍后再试");
+      return;
+    }
+
+    rm.downloadimging = true;
+    anzhiyu.snackbarShow("正在下载图片，请稍后", false, 3000);
+    try {
+      const image = new Image();
+      image.crossOrigin = "anonymous";
+      await new Promise((resolve, reject) => {
+        image.onload = resolve;
+        image.onerror = () => reject(new Error("图片加载失败或不允许跨域读取"));
+        image.src = imgsrc;
+      });
+
+      const canvas = document.createElement("canvas");
+      canvas.width = image.naturalWidth || image.width;
+      canvas.height = image.naturalHeight || image.height;
+      const context = canvas.getContext("2d");
+      if (!context) throw new Error("浏览器无法创建图片画布");
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(result => {
+          if (result) resolve(result);
+          else reject(new Error("无法生成下载图片"));
+        }, "image/png");
+      });
+
+      let sourceName = "image";
+      try {
+        const pathname = new URL(imgsrc, window.location.href).pathname;
+        const rawName = decodeURIComponent(pathname.split("/").pop() || "");
+        sourceName = rawName.replace(/\.[^.]+$/, "") || "image";
+      } catch (error) {
+        console.warn("无法从图片地址解析文件名，将使用默认名称", error);
+      }
+      const requestedName = name ? String(name).replace(/\.[^.]+$/, "") : sourceName;
+      const fileName = `${requestedName || "image"}.png`;
+
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.download = fileName;
+      link.href = objectUrl;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(objectUrl);
+      anzhiyu.snackbarShow("图片下载已开始", false, 2000);
+    } catch (error) {
+      console.error("图片下载失败:", error);
+      anzhiyu.snackbarShow("图片下载失败，请检查图片地址或跨域限制", false, 3000);
+    } finally {
+      rm.downloadimging = false;
     }
   },
   //禁止图片右键单击
@@ -738,33 +766,65 @@ const anzhiyu = {
   },
   // 将音乐缓存播放
   cacheAndPlayMusic() {
-    let data = localStorage.getItem("musicData");
-    if (data) {
-      data = JSON.parse(data);
-      const currentTime = new Date().getTime();
-      if (currentTime - data.timestamp < 24 * 60 * 60 * 1000) {
-        // 如果缓存的数据没有过期，直接使用
-        anzhiyu.playMusic(data.songs);
-        return;
+    let cacheData = null;
+    const rawCache = localStorage.getItem("musicData");
+    if (rawCache) {
+      try {
+        cacheData = JSON.parse(rawCache);
+      } catch (error) {
+        console.warn("音乐缓存已损坏，将重新加载", error);
+        localStorage.removeItem("musicData");
       }
     }
 
-    // 否则重新从服务器获取数据
+    const currentTime = Date.now();
+    if (
+      cacheData &&
+      Number.isFinite(cacheData.timestamp) &&
+      currentTime - cacheData.timestamp < 24 * 60 * 60 * 1000 &&
+      Array.isArray(cacheData.songs) &&
+      cacheData.songs.length > 0
+    ) {
+      anzhiyu.playMusic(cacheData.songs);
+      return;
+    }
+
     fetch("/json/music.json")
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) throw new Error(`音乐列表请求失败：${response.status}`);
+        return response.json();
+      })
       .then(songs => {
-        const cacheData = {
-          timestamp: new Date().getTime(),
-          songs: songs,
+        if (!Array.isArray(songs) || songs.length === 0) {
+          throw new Error("音乐列表为空或格式无效");
+        }
+        const freshCache = {
+          timestamp: Date.now(),
+          songs,
         };
-        localStorage.setItem("musicData", JSON.stringify(cacheData));
+        localStorage.setItem("musicData", JSON.stringify(freshCache));
         anzhiyu.playMusic(songs);
+      })
+      .catch(error => {
+        console.error("音乐列表加载失败:", error);
+        localStorage.removeItem("musicData");
+        anzhiyu.snackbarShow("音乐列表加载失败，请稍后重试", false, 3000);
       });
   },
   // 播放音乐
   playMusic(songs) {
+    if (!Array.isArray(songs) || songs.length === 0) {
+      console.warn("没有可播放的音乐数据");
+      anzhiyu.snackbarShow("暂无可播放的歌曲", false, 2500);
+      return;
+    }
     const anMusicPage = document.getElementById("anMusic-page");
-    const metingAplayer = anMusicPage.querySelector("meting-js").aplayer;
+    const metingAplayer = anMusicPage?.querySelector("meting-js")?.aplayer;
+    if (!metingAplayer?.list?.audios) {
+      console.warn("音乐播放器尚未准备完成");
+      anzhiyu.snackbarShow("音乐播放器尚未准备完成，请稍后重试", false, 2500);
+      return;
+    }
     const randomIndex = Math.floor(Math.random() * songs.length);
     const randomSong = songs[randomIndex];
     const allAudios = metingAplayer.list.audios;
@@ -985,35 +1045,65 @@ const anzhiyu = {
   // 切换歌单
   changeMusicList: async function () {
     const anMusicPage = document.getElementById("anMusic-page");
-    const metingAplayer = anMusicPage.querySelector("meting-js").aplayer;
-    const currentTime = new Date().getTime();
-    const cacheData = JSON.parse(localStorage.getItem("musicData")) || { timestamp: 0 };
-    let songs = [];
+    const metingAplayer = anMusicPage?.querySelector("meting-js")?.aplayer;
+    if (!metingAplayer?.list?.audios) {
+      anzhiyu.snackbarShow("音乐播放器尚未准备完成，请稍后重试", false, 2500);
+      return;
+    }
 
-    if (changeMusicListFlag) {
-      songs = defaultPlayMusicList;
-    } else {
-      // 保存当前默认播放列表，以使下次可以切换回来
-      defaultPlayMusicList = metingAplayer.list.audios;
-      // 如果缓存的数据没有过期，直接使用
-      if (currentTime - cacheData.timestamp < 24 * 60 * 60 * 1000) {
-        songs = cacheData.songs;
-      } else {
-        // 否则重新从服务器获取数据
-        const response = await fetch("/json/music.json");
-        songs = await response.json();
-        cacheData.timestamp = currentTime;
-        cacheData.songs = songs;
-        localStorage.setItem("musicData", JSON.stringify(cacheData));
+    const currentTime = Date.now();
+    let cacheData = { timestamp: 0, songs: [] };
+    const rawCache = localStorage.getItem("musicData");
+    if (rawCache) {
+      try {
+        const parsedCache = JSON.parse(rawCache);
+        if (parsedCache && typeof parsedCache === "object") cacheData = parsedCache;
+      } catch (error) {
+        console.warn("音乐缓存已损坏，将重新加载", error);
+        localStorage.removeItem("musicData");
       }
     }
 
-    // 清除当前播放列表并添加新的歌曲
-    metingAplayer.list.clear();
-    metingAplayer.list.add(songs);
+    try {
+      let songs = [];
+      if (changeMusicListFlag) {
+        songs = Array.isArray(defaultPlayMusicList) ? defaultPlayMusicList : [];
+      } else {
+        // 保存当前默认播放列表，以使下次可以切换回来
+        defaultPlayMusicList = [...metingAplayer.list.audios];
+        if (
+          Number.isFinite(cacheData.timestamp) &&
+          currentTime - cacheData.timestamp < 24 * 60 * 60 * 1000 &&
+          Array.isArray(cacheData.songs) &&
+          cacheData.songs.length > 0
+        ) {
+          songs = cacheData.songs;
+        } else {
+          const response = await fetch("/json/music.json");
+          if (!response.ok) throw new Error(`音乐列表请求失败：${response.status}`);
+          songs = await response.json();
+          if (!Array.isArray(songs) || songs.length === 0) {
+            throw new Error("音乐列表为空或格式无效");
+          }
+          cacheData = {
+            timestamp: currentTime,
+            songs,
+          };
+          localStorage.setItem("musicData", JSON.stringify(cacheData));
+        }
+      }
 
-    // 切换标志位
-    changeMusicListFlag = !changeMusicListFlag;
+      if (!Array.isArray(songs) || songs.length === 0) {
+        throw new Error("没有可切换的歌曲");
+      }
+
+      metingAplayer.list.clear();
+      metingAplayer.list.add(songs);
+      changeMusicListFlag = !changeMusicListFlag;
+    } catch (error) {
+      console.error("歌单切换失败:", error);
+      anzhiyu.snackbarShow("歌单切换失败，已保留当前歌单", false, 3000);
+    }
   },
   // 控制台音乐列表监听
   addEventListenerConsoleMusicList: function () {
