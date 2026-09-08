@@ -1,0 +1,73 @@
+name: Phase 8 Final Validation
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-8
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: fix/site-quality-phase-8
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Clean up indentation
+        run: python3 .github/phase8_indent.py
+
+      - name: JavaScript syntax checks
+        run: |
+          node --check themes/anzhiyu/source/js/utils.js
+          node --check themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Security audit
+        run: npm audit --audit-level=low
+
+      - name: Build Hexo site
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: Validate generated output
+        run: |
+          grep -q 'replaceChildren(meting)' public/js/utils.js
+          grep -q 'Math.min(1' public/js/utils.js
+          grep -q 'Math.max(0' public/js/utils.js
+          grep -q 'musicPageKeydownHandler' public/js/utils.js
+          grep -q 'isContentEditable' public/js/utils.js
+          grep -q 'maxAttempts = 100' public/js/utils.js
+          ! grep -q 'type="playlist" type="playlist"' public/js/utils.js
+          ! grep -Fq 'server=${server}' public/js/utils.js
+          grep -q 'closest?.("a\[href\]")' public/js/anzhiyu/right_click_menu.js
+          grep -q 'await copyImage(imgsrc)' public/js/anzhiyu/right_click_menu.js
+          grep -q 'img.onerror' public/js/anzhiyu/right_click_menu.js
+          grep -q 'await navigator.clipboard.write' public/js/anzhiyu/right_click_menu.js
+          grep -q '^  // 音乐节目切换背景' themes/anzhiyu/source/js/utils.js
+          grep -q '^  getCustomPlayList: function' themes/anzhiyu/source/js/utils.js
+          grep -q '^    // 监听键盘事件' themes/anzhiyu/source/js/utils.js
+          grep -q '^    const linkTarget' themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
+
+      - name: Commit cleanup and remove temporary files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/phase8-finalize.yml .github/phase8_indent.py
+          git add themes/anzhiyu/source/js/utils.js themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
+          git commit -m "style: normalize phase 8 code formatting"
+          git push origin fix/site-quality-phase-8
