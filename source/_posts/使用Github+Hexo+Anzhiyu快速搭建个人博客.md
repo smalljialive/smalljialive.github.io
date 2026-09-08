@@ -7,19 +7,19 @@ date: '2024-12-17T17:17:06.203780+08:00'
 tags:
 - 网站建设
 - 个人博客
-title: 使用Github+Hexo+Anzhiyu快速搭建个人博客
+title: 使用GitHub+Hexo+AnZhiYu快速搭建个人博客
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/72.png
 updated: '2024-12-18T10:18:53.899+08:00'
 ---
 #### 个人博客作为互联网冲浪选手的技能展示，是最直观的一种方式，常见的博客搭建方式是通过服务器安装网站程序，然后通过域名解析到的服务器的网站程序，从而达成访问。
 
-#### 所以我们可以采用Github作为服务器，而域名则采用Github默认的仓库名，一样可以制作个人博客。
+#### 所以我们可以采用GitHub作为服务器，而域名则采用GitHub默认的仓库名，一样可以制作个人博客。
 
 ## 1. 前期准备工作
 
 1. [Node](https://nodejs.org/en)（**必备**）
 2. [Git](https://git-scm.com/downloads)（**必备**）
-3. [Github](https://www.github.com)（**必备**）
+3. [GitHub](https://www.github.com)（**必备**）
 4. [VSCode](https://code.visualstudio.com/)（**可选，代码编辑工具，提供终端连接服务**）
 5. 域名，建议配置一个域名以避免被防火墙阻挡。（**若没有展示需求，可不用**）
 6. 创建免费图床
@@ -42,13 +42,13 @@ updated: '2024-12-18T10:18:53.899+08:00'
 2. Windows 用户可使用默认目录安装 Git，苹果用户则按提示在终端操作。
 3. 验证安装完毕后，Windows 用户会在开始菜单中看到 `Git Bash` 等应用。
 
-### 2.3 申请注册Github账号
+### 2.3 申请注册GitHub账号
 
-1.从Github官网注册账号
+1.从GitHub官网注册账号
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/68.png)
 
-## 3. 配置 Git 密钥并连接至 Github
+## 3. 配置 Git 密钥并连接至 GitHub
 
 **Git 常见的命令（不是必须输入）:**
 
@@ -58,7 +58,7 @@ git config --system --list
 git config --global --list
 ```
 
-### 3.1. 配置用户名和邮箱 并验证是否成功（Github的用户名和邮箱）
+### 3.1. 配置用户名和邮箱 并验证是否成功（GitHub的用户名和邮箱）
 
 从电脑的开始菜单打开**Git bash**，然后输入Git命令
 
@@ -69,25 +69,25 @@ git config --global user.email 你的邮箱
 
 然后输入`git config -l`验证是否成功配置了用户名和邮箱
 
-### 3.2. 生成 SSH 公钥，并配置秘钥连接 Github
+### 3.2. 生成 SSH 公钥，并配置秘钥连接 GitHub
 
 ```
 ssh-keygen -t rsa -C 你的邮箱名
 ```
 
-一直回车生成密钥，然后进入电脑的 **.ssh**文件夹复制 **id_rsa.pub**公钥内容，配置到 Github 的 SSH 设置中。（直接使用记事本打开文件复制内容即可）
+一直回车生成密钥，然后进入电脑的 **.ssh**文件夹复制 **id_rsa.pub**公钥内容，配置到 GitHub 的 SSH 设置中。（直接使用记事本打开文件复制内容即可）
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/69.png)
 
-### 3.3将SSH秘钥配置连接至Github
+### 3.3将SSH秘钥配置连接至GitHub
 
-打开Github网站，点击右上角头像 选择**settings**
+打开GitHub网站，点击右上角头像 选择**settings**
 
 进入设置页后选择 **SSH and GPG keys**，填写名称，后期自己能分清楚即可
 
 将复制的秘钥填到Key那一栏。
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/70.png)
 
-### 3.4测试是否成功连接电脑和Github
+### 3.4测试是否成功连接电脑和GitHub
 
 ```
 ssh -T git@github.com
@@ -104,7 +104,7 @@ ssh -T git@github.com
 
    ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/71.png)
 
-#### 至此，我们已经通过Github与本地网络连接实现了输入`你的用户名+github.io`访问你的博客地址的操作
+#### 至此，我们已经通过GitHub与本地网络连接实现了输入`你的用户名+github.io`访问你的博客地址的操作
 
 ## 5. 初始化 Hexo 博客
 
@@ -137,12 +137,12 @@ hexo cl; hexo s
 
 ```
 deploy:
-type: git
-repository: git@github.com:你的用户名/你的用户名.github.io.git
-branch: main
+  type: git
+  repository: git@github.com:你的用户名/你的用户名.github.io.git
+  branch: main
 ```
 
-2. 安装 `hexo-deployer-git`：（为了将本地文件推送至Github）
+2. 安装 `hexo-deployer-git`：（为了将本地文件推送至GitHub）
 
 ```
 npm install hexo-deployer-git --save
@@ -190,17 +190,17 @@ hexo cl && hexo g && hexo d
 Set-ExecutionPolicy RemoteSigned
 ```
 
-## 经过上述步骤，我们已经成功通过Github自带的github.io方式部署了我们的博客，但是还需要进一步的美化
+## 经过上述步骤，我们已经成功通过GitHub自带的github.io方式部署了我们的博客，但是还需要进一步的美化
 
 ### 个人图床的搭建
 
-个人图床就是你的个人博客网站上图片的存储地址，因为我们是采用Github作为服务器，所以我们需要创建个人图床用来存储我们的图片，目前网络上的图床有很多，选择合适稳定的图床即可。
+个人图床就是你的个人博客网站上图片的存储地址，因为我们是采用GitHub作为服务器，所以我们需要创建个人图床用来存储我们的图片，目前网络上的图床有很多，选择合适稳定的图床即可。
 
-或者可以查看我的其他文章，使用Github创建个人图床。
+或者可以查看我的其他文章，使用GitHub创建个人图床。
 
 ### 安装Hexo的“安知鱼”的主题
 
-HEXO的官方主题有很多种可以选择[点击跳转](https://hexo.io/themes/)，我们这次使用Anzhiyu的主题 [安装方法](https://github.com/anzhiyu-c/hexo-theme-anzhiyu?tab=readme-ov-file)
+HEXO的官方主题有很多种可以选择[点击跳转](https://hexo.io/themes/)，我们这次使用AnZhiYu的主题 [安装方法](https://github.com/anzhiyu-c/hexo-theme-anzhiyu?tab=readme-ov-file)
 
 ### 1. Git 安装
 
@@ -314,6 +314,6 @@ hexo cl; hexo g; hexo d
    type: "categories"
    ---
    ```
-   ### 至此我们就通过Github+Hexo+Anzhiyu搭建好了自己的个人博客！
+   ### 至此我们就通过GitHub+Hexo+AnZhiYu搭建好了自己的个人博客！
 
    ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/72.png)

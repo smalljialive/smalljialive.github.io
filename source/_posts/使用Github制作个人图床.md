@@ -7,17 +7,17 @@ date: '2024-12-18T13:33:55.005278+08:00'
 tags:
 - 网站建设
 - 个人博客
-title: ' 使用Github制作个人图床'
+title: 使用GitHub制作个人图床
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/88.png
 updated: '2024-12-18T14:21:46.719+08:00'
 ---
 图床的含义是图片存储仓库，市面上的图床有很多平台，可以选择付费平台以及免费平台。作为白嫖党，自然选择GitHub平台，不怕跑路还稳定。
 
-Github作为程序员的宝库，不仅能用来制作我们的个人博客，也可以用于制作我们的个人图床，为我们的个人博客或者网站提供图片链接。
+GitHub作为程序员的宝库，不仅能用来制作我们的个人博客，也可以用于制作我们的个人图床，为我们的个人博客或者网站提供图片链接。
 
-### 第一步：准备好Github账户，并新建一个仓库
+### 第一步：准备好GitHub账户，并新建一个仓库
 
-1. 打开Github官网，登录我们的个人账号， 没有账号的话需要注册一个。
+1. 打开GitHub官网，登录我们的个人账号， 没有账号的话需要注册一个。
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/68.png)
 2. 点击右上角的+号，选择New repository，创建一个新的图片存储仓库。仓库名称与描述自己随意填写，选择仓库为Public公开，之后创建仓库。
@@ -35,9 +35,9 @@ Github作为程序员的宝库，不仅能用来制作我们的个人博客，�
 
    ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/76.avif)
 
-   #### 至此我们在Github上的操作已经完成了，接下来我们就需要下载Picgo软件来连接我们的图床
+   #### 至此我们在GitHub上的操作已经完成了，接下来我们就需要下载PicGo软件来连接我们的图床
 
-### 第三步：安装Picgo软件，配置连接Github图床仓库
+### 第三步：安装PicGo软件，配置连接GitHub图床仓库
 
 1.下载PicGo
 
@@ -47,11 +47,11 @@ Github作为程序员的宝库，不仅能用来制作我们的个人博客，�
 
 [https://mirrors.sdu.edu.cn/github-release/Molunerfinn\_PicGo/v2.3.1/](https://mirrors.sdu.edu.cn/github-release/Molunerfinn_PicGo/v2.3.1/)
 
-2.安装完毕后我们开始连接软件与仓库，打开软件的**图床设置**-**Github图床**进行配置
+2.安装完毕后我们开始连接软件与仓库，打开软件的**图床设置**-**GitHub图床**进行配置
 
 图床配置名：自己命名即可（例如我写的Blogimg）
 
-仓库名：username/仓库名（创建的Github仓库名）
+仓库名：username/仓库名（创建的GitHub仓库名）
 
 分支名：你的仓库分支名
 
@@ -59,7 +59,7 @@ Token：创建的Token秘钥
 
 存储路径：仓库内的自定义文件夹（根目录的话就不写）
 
-自定义域名：`https://cdn.jsdelivr.net/gh/ +你的账户名+你的仓库名@你的分支名`（注意最后是@分支名，例如：`https://cdn.jsdelivr.net/gh/jianxiangwudi/MyPic@img`）
+自定义域名：`https://cdn.jsdelivr.net/gh/你的账户名/你的仓库名@你的分支名`（注意最后是@分支名，例如：`https://cdn.jsdelivr.net/gh/jianxiangwudi/MyPic@img`）
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/87.1.png)
 
