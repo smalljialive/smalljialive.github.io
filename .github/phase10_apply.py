@@ -1,0 +1,348 @@
+from pathlib import Path
+
+LOCAL_SEARCH = r'''window.addEventListener("load", () => {
+  let loadFlag = false;
+  let dataObj = [];
+  const $searchMask = document.getElementById("search-mask");
+
+  const openSearch = () => {
+    const bodyStyle = document.body.style;
+    bodyStyle.width = "100%";
+    bodyStyle.overflow = "hidden";
+    anzhiyu.animateIn($searchMask, "to_show 0.5s");
+    anzhiyu.animateIn(document.querySelector("#local-search .search-dialog"), "titleScale 0.5s");
+    setTimeout(() => {
+      document.querySelector("#local-search-input input").focus();
+    }, 100);
+    if (!loadFlag) {
+      search();
+      loadFlag = true;
+    }
+    // shortcut: ESC
+    document.addEventListener("keydown", function f(event) {
+      if (event.code === "Escape") {
+        closeSearch();
+        document.removeEventListener("keydown", f);
+      }
+    });
+  };
+
+  const closeSearch = () => {
+    const bodyStyle = document.body.style;
+    bodyStyle.width = "";
+    bodyStyle.overflow = "";
+    anzhiyu.animateOut(document.querySelector("#local-search .search-dialog"), "search_close .5s");
+    anzhiyu.animateOut($searchMask, "to_hide 0.5s");
+  };
+
+  const searchClickFn = () => {
+    document.querySelector("#search-button > .search").addEventListener("click", openSearch);
+    document.querySelector("#menu-search").addEventListener("click", openSearch);
+  };
+
+  const searchClickFnOnce = () => {
+    document.querySelector("#local-search .search-close-button").addEventListener("click", closeSearch);
+    $searchMask.addEventListener("click", closeSearch);
+    if (GLOBAL_CONFIG.localSearch.preload) dataObj = fetchData(GLOBAL_CONFIG.localSearch.path);
+  };
+
+  const isJson = url => /\.json$/.test(url);
+
+  const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const escapeHTML = text =>
+    String(text).replace(/[&<>"']/g, char => {
+      const entities = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      };
+      return entities[char];
+    });
+
+  const highlightText = (text, keywords) => {
+    if (!text || !keywords.length) return escapeHTML(text || "");
+    const pattern = new RegExp(keywords.map(escapeRegExp).join("|"), "gi");
+    let result = "";
+    let lastIndex = 0;
+
+    text.replace(pattern, (match, offset) => {
+      result += escapeHTML(text.slice(lastIndex, offset));
+      result += `<span class="search-keyword">${escapeHTML(match)}</span>`;
+      lastIndex = offset + match.length;
+      return match;
+    });
+
+    result += escapeHTML(text.slice(lastIndex));
+    return result;
+  };
+
+  const getImageSource = content => {
+    const imgTags = content.match(/<img\b[^>]*>/gi) || [];
+    for (const imgTag of imgTags) {
+      const srcMatch = imgTag.match(/\ssrc\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+      if (!srcMatch) continue;
+      const src = srcMatch[1] || srcMatch[2] || srcMatch[3] || "";
+      if (/^(?:https?:)?\/\//i.test(src) || /^\.{0,2}\//.test(src)) return src;
+    }
+    return "";
+  };
+
+  const showDatabaseError = () => {
+    const $loadDataItem = document.getElementById("loading-database");
+    if ($loadDataItem) $loadDataItem.innerHTML = "<span> 搜索数据库加载失败，请刷新重试</span>";
+  };
+
+  const fetchData = async path => {
+    try {
+      let data = [];
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(`搜索数据库请求失败: ${response.status}`);
+
+      if (isJson(path)) {
+        data = await response.json();
+      } else {
+        const res = await response.text();
+        const xml = new window.DOMParser().parseFromString(res, "text/xml");
+        if (xml.querySelector("parsererror")) throw new Error("搜索数据库 XML 解析失败");
+
+        data = [...xml.querySelectorAll("entry")].map(item => {
+          const tagsArr = [];
+          const tags = item.querySelector("tags");
+          if (tags) {
+            Array.prototype.forEach.call(tags.getElementsByTagName("tag"), tag => {
+              tagsArr.push(tag.textContent);
+            });
+          }
+
+          const content = item.querySelector("content")?.textContent || "";
+          return {
+            title: item.querySelector("title")?.textContent || "",
+            content,
+            url: item.querySelector("url")?.textContent || "",
+            tags: tagsArr,
+            oneImage: getImageSource(content),
+          };
+        });
+      }
+
+      const $loadDataItem = document.getElementById("loading-database");
+      if ($loadDataItem) {
+        const $searchWrap = $loadDataItem.nextElementSibling;
+        if ($searchWrap) $searchWrap.style.display = "block";
+        $loadDataItem.remove();
+      }
+      return data;
+    } catch (error) {
+      console.error("加载搜索数据库失败:", error);
+      showDatabaseError();
+      throw error;
+    }
+  };
+
+  const search = () => {
+    if (!GLOBAL_CONFIG.localSearch.preload) {
+      dataObj = fetchData(GLOBAL_CONFIG.localSearch.path);
+    }
+    const $input = document.querySelector("#local-search-input input");
+    const $resultContent = document.getElementById("local-search-results");
+    const $loadingStatus = document.getElementById("loading-status");
+
+    $input.addEventListener("input", function () {
+      const query = this.value.trim();
+      $resultContent.innerHTML = "";
+      $loadingStatus.innerHTML = "";
+      if (!query) return;
+
+      const keywords = query.toLowerCase().split(/\s+/).filter(Boolean);
+      if (!keywords.length) return;
+
+      $loadingStatus.innerHTML = '<i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i>';
+      let str = '<div class="search-result-list">';
+      let count = 0;
+
+      Promise.resolve(dataObj)
+        .then(data => {
+          if ($input.value.trim() !== query) return;
+
+          data.forEach(item => {
+            let isMatch = true;
+            const rawTitle = item.title ? item.title.trim() : "";
+            const rawContent = item.content ? item.content.trim().replace(/<[^>]+>/g, "") : "";
+            const searchableTitle = rawTitle.toLowerCase();
+            const searchableContent = rawContent.toLowerCase();
+            const dataTags = Array.isArray(item.tags) ? item.tags : [];
+            const oneImage = item.oneImage || "";
+            const dataUrl = item.url.startsWith("/") ? item.url : GLOBAL_CONFIG.root + item.url;
+            let firstOccur = -1;
+
+            if (searchableTitle !== "" || searchableContent !== "") {
+              keywords.forEach((keyword, index) => {
+                const indexTitle = searchableTitle.indexOf(keyword);
+                let indexContent = searchableContent.indexOf(keyword);
+                if (indexTitle < 0 && indexContent < 0) {
+                  isMatch = false;
+                } else {
+                  if (indexContent < 0) indexContent = 0;
+                  if (index === 0) firstOccur = indexContent;
+                }
+              });
+            } else {
+              isMatch = false;
+            }
+
+            if (!isMatch || firstOccur < 0) return;
+
+            let start = firstOccur - 30;
+            let end = firstOccur + 100;
+            let pre = "";
+            let post = "";
+
+            if (start < 0) start = 0;
+            if (start === 0) end = 100;
+            else pre = "...";
+
+            if (end > rawContent.length) end = rawContent.length;
+            else post = "...";
+
+            const displayTitle = highlightText(rawTitle, keywords);
+            const matchContent = highlightText(rawContent.substring(start, end), keywords);
+
+            str += '<div class="local-search__hit-item">';
+            if (oneImage) {
+              str += `<div class="search-left"><img src="${escapeHTML(oneImage)}" alt="${escapeHTML(
+                rawTitle
+              )}" data-fancybox="gallery">`;
+            } else {
+              str += '<div class="search-left" style="width:0">';
+            }
+            str += "</div>";
+
+            if (oneImage) {
+              str += `<div class="search-right"><a href="${escapeHTML(
+                dataUrl
+              )}" class="search-result-title">${displayTitle}</a>`;
+            } else {
+              str += `<div class="search-right" style="width: 100%"><a href="${escapeHTML(
+                dataUrl
+              )}" class="search-result-title">${displayTitle}</a>`;
+            }
+
+            count += 1;
+
+            if (rawContent !== "") {
+              str +=
+                '<p class="search-result" onclick="pjax.loadUrl(`' +
+                dataUrl +
+                '`)">' +
+                pre +
+                matchContent +
+                post +
+                "</p>";
+            }
+
+            if (dataTags.length) {
+              str += '<div class="search-result-tags">';
+              for (let i = 0; i < dataTags.length; i++) {
+                const element = dataTags[i].trim();
+                str +=
+                  '<a class="tag-list" href="/tags/' +
+                  element +
+                  '/" data-pjax-state="" one-link-mark="yes">#' +
+                  element +
+                  "</a>";
+              }
+              str += "</div>";
+            }
+            str += "</div></div>";
+          });
+
+          if (count === 0) {
+            str +=
+              '<div id="local-search__hits-empty">' +
+              GLOBAL_CONFIG.localSearch.languages.hits_empty.replace(/\$\{query}/, escapeHTML(query)) +
+              "</div>";
+          }
+          str += "</div>";
+          $resultContent.innerHTML = str;
+          $loadingStatus.innerHTML = "";
+          window.pjax && window.pjax.refresh($resultContent);
+        })
+        .catch(error => {
+          console.error("执行站内搜索失败:", error);
+          if ($input.value.trim() !== query) return;
+          $loadingStatus.innerHTML = "";
+          $resultContent.innerHTML = '<div id="local-search__hits-empty">搜索数据库加载失败，请刷新重试</div>';
+        });
+    });
+  };
+
+  searchClickFn();
+  searchClickFnOnce();
+
+  // pjax
+  window.addEventListener("pjax:complete", () => {
+    !anzhiyu.isHidden($searchMask) && closeSearch();
+    searchClickFn();
+  });
+});
+'''
+
+
+def replace_exact(path: Path, old: str, new: str, count: int = 1):
+    text = path.read_text(encoding="utf-8")
+    actual = text.count(old)
+    if actual != count:
+        raise RuntimeError(f"{path}: expected {count} occurrence(s), found {actual}: {old!r}")
+    path.write_text(text.replace(old, new, count), encoding="utf-8")
+
+
+local_search_path = Path("themes/anzhiyu/source/js/search/local-search.js")
+local_search_path.write_text(LOCAL_SEARCH, encoding="utf-8")
+
+rightmenu = Path("themes/anzhiyu/layout/includes/anzhiyu/rightmenu.pug")
+replace_exact(
+    rightmenu,
+    "\t\ta.rightMenu-item#menu-commentBarrage(href='javascript:void(0);')\n\t\t\ti.anzhiyufont.anzhiyu-icon-message\n\t\t\tspan.menu-commentBarrage-text 关闭热评\n",
+    "\t\tif theme.comment_barrage_config && theme.comment_barrage_config.enable && theme.comments && theme.comments.use == 'Twikoo'\n\t\t\ta.rightMenu-item#menu-commentBarrage(href='javascript:void(0);')\n\t\t\t\ti.anzhiyufont.anzhiyu-icon-message\n\t\t\t\tspan.menu-commentBarrage-text 关闭热评\n",
+)
+
+right_click = Path("themes/anzhiyu/source/js/anzhiyu/right_click_menu.js")
+replace_exact(
+    right_click,
+    '  document.getElementById("menu-commentBarrage").addEventListener("click", anzhiyu.switchCommentBarrage);',
+    '  const commentBarrageMenu = document.getElementById("menu-commentBarrage");\n  if (commentBarrageMenu) commentBarrageMenu.addEventListener("click", anzhiyu.switchCommentBarrage);',
+)
+
+socks_post = Path("source/_posts/一键转换】将机场节点转换为socks节点，实现一个节点一个端口.md")
+replacements = {
+    "Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY]([https://](https://www.youtube.com/watch?v=01F8xUxqmkY))": "Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY](https://www.youtube.com/watch?v=01F8xUxqmkY)",
+    "**V2ray**：[https://github.com/2dust/v2rayN/releases/tag/6.23]([https://](https://github.com/2dust/v2rayN/releases/tag/6.23))": "**V2ray**：[https://github.com/2dust/v2rayN/releases/tag/6.23](https://github.com/2dust/v2rayN/releases/tag/6.23)",
+    "1. AdsPower：[https://activity.adspower.net/ap/dist/]([https://](https://activity.adspower.net/ap/dist/))": "1. AdsPower：[https://activity.adspower.net/ap/dist/](https://activity.adspower.net/ap/dist/)",
+    "[https://bulianglin.com/archives/51.html]([https://](https://bulianglin.com/archives/51.html))": "[https://bulianglin.com/archives/51.html](https://bulianglin.com/archives/51.html)",
+    "[https://github.com/tindy2013/subconverter/releases]([https://](https://github.com/tindy2013/subconverter/releases))": "[https://github.com/tindy2013/subconverter/releases](https://github.com/tindy2013/subconverter/releases)",
+}
+for old, new in replacements.items():
+    replace_exact(socks_post, old, new)
+
+backlink_post = Path("source/_posts/谷歌外链平台大区.md")
+replace_exact(
+    backlink_post,
+    "3.Blogger：[https://www.blogger.com/about/?bpli=1]([https://](https://www.blogger.com/about/?bpli=1))",
+    "3.Blogger：[https://www.blogger.com/about/?bpli=1](https://www.blogger.com/about/?bpli=1)",
+)
+
+# Source-level assertions.
+local = local_search_path.read_text(encoding="utf-8")
+assert "if (!query) return;" in local
+assert "escapeRegExp" in local
+assert 'src="${escapeHTML(oneImage)}"' in local
+assert "搜索数据库加载失败，请刷新重试" in local
+assert ".toLowerCase()" in local  # matching remains case-insensitive
+assert "let dataTitle = data.title ? data.title.trim().toLowerCase()" not in local
+assert "new RegExp(keyword" not in local
+assert "]([https://](" not in socks_post.read_text(encoding="utf-8")
+assert "]([https://](" not in backlink_post.read_text(encoding="utf-8")
+print("Phase 10 source changes applied and assertions passed")
