@@ -58,7 +58,7 @@ updated: '2024-12-16T15:41:09.963+08:00'
 
  
 
-想要搭建 V2Ray， 拥有一个 VPS 是必需的。 我们推荐使用：[搬瓦工（Bandwagon Host）](https://on.affpass.com/go/bwg) VPS 来搭建 V2Ray 搬瓦工是一个对中国用户极度友好的 VPS 商家，有香港，CN2 GIA 优化线路，并且支持支付宝付款，当然也是支持退款的！ 没有找到合适的套餐？你可以前往官网详细查看：[https://bwh89.net/cart.php](https://on.affpass.com/go/bwg) 哪个套餐好？ 一般来说，**推荐购买 香港线路** 或 **CN2 GIA 线路**，或者哪个便宜选择那个，说着当然如果你使用量比较多或者想要分享给同学和朋友一起用的话，选择合适的套餐即可。又或者你土豪的话，选择最贵的也行。 **VPS 速度：香港线路 > 日本线路 > CN2 GIA 线路 > CN2 线路 > 普通线路** **香港套餐 VPS 的速度最快。** 如果你非常在乎速度的话，建议购买香港线路的 VPS，当然，但价格贵，流量相对其他套餐来说也是比较少的……退一步的选择是 `CN2 GIA` 线路，这个线路的速度也比较好。 线路是比较重要的，像香港和 CN2 GIA 线路到晚上一般不会怎么炸，普通线路的到了晚上可能会出现很慢慢的感觉。 我本人比较推荐 `CN2 GIA` 线路，稳定性，速度与价格适中选择。 当然啦！如果你觉得价格太贵了，推荐你查看一下 [Just My Socks](https://justmysocks.xyz/justmysocks-v2ray/) ，搬瓦工官方出品的代理服务，优质的 CN2 GIA 线路，**每月仅需 $2.88 起！**再也不用自己折腾搭建了，**最最最最重要的是：被墙自动换 IP，无须担心 IP 被墙！** Just My Socks 购买教程在这里： [Just My Socks 购买及使用](https://justmysocks.xyz/justmysocks-v2ray/) 毫无疑问！绝对的一分钱一分货。
+想要搭建 V2Ray， 拥有一个 VPS 是必需的。 我们推荐使用：[搬瓦工（Bandwagon Host）](https://on.affpass.com/go/bwg) VPS 来搭建 V2Ray 搬瓦工是一个对中国用户极度友好的 VPS 商家，有香港，CN2 GIA 优化线路，并且支持支付宝付款，当然也是支持退款的！ 没有找到合适的套餐？你可以前往官网详细查看：[https://bwh89.net/cart.php](https://on.affpass.com/go/bwg) 哪个套餐好？ 一般来说，**推荐购买 香港线路** 或 **CN2 GIA 线路**，或者哪个便宜选择那个，说着当然如果你使用量比较多或者想要分享给同学和朋友一起用的话，选择合适的套餐即可。又或者你土豪的话，选择最贵的也行。 **VPS 速度：香港线路 > 日本线路 > CN2 GIA 线路 > CN2 线路 > 普通线路** **香港套餐 VPS 的速度最快。** 如果你非常在乎速度的话，建议购买香港线路的 VPS，当然，但价格贵，流量相对其他套餐来说也是比较少的……退一步的选择是 `CN2 GIA` 线路，这个线路的速度也比较好。 线路是比较重要的，像香港和 CN2 GIA 线路到晚上一般不会怎么炸，普通线路的到了晚上可能会出现很慢慢的感觉。 我本人比较推荐 `CN2 GIA` 线路，稳定性，速度与价格适中选择。 当然啦！如果你觉得价格太贵了，推荐你查看一下 [Just My Socks](https://justmysocks.xyz/justmysocks-v2ray/) ，搬瓦工官方出品的代理服务，优质的 CN2 GIA 线路，**每月仅需 $2.88 起！** 再也不用自己折腾搭建了，**最最最最重要的是：被墙自动换 IP，无须担心 IP 被墙！** Just My Socks 购买教程在这里： [Just My Socks 购买及使用](https://justmysocks.xyz/justmysocks-v2ray/) 毫无疑问！绝对的一分钱一分货。
 
 > 如果出现 out of stock 这样的提示，那就是这个套餐卖完了，选择其他套餐即可。
 
@@ -104,9 +104,6 @@ Xshell 是一个易用的 SSH 客户端，要登录 VPS，当然需要 SSH 客�
 
 ```bash
 bash <(wget -qO- -o- https://git.io/v2ray.sh)
-```bash
-bash <(wget -qO- -o- https://git.io/v2ray.sh)
-
 ```
 
 ## 安装完成
