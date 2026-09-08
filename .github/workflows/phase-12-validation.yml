@@ -45,7 +45,10 @@ jobs:
               "source/_posts/禁用wordpress插件的更新-全部禁用和部分禁用.md",
           }
           actual = set(
-              subprocess.check_output(["git", "diff", "--name-only"], text=True).splitlines()
+              subprocess.check_output(
+                  ["git", "-c", "core.quotePath=false", "diff", "--name-only"],
+                  text=True,
+              ).splitlines()
           )
           print("Expected changed files:", sorted(expected))
           print("Actual changed files:", sorted(actual))
