@@ -10,7 +10,7 @@ id: 432
 tags:
 - WordPress
 - 网站建设
-title: Wordpress的Generatepress主题取消默认分页，替换为插件Wp_pagenavi的样式
+title: WordPress的Generatepress主题取消默认分页，替换为插件Wp_pagenavi的样式
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/23.jpg
 updated: '2024-12-16T13:59:43.483+08:00'
 ---

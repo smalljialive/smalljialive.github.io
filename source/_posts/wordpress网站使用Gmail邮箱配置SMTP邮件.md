@@ -8,7 +8,7 @@ date: '2026-04-15T10:58:29.272278+08:00'
 tags:
 - 网站建设
 - WordPress
-title: wordpress网站使用Gmail邮箱配置SMTP留言邮件
+title: WordPress网站使用Gmail邮箱配置SMTP留言邮件
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/wpmail%E9%85%8D%E7%BD%AE.png
 updated: '2026-04-15T11:18:24.007+08:00'
 ---
