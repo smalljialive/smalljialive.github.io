@@ -429,7 +429,8 @@ function addRightMenuClickEvent() {
     toRandomPost();
   });
 
-  document.getElementById("menu-commentBarrage").addEventListener("click", anzhiyu.switchCommentBarrage);
+  const commentBarrageMenu = document.getElementById("menu-commentBarrage");
+  if (commentBarrageMenu) commentBarrageMenu.addEventListener("click", anzhiyu.switchCommentBarrage);
 
   document.getElementById("rightmenu-mask").addEventListener("click", rm.hideRightMenu);
 

@@ -22,7 +22,7 @@ updated: '2025-12-18T14:28:21.875+08:00'
 
 以下附上大佬的视频地址和网站地址：
 
-Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY]([https://](https://www.youtube.com/watch?v=01F8xUxqmkY))
+Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY](https://www.youtube.com/watch?v=01F8xUxqmkY)
 
 网站：[https://www.bulianglin.com](https://www.bulianglin.com/category/fan/2/)
 
@@ -30,13 +30,13 @@ Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY]([https://](https://www.y
 
 ### 软件准备
 
-**V2ray**：[https://github.com/2dust/v2rayN/releases/tag/6.23]([https://](https://github.com/2dust/v2rayN/releases/tag/6.23))下载带core的版本（之后自定义服务器的专属版本）
+**V2ray**：[https://github.com/2dust/v2rayN/releases/tag/6.23](https://github.com/2dust/v2rayN/releases/tag/6.23)下载带core的版本（之后自定义服务器的专属版本）
 
 **机场节点**：机场节点的订阅地址或者是已经整理好的机场节点文件（yaml文件）
 
 **指纹浏览器**：主包推荐AdsPower（免费版有可设置两个，界面简单）或者VirtualBrowser（免费版随便设置）
 
-1. AdsPower：[https://activity.adspower.net/ap/dist/]([https://](https://activity.adspower.net/ap/dist/))
+1. AdsPower：[https://activity.adspower.net/ap/dist/](https://activity.adspower.net/ap/dist/)
 2. VirtualBrowser：[https://virtualbrowser.cc/](https://virtualbrowser.cc/)
 
 ### 解决步骤
@@ -47,11 +47,11 @@ Youtube：[https://www.youtube.com/watch?v=01F8xUxqmkY]([https://](https://www.y
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_145228_325.png)
 
-首先复制机场节点订阅链接，然后打开转化工具（可通过百度节点转化网站，无需转换工具）：本文使用的是不良林的网站转化工具：[https://bulianglin.com/archives/51.html]([https://](https://bulianglin.com/archives/51.html))（需要下载一个小脚本）
+首先复制机场节点订阅链接，然后打开转化工具（可通过百度节点转化网站，无需转换工具）：本文使用的是不良林的网站转化工具：[https://bulianglin.com/archives/51.html](https://bulianglin.com/archives/51.html)（需要下载一个小脚本）
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_145812_918.png)
 
-首先需要下载一个订阅转换工具[https://github.com/tindy2013/subconverter/releases]([https://](https://github.com/tindy2013/subconverter/releases))  按照需求下载对应的版本即可，下载完成后双击运行会自动打开一个命令提示符，将其放置后台不用理会。
+首先需要下载一个订阅转换工具[https://github.com/tindy2013/subconverter/releases](https://github.com/tindy2013/subconverter/releases)  按照需求下载对应的版本即可，下载完成后双击运行会自动打开一个命令提示符，将其放置后台不用理会。
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/ScreenShot_2025-12-18_150320_958.png)
 
