@@ -1,0 +1,101 @@
+name: Finalize phase 6 dependency cleanup
+
+on:
+  push:
+    branches:
+      - chore/remove-wordpress-migrator-phase-6
+    paths:
+      - .github/workflows/finalize-phase6.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v6
+        with:
+          ref: chore/remove-wordpress-migrator-phase-6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Record baseline audit
+        shell: bash
+        run: |
+          npm ci
+          npm audit --json > /tmp/audit-before.json || true
+          node <<'NODE'
+          const fs = require('fs');
+          const a = JSON.parse(fs.readFileSync('/tmp/audit-before.json', 'utf8'));
+          const v = a.metadata?.vulnerabilities || {};
+          console.log(`AUDIT_BEFORE info=${v.info||0} low=${v.low||0} moderate=${v.moderate||0} high=${v.high||0} critical=${v.critical||0} total=${v.total||0}`);
+          NODE
+
+      - name: Remove WordPress migrator and refresh lockfile
+        shell: bash
+        run: |
+          npm uninstall hexo-migrator-wordpress --package-lock-only
+          npm update --package-lock-only
+          node <<'NODE'
+          const pkg = require('./package.json');
+          if (pkg.dependencies?.['hexo-migrator-wordpress']) {
+            throw new Error('hexo-migrator-wordpress still present in package.json');
+          }
+          if (pkg.dependencies?.hexo !== '^7.3.0') {
+            throw new Error(`Hexo dependency changed unexpectedly: ${pkg.dependencies?.hexo}`);
+          }
+          const lock = require('./package-lock.json');
+          const p = lock.packages || {};
+          if (p['node_modules/hexo-migrator-wordpress']) {
+            throw new Error('hexo-migrator-wordpress still present in package-lock.json');
+          }
+          console.log('Dependency removal verified');
+          NODE
+
+      - name: Reinstall and require clean audit
+        shell: bash
+        run: |
+          rm -rf node_modules
+          npm ci
+          npm audit --json > /tmp/audit-after.json || true
+          node <<'NODE'
+          const fs = require('fs');
+          const a = JSON.parse(fs.readFileSync('/tmp/audit-after.json', 'utf8'));
+          const v = a.metadata?.vulnerabilities || {};
+          console.log(`AUDIT_AFTER info=${v.info||0} low=${v.low||0} moderate=${v.moderate||0} high=${v.high||0} critical=${v.critical||0} total=${v.total||0}`);
+          if ((v.total || 0) !== 0) throw new Error(`Expected 0 vulnerabilities, got ${v.total}`);
+          const lock = require('./package-lock.json');
+          const p = lock.packages || {};
+          const names = ['hexo','hexo-renderer-marked','dompurify','jsdom','form-data','camaro','turndown'];
+          for (const name of names) console.log(`PACKAGE ${name}=${p[`node_modules/${name}`]?.version || 'not-found'}`);
+          NODE
+
+      - name: Build Hexo site
+        shell: bash
+        run: |
+          timeout 30s npx hexo clean
+          timeout 90s npx hexo generate
+          test -f public/index.html
+          count=$(find public -type f | wc -l)
+          echo "GENERATED_FILE_COUNT=$count"
+          test "$count" -gt 100
+
+      - name: Commit dependency cleanup and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: remove unused WordPress migrator and refresh dependencies"
+          git rm .github/workflows/finalize-phase6.yml
+          git commit -m "chore: remove temporary phase 6 validation workflow"
+          git push origin chore/remove-wordpress-migrator-phase-6
