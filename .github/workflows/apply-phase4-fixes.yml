@@ -1,0 +1,165 @@
+name: Apply phase 4 site quality fixes
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-4
+    paths:
+      - .github/workflows/apply-phase4-fixes.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/site-quality-phase-4
+
+      - name: Apply approved fixes
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+
+          config_path = Path('_config.anzhiyu.yml')
+          config = config_path.read_text(encoding='utf-8')
+          old_reward = '''reward:
+            enable: false
+            QR_code:
+              - img: https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-weichat.png
+                link:
+                text: 微信
+              - img: https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/qrcode-alipay.png
+                link:
+                text: 支付宝
+          '''
+          new_reward = '''reward:
+            enable: false
+            QR_code: []
+          '''
+          if old_reward not in config:
+              raise SystemExit('Expected reward block not found; refusing to patch')
+          config = config.replace(old_reward, new_reward, 1)
+          config_path.write_text(config, encoding='utf-8')
+
+          head_path = Path('themes/anzhiyu/layout/includes/head.pug')
+          head = head_path.read_text(encoding='utf-8')
+          old_viewport = 'meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")'
+          new_viewport = 'meta(name="viewport" content="width=device-width, initial-scale=1.0")'
+          if old_viewport not in head:
+              raise SystemExit('Expected viewport meta not found; refusing to patch')
+          head = head.replace(old_viewport, new_viewport, 1)
+          head_path.write_text(head, encoding='utf-8')
+
+          lazyload_path = Path('themes/anzhiyu/scripts/filters/post_lazyload.js')
+          lazyload_path.write_text(r'''/**
+           * AnZhiYu
+           * lazyload
+           * replace src to data-lazy-src
+           */
+
+          "use strict";
+
+          const urlFor = require("hexo-util").url_for.bind(hexo);
+
+          const lazyload = htmlContent => {
+            const error_img = hexo.theme.config.error_img.post_page;
+            const bg = hexo.theme.config.lazyload.placeholder
+              ? urlFor(hexo.theme.config.lazyload.placeholder)
+              : "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+
+            return htmlContent.replace(/<img\b[^>]*>/gi, imgTag => {
+              if (/\bclass\s*=\s*["'][^"']*\bnolazyload\b[^"']*["']/i.test(imgTag)) {
+                return imgTag;
+              }
+
+              const srcPattern = /\s+src=(["'])(.*?)\1/i;
+              if (!srcPattern.test(imgTag)) return imgTag;
+
+              const hasOnerror = /\bonerror\s*=/i.test(imgTag);
+              const errorHandler = hasOnerror
+                ? ""
+                : ` onerror="this.onerror=null,this.src=&quot;${error_img}&quot;"`;
+
+              return imgTag.replace(
+                srcPattern,
+                (_, quote, src) => ` src="${bg}"${errorHandler} data-lazy-src=${quote}${src}${quote}`
+              );
+            });
+          };
+
+          hexo.extend.filter.register("after_render:html", data => {
+            const { enable, field } = hexo.theme.config.lazyload;
+            if (!enable || field !== "site") return;
+            return lazyload(data);
+          });
+
+          hexo.extend.filter.register("after_post_render", data => {
+            const { enable, field } = hexo.theme.config.lazyload;
+            if (!enable || field !== "post") return;
+            data.content = lazyload(data.content);
+            return data;
+          });
+          ''', encoding='utf-8')
+          PY
+
+      - name: Validate JavaScript syntax
+        run: node --check themes/anzhiyu/scripts/filters/post_lazyload.js
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Hexo site
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: Validate generated HTML
+        shell: bash
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          import re
+
+          html_files = list(Path('public').rglob('*.html'))
+          if not html_files:
+              raise SystemExit('No generated HTML files found')
+
+          duplicate_onerror = []
+          for path in html_files:
+              text = path.read_text(encoding='utf-8', errors='ignore')
+              for tag in re.findall(r'<img\b[^>]*>', text, flags=re.I):
+                  if len(re.findall(r'\bonerror\s*=', tag, flags=re.I)) > 1:
+                      duplicate_onerror.append((str(path), tag[:240]))
+
+          if duplicate_onerror:
+              print('Duplicate onerror attributes remain:')
+              for item in duplicate_onerror[:10]:
+                  print(item)
+              raise SystemExit(1)
+
+          combined = '\n'.join(p.read_text(encoding='utf-8', errors='ignore') for p in html_files)
+          if 'user-scalable=no' in combined:
+              raise SystemExit('user-scalable=no still exists in generated HTML')
+          if 'qrcode-weichat.png' in combined or 'qrcode-alipay.png' in combined:
+              raise SystemExit('Default reward QR codes still exist in generated HTML')
+
+          about = Path('public/about/index.html').read_text(encoding='utf-8', errors='ignore')
+          if 'width=device-width, initial-scale=1.0' not in about:
+              raise SystemExit('Expected viewport content missing from generated About page')
+          print(f'Validated {len(html_files)} generated HTML files successfully')
+          PY
+
+      - name: Commit fixes and remove temporary workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-phase4-fixes.yml
+          git add _config.anzhiyu.yml themes/anzhiyu/layout/includes/head.pug themes/anzhiyu/scripts/filters/post_lazyload.js
+          git commit -m "fix: clean inactive UI data and image fallback handling [phase4-applied]"
+          git push origin fix/site-quality-phase-4
