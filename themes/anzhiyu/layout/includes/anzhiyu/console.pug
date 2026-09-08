@@ -1,11 +1,12 @@
 #console
-  .console-card-group-reward
-    ul.reward-all.console-card
-      each item in theme.reward.QR_code
-        li.reward-item
-          a(href=url_for(item.link || item.img), target='_blank')
-            img.post-qr-code-img(alt=item.text, src=url_for(item.img))
-          .post-qr-code-desc=item.text
+  if theme.reward && theme.reward.enable && theme.reward.QR_code && theme.reward.QR_code.length
+    .console-card-group-reward
+      ul.reward-all.console-card
+        each item in theme.reward.QR_code
+          li.reward-item
+            a(href=url_for(item.link || item.img), target='_blank')
+              img.post-qr-code-img(alt=item.text, src=url_for(item.img))
+            .post-qr-code-desc=item.text
   .console-card-group
     .console-card-group-left
       !=partial('includes/widget/card_newest_comment', {}, {cache: true})
