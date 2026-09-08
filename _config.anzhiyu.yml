@@ -70,7 +70,7 @@ copy:
 # formal:
 #   name: link || icon
 social:
-   Github: https://github.com/smalljialive|| anzhiyu-icon-github
+   GitHub: https://github.com/smalljialive|| anzhiyu-icon-github
    BiliBili: https://space.bilibili.com/32638048 || anzhiyu-icon-bilibili
 
 # 作者卡片 状态
@@ -529,7 +529,7 @@ footer:
       link: /copyright
     linkList:
       - link: https://github.com/anzhiyu-c/hexo-theme-anzhiyu
-        text: 本站采用Hero的安知鱼主题
+        text: 本站采用 AnZhiYu 主题
       # - link: https://image.anheyu.com
       #   text: 图床
       # - link: https://beian.miit.gov.cn/

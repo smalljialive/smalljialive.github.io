@@ -21,16 +21,16 @@ updated: '2025-04-09T17:17:52.817+08:00'
 ```
 <div style="text-align:left;">
     <p class="allwidth">Name*:
-        [text* your-name placeholder"Your Name:"]
+        [text* your-name placeholder "Your Name:"]
     </p>
     <p class="allwidth">Phone/Whatsapp*:
-        [tel* your-whatsapp placeholder"Phone/Whatsapp:"]
+        [tel* your-whatsapp placeholder "Phone/Whatsapp:"]
     </p>
     <p class="allwidth">Email*:
-        [email* your-email placeholder"Your Email:"]
+        [email* your-email placeholder "Your Email:"]
     </p>
     <p class="allwidth">Message*:
-        [textarea* your-message x4 size:40 placeholder"Leave your requirements and we will provide you with a quote" ]
+        [textarea* your-message placeholder "Leave your requirements and we will provide you with a quote"]
     </p>
     <p class="allsubmit" style="width:100%;">[submit "Send A Message"]
     </p>
