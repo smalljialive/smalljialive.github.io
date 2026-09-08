@@ -70,9 +70,10 @@
 		a.rightMenu-item#menu-copy(href='javascript:void(0);')
 			i.anzhiyufont.anzhiyu-icon-copy
 			span 复制地址
-		a.rightMenu-item#menu-commentBarrage(href='javascript:void(0);')
-			i.anzhiyufont.anzhiyu-icon-message
-			span.menu-commentBarrage-text 关闭热评
+		if theme.comment_barrage_config && theme.comment_barrage_config.enable && theme.comments && theme.comments.use == 'Twikoo'
+			a.rightMenu-item#menu-commentBarrage(href='javascript:void(0);')
+				i.anzhiyufont.anzhiyu-icon-message
+				span.menu-commentBarrage-text 关闭热评
 		a.rightMenu-item#menu-darkmode(href='javascript:void(0);')
 			i.anzhiyufont.anzhiyu-icon-circle-half-stroke
 			span.menu-darkmode-text 深色模式
