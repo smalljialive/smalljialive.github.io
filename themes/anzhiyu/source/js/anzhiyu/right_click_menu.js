@@ -75,10 +75,10 @@ var oncontextmenuFunction = function (event) {
     const $rightMenuMusicPlaylist = document.querySelector("#menu-music-playlist");
     const $rightMenuMusicCopyMusicName = document.querySelector("#menu-music-copyMusicName");
 
-const linkTarget = event.target.closest?.("a[href]");
-const imageTarget = event.target.closest?.("img");
-let href = linkTarget ? linkTarget.href : "";
-let imgsrc = imageTarget ? imageTarget.currentSrc || imageTarget.src : "";
+    const linkTarget = event.target.closest?.("a[href]");
+    const imageTarget = event.target.closest?.("img");
+    let href = linkTarget ? linkTarget.href : "";
+    let imgsrc = imageTarget ? imageTarget.currentSrc || imageTarget.src : "";
 
     // 判断模式 扩展模式为有事件
     let pluginMode = false;
