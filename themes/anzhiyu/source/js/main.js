@@ -1456,12 +1456,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 监听nav是否被其他音频暂停⏸️
   const listenNavMusicPause = function () {
+    let attempts = 0;
+    const maxAttempts = 100;
     const timer = setInterval(() => {
-      if (navMusicEl && navMusicEl.querySelector("#nav-music meting-js").aplayer) {
+      const navMeting = navMusicEl?.querySelector("meting-js");
+      const navAplayer = navMeting?.aplayer;
+
+      if (navAplayer) {
         clearInterval(timer);
         let msgPlay = '<i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span>';
         let msgPause = '<i class="anzhiyufont anzhiyu-icon-pause"></i><span>暂停音乐</span>';
-        navMusicEl.querySelector("#nav-music meting-js").aplayer.on("pause", function () {
+        navAplayer.on("pause", function () {
           navMusicEl.classList.remove("playing");
           document.getElementById("menu-music-toggle").innerHTML = msgPlay;
           document.getElementById("nav-music-hoverTips").innerHTML = "音乐已暂停";
@@ -1469,15 +1474,22 @@ document.addEventListener("DOMContentLoaded", function () {
           anzhiyu_musicPlaying = false;
           navMusicEl.classList.remove("stretch");
         });
-        navMusicEl.querySelector("#nav-music meting-js").aplayer.on("play", function () {
+        navAplayer.on("play", function () {
           navMusicEl.classList.add("playing");
           document.getElementById("menu-music-toggle").innerHTML = msgPause;
           document.querySelector("#consoleMusic").classList.add("on");
           anzhiyu_musicPlaying = true;
           // navMusicEl.classList.add("stretch");
         });
+        return;
       }
-    }, 16);
+
+      attempts += 1;
+      if (attempts >= maxAttempts) {
+        clearInterval(timer);
+        console.warn("导航音乐播放器加载超时，已停止等待");
+      }
+    }, 100);
   };
 
   // 开发者工具键盘监听
@@ -1664,24 +1676,30 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function changeDocumentTitle() {
-    let leaveTitle = GLOBAL_CONFIG.diytitle.leaveTitle;
-    let backTitle = GLOBAL_CONFIG.diytitle.backTitle;
-    let OriginTitile = document.title;
+    let hiddenPageTitle = "";
     let titleTime;
 
     document.addEventListener("visibilitychange", function () {
+      const leaveTitle = GLOBAL_CONFIG.diytitle.leaveTitle;
+      const backTitle = GLOBAL_CONFIG.diytitle.backTitle;
+
       if (document.hidden) {
-        //离开当前页面时标签显示内容
+        // 离开当前页面时记录真实标题，再显示离开提示。
+        hiddenPageTitle = document.title;
         document.title = leaveTitle;
         clearTimeout(titleTime);
-      } else {
-        //返回当前页面时标签显示内容
-        document.title = backTitle + OriginTitile;
-        //两秒后变回正常标题
-        titleTime = setTimeout(function () {
-          document.title = OriginTitile;
-        }, 2000);
+        return;
       }
+
+      // 返回时以本次离开前的页面标题为准，避免 PJAX 后恢复旧标题。
+      const restoreTitle = hiddenPageTitle || document.title;
+      const temporaryTitle = backTitle + restoreTitle;
+      document.title = temporaryTitle;
+      clearTimeout(titleTime);
+      titleTime = setTimeout(function () {
+        // 如果这两秒内 PJAX 已更新标题，不再用旧页面标题覆盖它。
+        if (document.title === temporaryTitle) document.title = restoreTitle;
+      }, 2000);
     });
   }
 
@@ -1713,7 +1731,11 @@ document.addEventListener("DOMContentLoaded", function () {
     clickFnOfSubMenu();
     GLOBAL_CONFIG.islazyload && lazyloadImg();
     GLOBAL_CONFIG.copyright !== undefined && addCopyright();
-    GLOBAL_CONFIG.navMusic && listenNavMusicPause();
+    if (GLOBAL_CONFIG.navMusic) {
+      listenNavMusicPause();
+      anzhiyu.addEventListenerConsoleMusicList();
+    }
+    GLOBAL_CONFIG.diytitle && changeDocumentTitle();
     if (GLOBAL_CONFIG.shortcutKey && document.getElementById("consoleKeyboard")) {
       localStorage.setItem("keyboardToggle", "true");
       document.getElementById("consoleKeyboard").classList.add("on");
@@ -1755,7 +1777,6 @@ document.addEventListener("DOMContentLoaded", function () {
       toggleCardCategory();
     }
 
-    GLOBAL_CONFIG.diytitle && changeDocumentTitle();
     scrollFnToDo();
     GLOBAL_CONFIG_SITE.isHome && scrollDownInIndex();
     addHighlightTool();
@@ -1804,7 +1825,6 @@ document.addEventListener("DOMContentLoaded", function () {
     anzhiyu.topCategoriesBarScroll();
     anzhiyu.switchRightClickMenuHotReview();
     anzhiyu.getCustomPlayList();
-    anzhiyu.addEventListenerConsoleMusicList(false);
     anzhiyu.initPaginationObserver();
 
     setTimeout(() => {
