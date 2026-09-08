@@ -140,7 +140,6 @@ def validate_source():
     ]:
         assert old not in aplayer, old
     assert not re.search(r"^\s{8,}(?:title|author|pic):", aplayer, flags=re.MULTILINE)
-    # The Meting section must remain byte-for-byte untouched by the APlayer modernization.
     original = subprocess.check_output(
         ["git", "show", "HEAD:source/_posts/如何在网站中引入一个音乐播放器.md"],
         cwd=ROOT,
@@ -155,11 +154,22 @@ def validate_source():
     assert set(changed) == TARGETS, f"Unexpected changed files: {changed}"
 
 
+def without_runtime_blocks(raw):
+    raw = re.sub(r"<script\b[^>]*>.*?</script>", "", raw, flags=re.I | re.S)
+    raw = re.sub(r"<style\b[^>]*>.*?</style>", "", raw, flags=re.I | re.S)
+    return raw
+
+
 def strip_html(raw):
-    raw = re.sub(r"<script\b[^>]*>.*?</script>", " ", raw, flags=re.I | re.S)
-    raw = re.sub(r"<style\b[^>]*>.*?</style>", " ", raw, flags=re.I | re.S)
+    raw = without_runtime_blocks(raw)
     raw = re.sub(r"<[^>]+>", " ", raw)
     return re.sub(r"\s+", " ", html.unescape(raw)).strip()
+
+
+def compact_code_text(raw):
+    raw = without_runtime_blocks(raw)
+    raw = re.sub(r"<[^>]+>", "", raw)
+    return html.unescape(raw)
 
 
 def validate_generated():
@@ -178,19 +188,22 @@ def validate_generated():
     assert len(total_files) >= 160, len(total_files)
 
     contact_html = expected_paths[0].read_text(encoding="utf-8")
-    contact_text = strip_html(contact_html)
-    assert 'placeholder "Your Name:"' in contact_text
-    assert 'placeholder "Phone/Whatsapp:"' in contact_text
-    assert 'placeholder "Your Email:"' in contact_text
-    assert "x4 size:40" not in contact_text
+    contact_code = compact_code_text(contact_html)
+    assert 'placeholder "Your Name:"' in contact_code
+    assert 'placeholder "Phone/Whatsapp:"' in contact_code
+    assert 'placeholder "Your Email:"' in contact_code
+    assert "x4 size:40" not in contact_code
 
-    music_text = strip_html(expected_paths[1].read_text(encoding="utf-8"))
+    music_html = expected_paths[1].read_text(encoding="utf-8")
+    music_text = strip_html(music_html)
+    music_code = compact_code_text(music_html)
     assert "固定播放器（Fixed）" in music_text
-    assert "container: document.getElementById" in music_text
-    assert "lrcType: 0" in music_text
-    assert "element: document.getElementById" not in music_text
-    assert "showlrc: false" not in music_text
-    assert ".init();" not in music_text
+    assert "APlayer 官方说明" in music_text
+    assert "container: document.getElementById" in music_code
+    assert "lrcType: 0" in music_code
+    assert "element: document.getElementById" not in music_code
+    assert "showlrc: false" not in music_code
+    assert ".init();" not in music_code
 
     robots_html = expected_paths[2].read_text(encoding="utf-8")
     robots_text = strip_html(robots_html)
