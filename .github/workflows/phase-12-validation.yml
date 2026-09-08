@@ -31,19 +31,29 @@ jobs:
         run: |
           set -euo pipefail
 
-          expected=$(cat <<'EOF'
-          source/_posts/Wordpress网站好用的插件推荐.md
-          source/_posts/Wordpress留言后跳转到感谢Thank You页面的方法.md
-          source/_posts/wordpress个人博客类主题推荐.md
-          source/_posts/wordpress创建子主题方法.md
-          source/_posts/wordpress文章内页显示同一分类的上下文章.md
-          source/_posts/wordpress的generatepress主题取消默认分页，替换为插件wp-pagenavi的样式.md
-          source/_posts/wordpress网站使用Gmail邮箱配置SMTP邮件.md
-          source/_posts/禁用wordpress插件的更新-全部禁用和部分禁用.md
-          EOF
+          python3 - <<'PY'
+          import subprocess
+
+          expected = {
+              "source/_posts/Wordpress网站好用的插件推荐.md",
+              "source/_posts/Wordpress留言后跳转到感谢Thank You页面的方法.md",
+              "source/_posts/wordpress个人博客类主题推荐.md",
+              "source/_posts/wordpress创建子主题方法.md",
+              "source/_posts/wordpress文章内页显示同一分类的上下文章.md",
+              "source/_posts/wordpress的generatepress主题取消默认分页，替换为插件wp-pagenavi的样式.md",
+              "source/_posts/wordpress网站使用Gmail邮箱配置SMTP邮件.md",
+              "source/_posts/禁用wordpress插件的更新-全部禁用和部分禁用.md",
+          }
+          actual = set(
+              subprocess.check_output(["git", "diff", "--name-only"], text=True).splitlines()
           )
-          actual=$(git diff --name-only | sort)
-          test "$actual" = "$(printf '%s\n' "$expected" | sort)"
+          print("Expected changed files:", sorted(expected))
+          print("Actual changed files:", sorted(actual))
+          if actual != expected:
+              raise SystemExit(
+                  f"Changed-file mismatch; missing={sorted(expected - actual)}, extra={sorted(actual - expected)}"
+              )
+          PY
 
           grep -F '本文转载地址：https://cloud.tencent.com/developer/article/2008499' 'source/_posts/wordpress个人博客类主题推荐.md'
           if grep -F 'cloud.tencent.com/developer/tools/blog-entry?target=' 'source/_posts/wordpress个人博客类主题推荐.md'; then
