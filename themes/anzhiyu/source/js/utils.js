@@ -667,9 +667,21 @@ const anzhiyu = {
   },
   //切换音乐播放状态
   musicToggle: function (changePaly = true) {
+    const navMeting = document.querySelector("#nav-music meting-js");
+    const navAplayer = navMeting?.aplayer;
+    if (!navAplayer) {
+      anzhiyu.snackbarShow("音乐播放器加载中，请稍后重试", false, 2000);
+      rm && rm.hideRightMenu();
+      return;
+    }
+
     if (!anzhiyu_musicFirst) {
-      anzhiyu.musicBindEvent();
-      anzhiyu_musicFirst = true;
+      anzhiyu_musicFirst = anzhiyu.musicBindEvent();
+      if (!anzhiyu_musicFirst) {
+        anzhiyu.snackbarShow("音乐播放器加载中，请稍后重试", false, 2000);
+        rm && rm.hideRightMenu();
+        return;
+      }
     }
     let msgPlay = '<i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span>';
     let msgPause = '<i class="anzhiyufont anzhiyu-icon-pause"></i><span>暂停音乐</span>';
@@ -687,7 +699,7 @@ const anzhiyu = {
       anzhiyu_musicPlaying = true;
       navMusicEl.classList.add("stretch");
     }
-    if (changePaly) document.querySelector("#nav-music meting-js").aplayer.toggle();
+    if (changePaly) navAplayer.toggle();
     rm && rm.hideRightMenu();
   },
   // 音乐伸缩
@@ -1114,6 +1126,7 @@ const anzhiyu = {
       const listBtn = navMusic.querySelector(
         "div.aplayer-info > div.aplayer-controller > div.aplayer-time.aplayer-time-narrow > button.aplayer-icon.aplayer-icon-menu svg"
       );
+      if (!aplayerList) return;
       if (e.target != listBtn && aplayerList.classList.contains("aplayer-list-hide")) {
         aplayerList.classList.remove("aplayer-list-hide");
       }
@@ -1238,12 +1251,17 @@ const anzhiyu = {
 
   // 音乐绑定事件
   musicBindEvent: function () {
-    document.querySelector("#nav-music .aplayer-music").addEventListener("click", function () {
+    const musicTitle = document.querySelector("#nav-music .aplayer-music");
+    const musicButton = document.querySelector("#nav-music .aplayer-button");
+    if (!musicTitle || !musicButton) return false;
+
+    musicTitle.addEventListener("click", function () {
       anzhiyu.musicTelescopic();
     });
-    document.querySelector("#nav-music .aplayer-button").addEventListener("click", function () {
+    musicButton.addEventListener("click", function () {
       anzhiyu.musicToggle(false);
     });
+    return true;
   },
 
   // 判断是否是移动端
