@@ -20,7 +20,7 @@ updated: '2025-01-10T10:01:00.455+08:00'
 
 ### **Advanced Custom Fields**
 
-【高级自定义字段 ACF】使用强大、专业和直观的字段自定义WordPress。该插件可创建自定义的文章类型、字段组、分类伐，是实现自定义“产品、案例、项目”分组的最好用的插件（目前WordPress官方与这个插件在打官司，WordPress出了仿制该插件的"**SCF-安全自定义字段**"，对比原版，仿制版的基本功能都有，但缺少多图上传等高级功能）
+【高级自定义字段 ACF】使用强大、专业和直观的字段自定义WordPress。该插件可创建自定义的文章类型、字段组、分类法，是实现自定义“产品、案例、项目”分组的最好用的插件（目前WordPress官方与这个插件在打官司，WordPress出了仿制该插件的"**SCF-安全自定义字段**"，对比原版，仿制版的基本功能都有，但缺少多图上传等高级功能）
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/002.png)
 
@@ -58,7 +58,7 @@ Akismet可能是保护您的站点免受垃圾评论**的世界上最好的方�
 
 ### **Page scroll to id**
 
-Page scroll to id是一个易于使用的jQuery插件，可将动画（平滑）页面滚动到文档中的特定ID。该插件可设置混动到ID的偏移量，例如滚动到ID上的100px 的位置。
+Page scroll to id是一个易于使用的jQuery插件，可将动画（平滑）页面滚动到文档中的特定ID。该插件可设置滚动到ID的偏移量，例如滚动到ID上的100px 的位置。
 
 ![](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/009.png)
 
