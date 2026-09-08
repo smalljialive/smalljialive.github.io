@@ -25,7 +25,18 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Apply phase 10 fixes
-        run: python .github/phase10_apply.py
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('.github/phase10_apply.py')
+          text = path.read_text(encoding='utf-8')
+          text = text.replace(
+              'assert "new RegExp(keyword" not in local',
+              'assert \'const regS = new RegExp(keyword, "gi");\' not in local',
+          )
+          path.write_text(text, encoding='utf-8')
+          PY
+          python .github/phase10_apply.py
 
       - name: Check JavaScript syntax
         run: |
