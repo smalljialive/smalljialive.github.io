@@ -244,31 +244,17 @@ rm.copyUrl = function (id) {
   input.remove(); // Remove the <input> element from the DOM
 };
 
+let maskScrollListenersBound = false;
 function stopMaskScroll() {
-  if (document.getElementById("rightmenu-mask")) {
-    let xscroll = document.getElementById("rightmenu-mask");
-    xscroll.addEventListener(
-      "mousewheel",
-      function (e) {
-        //阻止浏览器默认方法
-        rm.hideRightMenu();
-        // e.preventDefault();
-      },
-      { passive: true }
-    );
-  }
-  if (document.getElementById("rightMenu")) {
-    let xscroll = document.getElementById("rightMenu");
-    xscroll.addEventListener(
-      "mousewheel",
-      function (e) {
-        //阻止浏览器默认方法
-        rm.hideRightMenu();
-        // e.preventDefault();
-      },
-      { passive: true }
-    );
-  }
+  if (maskScrollListenersBound) return;
+
+  const closeOnMouseWheel = () => rm.hideRightMenu();
+  const rightMenuMask = document.getElementById("rightmenu-mask");
+  const rightMenu = document.getElementById("rightMenu");
+
+  rightMenuMask?.addEventListener("mousewheel", closeOnMouseWheel, { passive: true });
+  rightMenu?.addEventListener("mousewheel", closeOnMouseWheel, { passive: true });
+  maskScrollListenersBound = true;
 }
 
 rm.rightmenuCopyText = function (txt) {
@@ -487,7 +473,13 @@ function addRightMenuClickEvent() {
   document.getElementById("menu-music-forward").addEventListener("click", anzhiyu.musicSkipForward);
 
   document.getElementById("menu-music-copyMusicName").addEventListener("click", function () {
-    rm.rightmenuCopyText(anzhiyu.musicGetName());
+    const musicName = anzhiyu.musicGetName();
+    if (!musicName) {
+      anzhiyu.snackbarShow("音乐播放器加载中，请稍后重试", false, 2000);
+      rm.hideRightMenu();
+      return;
+    }
+    rm.rightmenuCopyText(musicName);
     anzhiyu.snackbarShow("复制歌曲名称成功", false, 3000);
   });
 }
