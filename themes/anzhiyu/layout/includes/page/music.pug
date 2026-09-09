@@ -43,7 +43,7 @@
           button(type="submit") 搜索
         .sjm-source-chip
           span.sjm-source-dot
-          span 网易云在线曲库
+          span 正在连接音乐服务
 
       section.sjm-view.active(data-sjm-view="home")
         .sjm-now-grid
@@ -158,7 +158,7 @@
       padding: 0;
       overflow: hidden;
       border-radius: 12px;
-      background: rgba(255,255,255,.07);
+      background: #eef2f7;
       cursor: pointer;
     }
     #anMusic-page .sjm-track-cover img {
@@ -173,7 +173,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,.22);
+      background: rgba(24,35,55,.24);
       color: #fff;
       font-size: 12px;
       opacity: 0;
@@ -199,14 +199,14 @@
       text-overflow: ellipsis;
     }
     #anMusic-page .sjm-track-name {
-      color: rgba(255,255,255,.92);
+      color: #2a3548;
       font-size: 12px;
       font-weight: 800;
       line-height: 1.4;
     }
     #anMusic-page .sjm-track-sub {
       margin-top: 3px;
-      color: rgba(255,255,255,.52);
+      color: #7b8799;
       font-size: 10px;
     }
     #anMusic-page .sjm-row-action {
@@ -216,17 +216,17 @@
       height: 32px;
       border-radius: 50%;
       background: transparent;
-      color: rgba(255,255,255,.35);
+      color: #a2aaba;
       cursor: pointer;
       transition: .2s ease;
     }
     #anMusic-page .sjm-row-action:hover,
     #anMusic-page .sjm-row-action.active {
-      background: rgba(255,255,255,.07);
-      color: #ff7a9e;
+      background: rgba(255,106,145,.08);
+      color: #f05f8c;
     }
     @media screen and (max-width: 768px) {
       #anMusic-page .sjm-track-cover { width: 44px; height: 44px; }
     }
 
-  script(src=url_for('/js/smalljia-music.js') data-pjax)
+  script(src=url_for('/js/smalljia-music.js') + '?v=20260909-3' data-pjax)
