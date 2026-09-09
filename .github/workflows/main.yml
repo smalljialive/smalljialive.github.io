@@ -34,7 +34,10 @@ jobs:
         working-directory: ./blog
 
       - name: Generate static pages
-        run: npx hexo generate
+        run: |
+          npx hexo generate
+          test -s public/css/index.css
+          grep -q ".sjm-playerbar" public/css/index.css
         working-directory: ./blog
 
       - name: Deploy to GitHub Pages
