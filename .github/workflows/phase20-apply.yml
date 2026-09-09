@@ -1,0 +1,82 @@
+name: Phase 20 Apply
+
+on:
+  push:
+    branches:
+      - fix/site-quality-phase-20
+    paths:
+      - .github/workflows/phase20-apply.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: fix/site-quality-phase-20
+
+      - name: Apply Phase 20 changes
+        shell: python
+        run: |
+          from pathlib import Path
+
+          replacements = [
+              (
+                  Path("themes/anzhiyu/layout/includes/mixins/post-ui.pug"),
+                  "            a.unvisited-post(href=url_for(link) title=title) 未读",
+                  "            if theme.post_meta.post.unread\n              a.unvisited-post(href=url_for(link) title=title) 未读",
+              ),
+              (
+                  Path("_config.anzhiyu.yml"),
+                  "  length: 500 # if you set method to 2 or 3, the length need to config",
+                  "  length: 200 # if you set method to 2 or 3, the length need to config",
+              ),
+              (
+                  Path("themes/anzhiyu/layout/includes/header/nav.pug"),
+                  "        a#page-name(href=\"javascript:anzhiyu.scrollToDest(0, 500)\") PAGE_NAME",
+                  "        a#page-name(href=\"javascript:anzhiyu.scrollToDest(0, 500)\")= page.title || config.title",
+              ),
+          ]
+
+          for path, old, new in replacements:
+              text = path.read_text(encoding="utf-8")
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"Expected exactly one match in {path}, found {count}")
+              path.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+      - name: Validate exact changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq 'if theme.post_meta.post.unread' themes/anzhiyu/layout/includes/mixins/post-ui.pug
+          grep -Fq 'length: 200 # if you set method to 2 or 3, the length need to config' _config.anzhiyu.yml
+          grep -Fq 'a#page-name(href="javascript:anzhiyu.scrollToDest(0, 500)")= page.title || config.title' themes/anzhiyu/layout/includes/header/nav.pug
+          ! grep -Fq 'a#page-name(href="javascript:anzhiyu.scrollToDest(0, 500)") PAGE_NAME' themes/anzhiyu/layout/includes/header/nav.pug
+          git diff --check
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate static pages
+        run: npm run build
+
+      - name: Commit Phase 20 changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _config.anzhiyu.yml themes/anzhiyu/layout/includes/mixins/post-ui.pug themes/anzhiyu/layout/includes/header/nav.pug
+          git commit -m "Fix homepage metadata and nav fallback"
+          git push origin HEAD:fix/site-quality-phase-20
