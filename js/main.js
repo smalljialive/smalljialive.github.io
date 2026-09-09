@@ -1794,9 +1794,6 @@ document.addEventListener("DOMContentLoaded", function () {
     clickFnOfTagHide();
     tabsFn();
     switchComments();
-    document.getElementById("toggle-menu").addEventListener("click", () => {
-      sidebarFn.open();
-    });
 
     // 如果当前页有评论就执行函数
     if (document.getElementById("post-comment")) owoBig();

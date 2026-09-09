@@ -713,24 +713,32 @@ const anzhiyu = {
 
   //音乐上一曲
   musicSkipBack: function () {
-    navMusicEl.querySelector("meting-js").aplayer.skipBack();
+    const navAplayer = navMusicEl?.querySelector("meting-js")?.aplayer;
+    if (!navAplayer) {
+      anzhiyu.snackbarShow("音乐播放器加载中，请稍后重试", false, 2000);
+      rm && rm.hideRightMenu();
+      return;
+    }
+    navAplayer.skipBack();
     rm && rm.hideRightMenu();
   },
 
   //音乐下一曲
   musicSkipForward: function () {
-    navMusicEl.querySelector("meting-js").aplayer.skipForward();
+    const navAplayer = navMusicEl?.querySelector("meting-js")?.aplayer;
+    if (!navAplayer) {
+      anzhiyu.snackbarShow("音乐播放器加载中，请稍后重试", false, 2000);
+      rm && rm.hideRightMenu();
+      return;
+    }
+    navAplayer.skipForward();
     rm && rm.hideRightMenu();
   },
 
   //获取音乐中的名称
   musicGetName: function () {
-    var x = document.querySelectorAll(".aplayer-title");
-    var arr = [];
-    for (var i = x.length - 1; i >= 0; i--) {
-      arr[i] = x[i].innerText;
-    }
-    return arr[0];
+    const title = document.querySelector("#nav-music .aplayer-title");
+    return title?.innerText?.trim() || "";
   },
 
   //初始化console图标
