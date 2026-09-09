@@ -67,7 +67,7 @@ jobs:
           for html in public/index.html public/music/index.html "$POST_HTML"; do
             ! grep -q 'cdn.cbd.int' "$html"
             grep -q 'cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js' "$html"
-            grep -q 'cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js' "$html"
+            grep -q 'cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.min.js' "$html"
             grep -q 'cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js' "$html"
             grep -q 'cdn.jsdelivr.net/npm/anzhiyu-blog-static@1.0.1/js/APlayer.min.js' "$html"
             grep -q 'cdn.jsdelivr.net/npm/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js' "$html"
@@ -84,7 +84,7 @@ jobs:
             'https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js'
             'https://cdn.jsdelivr.net/npm/anzhiyu-blog-static@1.0.1/js/APlayer.min.js'
             'https://cdn.jsdelivr.net/npm/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js'
-            'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js'
+            'https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.min.js'
             'https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js'
             'https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js'
             'https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js'
