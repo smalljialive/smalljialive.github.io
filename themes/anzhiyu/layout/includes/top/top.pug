@@ -93,7 +93,8 @@ if home_top_config.enable
                 i.anzhiyufont.anzhiyu-icon-arrow-circle-right
                 span.banner-button-text 更多推荐
         
-        link(rel="stylesheet", href=theme.home_top.banner.top_group_banner_css)
+        if theme.home_top.banner.top_group_banner_css
+          link(rel="stylesheet", href=theme.home_top.banner.top_group_banner_css)
       
   if theme.home_top.swiper.enable
     if !site.data.essay
