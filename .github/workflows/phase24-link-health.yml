@@ -1,0 +1,155 @@
+name: Phase 24 Link Health
+
+on:
+  push:
+    branches:
+      - fix/link-health-phase-24
+    paths:
+      - .github/workflows/phase24-link-health.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: fix/link-health-phase-24
+          fetch-depth: 0
+
+      - name: Apply exact link health fixes
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('source/_data/link.yml')
+          with path.open('r', encoding='utf-8', newline='') as f:
+              text = f.read()
+
+          replacements = [
+              ('      link: http://khroma.co', '      link: https://www.khroma.co/'),
+              ('      avatar: http://khroma.co/favicon.ico', '      avatar: https://www.khroma.co/favicon.ico'),
+              ('      link: http://join-screenshots.zhanghai.me/', '      link: https://join-screenshots.zhanghai.me/'),
+              ('      avatar: http://join-screenshots.zhanghai.me/favicon.ico', '      avatar: https://join-screenshots.zhanghai.me/favicon.ico'),
+              ('      link: http://tool.mkblog.cn/', '      link: https://tool.mkblog.cn/'),
+              ('      avatar: http://tool.mkblog.cn/favicon.ico', '      avatar: https://tool.mkblog.cn/favicon.ico'),
+              ('      link: http://isearchfrom.com/', '      link: https://isearchfrom.com/'),
+              ('      avatar: http://isearchfrom.com/favicon.ico', '      avatar: https://isearchfrom.com/favicon.ico'),
+              ('      link: http://keywordtool.io', '      link: https://keywordtool.io/'),
+              ('      avatar: http://keywordtool.io/favicon.ico', '      avatar: https://keywordtool.io/favicon.ico'),
+              ('      link: http://www.clipconverter.cc/', '      link: https://www.clipconverter.cc/'),
+              ('      avatar: http://www.clipconverter.cc/favicon.ico', '      avatar: https://www.clipconverter.cc/favicon.ico'),
+              ('      link: http://ffzy5.tv/', '      link: https://ffzy5.tv/'),
+              ('      avatar: http://ffzy5.tv/favicon.ico', '      avatar: https://ffzy5.tv/favicon.ico'),
+              ('      link: http://zhongguose.com', '      link: https://zhongguose.com/'),
+              ('      avatar: http://zhongguose.com/favicon.ico', '      avatar: https://zhongguose.com/favicon.ico'),
+              ('      link: http://www.lexueduosi.com/', '      link: https://www.lexueduosi.com/'),
+              ('      avatar: http://www.lexueduosi.com/favicon.ico', '      avatar: https://www.lexueduosi.com/favicon.ico'),
+              ('      link: http://www.adobeae.com/', '      link: https://www.adobeae.com/'),
+              ('      avatar: http://www.adobeae.com/favicon.ico', '      avatar: https://www.adobeae.com/favicon.ico'),
+              ('      link: http://www.newcger.com/', '      link: https://www.newcger.com/'),
+              ('      avatar: http://www.newcger.com/favicon.ico', '      avatar: https://www.newcger.com/favicon.ico'),
+              ('      link: http://www.airpano.org.cn/', '      link: https://www.airpano.org.cn/'),
+              ('      avatar: http://www.airpano.org.cn/favicon.ico', '      avatar: https://www.airpano.org.cn/favicon.ico'),
+              ('      link: http://www.cbaigui.com/', '      link: https://www.cbaigui.com/'),
+              ('      avatar: http://www.cbaigui.com/favicon.ico', '      avatar: https://www.cbaigui.com/favicon.ico'),
+              ('      link: http://www.goethe-verlag.com', '      link: https://www.goethe-verlag.com/'),
+              ('      avatar: http://www.goethe-verlag.com/favicon.ico', '      avatar: https://www.goethe-verlag.com/favicon.ico'),
+              ('      avatar: https://github.com/game1024/Speedy/blob/master/docs/README_cn.md/favicon.ico', '      avatar: https://github.com/favicon.ico'),
+              ('      avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico', '      avatar: https://github.com/favicon.ico'),
+              ('      avatar: https://github.com/githubvpn007/favicon.ico', '      avatar: https://github.com/favicon.ico'),
+              ('      avatar: https://www.zx-cc.net/25809.html/favicon.ico', '      avatar: https://www.zx-cc.net/favicon.ico'),
+              ('      avatar: https://house2048.cn/app/house-map/favicon.ico', '      avatar: https://house2048.cn/favicon.ico'),
+              ('    - name: Adobe软件下载https://ps11.15ml.cn', '    - name: Adobe软件下载'),
+          ]
+
+          for old, new in replacements:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one match for {old!r}, found {count}')
+              text = text.replace(old, new, 1)
+
+          with path.open('w', encoding='utf-8', newline='') as f:
+              f.write(text)
+          PY
+
+          test "$(git diff --name-only | wc -l)" -eq 1
+          test "$(git diff --name-only)" = "source/_data/link.yml"
+          git diff --check
+
+      - name: Validate source invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          file='source/_data/link.yml'
+
+          grep -F 'link: https://www.khroma.co/' "$file"
+          grep -F 'link: https://join-screenshots.zhanghai.me/' "$file"
+          grep -F 'link: https://tool.mkblog.cn/' "$file"
+          grep -F 'link: https://isearchfrom.com/' "$file"
+          grep -F 'link: https://keywordtool.io/' "$file"
+          grep -F 'link: https://www.clipconverter.cc/' "$file"
+          grep -F 'link: https://ffzy5.tv/' "$file"
+          grep -F 'link: https://zhongguose.com/' "$file"
+          grep -F 'link: https://www.lexueduosi.com/' "$file"
+          grep -F 'link: https://www.adobeae.com/' "$file"
+          grep -F 'link: https://www.newcger.com/' "$file"
+          grep -F 'link: https://www.airpano.org.cn/' "$file"
+          grep -F 'link: https://www.cbaigui.com/' "$file"
+          grep -F 'link: https://www.goethe-verlag.com/' "$file"
+
+          test "$(grep -F -c 'avatar: https://github.com/favicon.ico' "$file")" -eq 3
+          ! grep -Fq 'README_cn.md/favicon.ico' "$file"
+          ! grep -Fq 'template-html-css-js/favicon.ico' "$file"
+          ! grep -Fq 'https://github.com/githubvpn007/favicon.ico' "$file"
+          ! grep -Fq '25809.html/favicon.ico' "$file"
+          ! grep -Fq 'app/house-map/favicon.ico' "$file"
+          grep -F '    - name: Adobe软件下载' "$file"
+          ! grep -Fq 'Adobe软件下载https://ps11.15ml.cn' "$file"
+
+          # Explicitly preserve the intentionally deferred WeaveSilk HTTP entry.
+          grep -F 'link: http://weavesilk.com/' "$file"
+          grep -F 'avatar: http://weavesilk.com/favicon.ico' "$file"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Build site
+        run: |
+          npm ci
+          npx hexo clean
+          npx hexo generate
+
+      - name: Validate generated link page
+        shell: bash
+        run: |
+          set -euo pipefail
+          page='public/link/index.html'
+          test -s "$page"
+          grep -Fq 'https://www.khroma.co/' "$page"
+          grep -Fq 'https://github.com/favicon.ico' "$page"
+          grep -Fq 'https://www.zx-cc.net/favicon.ico' "$page"
+          grep -Fq 'https://house2048.cn/favicon.ico' "$page"
+          grep -Fq 'Adobe软件下载' "$page"
+          ! grep -Fq 'README_cn.md/favicon.ico' "$page"
+          ! grep -Fq 'template-html-css-js/favicon.ico' "$page"
+          ! grep -Fq '25809.html/favicon.ico' "$page"
+          ! grep -Fq 'app/house-map/favicon.ico' "$page"
+
+      - name: Commit link fixes
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add source/_data/link.yml
+          git diff --cached --check
+          git commit -m 'Fix confirmed link and favicon issues'
+          git push origin HEAD:fix/link-health-phase-24
