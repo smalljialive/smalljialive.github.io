@@ -1,0 +1,99 @@
+name: Phase 29A Dependency Cleanup
+
+on:
+  push:
+    branches:
+      - chore/phase-29a-dependency-cleanup
+    paths:
+      - .github/workflows/phase-29a-cleanup.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: chore/phase-29a-dependency-cleanup
+
+      - name: Set up Node.js 24
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Remove unused root dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs')
+          const path = 'package.json'
+          const pkg = JSON.parse(fs.readFileSync(path, 'utf8'))
+          for (const name of ['hexo-renderer-ejs', 'hexo-theme-landscape']) {
+            if (!pkg.dependencies || !(name in pkg.dependencies)) {
+              throw new Error(`Expected dependency not found: ${name}`)
+            }
+            delete pkg.dependencies[name]
+          }
+          fs.writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n')
+          NODE
+          rm -f _config.landscape.yml
+          npm install --package-lock-only --ignore-scripts
+
+      - name: Assert cleanup scope
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs')
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'))
+          const lock = JSON.parse(fs.readFileSync('package-lock.json', 'utf8'))
+          const forbidden = ['hexo-renderer-ejs', 'hexo-theme-landscape']
+          for (const name of forbidden) {
+            if (pkg.dependencies?.[name]) throw new Error(`${name} still exists in package.json`)
+            if (lock.packages?.['']?.dependencies?.[name]) throw new Error(`${name} still exists in lock root dependencies`)
+            if (lock.packages?.[`node_modules/${name}`]) throw new Error(`${name} still exists as a lock package`)
+          }
+          if (fs.existsSync('_config.landscape.yml')) throw new Error('_config.landscape.yml still exists')
+          if (pkg.dependencies?.hexo !== '^7.3.0') throw new Error(`Unexpected Hexo range: ${pkg.dependencies?.hexo}`)
+          NODE
+          git diff --check
+
+      - name: Clean install
+        run: npm ci
+
+      - name: Generate site
+        run: |
+          npx hexo clean
+          npx hexo generate
+
+      - name: Validate generated pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/index.html
+          test -s public/music/index.html
+          test -s public/link/index.html
+          test -s public/search.xml
+          POST_FILE="$(find public -type f -path '*/index.html' ! -path 'public/index.html' ! -path '*/music/index.html' ! -path '*/link/index.html' -print -quit)"
+          test -n "$POST_FILE"
+          grep -q 'SmallJia' public/index.html
+          grep -q 'anMusic-page' public/music/index.html
+          grep -q 'flink' public/link/index.html
+          echo "Representative post: $POST_FILE"
+
+      - name: Commit validated cleanup
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git rm -f --ignore-unmatch _config.landscape.yml
+          git status --short
+          git commit -m "chore: remove unused Hexo default dependencies"
+          git push origin HEAD:chore/phase-29a-dependency-cleanup
