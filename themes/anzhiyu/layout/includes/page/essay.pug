@@ -221,6 +221,20 @@ if site.data.essay
             };
           }).filter(record => record.year);
 
+          const refreshEssayWaterfall = () => {
+            const waterfallEl = root.querySelector("#waterfall");
+            if (!waterfallEl) return;
+
+            requestAnimationFrame(() => {
+              if (typeof waterfall === "function") {
+                waterfall(waterfallEl);
+                waterfallEl.classList.add("show");
+              } else if (typeof anzhiyu !== "undefined" && typeof anzhiyu.reflashEssayWaterFall === "function") {
+                anzhiyu.reflashEssayWaterFall();
+              }
+            });
+          };
+
           const now = new Date();
           const todayRecords = records
             .filter(record => record.month === now.getMonth() + 1 && record.day === now.getDate() && record.year < now.getFullYear())
@@ -283,6 +297,8 @@ if site.data.essay
               const visible = selectedYear === "all" || String(record.year) === selectedYear;
               record.item.classList.toggle("essay-archive-hidden", !visible);
             });
+
+            refreshEssayWaterfall();
 
             if (selectedYear === "all") {
               summary.textContent = `共记录 ${records.length} 条碎碎念，时间跨度 ${years[years.length - 1]} — ${years[0]}。`;
