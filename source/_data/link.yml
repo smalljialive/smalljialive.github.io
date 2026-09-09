@@ -802,8 +802,8 @@
       descr: 各类电子书收听
       recommend: true  
     - name: 悦听吧听书网
-      link: http://www.yuetingba.cn/
-      avatar: http://www.yuetingba.cn/favicon.ico
+      link: https://www.yuetingba.cn/
+      avatar: https://www.yuetingba.cn/favicon.ico
       descr: 各类有声电子书收听
       recommend: true   
     - name: 中国色
@@ -957,8 +957,8 @@
       descr: CG，特效，AE动态效果模版下载
       recommend: true  
     - name: 龋齿一号AE模版
-      link: http://www.gfxcamp.com/
-      avatar: http://www.gfxcamp.com/favicon.ico
+      link: https://www.gfxcamp.com/
+      avatar: https://www.gfxcamp.com/favicon.ico
       descr: AE动态效果模版库
       recommend: true   
     - name: CG动态效果资源网
@@ -967,13 +967,13 @@
       descr: Cg动态效果资源网
       recommend: true    
     - name: CG素材商城
-      link: http://www.lookae.com/
-      avatar: http://www.lookae.com/favicon.ico
+      link: https://www.lookae.com/
+      avatar: https://www.lookae.com/favicon.ico
       descr: 成品CG特效素材在线下载
       recommend: true     
     - name: 书生CG资源库
-      link: http://c4dsky.com/
-      avatar: http://c4dsky.com/favicon.ico
+      link: https://c4dsky.com/
+      avatar: https://c4dsky.com/favicon.ico
       descr: CG特效资源素材库
       recommend: true   
     - name: AE模版精品站
@@ -1023,8 +1023,8 @@
       descr: Yity在线音乐播放⭐️
       recommend: true 
     - name: 爱听音乐网
-      link: http://music.2t58.com/
-      avatar: http://music.2t58.com/favicon.ico
+      link: https://www.2t58.com/
+      avatar: https://www.2t58.com/favicon.ico
       descr: 爱听音乐网
       recommend: true
     - name: 好听轻音乐网
@@ -1178,8 +1178,8 @@
       descr: 各类乐器在线模拟，自由组合创作乐曲
       recommend: true   
     - name: 镜像炫光生成
-      link: http://weavesilk.com/ 
-      avatar: http://weavesilk.com/favicon.ico
+      link: https://weavesilk.com/
+      avatar: https://weavesilk.com/favicon.ico
       descr: 鼠标点击滑动，自由创作镜像炫光图片
       recommend: true     
     - name: 人物卡通形象
