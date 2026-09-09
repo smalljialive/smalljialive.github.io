@@ -368,7 +368,7 @@
       descr: 全球多个国家的短信接码平台  
     - name: OpenSpeedy加速软件
       link: https://github.com/game1024/Speedy/blob/master/docs/README_cn.md
-      avatar: https://github.com/game1024/Speedy/blob/master/docs/README_cn.md/favicon.ico
+      avatar: https://github.com/favicon.ico
       descr: 可以加速百度网盘下载速度的软件  
 #分界线-------------------------------------------------小工具站       
 - class_name: 小工具站
@@ -381,7 +381,7 @@
       avatar: https://zhuaisuan.top/favicon.ico
       descr: 搜百软件下载，各类软件大全
       recommend: true
-    - name: Adobe软件下载https://ps11.15ml.cn
+    - name: Adobe软件下载
       link: https://ps11.15ml.cn
       avatar: https://ps11.15ml.cn/favicon.ico
       descr: 进入为PS，可通过更换URL里的软件名跳转
@@ -393,7 +393,7 @@
       recommend: true
     - name: H5+C3+JS小组件
       link: https://github.com/front-end-study-GoGoGo/template-html-css-js
-      avatar: https://github.com/front-end-study-GoGoGo/template-html-css-js/favicon.ico
+      avatar: https://github.com/favicon.ico
       descr: 各类代码小组件源码库
       recommend: true
     - name: Miku小工具
@@ -428,7 +428,7 @@
       recommend: true
     - name: 机场节点
       link: https://github.com/githubvpn007/v2rayNvpn
-      avatar: https://github.com/githubvpn007/favicon.ico
+      avatar: https://github.com/favicon.ico
       descr: 机场节点分享  
       recommend: true  
     - name: Cloudflare
@@ -437,8 +437,8 @@
       descr: 域名DNS修改遮挡
       recommend: true
     - name: Khroma
-      link: http://khroma.co
-      avatar: http://khroma.co/favicon.ico
+      link: https://www.khroma.co/
+      avatar: https://www.khroma.co/favicon.ico
       descr: Khroma多个颜色自定义搭配方案
       recommend: true
     - name: 云铺子
@@ -467,8 +467,8 @@
       descr: 迅捷格式转换器，各类文件格式转换
       recommend: true  
     - name: 图片拼接工具
-      link: http://join-screenshots.zhanghai.me/
-      avatar: http://join-screenshots.zhanghai.me/favicon.ico
+      link: https://join-screenshots.zhanghai.me/
+      avatar: https://join-screenshots.zhanghai.me/favicon.ico
       descr: 多张图片在线拼接
       recommend: true
     - name: 图片转格式
@@ -552,8 +552,8 @@
       descr: 外网各类小工具在线使用
       recommend: true
     - name: 孟坤工具箱
-      link: http://tool.mkblog.cn/
-      avatar: http://tool.mkblog.cn/favicon.ico
+      link: https://tool.mkblog.cn/
+      avatar: https://tool.mkblog.cn/favicon.ico
       descr: 各种办公生活小工具在线使用
       recommend: true
     #- name: 在线工具箱
@@ -643,8 +643,8 @@
       avatar: https://dash.3ue.com/favicon.ico
       descr: Semrush外租工具网站  
     - name: 搜索模拟器
-      link: http://isearchfrom.com/
-      avatar: http://isearchfrom.com/favicon.ico
+      link: https://isearchfrom.com/
+      avatar: https://isearchfrom.com/favicon.ico
       descr: 模拟世界各地进行谷歌搜索  
     - name: 谷歌搜索模拟器
       link: https://valentin.app/
@@ -663,8 +663,8 @@
       avatar: https://www.thehoth.com/favicon.ico
       descr: 谷歌关键词排名检查器
     - name: 各渠道关键词获取
-      link: http://keywordtool.io
-      avatar: http://keywordtool.io/favicon.ico
+      link: https://keywordtool.io/
+      avatar: https://keywordtool.io/favicon.ico
       descr: 外媒各渠道关键词获取 
     - name: 全球网站分析
       link: https://marketfinder.thinkwithgoogle.com/intl/zh-CN_cn
@@ -686,8 +686,8 @@
       descr: Video Downloader外媒各类网站视频下载
       recommend: true
     - name: Clip
-      link: http://www.clipconverter.cc/
-      avatar: http://www.clipconverter.cc/favicon.ico
+      link: https://www.clipconverter.cc/
+      avatar: https://www.clipconverter.cc/favicon.ico
       descr: Clip-外媒视频解析，YouTube视频解析
       recommend: true    
     #- name: Y2-mate
@@ -756,8 +756,8 @@
       descr: 迅捷视频声音消除
       recommend: true
     - name: 非凡影视采集站
-      link: http://ffzy5.tv/
-      avatar: http://ffzy5.tv/favicon.ico
+      link: https://ffzy5.tv/
+      avatar: https://ffzy5.tv/favicon.ico
       descr: 非凡影视采集站
       recommend: true
     - name: 飞飞影视采集站
@@ -807,8 +807,8 @@
       descr: 各类有声电子书收听
       recommend: true   
     - name: 中国色
-      link: http://zhongguose.com
-      avatar: http://zhongguose.com/favicon.ico
+      link: https://zhongguose.com/
+      avatar: https://zhongguose.com/favicon.ico
       descr: 中国颜色，中国颜色在线获取
       recommend: true  
     - name: 矢量图标库
@@ -827,8 +827,8 @@
       descr: 在线生成故障图片，模拟各类故障图片
       recommend: true       
     - name: 乐学多思资料库
-      link: http://www.lexueduosi.com/
-      avatar: http://www.lexueduosi.com/favicon.ico
+      link: https://www.lexueduosi.com/
+      avatar: https://www.lexueduosi.com/favicon.ico
       descr: 乐学多思资料库，千万文档检索免费下载
       recommend: true    
     - name: 手游分享
@@ -977,13 +977,13 @@
       descr: CG特效资源素材库
       recommend: true   
     - name: AE模版精品站
-      link: http://www.adobeae.com/
-      avatar: http://www.adobeae.com/favicon.ico
+      link: https://www.adobeae.com/
+      avatar: https://www.adobeae.com/favicon.ico
       descr: AE精品模版库，AE效果下载
       recommend: true   
     - name: 新CG素材网
-      link: http://www.newcger.com/
-      avatar: http://www.newcger.com/favicon.ico
+      link: https://www.newcger.com/
+      avatar: https://www.newcger.com/favicon.ico
       descr: 新CG素材网，动态效果素材网
       recommend: true     
 #分界线-------------------------------------------------新奇网站       
@@ -1128,8 +1128,8 @@
       descr: 世界各地在线查看
       recommend: true
     - name: 世界遨游
-      link: http://www.airpano.org.cn/
-      avatar: http://www.airpano.org.cn/favicon.ico
+      link: https://www.airpano.org.cn/
+      avatar: https://www.airpano.org.cn/favicon.ico
       descr: 足不出户，遨游全世界
       recommend: true  
     - name: 在线投喂金鱼
@@ -1149,7 +1149,7 @@
       recommend: true     
     - name: 租房搜索地图
       link: https://house2048.cn/app/house-map/
-      avatar: https://house2048.cn/app/house-map/favicon.ico
+      avatar: https://house2048.cn/favicon.ico
       descr: 地图找房，低价查询各地出租房
       recommend: true     
     - name: 四季声音模拟
@@ -1208,8 +1208,8 @@
       descr: SCP基金会，全球科幻迷基地
       recommend: true  
     - name: 纪妖
-      link: http://www.cbaigui.com/
-      avatar: http://www.cbaigui.com/favicon.ico
+      link: https://www.cbaigui.com/
+      avatar: https://www.cbaigui.com/favicon.ico
       descr: 中国各类妖怪资料档案
       recommend: true  
     - name: Wk小说阅读器
@@ -1260,7 +1260,7 @@
       recommend: true
     - name: 自学成才网
       link: https://www.zx-cc.net/25809.html
-      avatar: https://www.zx-cc.net/25809.html/favicon.ico
+      avatar: https://www.zx-cc.net/favicon.ico
       descr: 各类付费运营教程
       recommend: true
     - name: 在线大学
@@ -1279,8 +1279,8 @@
       descr: 在线学习各类语言，外语，粤语学习
       recommend: true   
     - name: 英语学堂
-      link: http://www.goethe-verlag.com
-      avatar: http://www.goethe-verlag.com/favicon.ico
+      link: https://www.goethe-verlag.com/
+      avatar: https://www.goethe-verlag.com/favicon.ico
       descr: 在线学习外语
       recommend: true    
     - name: 菜鸟编程
