@@ -598,13 +598,7 @@ google_adsense:
 # Verification (站长验证)
 # --------------------------------------
 
-site_verification:
-  - name: google-site-verification
-    content: xxx
-  - name: baidu-site-verification
-    content: code-xxx
-  - name: msvalidate.01
-    content: xxx
+site_verification: false
 
 # Beautify/Effect (美化/效果)
 # --------------------------------------
