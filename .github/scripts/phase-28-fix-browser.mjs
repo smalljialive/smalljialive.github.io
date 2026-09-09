@@ -13,7 +13,11 @@ page.setDefaultTimeout(12000);
 
 let current = 'bootstrap';
 const pageErrors = [];
-page.on('pageerror', e => pageErrors.push({ test: current, message: e.message, stack: e.stack || '' }));
+page.on('pageerror', e => {
+  const entry = { test: current, message: e.message, stack: e.stack || '' };
+  pageErrors.push(entry);
+  console.error(`[PAGEERROR][${current}] ${entry.stack || entry.message}`);
+});
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const assert = (v, m) => { if (!v) throw new Error(m); };
 const checkpoint = () => pageErrors.length;
