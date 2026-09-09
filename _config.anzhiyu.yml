@@ -1134,7 +1134,7 @@ music_page_default: nav_music
 
 # 评论匿名邮箱
 visitorMail:
-  enable: true
+  enable: false
   mail: ""
 
 # ptool 文章底部工具
@@ -1178,7 +1178,7 @@ greetingBox:
 
 # 文章顶部ai摘要
 post_head_ai_description:
-  enable: true
+  enable: false
   gptName: AnZhiYu
   mode: local # 默认模式 可选值: tianli/local
   switchBtn: false # 可以配置是否显示切换按钮 以切换tianli/local
