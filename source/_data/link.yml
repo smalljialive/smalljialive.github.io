@@ -761,8 +761,8 @@
       descr: 非凡影视采集站
       recommend: true
     - name: 飞飞影视采集站
-      link: http://www.feifeicms.vip/portal.php
-      avatar: http://www.feifeicms.vip/favicon.ico
+      link: https://www.feifeicms.vip/
+      avatar: https://www.feifeicms.vip/favicon.ico
       descr: 飞飞影视采集站
       recommend: true    
     - name: 海洋影视采集站
@@ -952,8 +952,8 @@
       descr: 特效Cg插件下载，特效模版下载
       recommend: true   
     - name: CG爱好者AE素材
-      link: http://www.cgahz.com/aemoban/
-      avatar: http://www.cgahz.com/favicon.ico
+      link: https://www.cgahz.com/
+      avatar: https://www.cgahz.com/favicon.ico
       descr: CG，特效，AE动态效果模版下载
       recommend: true  
     - name: 龋齿一号AE模版
@@ -1254,8 +1254,8 @@
   hundredSuffix: ""
   link_list:
     - name: Oeasy教程网站
-      link: http://oeasy.org/
-      avatar: http://oeasy.org/favicon.ico
+      link: https://oeasy.org/
+      avatar: https://oeasy.org/favicon.ico
       descr: 最厉害的各种软件教程网站，五星推荐
       recommend: true
     - name: 自学成才网
