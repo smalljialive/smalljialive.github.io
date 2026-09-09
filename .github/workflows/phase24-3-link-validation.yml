@@ -1,0 +1,136 @@
+name: Validate Phase 24 third link cleanup
+
+on:
+  push:
+    branches:
+      - fix/link-health-phase-24-3
+    paths:
+      - .github/workflows/phase24-3-link-validation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply exact link replacements
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("source/_data/link.yml")
+          data = path.read_bytes()
+
+          replacements = [
+              (b"link: http://oeasy.org/", b"link: https://oeasy.org/"),
+              (b"avatar: http://oeasy.org/favicon.ico", b"avatar: https://oeasy.org/favicon.ico"),
+              (b"link: http://www.feifeicms.vip/portal.php", b"link: https://www.feifeicms.vip/"),
+              (b"avatar: http://www.feifeicms.vip/favicon.ico", b"avatar: https://www.feifeicms.vip/favicon.ico"),
+              (b"link: http://www.cgahz.com/aemoban/", b"link: https://www.cgahz.com/"),
+              (b"avatar: http://www.cgahz.com/favicon.ico", b"avatar: https://www.cgahz.com/favicon.ico"),
+          ]
+
+          for old, new in replacements:
+              count = data.count(old)
+              if count != 1:
+                  raise SystemExit(f"Expected exactly one match for {old!r}, found {count}")
+              data = data.replace(old, new, 1)
+
+          path.write_bytes(data)
+          PY
+
+      - name: Validate source diff
+        shell: bash
+        run: |
+          git config core.whitespace cr-at-eol
+          test "$(git diff --name-only)" = "source/_data/link.yml"
+          git diff --check
+          python - <<'PY'
+          from pathlib import Path
+          data = Path("source/_data/link.yml").read_text(encoding="utf-8")
+
+          required = [
+              "link: https://oeasy.org/",
+              "avatar: https://oeasy.org/favicon.ico",
+              "link: https://www.feifeicms.vip/",
+              "avatar: https://www.feifeicms.vip/favicon.ico",
+              "link: https://www.cgahz.com/",
+              "avatar: https://www.cgahz.com/favicon.ico",
+          ]
+          forbidden = [
+              "link: http://oeasy.org/",
+              "avatar: http://oeasy.org/favicon.ico",
+              "link: http://www.feifeicms.vip/portal.php",
+              "avatar: http://www.feifeicms.vip/favicon.ico",
+              "link: http://www.cgahz.com/aemoban/",
+              "avatar: http://www.cgahz.com/favicon.ico",
+          ]
+
+          for item in required:
+              if data.count(item) != 1:
+                  raise SystemExit(f"Missing or duplicated required source value: {item}")
+          for item in forbidden:
+              if item in data:
+                  raise SystemExit(f"Old source value still present: {item}")
+          PY
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate static pages
+        run: npm run build
+
+      - name: Validate generated link page
+        shell: bash
+        run: |
+          test -f public/link/index.html
+          python - <<'PY'
+          from pathlib import Path
+          html = Path("public/link/index.html").read_text(encoding="utf-8")
+
+          required = [
+              'href="https://oeasy.org/"',
+              'src="https://oeasy.org/favicon.ico"',
+              'href="https://www.feifeicms.vip/"',
+              'src="https://www.feifeicms.vip/favicon.ico"',
+              'href="https://www.cgahz.com/"',
+              'src="https://www.cgahz.com/favicon.ico"',
+          ]
+          forbidden = [
+              'href="http://oeasy.org/"',
+              'src="http://oeasy.org/favicon.ico"',
+              'href="http://www.feifeicms.vip/portal.php"',
+              'src="http://www.feifeicms.vip/favicon.ico"',
+              'href="http://www.cgahz.com/aemoban/"',
+              'src="http://www.cgahz.com/favicon.ico"',
+          ]
+
+          for item in required:
+              if item not in html:
+                  raise SystemExit(f"Generated page missing: {item}")
+          for item in forbidden:
+              if item in html:
+                  raise SystemExit(f"Generated page still contains old value: {item}")
+          PY
+
+      - name: Commit Phase 24 third batch
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add source/_data/link.yml
+          git commit -m "Fix final confirmed legacy links"
+          git push origin HEAD:${GITHUB_REF_NAME}
