@@ -24,29 +24,34 @@ jobs:
         shell: bash
         run: |
           python3 - <<'PY'
+          import re
           from pathlib import Path
+
           path = Path('themes/anzhiyu/source/js/utils.js')
           text = path.read_text(encoding='utf-8')
-          old = '''  switchRightClickMenuHotReview: function () {
-            const postComment = document.getElementById("post-comment");
-            const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");
-            if (postComment) {
-              menuCommentBarrageDom.style.display = "flex";
-            } else {
-              menuCommentBarrageDom.style.display = "none";
-            }
-          },'''
-          new = '''  switchRightClickMenuHotReview: function () {
-            const postComment = document.getElementById("post-comment");
-            const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");
-            if (!menuCommentBarrageDom) return;
+          pattern = re.compile(
+              r'(?m)^(?P<i>[ \t]*)const postComment = document\.getElementById\("post-comment"\);\n'
+              r'(?P=i)const menuCommentBarrageDom = document\.getElementById\("menu-commentBarrage"\);\n'
+              r'(?P=i)if \(postComment\) \{\n'
+              r'(?P=i)  menuCommentBarrageDom\.style\.display = "flex";\n'
+              r'(?P=i)\} else \{\n'
+              r'(?P=i)  menuCommentBarrageDom\.style\.display = "none";\n'
+              r'(?P=i)\}'
+          )
 
-            menuCommentBarrageDom.style.display = postComment ? "flex" : "none";
-          },'''
-          count = text.count(old)
+          def replacement(match):
+              i = match.group('i')
+              return (
+                  f'{i}const postComment = document.getElementById("post-comment");\n'
+                  f'{i}const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");\n'
+                  f'{i}if (!menuCommentBarrageDom) return;\n\n'
+                  f'{i}menuCommentBarrageDom.style.display = postComment ? "flex" : "none";'
+              )
+
+          updated, count = pattern.subn(replacement, text, count=1)
           if count != 1:
-              raise SystemExit(f'Expected exactly one target block, found {count}')
-          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+              raise SystemExit(f'Expected exactly one target sequence, found {count}')
+          path.write_text(updated, encoding='utf-8')
           PY
 
           grep -F 'if (!menuCommentBarrageDom) return;' themes/anzhiyu/source/js/utils.js
