@@ -80,39 +80,39 @@ type: "about"
 </div>
 
 <style>
-body[data-type="about"] .create-site-post {
+#about-page .create-site-post {
   padding: 1.25rem !important;
 }
-body[data-type="about"] .smalljia-about-extra {
+#about-page .smalljia-about-extra {
   width: 100%;
 }
-body[data-type="about"] .smalljia-extra-heading {
+#about-page .smalljia-extra-heading {
   padding: .5rem .5rem 1.2rem;
 }
-body[data-type="about"] .smalljia-extra-kicker,
-body[data-type="about"] .smalljia-card-tips {
+#about-page .smalljia-extra-kicker,
+#about-page .smalljia-card-tips {
   color: var(--anzhiyu-secondtext);
   font-size: 12px;
   line-height: 1.3;
 }
-body[data-type="about"] .smalljia-extra-title {
+#about-page .smalljia-extra-title {
   color: var(--anzhiyu-fontcolor);
   font-size: clamp(24px, 3vw, 36px);
   font-weight: 800;
   line-height: 1.15;
   margin: .35rem 0 .55rem;
 }
-body[data-type="about"] .smalljia-extra-desc {
+#about-page .smalljia-extra-desc {
   color: var(--anzhiyu-secondtext);
   font-size: 14px;
   line-height: 1.7;
 }
-body[data-type="about"] .smalljia-personality-grid {
+#about-page .smalljia-personality-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
-body[data-type="about"] .smalljia-personality-card {
+#about-page .smalljia-personality-card {
   position: relative;
   min-width: 0;
   min-height: 190px;
@@ -123,12 +123,12 @@ body[data-type="about"] .smalljia-personality-card {
   overflow: hidden;
   transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
-body[data-type="about"] .smalljia-personality-card:hover {
+#about-page .smalljia-personality-card:hover {
   transform: translateY(-3px);
   border-color: var(--anzhiyu-main);
   box-shadow: var(--anzhiyu-shadow-border);
 }
-body[data-type="about"] .smalljia-card-emoji {
+#about-page .smalljia-card-emoji {
   position: absolute;
   right: 1rem;
   top: .85rem;
@@ -136,8 +136,8 @@ body[data-type="about"] .smalljia-card-emoji {
   opacity: .92;
   transform: rotate(4deg);
 }
-body[data-type="about"] .smalljia-card-title,
-body[data-type="about"] .smalljia-card-quote {
+#about-page .smalljia-card-title,
+#about-page .smalljia-card-quote {
   max-width: calc(100% - 42px);
   color: var(--anzhiyu-fontcolor);
   font-size: 24px;
@@ -145,32 +145,32 @@ body[data-type="about"] .smalljia-card-quote {
   line-height: 1.25;
   margin: .5rem 0 .75rem;
 }
-body[data-type="about"] .smalljia-card-text,
-body[data-type="about"] .smalljia-version-note {
+#about-page .smalljia-card-text,
+#about-page .smalljia-version-note {
   color: var(--anzhiyu-secondtext);
   font-size: 13px;
   line-height: 1.7;
 }
-body[data-type="about"] .smalljia-version-bar {
+#about-page .smalljia-version-bar {
   height: 8px;
   margin: 1rem 0 .55rem;
   overflow: hidden;
   border-radius: 999px;
   background: var(--anzhiyu-card-bg);
 }
-body[data-type="about"] .smalljia-version-bar span {
+#about-page .smalljia-version-bar span {
   display: block;
   width: 63%;
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--anzhiyu-main), #49b1f5);
 }
-body[data-type="about"] .smalljia-status-list {
+#about-page .smalljia-status-list {
   display: flex;
   flex-direction: column;
   gap: .55rem;
 }
-body[data-type="about"] .smalljia-status-list span {
+#about-page .smalljia-status-list span {
   display: flex;
   gap: .55rem;
   align-items: center;
@@ -180,17 +180,17 @@ body[data-type="about"] .smalljia-status-list span {
   color: var(--anzhiyu-fontcolor);
   font-size: 13px;
 }
-body[data-type="about"] .smalljia-status-list b {
+#about-page .smalljia-status-list b {
   min-width: 58px;
   color: var(--anzhiyu-main);
 }
-body[data-type="about"] .smalljia-tag-cloud {
+#about-page .smalljia-tag-cloud {
   display: flex;
   flex-wrap: wrap;
   gap: .55rem;
   margin-top: .9rem;
 }
-body[data-type="about"] .smalljia-tag-cloud span {
+#about-page .smalljia-tag-cloud span {
   display: inline-flex;
   align-items: center;
   padding: .45rem .7rem;
@@ -200,43 +200,43 @@ body[data-type="about"] .smalljia-tag-cloud span {
   font-size: 13px;
   font-weight: 700;
 }
-body[data-type="about"] .smalljia-tag-cloud.muted span {
+#about-page .smalljia-tag-cloud.muted span {
   color: var(--anzhiyu-secondtext);
   font-weight: 600;
 }
-body[data-type="about"] .smalljia-life-timeline {
+#about-page .smalljia-life-timeline {
   display: flex;
   flex-direction: column;
   gap: .75rem;
   margin-top: .85rem;
 }
-body[data-type="about"] .smalljia-life-timeline div {
+#about-page .smalljia-life-timeline div {
   display: grid;
   grid-template-columns: 62px 1fr;
   gap: .7rem;
   align-items: center;
   position: relative;
 }
-body[data-type="about"] .smalljia-life-timeline b {
+#about-page .smalljia-life-timeline b {
   color: var(--anzhiyu-main);
   font-size: 14px;
 }
-body[data-type="about"] .smalljia-life-timeline span {
+#about-page .smalljia-life-timeline span {
   color: var(--anzhiyu-fontcolor);
   font-size: 13px;
 }
 @media screen and (max-width: 768px) {
-  body[data-type="about"] .create-site-post {
+  #about-page .create-site-post {
     padding: 1rem !important;
   }
-  body[data-type="about"] .smalljia-personality-grid {
+  #about-page .smalljia-personality-grid {
     grid-template-columns: 1fr;
   }
-  body[data-type="about"] .smalljia-personality-card {
+  #about-page .smalljia-personality-card {
     min-height: auto;
   }
-  body[data-type="about"] .smalljia-card-title,
-  body[data-type="about"] .smalljia-card-quote {
+  #about-page .smalljia-card-title,
+  #about-page .smalljia-card-quote {
     font-size: 21px;
   }
 }
