@@ -74,8 +74,7 @@ jobs:
               text = text.replace(old, new, 1)
 
           # The source file already contains legacy trailing spaces. Remove them
-          # only from lines touched by this phase, so git diff --check remains clean
-          # without reformatting unrelated entries.
+          # only from lines touched by this phase, without reformatting the file.
           markers = tuple(new for _, new in replacements)
           cleaned = []
           for line in text.splitlines(keepends=True):
@@ -96,6 +95,7 @@ jobs:
 
           test "$(git diff --name-only | wc -l)" -eq 1
           test "$(git diff --name-only)" = "source/_data/link.yml"
+          git config core.whitespace cr-at-eol
           git diff --check
 
       - name: Validate source invariants
@@ -166,6 +166,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config core.whitespace cr-at-eol
           git add source/_data/link.yml
           git diff --cached --check
           git commit -m 'Fix confirmed link and favicon issues'
