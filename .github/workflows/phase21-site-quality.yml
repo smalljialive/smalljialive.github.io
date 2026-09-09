@@ -43,7 +43,7 @@ jobs:
               raise SystemExit(f"Expected exactly one malformed WeChat onclick, found {text.count(old)}")
           wechat.write_text(text.replace(old, new, 1), encoding="utf-8")
 
-          # 3) Remove placeholder webmaster verification values as one config block.
+          # 3) Explicitly disable placeholder webmaster verification values.
           config = Path("_config.anzhiyu.yml")
           text = config.read_text(encoding="utf-8")
           pattern = re.compile(r"site_verification:\n(?:(?:  - name: [^\n]+\n)(?:    content: [^\n]*\n))+", re.MULTILINE)
@@ -56,7 +56,7 @@ jobs:
               raise SystemExit("Verification block does not contain the expected placeholder services")
           if "content: xxx" not in block or "content: code-xxx" not in block:
               raise SystemExit("Verification block no longer matches the expected placeholder values")
-          text = text[:matches[0].start()] + "site_verification: []\n" + text[matches[0].end():]
+          text = text[:matches[0].start()] + "site_verification: false\n" + text[matches[0].end():]
           config.write_text(text, encoding="utf-8")
 
       - name: Validate source diff
@@ -70,7 +70,7 @@ jobs:
           git diff --name-only | grep -Fxq 'themes/anzhiyu/layout/includes/widget/card_weixin.pug'
           grep -Fq "partial('includes/header/nav', {}, {cache: false})" themes/anzhiyu/layout/includes/header/index.pug
           ! grep -Fq 'onclick="window.open("/")"' themes/anzhiyu/layout/includes/widget/card_weixin.pug
-          grep -Fxq 'site_verification: []' _config.anzhiyu.yml
+          grep -Fxq 'site_verification: false' _config.anzhiyu.yml
 
       - name: Set up Node.js
         uses: actions/setup-node@v5
