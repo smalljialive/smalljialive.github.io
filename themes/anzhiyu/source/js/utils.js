@@ -1445,11 +1445,9 @@ const anzhiyu = {
   switchRightClickMenuHotReview: function () {
     const postComment = document.getElementById("post-comment");
     const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");
-    if (postComment) {
-      menuCommentBarrageDom.style.display = "flex";
-    } else {
-      menuCommentBarrageDom.style.display = "none";
-    }
+    if (!menuCommentBarrageDom) return;
+
+    menuCommentBarrageDom.style.display = postComment ? "flex" : "none";
   },
   // 切换作者卡片状态文字
   changeSayHelloText: function () {
