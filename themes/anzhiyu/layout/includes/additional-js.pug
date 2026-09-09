@@ -28,7 +28,7 @@ div
   //- 深色模式粒子效果canvas
   if theme.universe.enable
     canvas(id="universe")
-    script(async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js")
+    script(async src="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.0.0/dark/dark.js")
 
   //- 控制台打印信息
   if theme.console.enable
@@ -97,7 +97,8 @@ div
   //- 即刻依赖waterfall
   script(async data-pjax src=url_for(theme.asset.waterfall))
   //- 文章二维码
-  script(src='https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js')
+  if is_post() && theme.ptool.enable && theme.ptool.share_mobile
+    script(src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js')
   //- 右键菜单
   if (theme.rightClickMenu && theme.rightClickMenu.enable)
     script(src=url_for(theme.asset.right_click_menu_js))
