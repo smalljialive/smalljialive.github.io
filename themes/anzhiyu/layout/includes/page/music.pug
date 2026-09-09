@@ -1,8 +1,150 @@
-#anMusic-page(data-music-id=theme.nav_music.id data-music-server=theme.nav_music.server data-music-volume=theme.nav_music.volume)
-  #anMusicBtnGetSong(title="随机周董单曲，打开异世界的大梦")
+#anMusic-page(data-music-id=theme.nav_music.id data-music-server=theme.nav_music.server data-music-volume=theme.nav_music.volume data-current-view="home")
+  #sjm-music-bg
+  .sjm-shell
+    aside.sjm-sidebar
+      .sjm-brand
+        .sjm-brand-mark ♫
+        .sjm-brand-copy
+          strong SmallJia Music
+          span 我的在线音乐房间
+
+      nav.sjm-nav(aria-label="音乐馆导航")
+        button.sjm-nav-item.active(type="button" data-sjm-view-target="home")
+          span.sjm-nav-icon ♫
+          span 音乐首页
+        button.sjm-nav-item(type="button" data-sjm-view-target="search")
+          span.sjm-nav-icon ⌕
+          span 在线搜索
+        button.sjm-nav-item(type="button" data-sjm-view-target="favorites")
+          span.sjm-nav-icon ♡
+          span 我的收藏
+          em#sjm-favorite-count 0
+        button.sjm-nav-item(type="button" data-sjm-view-target="recent")
+          span.sjm-nav-icon ◷
+          span 最近播放
+          em#sjm-recent-count 0
+        button.sjm-nav-item(type="button" data-sjm-view-target="queue")
+          span.sjm-nav-icon ≡
+          span 播放队列
+          em#sjm-queue-count 0
+
+      .sjm-sidebar-note
+        span PERSONAL MUSIC SPACE
+        p 收藏、历史和播放状态仅保存在当前浏览器。
+
+    main.sjm-main
+      header.sjm-topbar
+        .sjm-topbar-copy
+          span.sjm-eyebrow SMALLJIA MUSIC
+          h1 想听什么，就从这里开始
+        form#sjm-search-form.sjm-search-form(role="search")
+          span.sjm-search-icon ⌕
+          input#sjm-search-input(type="search" autocomplete="off" placeholder="搜索歌曲、歌手…" aria-label="在线搜索歌曲")
+          button(type="submit") 搜索
+        .sjm-source-chip
+          span.sjm-source-dot
+          span 网易云在线曲库
+
+      section.sjm-view.active(data-sjm-view="home")
+        .sjm-now-grid
+          article.sjm-now-card
+            .sjm-cover-wrap
+              img#sjm-now-cover(src="/img/favicon.ico" alt="当前歌曲封面")
+              .sjm-cover-ring
+            .sjm-now-copy
+              span.sjm-eyebrow NOW PLAYING
+              h2#sjm-now-title 音乐加载中
+              p#sjm-now-artist SmallJia Music
+              p#sjm-now-album 我的歌单
+              .sjm-now-actions
+                button#sjm-current-favorite.sjm-soft-button(type="button" aria-label="收藏当前歌曲") ♡ 收藏
+                button#sjm-queue-shortcut.sjm-soft-button(type="button") 查看队列
+
+          article.sjm-lyrics-card
+            .sjm-card-head
+              div
+                span.sjm-eyebrow LYRICS
+                h3 动态歌词
+              span.sjm-card-tip 点击歌词可跳转
+            #sjm-lyrics.sjm-lyrics
+              .sjm-empty.sjm-lyrics-empty
+                .sjm-empty-icon ♫
+                .sjm-empty-title 正在等待歌词
+                .sjm-empty-text 播放器准备好后会自动同步。
+
+        .sjm-section
+          .sjm-section-head
+            div
+              span.sjm-eyebrow MY PLAYLIST
+              h3 默认歌单
+            button.sjm-text-button(type="button" data-sjm-view-target="queue") 查看全部 →
+          #sjm-home-list.sjm-track-list
+
+      section.sjm-view(data-sjm-view="search")
+        .sjm-page-head
+          div
+            span.sjm-eyebrow ONLINE SEARCH
+            h2 在线搜索
+            p 输入歌曲名或歌手名，搜索结果可直接加入当前播放队列。
+          .sjm-search-badge 网易云 · Meting
+        #sjm-search-status.sjm-search-status 输入歌曲名或歌手开始搜索
+        #sjm-search-results.sjm-track-list.sjm-track-list-large
+
+      section.sjm-view(data-sjm-view="favorites")
+        .sjm-page-head
+          div
+            span.sjm-eyebrow FAVORITES
+            h2 我的收藏
+            p 不需要登录，收藏数据保存在当前浏览器。
+        #sjm-favorite-list.sjm-track-list.sjm-track-list-large
+
+      section.sjm-view(data-sjm-view="recent")
+        .sjm-page-head
+          div
+            span.sjm-eyebrow RECENTLY PLAYED
+            h2 最近播放
+            p 自动记录最近听过的歌曲，最多保留 50 首。
+        #sjm-recent-list.sjm-track-list.sjm-track-list-large
+
+      section.sjm-view(data-sjm-view="queue")
+        .sjm-page-head
+          div
+            span.sjm-eyebrow PLAY QUEUE
+            h2 播放队列
+            p 默认歌单与在线搜索加入的歌曲都会显示在这里。
+        #sjm-queue-list.sjm-track-list.sjm-track-list-large
+
+  footer.sjm-playerbar
+    .sjm-player-track
+      img#sjm-bar-cover(src="/img/favicon.ico" alt="")
+      .sjm-player-meta
+        strong#sjm-bar-title 音乐加载中
+        span#sjm-bar-artist SmallJia Music
+    .sjm-player-center
+      .sjm-player-controls
+        button#sjm-shuffle.sjm-control-small(type="button" title="随机播放") ⤨
+        button#sjm-prev.sjm-control(type="button" title="上一首") ◀
+        button#sjm-play.sjm-control.sjm-control-main(type="button" aria-label="播放") ▶
+        button#sjm-next.sjm-control(type="button" title="下一首") ▶
+        button#sjm-loop.sjm-control-small(type="button" title="列表循环") ↻
+      .sjm-progress-row
+        span#sjm-current-time 00:00
+        input#sjm-progress(type="range" min="0" max="100" value="0" step="0.1" aria-label="播放进度")
+        span#sjm-duration 00:00
+    .sjm-player-extra
+      span 🔊
+      input#sjm-volume(type="range" min="0" max="100" value="50" aria-label="音量")
+
+  #sjm-toast.sjm-toast(role="status" aria-live="polite")
+
+  //- 保留主题原有 Meting/APlayer 作为隐藏播放引擎与默认歌单数据源。
+  //- 旧控制按钮继续存在但不展示，避免主题原有音乐监听逻辑空引用。
+  #anMusicBtnGetSong.sjm-legacy-control(title="随机歌曲")
     i(class="anzhiyufont anzhiyu-icon-shuffle")
-  #anMusicRefreshBtn(title="立即刷新最新歌单")
+  #anMusicRefreshBtn.sjm-legacy-control(title="刷新歌单")
     i(class="anzhiyufont anzhiyu-icon-arrows-rotate")
-  #anMusicSwitching(title="切换歌单")
+  #anMusicSwitching.sjm-legacy-control(title="切换歌单")
     i(class="anzhiyufont anzhiyu-icon-repeat")
-  #anMusic-page-meting
+  #anMusic-page-meting.sjm-engine
+
+  script(src=url_for('/js/smalljia-music.js') data-pjax)
