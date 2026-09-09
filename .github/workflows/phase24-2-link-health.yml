@@ -44,6 +44,14 @@ jobs:
                   raise SystemExit(f'Expected exactly 2 occurrences of {old!r} (link + favicon), found {count}')
               data = data.replace(old, new)
 
+          crlf = b'      link: https://weavesilk.com/ \r\n'
+          lf = b'      link: https://weavesilk.com/ \n'
+          trailing_count = data.count(crlf) + data.count(lf)
+          if trailing_count != 1:
+              raise SystemExit(f'Expected exactly 1 legacy WeaveSilk trailing space, found {trailing_count}')
+          data = data.replace(crlf, b'      link: https://weavesilk.com/\r\n')
+          data = data.replace(lf, b'      link: https://weavesilk.com/\n')
+
           path.write_bytes(data)
           PY
 
