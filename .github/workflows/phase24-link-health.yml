@@ -73,6 +73,23 @@ jobs:
                   raise SystemExit(f'Expected exactly one match for {old!r}, found {count}')
               text = text.replace(old, new, 1)
 
+          # The source file already contains legacy trailing spaces. Remove them
+          # only from lines touched by this phase, so git diff --check remains clean
+          # without reformatting unrelated entries.
+          markers = tuple(new for _, new in replacements)
+          cleaned = []
+          for line in text.splitlines(keepends=True):
+              if line.endswith('\r\n'):
+                  body, ending = line[:-2], '\r\n'
+              elif line.endswith('\n'):
+                  body, ending = line[:-1], '\n'
+              else:
+                  body, ending = line, ''
+              if any(marker in body for marker in markers):
+                  body = body.rstrip(' \t')
+              cleaned.append(body + ending)
+          text = ''.join(cleaned)
+
           with path.open('w', encoding='utf-8', newline='') as f:
               f.write(text)
           PY
