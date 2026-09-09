@@ -789,11 +789,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     rm && rm.hideRightMenu();
 
-    const menuDarkmodeText = $rightMenu.querySelector(".menu-darkmode-text");
-    if (mode === "light") {
-      menuDarkmodeText.textContent = "深色模式";
-    } else {
-      menuDarkmodeText.textContent = "浅色模式";
+    const menuDarkmodeText = $rightMenu?.querySelector(".menu-darkmode-text") || null;
+    if (menuDarkmodeText) {
+      if (mode === "light") {
+        menuDarkmodeText.textContent = "深色模式";
+      } else {
+        menuDarkmodeText.textContent = "浅色模式";
+      }
     }
 
     if (!GLOBAL_CONFIG_SITE.isPost) {
@@ -1467,16 +1469,18 @@ document.addEventListener("DOMContentLoaded", function () {
         let msgPause = '<i class="anzhiyufont anzhiyu-icon-pause"></i><span>暂停音乐</span>';
         navAplayer.on("pause", function () {
           navMusicEl.classList.remove("playing");
-          document.getElementById("menu-music-toggle").innerHTML = msgPlay;
+          const menuMusicToggle = document.getElementById("menu-music-toggle");
+          if (menuMusicToggle) menuMusicToggle.innerHTML = msgPlay;
           document.getElementById("nav-music-hoverTips").innerHTML = "音乐已暂停";
-          document.querySelector("#consoleMusic").classList.remove("on");
+          document.querySelector("#consoleMusic")?.classList.remove("on");
           anzhiyu_musicPlaying = false;
           navMusicEl.classList.remove("stretch");
         });
         navAplayer.on("play", function () {
           navMusicEl.classList.add("playing");
-          document.getElementById("menu-music-toggle").innerHTML = msgPause;
-          document.querySelector("#consoleMusic").classList.add("on");
+          const menuMusicToggle = document.getElementById("menu-music-toggle");
+          if (menuMusicToggle) menuMusicToggle.innerHTML = msgPause;
+          document.querySelector("#consoleMusic")?.classList.add("on");
           anzhiyu_musicPlaying = true;
           // navMusicEl.classList.add("stretch");
         });
