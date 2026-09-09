@@ -105,14 +105,36 @@ type: "about"
   margin-top: 1rem;
 }
 #about-page .smalljia-extra-card {
+  --smalljia-accent: var(--anzhiyu-main);
   min-height: 210px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: .3s;
+  isolation: isolate;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+#about-page .smalljia-extra-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 190px;
+  height: 190px;
+  right: -70px;
+  top: -85px;
+  border-radius: 50%;
+  background: var(--smalljia-glow, transparent);
+  filter: blur(3px);
+  pointer-events: none;
 }
 #about-page .smalljia-extra-card:hover {
-  border: var(--style-border-hover);
+  transform: translateY(-2px);
+  border-color: var(--smalljia-accent);
+  box-shadow: var(--anzhiyu-shadow-border);
+}
+#about-page .smalljia-extra-card:not(.smalljia-version-card) .author-content-item-tips {
+  color: var(--smalljia-accent);
+  opacity: .9;
+  font-weight: 700;
 }
 #about-page .smalljia-version-card,
 #about-page .smalljia-likes-card,
@@ -126,9 +148,12 @@ type: "about"
 }
 #about-page .smalljia-version-card {
   color: var(--anzhiyu-white);
-  background: linear-gradient(120deg, #5b27ff 0%, #00a6ff 100%);
+  background: linear-gradient(120deg, #5b27ff 0%, #2f63ff 52%, #00a6ff 100%);
   background-size: 180% 180%;
   animation: gradient 15s ease infinite;
+}
+#about-page .smalljia-version-card::before {
+  display: none;
 }
 #about-page .smalljia-version-card .author-content-item-tips,
 #about-page .smalljia-version-card .author-content-item-title,
@@ -139,6 +164,41 @@ type: "about"
 #about-page .smalljia-version-card .author-content-item-tips,
 #about-page .smalljia-version-card .smalljia-version-note {
   opacity: .78;
+}
+#about-page .smalljia-status-card {
+  --smalljia-accent: #2f7cf6;
+  --smalljia-glow: rgba(73,177,245,.18);
+  background:
+    linear-gradient(135deg, rgba(73,177,245,.13) 0%, rgba(66,90,239,.055) 50%, transparent 100%),
+    var(--anzhiyu-card-bg);
+}
+#about-page .smalljia-belief-card {
+  --smalljia-accent: #2eaf76;
+  --smalljia-glow: rgba(46,175,118,.18);
+  background:
+    linear-gradient(135deg, rgba(46,175,118,.13) 0%, rgba(123,220,181,.055) 52%, transparent 100%),
+    var(--anzhiyu-card-bg);
+}
+#about-page .smalljia-likes-card {
+  --smalljia-accent: #e9698e;
+  --smalljia-glow: rgba(233,105,142,.2);
+  background:
+    linear-gradient(145deg, rgba(255,152,181,.15) 0%, rgba(255,185,128,.07) 58%, transparent 100%),
+    var(--anzhiyu-card-bg);
+}
+#about-page .smalljia-dislikes-card {
+  --smalljia-accent: #8a73e8;
+  --smalljia-glow: rgba(138,115,232,.18);
+  background:
+    linear-gradient(145deg, rgba(138,115,232,.13) 0%, rgba(184,163,245,.055) 58%, transparent 100%),
+    var(--anzhiyu-card-bg);
+}
+#about-page .smalljia-timeline-card {
+  --smalljia-accent: #536dfe;
+  --smalljia-glow: rgba(83,109,254,.18);
+  background:
+    linear-gradient(135deg, rgba(83,109,254,.11) 0%, rgba(0,188,212,.07) 56%, transparent 100%),
+    var(--anzhiyu-card-bg);
 }
 #about-page .smalljia-version-copy,
 #about-page .smalljia-belief-copy {
@@ -176,8 +236,11 @@ type: "about"
 #about-page .smalljia-status-grid div {
   min-width: 0;
   padding: .8rem .85rem;
+  border: 1px solid rgba(47,124,246,.09);
   border-radius: 16px;
-  background: var(--anzhiyu-secondbg);
+  background: rgba(255,255,255,.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 #about-page .smalljia-status-grid span {
   display: block;
@@ -191,9 +254,6 @@ type: "about"
   font-size: 14px;
   line-height: 1.45;
 }
-#about-page .smalljia-belief-card {
-  background: linear-gradient(135deg, var(--anzhiyu-card-bg), var(--anzhiyu-secondbg));
-}
 #about-page .smalljia-belief-card .author-content-item-title {
   max-width: 80%;
 }
@@ -206,10 +266,17 @@ type: "about"
 #about-page .smalljia-chip-list span {
   padding: .35rem .65rem;
   border-radius: 20px;
-  background: var(--anzhiyu-secondbg);
+  border: 1px solid color-mix(in srgb, var(--smalljia-accent) 11%, transparent);
+  background: rgba(255,255,255,.6);
   color: var(--anzhiyu-fontcolor);
   font-size: 12px;
   font-weight: 700;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+#about-page .smalljia-likes-card .smalljia-chip-list span:hover,
+#about-page .smalljia-dislikes-card .smalljia-chip-list span:hover {
+  border-color: var(--smalljia-accent);
 }
 #about-page .smalljia-chip-muted span {
   color: var(--anzhiyu-secondtext);
@@ -224,7 +291,7 @@ type: "about"
 #about-page .smalljia-life-line div {
   position: relative;
   padding-top: 1rem;
-  border-top: 2px solid var(--anzhiyu-secondbg);
+  border-top: 2px solid rgba(83,109,254,.16);
 }
 #about-page .smalljia-life-line div::before {
   content: '';
@@ -234,11 +301,12 @@ type: "about"
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--anzhiyu-main);
+  background: var(--smalljia-accent);
+  box-shadow: 0 0 0 4px rgba(83,109,254,.08);
 }
 #about-page .smalljia-life-line b {
   display: block;
-  color: var(--anzhiyu-main);
+  color: var(--smalljia-accent);
   font-size: 14px;
 }
 #about-page .smalljia-life-line span {
@@ -253,13 +321,27 @@ type: "about"
   right: -8px;
   bottom: -22px;
   font-size: 88px;
-  opacity: .08;
+  opacity: .1;
   transform: rotate(-10deg);
   user-select: none;
   pointer-events: none;
+  filter: saturate(.9);
 }
 #about-page .smalljia-version-card .smalljia-card-background-icon {
   opacity: .16;
+}
+[data-theme='dark'] #about-page .smalljia-status-card,
+[data-theme='dark'] #about-page .smalljia-belief-card,
+[data-theme='dark'] #about-page .smalljia-likes-card,
+[data-theme='dark'] #about-page .smalljia-dislikes-card,
+[data-theme='dark'] #about-page .smalljia-timeline-card {
+  background-color: var(--anzhiyu-card-bg);
+  background-blend-mode: screen;
+}
+[data-theme='dark'] #about-page .smalljia-status-grid div,
+[data-theme='dark'] #about-page .smalljia-chip-list span {
+  background: rgba(255,255,255,.055);
+  border-color: rgba(255,255,255,.07);
 }
 @media screen and (max-width: 768px) {
   #about-page .smalljia-extra-section-name {
@@ -282,7 +364,7 @@ type: "about"
   #about-page .smalljia-life-line div {
     padding: .65rem 0 .65rem 1rem;
     border-top: 0;
-    border-left: 2px solid var(--anzhiyu-secondbg);
+    border-left: 2px solid rgba(83,109,254,.16);
   }
   #about-page .smalljia-life-line div::before {
     top: 1rem;
