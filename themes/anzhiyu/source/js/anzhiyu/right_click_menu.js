@@ -265,11 +265,7 @@ rm.rightmenuCopyText = function (txt) {
 };
 
 rm.copyPageUrl = function (url) {
-  if (!url) {
-    url = window.location.href;
-  }
-  rm.copyUrl(url);
-  anzhiyu.snackbarShow("复制链接地址成功", false, 2000);
+  anzhiyu.copyPageUrl(url);
   rm.hideRightMenu();
 };
 

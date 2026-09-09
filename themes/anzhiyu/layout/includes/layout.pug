@@ -84,7 +84,8 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
     if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
       include ./music.pug
     !=partial('includes/third-party/search/index', {}, {cache: true})
-    !=partial('includes/anzhiyu/rightmenu', {}, {cache:true})
+    if theme.rightClickMenu && theme.rightClickMenu.enable
+      !=partial('includes/anzhiyu/rightmenu', {}, {cache:true})
     include ./additional-js.pug
 
     //- 弹窗通知

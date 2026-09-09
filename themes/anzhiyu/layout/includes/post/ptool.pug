@@ -15,14 +15,15 @@ if !theme.disable_top_img && page.top_img !== false
     - var site_title = page.title || page.tag || page.category || config.title
 #post-tools.post-tools
   .post-tools-left
-    div.rewardLeftButton
-      if theme.reward.enable && theme.reward.QR_code
-          !=partial('includes/post/reward', {}, {cache: true})
-      if theme.ptool.mode
-        .reward-link.mode
-          a.reward-link-button(href=url_for(theme.ptool.mode))
-            i.anzhiyufont.anzhiyu-icon-plant-fill
-            | 运营模式与责任
+    if (theme.reward.enable && theme.reward.QR_code) || theme.ptool.mode
+      div.rewardLeftButton
+        if theme.reward.enable && theme.reward.QR_code
+            !=partial('includes/post/reward', {}, {cache: true})
+        if theme.ptool.mode
+          .reward-link.mode
+            a.reward-link-button(href=url_for(theme.ptool.mode))
+              i.anzhiyufont.anzhiyu-icon-plant-fill
+              | 运营模式与责任
     div.shareRight
       if theme.ptool.share_mobile
         .share-link.mobile

@@ -20,7 +20,7 @@ if theme.post_copyright.enable && page.copyright !== false
       else
         a.post-copyright__original(title="该文章为原创文章，注意版权协议" href=url_for(url)) 原创
       a.post-copyright-title
-        span(onclick=`rm.copyPageUrl('${theme.post_copyright.decode ? decodeURI(url) : url}')`)=pageTitle
+        span(onclick=`anzhiyu.copyPageUrl('${theme.post_copyright.decode ? decodeURI(url) : url}')`)=pageTitle
     //- ptool
     if theme.ptool.enable
       include ./ptool.pug
