@@ -22,7 +22,7 @@ else
   - var top_img = false
   - var isHomeClass = 'not-top-img'
 header#page-header(class=`${isHomeClass}` style=home_index_img_bg)
-  !=partial('includes/header/nav', {}, {cache: true})
+  !=partial('includes/header/nav', {}, {cache: false})
   if top_img !== false
     if is_post()
       if page.bilibili_bg
