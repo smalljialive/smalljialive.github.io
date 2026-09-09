@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function translateInitialization() {
     translateButtonObject = document.getElementById('translateLink');
-    translateRightMenuButtonObject = document.getElementById('menu-translate').querySelector('span');
+    translateRightMenuButtonObject = document.getElementById('menu-translate')?.querySelector('span') || null;
 
     if (translateButtonObject || translateRightMenuButtonObject) {
       if (currentEncoding !== targetEncoding) {

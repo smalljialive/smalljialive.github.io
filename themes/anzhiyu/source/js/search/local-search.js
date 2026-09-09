@@ -34,8 +34,10 @@ window.addEventListener("load", () => {
   };
 
   const searchClickFn = () => {
-    document.querySelector("#search-button > .search").addEventListener("click", openSearch);
-    document.querySelector("#menu-search").addEventListener("click", openSearch);
+    const headerSearch = document.querySelector("#search-button > .search");
+    const menuSearch = document.querySelector("#menu-search");
+    if (headerSearch) headerSearch.addEventListener("click", openSearch);
+    if (menuSearch) menuSearch.addEventListener("click", openSearch);
   };
 
   const searchClickFnOnce = () => {

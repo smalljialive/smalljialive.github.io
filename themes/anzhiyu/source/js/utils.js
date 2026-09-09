@@ -57,26 +57,40 @@ const anzhiyu = {
 
   copyPageUrl: async function (url = window.location.href) {
     const text = url || window.location.href;
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
+    let clipboardError = null;
+
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
         await navigator.clipboard.writeText(text);
-      } else {
-        const input = document.createElement("input");
-        input.value = text;
-        document.body.appendChild(input);
-        input.select();
-        input.setSelectionRange(0, input.value.length);
-        const copied = document.execCommand("copy");
-        input.remove();
-        if (!copied) throw new Error("document.execCommand copy failed");
+        anzhiyu.snackbarShow("复制链接地址成功", false, 2000);
+        return true;
+      } catch (error) {
+        clipboardError = error;
       }
+    }
+
+    const input = document.createElement("input");
+    input.value = text;
+    document.body.appendChild(input);
+    input.select();
+    input.setSelectionRange(0, input.value.length);
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch (error) {
+      clipboardError = clipboardError || error;
+    } finally {
+      input.remove();
+    }
+
+    if (copied) {
       anzhiyu.snackbarShow("复制链接地址成功", false, 2000);
       return true;
-    } catch (error) {
-      console.error("复制链接地址失败:", error);
-      anzhiyu.snackbarShow("复制链接地址失败，请手动复制", false, 3000);
-      return false;
     }
+
+    console.error("复制链接地址失败:", clipboardError || new Error("document.execCommand copy failed"));
+    anzhiyu.snackbarShow("复制链接地址失败，请手动复制", false, 3000);
+    return false;
   },
 
   snackbarShow: (text, showActionFunction = false, duration = 2000, actionText = false) => {
@@ -711,15 +725,17 @@ const anzhiyu = {
     let msgPause = '<i class="anzhiyufont anzhiyu-icon-pause"></i><span>暂停音乐</span>';
     if (anzhiyu_musicPlaying) {
       navMusicEl.classList.remove("playing");
-      document.getElementById("menu-music-toggle").innerHTML = msgPlay;
+      const menuMusicToggle = document.getElementById("menu-music-toggle");
+      if (menuMusicToggle) menuMusicToggle.innerHTML = msgPlay;
       document.getElementById("nav-music-hoverTips").innerHTML = "音乐已暂停";
-      document.querySelector("#consoleMusic").classList.remove("on");
+      document.querySelector("#consoleMusic")?.classList.remove("on");
       anzhiyu_musicPlaying = false;
       navMusicEl.classList.remove("stretch");
     } else {
       navMusicEl.classList.add("playing");
-      document.getElementById("menu-music-toggle").innerHTML = msgPause;
-      document.querySelector("#consoleMusic").classList.add("on");
+      const menuMusicToggle = document.getElementById("menu-music-toggle");
+      if (menuMusicToggle) menuMusicToggle.innerHTML = msgPause;
+      document.querySelector("#consoleMusic")?.classList.add("on");
       anzhiyu_musicPlaying = true;
       navMusicEl.classList.add("stretch");
     }
@@ -944,6 +960,67 @@ const anzhiyu = {
       }, 100);
     }
   },
+  ensureMetingLifecycleGuard: function () {
+    const MetingElement = window.customElements?.get("meting-js");
+    const prototype = MetingElement?.prototype;
+    if (!prototype || prototype.__anzhiyuLifecycleGuarded) return;
+
+    prototype.__anzhiyuLifecycleGuarded = true;
+    const originalDisconnectedCallback = prototype.disconnectedCallback;
+    const originalLoadPlayer = prototype._loadPlayer;
+
+    const aplayerPrototype = window.APlayer?.prototype;
+    if (aplayerPrototype && !aplayerPrototype.__anzhiyuDestroyedSkipGuarded) {
+      aplayerPrototype.__anzhiyuDestroyedSkipGuarded = true;
+      const originalSkipForward = aplayerPrototype.skipForward;
+      const originalSkipBack = aplayerPrototype.skipBack;
+      if (typeof originalSkipForward === "function") {
+        aplayerPrototype.skipForward = function (...args) {
+          if (this.__anzhiyuDestroyed || !this.container?.isConnected) return;
+          return originalSkipForward.apply(this, args);
+        };
+      }
+      if (typeof originalSkipBack === "function") {
+        aplayerPrototype.skipBack = function (...args) {
+          if (this.__anzhiyuDestroyed || !this.container?.isConnected) return;
+          return originalSkipBack.apply(this, args);
+        };
+      }
+    }
+
+    prototype.disconnectedCallback = function () {
+      const aplayer = this.aplayer;
+      if (this.lock || !aplayer || aplayer.__anzhiyuDestroyed) return;
+      aplayer.__anzhiyuDestroyed = true;
+      try {
+        if (typeof originalDisconnectedCallback === "function") {
+          originalDisconnectedCallback.call(this);
+        } else if (typeof aplayer.destroy === "function") {
+          aplayer.destroy();
+        }
+      } catch (error) {
+        console.warn("Meting 播放器销毁异常已拦截", error);
+      }
+    };
+
+    if (typeof originalLoadPlayer === "function") {
+      prototype._loadPlayer = function (data) {
+        if (!this.isConnected) return;
+        return originalLoadPlayer.call(this, data);
+      };
+    }
+
+    if (!anzhiyu.musicPageKeyCleanupBound) {
+      document.addEventListener("pjax:send", () => {
+        if (anzhiyu.musicPageKeydownHandler) {
+          document.removeEventListener("keydown", anzhiyu.musicPageKeydownHandler);
+          anzhiyu.musicPageKeydownHandler = null;
+        }
+      });
+      anzhiyu.musicPageKeyCleanupBound = true;
+    }
+  },
+
   // 获取自定义播放列表
   getCustomPlayList: function () {
     if (!window.location.pathname.startsWith("/music/")) return;
@@ -951,6 +1028,8 @@ const anzhiyu = {
     const anMusicPage = document.getElementById("anMusic-page");
     const anMusicPageMeting = document.getElementById("anMusic-page-meting");
     if (!anMusicPage || !anMusicPageMeting) return;
+
+    anzhiyu.ensureMetingLifecycleGuard();
 
     const urlParams = new URLSearchParams(window.location.search);
     const defaultId = String(anMusicPage.dataset.musicId || "");
@@ -962,6 +1041,16 @@ const anzhiyu = {
     const validServer = allowedServers.has(requestedServer);
     const playlistId = validId && validServer ? requestedId : defaultId;
     const playlistServer = validId && validServer ? requestedServer : defaultServer;
+
+    const existingMeting = anMusicPageMeting.querySelector("meting-js");
+    if (
+      existingMeting &&
+      existingMeting.getAttribute("id") === playlistId &&
+      (existingMeting.getAttribute("server") || "netease").toLowerCase() === playlistServer
+    ) {
+      anzhiyu.changeMusicBg(false);
+      return;
+    }
 
     const meting = document.createElement("meting-js");
     meting.setAttribute("id", playlistId);
@@ -1311,18 +1400,38 @@ const anzhiyu = {
   },
 
   // 创建二维码
-  qrcodeCreate: function () {
-    if (document.getElementById("qrcode")) {
-      document.getElementById("qrcode").innerHTML = "";
-      var qrcode = new QRCode(document.getElementById("qrcode"), {
-        text: window.location.href,
-        width: 250,
-        height: 250,
-        colorDark: "#000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H,
-      });
+  qrcodeCreate: async function () {
+    let qrcodeEl = document.getElementById("qrcode");
+    if (!qrcodeEl) return;
+
+    if (typeof window.QRCode === "undefined") {
+      if (!anzhiyu.qrcodeScriptPromise) {
+        anzhiyu.qrcodeScriptPromise = window
+          .getScript("https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js")
+          .catch(error => {
+            anzhiyu.qrcodeScriptPromise = null;
+            throw error;
+          });
+      }
+      try {
+        await anzhiyu.qrcodeScriptPromise;
+      } catch (error) {
+        console.error("二维码脚本加载失败:", error);
+        return;
+      }
     }
+
+    qrcodeEl = document.getElementById("qrcode");
+    if (!qrcodeEl || typeof window.QRCode === "undefined") return;
+    qrcodeEl.innerHTML = "";
+    new window.QRCode(qrcodeEl, {
+      text: window.location.href,
+      width: 250,
+      height: 250,
+      colorDark: "#000",
+      colorLight: "#ffffff",
+      correctLevel: window.QRCode.CorrectLevel.H,
+    });
   },
 
   // 判断是否在el内
