@@ -55,6 +55,30 @@ const anzhiyu = {
     }
   },
 
+  copyPageUrl: async function (url = window.location.href) {
+    const text = url || window.location.href;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const input = document.createElement("input");
+        input.value = text;
+        document.body.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+        const copied = document.execCommand("copy");
+        input.remove();
+        if (!copied) throw new Error("document.execCommand copy failed");
+      }
+      anzhiyu.snackbarShow("复制链接地址成功", false, 2000);
+      return true;
+    } catch (error) {
+      console.error("复制链接地址失败:", error);
+      anzhiyu.snackbarShow("复制链接地址失败，请手动复制", false, 3000);
+      return false;
+    }
+  },
+
   snackbarShow: (text, showActionFunction = false, duration = 2000, actionText = false) => {
     const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar;
     const bg = document.documentElement.getAttribute("data-theme") === "light" ? bgLight : bgDark;
@@ -880,7 +904,6 @@ const anzhiyu = {
       }
     }
 
-    console.info("已随机歌曲：", selectRandomSong, "本次随机歌曲：", randomSong.name);
   },
   // 音乐节目切换背景
   changeMusicBg: function (isChangeBg = true) {
