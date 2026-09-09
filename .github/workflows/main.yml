@@ -38,6 +38,9 @@ jobs:
           npx hexo generate
           test -s public/css/index.css
           grep -q ".sjm-playerbar" public/css/index.css
+          test -s public/js/smalljia-music.js
+          node --check public/js/smalljia-music.js
+          grep -q "SmallJiaMusicApp" public/js/smalljia-music.js
         working-directory: ./blog
 
       - name: Deploy to GitHub Pages
