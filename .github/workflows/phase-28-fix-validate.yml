@@ -24,7 +24,9 @@ jobs:
           node-version: '24'
 
       - name: Apply approved Phase 28 patch
-        run: python3 .github/scripts/apply-phase-28-fix.py
+        run: |
+          python3 .github/scripts/apply-phase-28-fix.py
+          python3 .github/scripts/phase-28-music-guard.py
 
       - name: Validate source diff and JavaScript syntax
         shell: bash
