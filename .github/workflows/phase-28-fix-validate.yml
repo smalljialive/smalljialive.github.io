@@ -1,0 +1,97 @@
+name: Phase 28 Fix Validation
+
+on:
+  push:
+    branches:
+      - fix/phase-28-browser-regressions
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fix branch
+        uses: actions/checkout@v4
+        with:
+          ref: fix/phase-28-browser-regressions
+          fetch-depth: 0
+
+      - name: Set up Node 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Apply approved Phase 28 patch
+        run: python3 .github/scripts/apply-phase-28-fix.py
+
+      - name: Validate source diff and JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+          mapfile -t changed < <(git diff --name-only)
+          printf '%s\n' "${changed[@]}"
+          expected=(
+            themes/anzhiyu/source/js/tw_cn.js
+            themes/anzhiyu/source/js/search/local-search.js
+            themes/anzhiyu/source/js/main.js
+            themes/anzhiyu/source/js/utils.js
+          )
+          test "${#changed[@]}" -eq "${#expected[@]}"
+          for f in "${expected[@]}"; do
+            printf '%s\n' "${changed[@]}" | grep -Fx "$f" >/dev/null
+          done
+          node --check themes/anzhiyu/source/js/tw_cn.js
+          node --check themes/anzhiyu/source/js/search/local-search.js
+          node --check themes/anzhiyu/source/js/main.js
+          node --check themes/anzhiyu/source/js/utils.js
+
+      - name: Install project dependencies and build
+        run: |
+          npm ci
+          npx hexo clean
+          npx hexo generate
+
+      - name: Verify generated invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js' public/2025/01/10/WPS如何批量导出批注/index.html
+          ! grep -q 'id="rightMenu"' public/index.html
+          grep -q 'id="local-search"' public/index.html
+          grep -q 'id="anMusic-page-meting"' public/music/index.html
+
+      - name: Prepare browser validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium
+          npm install --no-save --package-lock=false puppeteer-core@24
+          python3 -m http.server 4000 --directory public > /tmp/phase28-http.log 2>&1 &
+          echo $! > /tmp/phase28-http.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/phase28-http.log
+          exit 1
+
+      - name: Run browser regression validation
+        run: node .github/scripts/phase-28-fix-browser.mjs
+
+      - name: Commit validated source changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Small Jia'
+          git config user.email 'mortysmithfor@gmail.com'
+          git add \
+            themes/anzhiyu/source/js/tw_cn.js \
+            themes/anzhiyu/source/js/search/local-search.js \
+            themes/anzhiyu/source/js/main.js \
+            themes/anzhiyu/source/js/utils.js
+          git diff --cached --check
+          git commit -m 'fix: resolve Phase 28 browser regressions [skip ci]'
+          git push origin HEAD:fix/phase-28-browser-regressions
