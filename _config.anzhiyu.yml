@@ -1251,7 +1251,7 @@ CDN:
 
   # The CDN provider of third party scripts (第三方 js 的 cdn 配置)
   # option: elemecdn/jsdelivr/unpkg/cdnjs/onmicrosoft/cbd/anheyu/custom
-  third_party_provider: cbd
+  third_party_provider: jsdelivr
 
   # Add version number to CDN, true or false
   version: true
