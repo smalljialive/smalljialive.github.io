@@ -1,377 +1,870 @@
 body[data-type="music"]
-  background rgb(13, 13, 13)
+  background #080b12
+  color #fff
   #body-wrap
-    justify-content: flex-start;
-  #center-console + label i
-    background: var(--anzhiyu-white) !important
+    justify-content flex-start
+    min-height 100vh
+  #web_bg, #an_music_bg, #footer, #nav-music, #rightside
+    display none !important
   .layout
-    flex-direction: row;
+    width 100%
+    max-width 1600px
+    flex-direction row
+    padding 0 18px 32px
+  #content-inner
+    margin-top 72px
   #page
+    width 100%
     border 0
     box-shadow none !important
     padding 0 !important
     background transparent !important
     .page-title
-      display: none
-  #page-header
-    #nav
-      backdrop-filter none !important
-      background 0 0 !important
-      border-bottom none !important
-      #blog_name,
-      .mask-name-container,
-      #menus,
-      #nav-right .nav-button,
-      #nav-right #toggle-menu
-        a, .back-home-button
-          color var(--anzhiyu-white)
-  #footer, #nav-music
-    display none
-  #an_music_bg
-    display block
-  #web_bg
-    display none
-  .s-sticker
-    div
-      color var(--anzhiyu-white) !important
-
-[data-theme="dark"]
-  body[data-type="music"]
-    .page
-      #page-header
-        &:before
-          background-color transparent
-
-
-#an_music_bg
-  display none
-  filter blur(63px)
-  opacity 0.6
-  position fixed
-  z-index -999
-  background-attachment local
-  background-position center center
-  background-size cover
-  background-repeat no-repeat
-  width 200%
-  height 200%
-  top -50%
-  left -50%
-  transform rotate(0deg)
-  transition .3s
-
-if hexo-config('nav_music.console_widescreen_music') == false
-  body
-    &:has(#console.show)
-      #nav-music
-        display: none !important
-if hexo-config('nav_music.enable') == false
-  #nav-music
-    display: none !important
-  body
-    &:has(#console.show)
-      #nav-music
-        display: flex !important;
-
-@media screen and (max-width: 1400px)
-  body
-    #anMusic-page
-      #anMusicSwitching, #anMusicRefreshBtn, #anMusicBtnGetSong
-        right 7vw
-      #anMusicSwitching
-        bottom: 100px
-      #anMusicRefreshBtn
-        bottom: 160px
-      #anMusicBtnGetSong
-        bottom: 220px
+      display none
+  #page-header #nav
+    backdrop-filter blur(18px) saturate(130%)
+    -webkit-backdrop-filter blur(18px) saturate(130%)
+    background rgba(8,11,18,.52) !important
+    border-bottom 1px solid rgba(255,255,255,.06) !important
+    #blog_name, .mask-name-container, #menus, #nav-right .nav-button, #nav-right #toggle-menu
+      a, .back-home-button
+        color #fff
 
 #anMusic-page
-  #anMusicRefreshBtn, #anMusicBtnGetSong, #anMusicSwitching
-    position: fixed;
-    display: flex;
-    width: 50px;
-    height: 50px;
-    bottom: 100px;
-    padding: 5px;
-    background: var(--anzhiyu-white-op);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 50%;
-    color: #fff;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index 2
-  #anMusicBtnGetSong
-    right: 11vw;
-  #anMusicRefreshBtn
-    right: 7vw;
-  #anMusicSwitching
-    right: 15vw;
-  +maxWidth768()
-    div#anMusicBtnGetSong
-      right: 80px;
-      bottom: 150px;
-    div#anMusicRefreshBtn
-      right: 20px;
-      bottom: 150px;
-    div#anMusicSwitching
-      right: 140px;
-      bottom: 150px;
-  meting-js
-    .aplayer
-      display flex
-      flex-direction row-reverse
-      background rgba(0, 0, 0, 0)
-      border none
-      box-shadow none
-      .aplayer-body
-        width 40%
-        height calc(100vh - 169px)
-        .aplayer-pic
-          float none
-          width 180px
-          height 180px
-          border-radius 12px
-          margin auto
-          left 0
-          right 0
-          transition: background-image 0.5s ease-in-out;
-          background-size: cover;
-          background-color: transparent !important;
-        .aplayer-info
-          margin 0 20px 0 20px
-          border-bottom none
-          .aplayer-music
-            text-align center
-            height auto
-            margin 15px
-            .aplayer-author, .aplayer-title
-              font-size 2rem
-              font-weight 700
-              color #fff
+  --sjm-accent var(--anzhiyu-main)
+  --sjm-card rgba(14,19,31,.72)
+  --sjm-card-strong rgba(17,23,38,.88)
+  --sjm-soft rgba(255,255,255,.065)
+  --sjm-border rgba(255,255,255,.10)
+  --sjm-muted rgba(255,255,255,.58)
+  --sjm-faint rgba(255,255,255,.36)
+  position relative
+  min-height calc(100vh - 94px)
+  padding-bottom 118px
+  isolation isolate
+  button, input
+    font inherit
+  button
+    -webkit-tap-highlight-color transparent
 
-          .aplayer-lrc
-            height 800%
-            margin-top 10px
-            mask-image linear-gradient(to bottom, #000, #000, #000, #000, #000, #000, #000, #000, #000, #000, #0000, #0000)
-            p
-              font-size 20px
-              line-height: 20px !important;
-              height: 20px !important;
-              margin: 20px 0 !important;
-              color #fff
-              &.aplayer-lrc-current {
-                min-height: 20px;
-              }
-            &::after, &::before
-              display none
-          .aplayer-controller 
-            position fixed
-            max-width 1500px
-            margin auto
-            left 0
-            right 0
-            bottom 50px
-            .aplayer-bar-wrap 
-              margin 0 160px 0 150px
-              .aplayer-bar
-                height: 6px;
-                border-radius: 4px;
-                .aplayer-played
-                  height: 6px;
-                  border-radius: 4px;
-                  background var(--anzhiyu-white) !important
-                  .aplayer-thumb
-                    width 20px
-                    height 20px
-                    margin-top: -7px
-                    transform none
-                    background #fff !important
-                .aplayer-loaded
-                  height: 6px;
-                  border-radius: 4px;
-            .aplayer-time
-              position absolute
-              width 100%
-              bottom 21px
-              height 0
-              display flex
-              justify-content flex-end
-              .aplayer-volume-wrap
-                .aplayer-volume-bar-wrap
-                  bottom: 0;
-                  right: -5px;
-              .aplayer-icon
-                width 2rem
-                height 2rem
-                margin-left 15px
-                path
-                  fill var(--anzhiyu-white)
-                  opacity 0.8
-                &.aplayer-icon-loop
-                  margin-right 15px
-              .aplayer-time-inner
-                margin-right 18px
-                margin-top -8px
-              .aplayer-icon-back
-                position absolute
-                left 0
-                display inline
-              .aplayer-icon-play
-                position absolute
-                left 40px
-                display inline
-              .aplayer-icon-forward
-                position absolute
-                left 80px
-                display inline
+#sjm-music-bg
+  position fixed
+  z-index -3
+  inset -18%
+  background-position center
+  background-size cover
+  background-repeat no-repeat
+  filter blur(90px) saturate(125%)
+  opacity .46
+  transform scale(1.08)
+  transition background-image .55s ease, opacity .35s ease
+  pointer-events none
 
-              .aplayer-icon-menu
-                display none
+#anMusic-page:before
+  content ""
+  position fixed
+  z-index -2
+  inset 0
+  background linear-gradient(135deg,rgba(5,8,15,.82),rgba(8,12,22,.72) 42%,rgba(10,14,25,.88)), radial-gradient(circle at 72% 18%,rgba(91,120,255,.16),transparent 34%)
+  pointer-events none
 
-      .aplayer-list
-          width 60%
-          height 100%
-        ol
-          padding-right 25px
-          & > li
-            border-top 1px solid transparent
-            font-size 14px
-            &:hover
-              background #ffffff33
-              border-radius 6px
-            &.aplayer-list-light
-              background #ffffff33
-              border-radius 6px
-              padding 20px 15px
-              span.aplayer-list-title
-                font-weight: bolder;
-              .aplayer-list-cur
-                display none
-            span
-              color var(--anzhiyu-white)
-              &.aplayer-list-author
-                opacity 0.6
+.sjm-shell
+  position relative
+  z-index 1
+  display grid
+  grid-template-columns 230px minmax(0,1fr)
+  gap 18px
+  align-items start
 
+.sjm-sidebar
+  position sticky
+  top 84px
+  display flex
+  flex-direction column
+  min-height calc(100vh - 214px)
+  padding 18px 14px
+  border 1px solid var(--sjm-border)
+  border-radius 24px
+  background rgba(8,12,21,.64)
+  box-shadow 0 18px 60px rgba(0,0,0,.18)
+  backdrop-filter blur(26px) saturate(135%)
+  -webkit-backdrop-filter blur(26px) saturate(135%)
 
-@media screen and (max-width: 768px)
+.sjm-brand
+  display flex
+  align-items center
+  gap 11px
+  padding 6px 7px 18px
+  .sjm-brand-mark
+    display flex
+    align-items center
+    justify-content center
+    width 40px
+    height 40px
+    border-radius 14px
+    background linear-gradient(135deg,var(--sjm-accent),#8e72ff)
+    box-shadow 0 8px 30px rgba(85,112,255,.26)
+    color #fff
+    font-size 22px
+    font-weight 900
+  .sjm-brand-copy
+    min-width 0
+    display flex
+    flex-direction column
+    strong
+      color #fff
+      font-size 15px
+    span
+      margin-top 2px
+      color var(--sjm-muted)
+      font-size 11px
+
+.sjm-nav
+  display flex
+  flex-direction column
+  gap 5px
+
+.sjm-nav-item
+  appearance none
+  border 0
+  outline 0
+  display grid
+  grid-template-columns 28px minmax(0,1fr) auto
+  align-items center
+  width 100%
+  min-height 44px
+  padding 0 11px
+  border-radius 13px
+  background transparent
+  color rgba(255,255,255,.68)
+  text-align left
+  cursor pointer
+  transition .2s ease
+  .sjm-nav-icon
+    color rgba(255,255,255,.48)
+    font-size 17px
+  > span:nth-child(2)
+    font-size 13px
+    font-weight 700
+  em
+    min-width 22px
+    height 22px
+    padding 0 6px
+    display inline-flex
+    align-items center
+    justify-content center
+    border-radius 999px
+    background rgba(255,255,255,.07)
+    color rgba(255,255,255,.5)
+    font-size 10px
+    font-style normal
+  &:hover
+    background rgba(255,255,255,.06)
+    color #fff
+  &.active
+    background linear-gradient(135deg,rgba(83,108,255,.28),rgba(139,107,255,.14))
+    color #fff
+    box-shadow inset 0 0 0 1px rgba(255,255,255,.06)
+    .sjm-nav-icon, em
+      color #fff
+
+.sjm-sidebar-note
+  margin-top auto
+  padding 16px 10px 4px
+  border-top 1px solid rgba(255,255,255,.07)
+  span
+    color rgba(255,255,255,.32)
+    font-size 9px
+    font-weight 800
+    letter-spacing .16em
+  p
+    margin 6px 0 0
+    color rgba(255,255,255,.43)
+    font-size 11px
+    line-height 1.65
+
+.sjm-main
+  min-width 0
+
+.sjm-topbar
+  display grid
+  grid-template-columns minmax(220px,.8fr) minmax(320px,1.25fr) auto
+  align-items center
+  gap 15px
+  margin-bottom 18px
+  padding 14px 16px
+  border 1px solid var(--sjm-border)
+  border-radius 21px
+  background rgba(12,17,29,.62)
+  backdrop-filter blur(26px) saturate(135%)
+  -webkit-backdrop-filter blur(26px) saturate(135%)
+
+.sjm-topbar-copy
+  min-width 0
+  h1
+    margin 3px 0 0
+    color #fff
+    font-size clamp(18px,1.7vw,25px)
+    line-height 1.25
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+.sjm-eyebrow
+  display block
+  color rgba(255,255,255,.38)
+  font-size 9px
+  font-weight 900
+  letter-spacing .17em
+
+.sjm-search-form
+  display flex
+  align-items center
+  min-width 0
+  height 46px
+  padding 0 5px 0 14px
+  border 1px solid rgba(255,255,255,.09)
+  border-radius 15px
+  background rgba(255,255,255,.06)
+  transition .2s ease
+  &:focus-within
+    border-color rgba(107,126,255,.75)
+    background rgba(255,255,255,.08)
+    box-shadow 0 0 0 3px rgba(94,117,255,.12)
+  .sjm-search-icon
+    flex 0 0 auto
+    margin-right 9px
+    color rgba(255,255,255,.48)
+    font-size 18px
+  input
+    min-width 0
+    flex 1
+    border 0
+    outline 0
+    background transparent
+    color #fff
+    font-size 13px
+    &::placeholder
+      color rgba(255,255,255,.36)
+  button
+    flex 0 0 auto
+    height 34px
+    padding 0 14px
+    border 0
+    border-radius 11px
+    background var(--sjm-accent)
+    color #fff
+    font-size 12px
+    font-weight 800
+    cursor pointer
+    transition .2s ease
+    &:hover
+      transform translateY(-1px)
+      filter brightness(1.08)
+
+.sjm-source-chip
+  display inline-flex
+  align-items center
+  gap 7px
+  min-height 34px
+  padding 0 11px
+  border 1px solid rgba(255,255,255,.08)
+  border-radius 999px
+  background rgba(255,255,255,.045)
+  color rgba(255,255,255,.56)
+  font-size 11px
+  white-space nowrap
+  .sjm-source-dot
+    width 7px
+    height 7px
+    border-radius 50%
+    background #31d17c
+    box-shadow 0 0 0 4px rgba(49,209,124,.1)
+
+.sjm-view
+  display none
+  min-width 0
+  &.active
+    display block
+    animation sjmViewIn .24s ease both
+
+@keyframes sjmViewIn
+  from
+    opacity 0
+    transform translateY(5px)
+  to
+    opacity 1
+    transform translateY(0)
+
+.sjm-now-grid
+  display grid
+  grid-template-columns minmax(0,.9fr) minmax(0,1.1fr)
+  gap 18px
+
+.sjm-now-card, .sjm-lyrics-card, .sjm-section, .sjm-page-head
+  border 1px solid var(--sjm-border)
+  background var(--sjm-card)
+  box-shadow 0 18px 60px rgba(0,0,0,.15)
+  backdrop-filter blur(26px) saturate(130%)
+  -webkit-backdrop-filter blur(26px) saturate(130%)
+
+.sjm-now-card
+  display grid
+  grid-template-columns 180px minmax(0,1fr)
+  gap 24px
+  align-items center
+  min-height 248px
+  padding 28px
+  border-radius 26px
+
+.sjm-cover-wrap
+  position relative
+  width 180px
+  height 180px
+  img
+    width 100%
+    height 100%
+    object-fit cover
+    border-radius 28px
+    box-shadow 0 20px 44px rgba(0,0,0,.32)
+  .sjm-cover-ring
+    position absolute
+    inset -8px
+    border 1px solid rgba(255,255,255,.12)
+    border-radius 34px
+    pointer-events none
+
+.sjm-now-copy
+  min-width 0
+  h2
+    margin 7px 0 6px
+    color #fff
+    font-size clamp(26px,3vw,42px)
+    line-height 1.12
+    display -webkit-box
+    -webkit-line-clamp 2
+    -webkit-box-orient vertical
+    overflow hidden
+  #sjm-now-artist
+    margin 0
+    color rgba(255,255,255,.76)
+    font-size 18px
+    font-weight 700
+  #sjm-now-album
+    margin 5px 0 0
+    color var(--sjm-muted)
+    font-size 12px
+
+.sjm-now-actions
+  display flex
+  gap 8px
+  margin-top 18px
+
+.sjm-soft-button, .sjm-text-button
+  appearance none
+  border 0
+  cursor pointer
+  transition .2s ease
+
+.sjm-soft-button
+  min-height 36px
+  padding 0 13px
+  border 1px solid rgba(255,255,255,.08)
+  border-radius 12px
+  background rgba(255,255,255,.06)
+  color rgba(255,255,255,.76)
+  font-size 12px
+  font-weight 700
+  &:hover, &.active
+    color #fff
+    border-color rgba(255,255,255,.14)
+    background rgba(255,255,255,.10)
+
+.sjm-lyrics-card
+  min-height 248px
+  padding 22px
+  border-radius 26px
+
+.sjm-card-head, .sjm-section-head, .sjm-page-head
+  display flex
+  align-items center
+  justify-content space-between
+  gap 14px
+
+.sjm-card-head
+  margin-bottom 8px
+  h3
+    margin 4px 0 0
+    color #fff
+    font-size 20px
+  .sjm-card-tip
+    color var(--sjm-faint)
+    font-size 10px
+
+.sjm-lyrics
+  position relative
+  height 188px
+  overflow-y auto
+  padding 64px 4px
+  scrollbar-width none
+  mask-image linear-gradient(to bottom,transparent,#000 18%,#000 82%,transparent)
+  &::-webkit-scrollbar
+    display none
+
+.sjm-lyric-line
+  padding 7px 3px
+  color rgba(255,255,255,.28)
+  font-size 13px
+  font-weight 600
+  line-height 1.55
+  cursor pointer
+  transition .22s ease
+  &.near
+    color rgba(255,255,255,.55)
+  &.active
+    color #fff
+    font-size 17px
+    font-weight 900
+    transform translateX(3px)
+
+.sjm-empty
+  min-height 150px
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  text-align center
+  color var(--sjm-faint)
+  .sjm-empty-icon
+    margin-bottom 8px
+    font-size 26px
+    color rgba(255,255,255,.32)
+  .sjm-empty-title
+    color rgba(255,255,255,.72)
+    font-size 13px
+    font-weight 800
+  .sjm-empty-text
+    margin-top 4px
+    font-size 11px
+    line-height 1.55
+
+.sjm-section
+  margin-top 18px
+  padding 18px
+  border-radius 22px
+
+.sjm-section-head
+  margin-bottom 12px
+  h3
+    margin 3px 0 0
+    color #fff
+    font-size 18px
+
+.sjm-text-button
+  background transparent
+  color rgba(255,255,255,.55)
+  font-size 11px
+  &:hover
+    color #fff
+
+.sjm-page-head
+  margin-bottom 14px
+  padding 20px 22px
+  border-radius 22px
+  align-items flex-start
+  h2
+    margin 4px 0 3px
+    color #fff
+    font-size 24px
+  p
+    margin 0
+    color var(--sjm-muted)
+    font-size 12px
+
+.sjm-search-badge
+  flex 0 0 auto
+  padding 7px 10px
+  border 1px solid rgba(255,255,255,.08)
+  border-radius 999px
+  background rgba(255,255,255,.045)
+  color rgba(255,255,255,.55)
+  font-size 10px
+
+.sjm-search-status
+  margin 0 0 10px 3px
+  color var(--sjm-muted)
+  font-size 11px
+
+.sjm-track-list
+  display grid
+  grid-template-columns repeat(2,minmax(0,1fr))
+  gap 7px
+
+.sjm-track-list-large
+  padding 10px
+  border 1px solid var(--sjm-border)
+  border-radius 20px
+  background rgba(10,15,26,.50)
+
+.sjm-track-row
+  position relative
+  display grid
+  grid-template-columns 50px minmax(0,1fr) auto 34px
+  align-items center
+  gap 10px
+  min-width 0
+  min-height 64px
+  padding 7px 8px
+  border 1px solid transparent
+  border-radius 15px
+  background rgba(255,255,255,.025)
+  cursor pointer
+  transition .2s ease
+  &:hover
+    background rgba(255,255,255,.07)
+    border-color rgba(255,255,255,.06)
+    transform translateY(-1px)
+  &.active
+    background linear-gradient(135deg,rgba(78,104,255,.18),rgba(139,107,255,.09))
+    border-color rgba(124,139,255,.26)
+  .sjm-track-cover
+    width 50px
+    height 50px
+    object-fit cover
+    border-radius 12px
+    background rgba(255,255,255,.07)
+  .sjm-track-copy
+    min-width 0
+    strong, span
+      display block
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+    strong
+      color rgba(255,255,255,.9)
+      font-size 12px
+      line-height 1.4
+    span
+      margin-top 3px
+      color var(--sjm-muted)
+      font-size 10px
+  .sjm-track-source
+    padding 4px 7px
+    border-radius 999px
+    background rgba(255,255,255,.055)
+    color var(--sjm-faint)
+    font-size 9px
+    white-space nowrap
+  .sjm-track-favorite
+    appearance none
+    border 0
+    width 32px
+    height 32px
+    border-radius 50%
+    background transparent
+    color rgba(255,255,255,.35)
+    cursor pointer
+    &:hover, &.active
+      background rgba(255,255,255,.07)
+      color #ff7a9e
+
+.sjm-playerbar
+  position fixed
+  z-index 1001
+  left 50%
+  bottom 12px
+  transform translateX(-50%)
+  display grid
+  grid-template-columns minmax(210px,.7fr) minmax(420px,1.45fr) minmax(130px,.45fr)
+  align-items center
+  gap 16px
+  width min(1420px,calc(100vw - 36px))
+  min-height 82px
+  padding 10px 14px
+  border 1px solid rgba(255,255,255,.12)
+  border-radius 22px
+  background rgba(7,10,17,.82)
+  box-shadow 0 20px 70px rgba(0,0,0,.34)
+  backdrop-filter blur(28px) saturate(145%)
+  -webkit-backdrop-filter blur(28px) saturate(145%)
+
+.sjm-player-track
+  min-width 0
+  display flex
+  align-items center
+  gap 10px
+  img
+    flex 0 0 auto
+    width 50px
+    height 50px
+    object-fit cover
+    border-radius 13px
+  .sjm-player-meta
+    min-width 0
+    strong, span
+      display block
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+    strong
+      color #fff
+      font-size 12px
+    span
+      margin-top 3px
+      color var(--sjm-muted)
+      font-size 10px
+
+.sjm-player-center
+  min-width 0
+
+.sjm-player-controls
+  display flex
+  align-items center
+  justify-content center
+  gap 7px
+
+.sjm-control, .sjm-control-small
+  appearance none
+  border 0
+  display flex
+  align-items center
+  justify-content center
+  border-radius 50%
+  background transparent
+  color rgba(255,255,255,.72)
+  cursor pointer
+  transition .2s ease
+  &:hover
+    color #fff
+    background rgba(255,255,255,.08)
+
+.sjm-control
+  width 34px
+  height 34px
+  font-size 13px
+
+.sjm-control-main
+  width 42px
+  height 42px
+  margin 0 3px
+  background #fff
+  color #0b0f18
+  box-shadow 0 8px 24px rgba(0,0,0,.2)
+  &:hover
+    background #fff
+    color #0b0f18
+    transform scale(1.04)
+
+.sjm-control-small
+  width 31px
+  height 31px
+  color rgba(255,255,255,.38)
+  font-size 14px
+  &.active
+    color var(--sjm-accent)
+    background rgba(90,115,255,.12)
+
+.sjm-progress-row
+  display grid
+  grid-template-columns 38px minmax(0,1fr) 38px
+  align-items center
+  gap 7px
+  margin-top 2px
+  span
+    color rgba(255,255,255,.34)
+    font-size 9px
+    text-align center
+
+#sjm-progress, #sjm-volume
+  appearance none
+  -webkit-appearance none
+  height 4px
+  border-radius 999px
+  outline 0
+  cursor pointer
+
+#sjm-progress
+  width 100%
+  background rgba(255,255,255,.15)
+
+#sjm-volume
+  width 100%
+  background rgba(255,255,255,.13)
+
+#sjm-progress::-webkit-slider-thumb, #sjm-volume::-webkit-slider-thumb
+  -webkit-appearance none
+  width 11px
+  height 11px
+  border 0
+  border-radius 50%
+  background #fff
+  box-shadow 0 0 0 3px rgba(255,255,255,.08)
+
+.sjm-player-extra
+  display grid
+  grid-template-columns 22px minmax(70px,1fr)
+  align-items center
+  gap 8px
+  color rgba(255,255,255,.46)
+  font-size 12px
+
+.sjm-toast
+  position fixed
+  z-index 1010
+  left 50%
+  bottom 118px
+  transform translate(-50%,12px)
+  max-width min(360px,calc(100vw - 36px))
+  padding 9px 14px
+  border 1px solid rgba(255,255,255,.11)
+  border-radius 999px
+  background rgba(7,10,17,.90)
+  color rgba(255,255,255,.86)
+  box-shadow 0 14px 40px rgba(0,0,0,.22)
+  font-size 11px
+  opacity 0
+  pointer-events none
+  transition .22s ease
+  &.show
+    opacity 1
+    transform translate(-50%,0)
+
+.sjm-engine
+  position fixed !important
+  left -99999px !important
+  top -99999px !important
+  width 1px !important
+  height 1px !important
+  overflow hidden !important
+  opacity 0 !important
+  pointer-events none !important
+
+.sjm-legacy-control
+  display none !important
+
+.sjm-engine-error .sjm-source-dot
+  background #ff7a7a
+
+@media screen and (max-width:1180px)
+  .sjm-shell
+    grid-template-columns 200px minmax(0,1fr)
+  .sjm-topbar
+    grid-template-columns minmax(180px,.7fr) minmax(280px,1.3fr)
+  .sjm-source-chip
+    display none
+  .sjm-now-card
+    grid-template-columns 150px minmax(0,1fr)
+  .sjm-cover-wrap
+    width 150px
+    height 150px
+
+@media screen and (max-width:920px)
+  .sjm-shell
+    grid-template-columns 1fr
+  .sjm-sidebar
+    position static
+    min-height 0
+    padding 12px
+  .sjm-nav
+    flex-direction row
+    overflow-x auto
+    scrollbar-width none
+  .sjm-nav-item
+    flex 0 0 auto
+    width auto
+    grid-template-columns 24px auto auto
+  .sjm-sidebar-note
+    display none
+  .sjm-now-grid
+    grid-template-columns 1fr
+  .sjm-track-list
+    grid-template-columns 1fr
+
+@media screen and (max-width:768px)
   body[data-type="music"]
-    #rightside
+    #content-inner
+      margin-top 68px
+    #page-header #nav #menus
       display none
-    #content-inner,#page
-      z-index auto
+    .layout
+      padding 0 9px 16px
   #anMusic-page
-    meting-js 
-      .aplayer
-        .aplayer-list
-          position fixed
-          z-index 1002
-          width 100%
-          bottom -88%
-          left 0
-          background var(--sidebar-bg)
-          height auto
-          border-radius 15px 15px 0px 0px
-          padding 15px 0px
-          &.aplayer-list-hide
-            bottom 0% !important
-          ol
-            max-height 60vh !important
-            padding-right 0px
-            & > li
-              display flex
-              margin 0 10px
-              span
-                color var(--font-color)
-                &.aplayer-list-title
-                  width 30%
-                  max-width 55%
-                  width auto
-                  display -webkit-box
-                  -webkit-line-clamp 1
-                  overflow hidden
-                  -webkit-box-orient vertical
-                &.aplayer-list-author
-                  position absolute
-                  right 10px
-                  width auto
-                  max-width 35%
-                  display -webkit-box
-                  -webkit-line-clamp 1
-                  overflow hidden
-                  -webkit-box-orient vertical
-              &.aplayer-list-light
-                background #33a673
-                padding 5px 20px
-                border-radius 10px
-                span
-                  color #fff
-                  &.aplayer-list-author
-                    right 15px
-        .aplayer-body
-          width 100%
-          position fixed
-          margin auto
-          left 0
-          right 0
-          top 100px
-          .aplayer-info
-            .aplayer-lrc
-              margin-top 40px
-              height auto
-              max-height 200%
-              min-height 100%
-              mask-image linear-gradient(to bottom, #000, #000, #000, #000, #0000, #0000)
-              p
-                &.aplayer-lrc-current
-                  color #33a673
-            .aplayer-controller
-              width 100%
-              bottom 100px
-              .aplayer-volume-wrap
-                left -66px
-                .aplayer-volume-bar-wrap
-                  bottom 0px
-                  right 7px
-              .aplayer-bar-wrap
-                margin 0 30px
-            .aplayer-controller
-              .aplayer-time
-                bottom -40px
-                .aplayer-time-inner
-                  position absolute
-                  width 100%
-                  margin-right 0
-                  margin-top -33px
-                  .aplayer-dtime
-                    position absolute
-                    right 30px
-                  .aplayer-ptime
-                    position absolute
-                    left 35px
-                .aplayer-icon-back
-                  margin auto
-                  right 110px
-                .aplayer-icon-play
-                  margin auto
-                  right 0
-                  left 0
-                .aplayer-icon-forward
-                  margin auto
-                  left 110px
-                  right 0
-                .aplayer-icon-order
-                  position absolute
-                  left 22px
-                .aplayer-icon-loop
-                  position absolute
-                  right 25px
-                .aplayer-icon-menu
-                  display inline
-                  position absolute
-                  right 25px
-                  top -90px
+    padding-bottom 132px
+  .sjm-shell
+    gap 10px
+  .sjm-sidebar, .sjm-topbar, .sjm-now-card, .sjm-lyrics-card, .sjm-section, .sjm-page-head
+    border-radius 18px
+  .sjm-topbar
+    display flex
+    flex-direction column
+    align-items stretch
+    gap 11px
+  .sjm-topbar-copy h1
+    white-space normal
+    font-size 20px
+  .sjm-now-card
+    grid-template-columns 110px minmax(0,1fr)
+    gap 16px
+    min-height 0
+    padding 18px
+  .sjm-cover-wrap
+    width 110px
+    height 110px
+  .sjm-now-copy h2
+    font-size 24px
+    -webkit-line-clamp 1
+  .sjm-now-copy #sjm-now-album
+    display none
+  .sjm-lyrics-card
+    min-height 280px
+    padding 18px
+  .sjm-lyrics
+    height 218px
+    padding 78px 3px
+  .sjm-track-row
+    grid-template-columns 44px minmax(0,1fr) 34px
+    gap 9px
+    min-height 58px
+  .sjm-track-row .sjm-track-cover
+    width 44px
+    height 44px
+  .sjm-track-row .sjm-track-source
+    display none
+  .sjm-playerbar
+    bottom 8px
+    display grid
+    grid-template-columns minmax(0,1fr) auto
+    grid-template-rows auto auto
+    gap 4px 8px
+    width calc(100vw - 16px)
+    min-height 0
+    padding 8px 10px 9px
+    border-radius 18px
+  .sjm-player-track
+    grid-column 1
+    grid-row 1
+  .sjm-player-track img
+    width 40px
+    height 40px
+  .sjm-player-center
+    grid-column 1 / -1
+    grid-row 2
+    display grid
+    grid-template-columns auto minmax(0,1fr)
+    align-items center
+    gap 7px
+  .sjm-control-small, .sjm-player-extra
+    display none
+  .sjm-toast
+    bottom 126px
 
-      
+@media screen and (max-width:480px)
+  .sjm-now-card
+    grid-template-columns 88px minmax(0,1fr)
+  .sjm-cover-wrap
+    width 88px
+    height 88px
+  .sjm-now-copy h2
+    font-size 20px
+  .sjm-now-actions .sjm-soft-button:not(#sjm-current-favorite)
+    display none
