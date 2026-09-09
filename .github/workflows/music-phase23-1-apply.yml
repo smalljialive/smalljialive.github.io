@@ -1,0 +1,175 @@
+name: Music Phase 23.1 Apply
+
+on:
+  push:
+    branches:
+      - fix/music-emergency-phase-23-1-final
+    paths:
+      - .github/workflows/music-phase23-1-apply.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v6
+        with:
+          ref: fix/music-emergency-phase-23-1-final
+          fetch-depth: 0
+
+      - name: Apply exact null guard fix
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          path = Path('themes/anzhiyu/source/js/utils.js')
+          text = path.read_text(encoding='utf-8')
+          old = '''  switchRightClickMenuHotReview: function () {
+            const postComment = document.getElementById("post-comment");
+            const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");
+            if (postComment) {
+              menuCommentBarrageDom.style.display = "flex";
+            } else {
+              menuCommentBarrageDom.style.display = "none";
+            }
+          },'''
+          new = '''  switchRightClickMenuHotReview: function () {
+            const postComment = document.getElementById("post-comment");
+            const menuCommentBarrageDom = document.getElementById("menu-commentBarrage");
+            if (!menuCommentBarrageDom) return;
+
+            menuCommentBarrageDom.style.display = postComment ? "flex" : "none";
+          },'''
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'Expected exactly one target block, found {count}')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
+          grep -F 'if (!menuCommentBarrageDom) return;' themes/anzhiyu/source/js/utils.js
+          grep -F 'menuCommentBarrageDom.style.display = postComment ? "flex" : "none";' themes/anzhiyu/source/js/utils.js
+          git diff --check
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Build site
+        run: |
+          npm ci
+          npx hexo clean
+          npx hexo generate
+
+      - name: Inject scoped music test markers
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          music = Path('public/music/index.html')
+          html = music.read_text(encoding='utf-8')
+          marker = '''<script>
+          setTimeout(() => {
+            const scoped = document.querySelector('#anMusic-page-meting .aplayer');
+            const scopedTitle = document.querySelector('#anMusic-page-meting .aplayer-title');
+            const scopedListCount = document.querySelectorAll('#anMusic-page-meting .aplayer-list li').length;
+            const result = document.createElement('div');
+            result.id = 'music-scoped-test-result';
+            result.dataset.scoped = scoped ? 'true' : 'false';
+            result.dataset.title = scopedTitle ? scopedTitle.textContent.trim() : '';
+            result.dataset.listCount = String(scopedListCount);
+            document.body.appendChild(result);
+          }, 12000);
+          </script>'''
+          if '</body>' not in html:
+              raise SystemExit('music page missing closing body')
+          music.write_text(html.replace('</body>', marker + '</body>', 1), encoding='utf-8')
+
+          home = Path('public/index.html')
+          html = home.read_text(encoding='utf-8')
+          marker = '''<script>
+          setTimeout(() => {
+            const link = document.querySelector('a[href="/music/"]');
+            if (link) link.click();
+          }, 1000);
+          setTimeout(() => {
+            const scoped = document.querySelector('#anMusic-page-meting .aplayer');
+            const scopedTitle = document.querySelector('#anMusic-page-meting .aplayer-title');
+            const scopedListCount = document.querySelectorAll('#anMusic-page-meting .aplayer-list li').length;
+            const result = document.createElement('div');
+            result.id = 'music-pjax-test-result';
+            result.dataset.path = location.pathname;
+            result.dataset.scoped = scoped ? 'true' : 'false';
+            result.dataset.title = scopedTitle ? scopedTitle.textContent.trim() : '';
+            result.dataset.listCount = String(scopedListCount);
+            document.body.appendChild(result);
+          }, 14000);
+          </script>'''
+          if '</body>' not in html:
+              raise SystemExit('homepage missing closing body')
+          home.write_text(html.replace('</body>', marker + '</body>', 1), encoding='utf-8')
+          PY
+
+      - name: Browser-test direct and PJAX music rendering
+        shell: bash
+        run: |
+          set -euo pipefail
+          chrome="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -z "$chrome" ]; then
+            echo 'No Chrome/Chromium executable found'
+            exit 1
+          fi
+
+          cd public
+          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/http.log 2>&1 &
+          server_pid=$!
+          trap 'kill $server_pid || true' EXIT
+          sleep 2
+
+          "$chrome" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --virtual-time-budget=20000 --dump-dom 'http://127.0.0.1:8000/music/' \
+            >/tmp/direct.html 2>/tmp/direct.log || true
+
+          "$chrome" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --virtual-time-budget=22000 --dump-dom 'http://127.0.0.1:8000/' \
+            >/tmp/pjax.html 2>/tmp/pjax.log || true
+
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          def check(path, marker_id, require_music_path=False):
+              text = Path(path).read_text(encoding='utf-8', errors='replace')
+              m = re.search(rf'<div[^>]*id="{marker_id}"[^>]*>', text)
+              if not m:
+                  raise SystemExit(f'{marker_id}: marker missing')
+              tag = m.group(0)
+              print(marker_id, tag)
+              if 'data-scoped="true"' not in tag:
+                  raise SystemExit(f'{marker_id}: scoped Music APlayer missing')
+              n = re.search(r'data-list-count="(\d+)"', tag)
+              if not n or int(n.group(1)) < 1:
+                  raise SystemExit(f'{marker_id}: no scoped playlist items')
+              if require_music_path and 'data-path="/music/"' not in tag:
+                  raise SystemExit(f'{marker_id}: PJAX did not reach /music/')
+
+          check('/tmp/direct.html', 'music-scoped-test-result')
+          check('/tmp/pjax.html', 'music-pjax-test-result', True)
+          print('MUSIC_SCOPED_RENDER_RESULT=OK')
+          PY
+
+      - name: Commit source fix
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add themes/anzhiyu/source/js/utils.js
+          git diff --cached --check
+          git commit -m 'Fix music page initialization after missing comment menu'
+          git push origin HEAD:fix/music-emergency-phase-23-1-final
