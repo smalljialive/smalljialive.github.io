@@ -19,111 +19,7 @@ jobs:
           fetch-depth: 0
 
       - name: Apply exact Phase 27 patch
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          def replace_once(path, old, new, label):
-              p = Path(path)
-              text = p.read_text(encoding='utf-8')
-              count = text.count(old)
-              if count != 1:
-                  raise SystemExit(f'{label}: expected exactly 1 match, got {count}')
-              p.write_text(text.replace(old, new, 1), encoding='utf-8')
-              print(f'patched: {label}')
-
-          replace_once(
-              'themes/anzhiyu/layout/includes/layout.pug',
-              "    !=partial('includes/third-party/search/index', {}, {cache: true})\n    !=partial('includes/anzhiyu/rightmenu', {}, {cache:true})\n    include ./additional-js.pug",
-              "    !=partial('includes/third-party/search/index', {}, {cache: true})\n    if theme.rightClickMenu && theme.rightClickMenu.enable\n      !=partial('includes/anzhiyu/rightmenu', {}, {cache:true})\n    include ./additional-js.pug",
-              'guard rightmenu DOM by config',
-          )
-
-          replace_once(
-              'themes/anzhiyu/layout/includes/post/post-copyright.pug',
-              "        span(onclick=`rm.copyPageUrl('${theme.post_copyright.decode ? decodeURI(url) : url}')`)=pageTitle",
-              "        span(onclick=`anzhiyu.copyPageUrl('${theme.post_copyright.decode ? decodeURI(url) : url}')`)=pageTitle",
-              'decouple copyright title copy from rm',
-          )
-
-          replace_once(
-              'themes/anzhiyu/layout/includes/post/ptool.pug',
-              "    div.rewardLeftButton\n      if theme.reward.enable && theme.reward.QR_code\n          !=partial('includes/post/reward', {}, {cache: true})\n      if theme.ptool.mode\n        .reward-link.mode\n          a.reward-link-button(href=url_for(theme.ptool.mode))\n            i.anzhiyufont.anzhiyu-icon-plant-fill\n            | 运营模式与责任",
-              "    if (theme.reward.enable && theme.reward.QR_code) || theme.ptool.mode\n      div.rewardLeftButton\n        if theme.reward.enable && theme.reward.QR_code\n            !=partial('includes/post/reward', {}, {cache: true})\n        if theme.ptool.mode\n          .reward-link.mode\n            a.reward-link-button(href=url_for(theme.ptool.mode))\n              i.anzhiyufont.anzhiyu-icon-plant-fill\n              | 运营模式与责任",
-              'avoid empty rewardLeftButton',
-          )
-
-          replace_once(
-              'themes/anzhiyu/layout/includes/footer.pug',
-              "        #footer-type-tips\n",
-              "",
-              'remove empty footer-type-tips',
-          )
-
-          copy_helper = '''  copyPageUrl: async function (url = window.location.href) {
-    const text = url || window.location.href;
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const input = document.createElement("input");
-        input.value = text;
-        document.body.appendChild(input);
-        input.select();
-        input.setSelectionRange(0, input.value.length);
-        const copied = document.execCommand("copy");
-        input.remove();
-        if (!copied) throw new Error("document.execCommand copy failed");
-      }
-      anzhiyu.snackbarShow("复制链接地址成功", false, 2000);
-      return true;
-    } catch (error) {
-      console.error("复制链接地址失败:", error);
-      anzhiyu.snackbarShow("复制链接地址失败，请手动复制", false, 3000);
-      return false;
-    }
-  },
-
-'''
-          replace_once(
-              'themes/anzhiyu/source/js/utils.js',
-              '  snackbarShow: (text, showActionFunction = false, duration = 2000, actionText = false) => {',
-              copy_helper + '  snackbarShow: (text, showActionFunction = false, duration = 2000, actionText = false) => {',
-              'add shared copyPageUrl helper',
-          )
-
-          replace_once(
-              'themes/anzhiyu/source/js/utils.js',
-              '    console.info("已随机歌曲：", selectRandomSong, "本次随机歌曲：", randomSong.name);\n',
-              '',
-              'remove random-song debug log',
-          )
-
-          replace_once(
-              'themes/anzhiyu/source/js/main.js',
-              '          console.info(waterfallResult, document.documentElement.clientHeight);\n',
-              '',
-              'remove waterfall debug log',
-          )
-
-          replace_once(
-              'themes/anzhiyu/source/js/anzhiyu/right_click_menu.js',
-              '''rm.copyPageUrl = function (url) {
-  if (!url) {
-    url = window.location.href;
-  }
-  rm.copyUrl(url);
-  anzhiyu.snackbarShow("复制链接地址成功", false, 2000);
-  rm.hideRightMenu();
-};''',
-              '''rm.copyPageUrl = function (url) {
-  anzhiyu.copyPageUrl(url);
-  rm.hideRightMenu();
-};''',
-              'reuse shared copyPageUrl helper in right menu',
-          )
-          PY
+        run: python3 .github/scripts/phase-27-patch.py
 
       - name: Verify authorized diff only
         shell: bash
@@ -131,21 +27,16 @@ jobs:
           git diff --check
           mapfile -t files < <(git diff --name-only | sort)
           printf '%s\n' "${files[@]}"
-          expected=$(cat <<'EOF'
-          themes/anzhiyu/layout/includes/footer.pug
-          themes/anzhiyu/layout/includes/layout.pug
-          themes/anzhiyu/layout/includes/post/post-copyright.pug
-          themes/anzhiyu/layout/includes/post/ptool.pug
-          themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
-          themes/anzhiyu/source/js/main.js
-          themes/anzhiyu/source/js/utils.js
-          EOF
-          )
-          actual=$(printf '%s\n' "${files[@]}")
-          test "$actual" = "$expected"
+          test "${#files[@]}" -eq 7
+          test "${files[0]}" = "themes/anzhiyu/layout/includes/footer.pug"
+          test "${files[1]}" = "themes/anzhiyu/layout/includes/layout.pug"
+          test "${files[2]}" = "themes/anzhiyu/layout/includes/post/post-copyright.pug"
+          test "${files[3]}" = "themes/anzhiyu/layout/includes/post/ptool.pug"
+          test "${files[4]}" = "themes/anzhiyu/source/js/anzhiyu/right_click_menu.js"
+          test "${files[5]}" = "themes/anzhiyu/source/js/main.js"
+          test "${files[6]}" = "themes/anzhiyu/source/js/utils.js"
 
       - name: Check JavaScript syntax
-        shell: bash
         run: |
           node --check themes/anzhiyu/source/js/utils.js
           node --check themes/anzhiyu/source/js/main.js
@@ -164,58 +55,19 @@ jobs:
         run: npx hexo clean && npx hexo generate
 
       - name: Validate generated structure
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-
-          home = Path('public/index.html').read_text(encoding='utf-8')
-          assert 'id="rightMenu"' not in home, 'rightMenu DOM still generated on home'
-          assert 'id="rightmenu-mask"' not in home, 'rightmenu mask still generated on home'
-          assert 'right_click_menu.js' not in home, 'right-click JS unexpectedly loaded on home'
-          assert 'id="footer-type-tips"' not in home, 'empty footer-type-tips still generated'
-          assert 'id="footer-wrap"' in home, 'footer-wrap must remain for layout spacing'
-
-          posts = []
-          for p in Path('public').rglob('index.html'):
-              if p == Path('public/index.html'):
-                  continue
-              text = p.read_text(encoding='utf-8', errors='ignore')
-              if 'class="post-copyright"' in text and 'id="post-tools"' in text:
-                  posts.append((p, text))
-          assert posts, 'no generated post page found for validation'
-          post_path, post = posts[0]
-          print('validated post:', post_path)
-          assert 'onclick="anzhiyu.copyPageUrl(' in post, 'copyright title does not use shared copy helper'
-          assert 'onclick="rm.copyPageUrl(' not in post, 'copyright title still depends on rm'
-          assert '<div class="rewardLeftButton"></div>' not in post, 'empty rewardLeftButton still generated'
-          assert 'class="rewardLeftButton"' not in post, 'rewardLeftButton should not exist with current disabled config'
-          assert 'class="share-link mobile"' in post, 'mobile QR share button unexpectedly missing'
-          assert 'qrcodejs@1.0.0/qrcode.min.js' in post, 'QRCode script unexpectedly missing on post'
-          assert 'id="rightMenu"' not in post, 'rightMenu DOM still generated on post'
-          assert 'id="footer-type-tips"' not in post, 'footer-type-tips still generated on post'
-
-          utils = Path('themes/anzhiyu/source/js/utils.js').read_text(encoding='utf-8')
-          main = Path('themes/anzhiyu/source/js/main.js').read_text(encoding='utf-8')
-          right = Path('themes/anzhiyu/source/js/anzhiyu/right_click_menu.js').read_text(encoding='utf-8')
-          assert 'copyPageUrl: async function' in utils
-          assert '已随机歌曲：' not in utils
-          assert 'console.info(waterfallResult, document.documentElement.clientHeight);' not in main
-          assert 'anzhiyu.copyPageUrl(url);' in right
-          print('Phase 27 generated-output assertions passed')
-          PY
+        run: python3 .github/scripts/phase-27-validate.py
 
       - name: Commit validated changes
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add themes/anzhiyu/layout/includes/footer.pug \
-                  themes/anzhiyu/layout/includes/layout.pug \
-                  themes/anzhiyu/layout/includes/post/post-copyright.pug \
-                  themes/anzhiyu/layout/includes/post/ptool.pug \
-                  themes/anzhiyu/source/js/anzhiyu/right_click_menu.js \
-                  themes/anzhiyu/source/js/main.js \
-                  themes/anzhiyu/source/js/utils.js
+          git add themes/anzhiyu/layout/includes/footer.pug
+          git add themes/anzhiyu/layout/includes/layout.pug
+          git add themes/anzhiyu/layout/includes/post/post-copyright.pug
+          git add themes/anzhiyu/layout/includes/post/ptool.pug
+          git add themes/anzhiyu/source/js/anzhiyu/right_click_menu.js
+          git add themes/anzhiyu/source/js/main.js
+          git add themes/anzhiyu/source/js/utils.js
           git commit -m "fix: clean inactive UI structure and copy helper [skip ci]"
           git push origin HEAD:fix/phase-27-structure-cleanup
