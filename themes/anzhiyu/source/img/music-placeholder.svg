@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Music cover placeholder">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef2ff"/>
+      <stop offset="1" stop-color="#dfe8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="36" fill="url(#g)"/>
+  <circle cx="100" cy="100" r="55" fill="#ffffff" fill-opacity="0.82"/>
+  <path d="M116 54v67.5c0 15-11.5 25.5-27 25.5-12.8 0-22-7.1-22-17.2 0-10.3 9.5-18 23-18 5.2 0 9.8 1.2 13 3.1V69l42-9v14.5L116 81v40.5" fill="#536dfe"/>
+</svg>
