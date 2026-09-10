@@ -31,7 +31,7 @@
       .sjm-sidebar-note
         span PERSONAL MUSIC SPACE
         p 收藏、历史和播放状态仅保存在当前浏览器。
-        p 数据服务：GD-Studio 直连优先 · 服务端代理备用。
+        p 默认歌单：我的 97 首私人清单；播放时由 GD-Studio 匹配音源。
 
     main.sjm-main
       header.sjm-topbar
@@ -80,7 +80,7 @@
           .sjm-section-head
             div
               span.sjm-eyebrow MY PLAYLIST
-              h3 默认歌单
+              h3 我的 97 首歌单
             button.sjm-text-button(type="button" data-sjm-view-target="queue") 查看全部 →
           #sjm-home-list.sjm-track-list
 
@@ -115,7 +115,7 @@
           div
             span.sjm-eyebrow PLAY QUEUE
             h2 播放队列
-            p 默认歌单与在线搜索加入的歌曲都会显示在这里。
+            p 这里默认显示你提供的 97 首歌曲；在线搜索点播的歌曲也会加入当前队列。
         #sjm-queue-list.sjm-track-list.sjm-track-list-large
 
   footer.sjm-playerbar
@@ -177,4 +177,5 @@
 
   script(src=url_for('/js/smalljia-music-native.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-gdstudio.js') + '?v=20260910-5' data-pjax)
+  script(src=url_for('/js/smalljia-music-personal-playlist.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-2' data-pjax)
