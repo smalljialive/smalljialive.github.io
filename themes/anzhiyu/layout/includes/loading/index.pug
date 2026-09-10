@@ -1,7 +1,6 @@
-if theme.preloader.source === 1
-  include ./fullpage-loading.pug
-else if theme.preloader.source === 2
+//- SmallJia: keep a single coherent loading experience.
+//- Source 2 remains available for Pace-only mode; all other modes use the custom fullpage loader.
+if theme.preloader.source === 2
   include ./pace.pug
 else
   include ./fullpage-loading.pug
-  include ./pace.pug
