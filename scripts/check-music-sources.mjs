@@ -1,4 +1,4 @@
-const API = 'https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music';
+const API = 'https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy';
 const MEDIA_PROXY = 'https://music-proxy.gdstudio.org/';
 const QUERY = '周杰伦 雨下一整晚';
 const SOURCES = ['netease', 'kuwo', 'tencent'];
@@ -57,7 +57,7 @@ async function getJson(url, timeout = 15000) {
       redirect: 'follow',
       headers: {
         'Accept': 'application/json, text/plain, */*',
-        'User-Agent': 'SmallJia-Music-Diagnostics/2.0',
+        'User-Agent': 'SmallJia-Music-Diagnostics/3.0',
       },
     });
     const text = await response.text();
