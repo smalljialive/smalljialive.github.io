@@ -4,7 +4,7 @@ div
   script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260910-2')
   script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260910-2')
   script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
-  script(src=url_for('/js/smalljia-toolbox.js') + '?v=20260910-1')
+  script(src=url_for('/js/smalljia-toolbox-v2.js') + '?v=20260910-2')
 
   if theme.translate.enable
     script(src=url_for(theme.asset.translate))
@@ -105,11 +105,11 @@ div
     script(src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js')
   //- 右键菜单
   if (theme.rightClickMenu && theme.rightClickMenu.enable)
-    script(src=url_for(theme.asset.right_click_menu_js))
+    script(async src=url_for(theme.asset.right_click_menu_js))
 
   //- iconfont依赖
   link(rel="stylesheet" href=url_for(theme.asset.ali_iconfont_css))
-  if (theme.icons && theme.icons.ali_iconfont_js)
+  if theme.icons && theme.icons.ali_iconfont_js)
     script(async src=url_for(theme.icons.ali_iconfont_js))
 
   != fragment_cache('injectBottom', function(){return injectHtml(theme.inject.bottom)})
