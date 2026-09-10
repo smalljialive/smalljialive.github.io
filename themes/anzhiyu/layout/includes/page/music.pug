@@ -61,7 +61,8 @@
               .sjm-now-actions
                 button#sjm-current-favorite.sjm-soft-button(type="button" aria-label="收藏当前歌曲") ♡ 收藏
                 button#sjm-queue-shortcut.sjm-soft-button(type="button") 查看队列
-                button#sjm-fullscreen-open.sjm-soft-button(type="button") ⛶ 全屏听歌
+                button#sjm-web-fullscreen-open.sjm-soft-button(type="button" title="在当前浏览器窗口内全屏听歌") ⛶ 网页全屏
+                button#sjm-fullscreen-open.sjm-soft-button(type="button" title="进入电脑屏幕全屏听歌") ▣ 屏幕全屏
 
           article.sjm-lyrics-card
             .sjm-card-head
@@ -176,4 +177,4 @@
 
   script(src=url_for('/js/smalljia-music-native.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-gdstudio.js') + '?v=20260910-1' data-pjax)
-  script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-1' data-pjax)
+  script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-2' data-pjax)
