@@ -1,0 +1,86 @@
+// SmallJia Music native-player specific controls
+#anMusic-page
+  .sjm-track-cover
+    appearance none
+    border 0
+    outline 0
+    position relative
+    width 50px
+    height 50px
+    padding 0
+    overflow hidden
+    border-radius 12px
+    background #eef2f7
+    cursor pointer
+    img
+      display block
+      width 100%
+      height 100%
+      object-fit cover
+    span
+      position absolute
+      inset 0
+      display flex
+      align-items center
+      justify-content center
+      background rgba(24,35,55,.24)
+      color #fff
+      font-size 12px
+      opacity 0
+      transition .2s ease
+
+  .sjm-track-row:hover .sjm-track-cover span,
+  .sjm-track-row.active .sjm-track-cover span
+    opacity 1
+
+  .sjm-track-meta
+    appearance none
+    border 0
+    outline 0
+    min-width 0
+    padding 0
+    background transparent
+    text-align left
+    cursor pointer
+
+  .sjm-track-name,
+  .sjm-track-sub
+    display block
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
+
+  .sjm-track-name
+    color #2a3548
+    font-size 12px
+    font-weight 800
+    line-height 1.4
+
+  .sjm-track-sub
+    margin-top 3px
+    color #7b8799
+    font-size 10px
+
+  .sjm-row-action
+    appearance none
+    border 0
+    width 32px
+    height 32px
+    border-radius 50%
+    background transparent
+    color #a2aaba
+    cursor pointer
+    transition .2s ease
+    &:hover,
+    &.active
+      background rgba(255,106,145,.08)
+      color #f05f8c
+
+  &.sjm-engine-error .sjm-source-dot
+    background #f26d6d
+    box-shadow 0 0 0 4px rgba(242,109,109,.10)
+
+@media screen and (max-width:768px)
+  #anMusic-page .sjm-track-cover
+    width 44px
+    height 44px
