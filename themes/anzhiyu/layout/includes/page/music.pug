@@ -31,6 +31,7 @@
       .sjm-sidebar-note
         span PERSONAL MUSIC SPACE
         p 收藏、历史和播放状态仅保存在当前浏览器。
+        p 数据服务：GD-Studio 主线路 · Meting 备用线路。
 
     main.sjm-main
       header.sjm-topbar
@@ -43,7 +44,7 @@
           button(type="submit") 搜索
         .sjm-source-chip
           span.sjm-source-dot
-          span 正在连接音乐服务
+          span 正在连接 GD-Studio
 
       section.sjm-view.active(data-sjm-view="home")
         .sjm-now-grid
@@ -87,8 +88,8 @@
           div
             span.sjm-eyebrow ONLINE SEARCH
             h2 在线搜索
-            p 输入歌曲名或歌手名，搜索结果可直接加入当前播放队列。
-          .sjm-search-badge 网易云 · 双线路
+            p 默认通过 GD-Studio 聚合网易云与酷我结果；接口异常时自动切换 Meting。
+          .sjm-search-badge GD-Studio · 网易云 + 酷我
         #sjm-search-status.sjm-search-status 输入歌曲名或歌手开始搜索
         #sjm-search-results.sjm-track-list.sjm-track-list-large
 
@@ -174,4 +175,5 @@
   #sjm-toast.sjm-toast(role="status" aria-live="polite")
 
   script(src=url_for('/js/smalljia-music-native.js') + '?v=20260910-1' data-pjax)
+  script(src=url_for('/js/smalljia-music-gdstudio.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-1' data-pjax)
