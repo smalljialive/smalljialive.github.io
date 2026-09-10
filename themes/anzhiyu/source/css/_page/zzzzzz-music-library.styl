@@ -1,0 +1,476 @@
+// SmallJia custom playlists + NetEase discovery
+.sjm-library-view
+  padding-bottom 120px
+
+.sjm-library-head
+  align-items center
+
+.sjm-library-head .sjm-discover-primary
+  flex 0 0 auto
+
+.sjm-discover-card
+  display grid
+  grid-template-columns 76px 1fr auto
+  gap 22px
+  align-items center
+  margin-top 16px
+  padding 26px 28px
+  border 1px solid rgba(68,85,126,.08)
+  border-radius 24px
+  background rgba(255,255,255,.78)
+  box-shadow 0 18px 50px rgba(48,65,102,.08)
+  backdrop-filter blur(16px)
+
+.sjm-discover-mark
+  display flex
+  align-items center
+  justify-content center
+  width 76px
+  height 76px
+  border-radius 24px
+  background linear-gradient(135deg,#5267ff,#8a6bff)
+  box-shadow 0 16px 36px rgba(82,103,255,.24)
+  color #fff
+  font-size 30px
+
+.sjm-discover-copy h3
+  margin 5px 0 7px
+  color #202b3d
+  font-size 22px
+  line-height 1.3
+
+.sjm-discover-copy p
+  margin 0
+  color #7b879a
+  font-size 13px
+  line-height 1.7
+
+.sjm-discover-actions
+  display flex
+  align-items center
+  gap 10px
+
+.sjm-discover-primary
+  min-height 42px
+  padding 0 18px
+  border 0
+  border-radius 13px
+  background #425aef
+  box-shadow 0 10px 24px rgba(66,90,239,.20)
+  color #fff
+  font-size 13px
+  font-weight 750
+  cursor pointer
+  transition .2s ease
+
+.sjm-discover-primary:hover
+  transform translateY(-1px)
+  background #354ddc
+
+.sjm-discover-primary:disabled
+  cursor wait
+  opacity .58
+  transform none
+
+#sjm-discover-auto.active
+  border-color rgba(55,184,121,.18)
+  background rgba(55,184,121,.08)
+  color #279467
+
+.sjm-discovery-history-section
+  margin-top 18px
+
+.sjm-custom-playlist-grid
+  display grid
+  grid-template-columns repeat(4,1fr)
+  gap 12px
+  margin-top 16px
+
+.sjm-custom-playlist-card,
+.sjm-empty-playlist-card
+  min-width 0
+  border 1px solid rgba(68,85,126,.08)
+  border-radius 18px
+  background rgba(255,255,255,.76)
+  box-shadow 0 12px 34px rgba(48,65,102,.06)
+  color #28364d
+  cursor pointer
+  transition .2s ease
+
+.sjm-custom-playlist-card
+  display grid
+  grid-template-columns 46px 1fr 22px
+  gap 12px
+  align-items center
+  padding 15px
+  text-align left
+
+.sjm-custom-playlist-card:hover,
+.sjm-custom-playlist-card.active
+  transform translateY(-2px)
+  border-color rgba(66,90,239,.18)
+  background rgba(245,247,255,.96)
+  box-shadow 0 16px 38px rgba(66,90,239,.10)
+
+.sjm-custom-playlist-card.active
+  box-shadow inset 0 0 0 1px rgba(66,90,239,.08),0 16px 38px rgba(66,90,239,.09)
+
+.sjm-custom-playlist-icon
+  display flex
+  align-items center
+  justify-content center
+  width 46px
+  height 46px
+  border-radius 14px
+  background linear-gradient(135deg,rgba(66,90,239,.13),rgba(138,107,255,.13))
+  color #425aef
+  font-size 20px
+
+.sjm-custom-playlist-copy
+  display flex
+  min-width 0
+  flex-direction column
+  gap 4px
+
+.sjm-custom-playlist-copy strong
+  overflow hidden
+  color #28364d
+  font-size 13px
+  text-overflow ellipsis
+  white-space nowrap
+
+.sjm-custom-playlist-copy small
+  color #929cab
+  font-size 11px
+
+.sjm-custom-playlist-arrow
+  color #a1aaba
+  font-size 22px
+
+.sjm-empty-playlist-card
+  grid-column 1 / -1
+  display flex
+  min-height 92px
+  flex-direction column
+  align-items center
+  justify-content center
+  gap 5px
+  padding 18px
+  border-style dashed
+
+.sjm-empty-playlist-card strong
+  color #425aef
+  font-size 14px
+
+.sjm-empty-playlist-card span
+  color #929cab
+  font-size 12px
+
+.sjm-custom-playlist-detail
+  margin-top 18px
+  padding 22px 0 0
+
+.sjm-playlist-detail-head
+  align-items center
+
+.sjm-playlist-detail-head p
+  margin 6px 0 0
+  color #929cab
+  font-size 12px
+
+.sjm-playlist-detail-actions
+  display flex
+  align-items center
+  gap 8px
+
+.sjm-danger-button
+  color #c35d68 !important
+
+.sjm-danger-button:hover
+  border-color rgba(195,93,104,.16) !important
+  background rgba(195,93,104,.07) !important
+
+.sjm-row-playlist-action,
+.sjm-row-playlist-remove
+  display flex
+  flex 0 0 auto
+  align-items center
+  justify-content center
+  width 29px
+  height 29px
+  margin-left 5px
+  border 0
+  border-radius 50%
+  background rgba(66,90,239,.06)
+  color #60708a
+  font-size 17px
+  cursor pointer
+  transition .18s ease
+
+.sjm-row-playlist-action:hover
+  background rgba(66,90,239,.12)
+  color #425aef
+  transform scale(1.06)
+
+.sjm-row-playlist-remove
+  background rgba(195,93,104,.055)
+  color #b57980
+
+.sjm-row-playlist-remove:hover
+  background rgba(195,93,104,.11)
+  color #c35d68
+
+.sjm-add-playlist-button
+  border-color rgba(66,90,239,.11) !important
+  background rgba(66,90,239,.055) !important
+  color #425aef !important
+
+.sjm-playlist-modal[hidden]
+  display none !important
+
+.sjm-playlist-modal
+  position fixed
+  inset 0
+  z-index 100500
+  display flex
+  align-items center
+  justify-content center
+  padding 24px
+  opacity 0
+  pointer-events none
+  transition opacity .18s ease
+
+.sjm-playlist-modal.active
+  opacity 1
+  pointer-events auto
+
+.sjm-playlist-modal-backdrop
+  position absolute
+  inset 0
+  border 0
+  background rgba(32,43,61,.26)
+  backdrop-filter blur(7px)
+  cursor default
+
+.sjm-playlist-modal-panel
+  position relative
+  z-index 2
+  width calc(100vw - 40px)
+  max-width 480px
+  max-height calc(100vh - 100px)
+  overflow auto
+  padding 22px
+  border 1px solid rgba(68,85,126,.08)
+  border-radius 24px
+  background rgba(255,255,255,.97)
+  box-shadow 0 28px 80px rgba(34,47,76,.20)
+  transform translateY(8px) scale(.985)
+  transition .18s ease
+
+.sjm-playlist-modal.active .sjm-playlist-modal-panel
+  transform none
+
+.sjm-playlist-modal-head
+  display flex
+  align-items center
+  justify-content space-between
+  margin-bottom 15px
+
+.sjm-playlist-modal-head h3
+  margin 4px 0 0
+  color #202b3d
+  font-size 21px
+
+.sjm-playlist-modal-close
+  display flex
+  align-items center
+  justify-content center
+  width 36px
+  height 36px
+  border 0
+  border-radius 50%
+  background #f3f5fa
+  color #6d788b
+  font-size 22px
+  cursor pointer
+
+.sjm-playlist-modal-targets
+  display flex
+  flex-direction column
+  gap 8px
+
+.sjm-playlist-target
+  display grid
+  grid-template-columns 38px 1fr 28px
+  gap 10px
+  align-items center
+  padding 10px 12px
+  border 1px solid rgba(68,85,126,.07)
+  border-radius 14px
+  background #f8f9fd
+  color #29364d
+  text-align left
+  cursor pointer
+  transition .18s ease
+
+.sjm-playlist-target:hover
+  border-color rgba(66,90,239,.15)
+  background #f2f4ff
+
+.sjm-playlist-target > span:first-child
+  display flex
+  align-items center
+  justify-content center
+  width 38px
+  height 38px
+  border-radius 11px
+  background rgba(66,90,239,.08)
+  color #425aef
+
+.sjm-playlist-target > span:nth-child(2)
+  display flex
+  min-width 0
+  flex-direction column
+  gap 3px
+
+.sjm-playlist-target strong
+  overflow hidden
+  font-size 13px
+  text-overflow ellipsis
+  white-space nowrap
+
+.sjm-playlist-target small
+  color #929cab
+  font-size 10px
+
+.sjm-playlist-target em
+  color #425aef
+  font-size 18px
+  font-style normal
+
+.sjm-playlist-create-inline
+  display grid
+  grid-template-columns 1fr auto
+  gap 8px
+  margin-top 14px
+  padding-top 14px
+  border-top 1px solid rgba(68,85,126,.07)
+
+.sjm-playlist-create-inline input
+  min-width 0
+  height 40px
+  padding 0 12px
+  border 1px solid rgba(68,85,126,.10)
+  border-radius 12px
+  outline none
+  background #f8f9fd
+  color #29364d
+
+.sjm-playlist-create-inline input:focus
+  border-color rgba(66,90,239,.30)
+  box-shadow 0 0 0 3px rgba(66,90,239,.07)
+
+.sjm-playlist-create-inline button
+  min-height 40px
+  padding 0 13px
+  border 0
+  border-radius 12px
+  background #425aef
+  color #fff
+  font-weight 700
+  cursor pointer
+
+.sjm-library-empty
+  display flex
+  min-height 120px
+  flex-direction column
+  align-items center
+  justify-content center
+  gap 5px
+  color #8d98a9
+  text-align center
+
+.sjm-library-empty strong
+  color #536079
+  font-size 14px
+
+.sjm-library-empty span
+  font-size 12px
+
+@media screen and (max-width: 1100px)
+  .sjm-custom-playlist-grid
+    grid-template-columns repeat(2,1fr)
+
+  .sjm-discover-card
+    grid-template-columns 64px 1fr
+
+  .sjm-discover-mark
+    width 64px
+    height 64px
+    border-radius 20px
+
+  .sjm-discover-actions
+    grid-column 1 / -1
+    padding-left 86px
+
+@media screen and (max-width: 720px)
+  .sjm-library-head
+    align-items flex-start
+    gap 14px
+
+  .sjm-library-head .sjm-discover-primary
+    width 100%
+
+  .sjm-custom-playlist-grid
+    grid-template-columns 1fr
+
+  .sjm-discover-card
+    grid-template-columns 52px 1fr
+    gap 14px
+    padding 20px
+
+  .sjm-discover-mark
+    width 52px
+    height 52px
+    border-radius 16px
+    font-size 22px
+
+  .sjm-discover-copy h3
+    font-size 18px
+
+  .sjm-discover-actions
+    grid-column 1 / -1
+    padding-left 0
+
+  .sjm-discover-actions > *
+    flex 1 1 0
+
+  .sjm-playlist-detail-head
+    align-items flex-start
+    gap 12px
+
+  .sjm-playlist-detail-actions
+    width 100%
+    flex-wrap wrap
+
+  .sjm-playlist-detail-actions .sjm-soft-button
+    flex 1 1 auto
+
+  .sjm-playlist-modal
+    padding 12px
+
+  .sjm-playlist-modal-panel
+    width calc(100vw - 24px)
+    padding 18px
+    border-radius 20px
+
+  .sjm-playlist-create-inline
+    grid-template-columns 1fr
+
+@media screen and (max-width: 520px)
+  .sjm-row-playlist-action,
+  .sjm-row-playlist-remove
+    width 26px
+    height 26px
+    margin-left 3px
+    font-size 15px
