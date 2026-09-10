@@ -138,6 +138,7 @@
     .sjm-player-extra
       span 🔊
       input#sjm-volume(type="range" min="0" max="100" value="50" aria-label="音量")
+      span#sjm-volume-value.sjm-volume-value(aria-live="polite" aria-label="当前音量") 50%
 
   #sjm-fullscreen.sjm-fullscreen(aria-hidden="true")
     #sjm-fullscreen-bg.sjm-fullscreen-bg
@@ -186,4 +187,4 @@
   script(src=url_for('/js/smalljia-music-scrollfix.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-source-selector.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-source-retry.js') + '?v=20260910-1' data-pjax)
-  script(src=url_for('/js/smalljia-music-interactions.js') + '?v=20260910-1' data-pjax)
+  script(src=url_for('/js/smalljia-music-interactions.js') + '?v=20260910-2' data-pjax)
