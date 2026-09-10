@@ -199,8 +199,28 @@
     if (box) box.classList.remove('loaded');
   }
 }
-window.addEventListener('load', () => { preloader.endLoading() })
-setTimeout(function(){ preloader.endLoading(); }, 10000)
+
+// The toolbox page contains many external site icons. Waiting for window.load
+// keeps the full-screen loading layer above an already usable document until
+// every slow third-party resource settles. Release it as soon as the DOM is
+// interactive, then let icons and enhancements continue loading in the back.
+const isToolboxPage = () => {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+  return path === '/link';
+};
+
+const endToolboxLoadingEarly = () => {
+  const finish = () => requestAnimationFrame(() => requestAnimationFrame(() => preloader.endLoading()));
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', finish, { once: true });
+  } else {
+    finish();
+  }
+};
+
+if (isToolboxPage()) endToolboxLoadingEarly();
+window.addEventListener('load', () => { preloader.endLoading() }, { once: true })
+setTimeout(function(){ preloader.endLoading(); }, isToolboxPage() ? 1500 : 10000)
 
 if (true) {
   document.addEventListener('pjax:send', () => { preloader.initLoading() })
