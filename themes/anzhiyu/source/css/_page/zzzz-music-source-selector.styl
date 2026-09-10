@@ -1,0 +1,83 @@
+#anMusic-page
+  .sjm-search-form
+    overflow visible
+
+  .sjm-source-select-wrap
+    position relative
+    display flex
+    align-items center
+    flex 0 0 auto
+    height 34px
+    margin-left 7px
+    padding 0 24px 0 10px
+    border 1px solid rgba(74,92,134,.12)
+    border-radius 11px
+    background rgba(244,247,255,.9)
+    color #5f6d86
+    cursor pointer
+    transition .2s ease
+
+    &:hover
+      border-color rgba(66,90,239,.28)
+      background rgba(239,243,255,.98)
+
+  .sjm-source-select-icon
+    margin-right 5px
+    font-size 12px
+    opacity .72
+    pointer-events none
+
+  #sjm-source-select
+    appearance none
+    -webkit-appearance none
+    min-width 66px
+    border 0
+    outline 0
+    background transparent
+    color #4d5d78
+    font-size 12px
+    font-weight 600
+    cursor pointer
+
+  .sjm-source-select-arrow
+    position absolute
+    right 8px
+    top 50%
+    transform translateY(-53%)
+    font-size 12px
+    opacity .62
+    pointer-events none
+
+[data-theme='dark'] #anMusic-page
+  .sjm-source-select-wrap
+    border-color rgba(255,255,255,.1)
+    background rgba(255,255,255,.06)
+    color rgba(255,255,255,.74)
+  #sjm-source-select
+    color rgba(255,255,255,.82)
+    option
+      color #263247
+      background #fff
+
+@media screen and (max-width: 900px)
+  #anMusic-page
+    .sjm-source-select-wrap
+      padding-left 8px
+      padding-right 20px
+    .sjm-source-select-icon
+      display none
+    #sjm-source-select
+      min-width 58px
+      font-size 11px
+
+@media screen and (max-width: 620px)
+  #anMusic-page
+    .sjm-search-form
+      flex-wrap nowrap
+    .sjm-source-select-wrap
+      margin-left 4px
+      height 32px
+      padding 0 18px 0 7px
+    #sjm-source-select
+      width 58px
+      min-width 58px
