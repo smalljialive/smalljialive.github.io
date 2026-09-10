@@ -93,9 +93,10 @@ div
   //- 气泡效果
   if theme.bubble.enable
     script(async data-pjax src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.1/bubble/bubble.js")
-  if theme.visitorMail.enable
+  if theme.visitorMail && theme.visitorMail.enable
+    - const mail = theme.visitorMail.mail || ''
     script.
-      var visitorMail = "#{theme.visitorMail.mail}";
+      var visitorMail = "#{mail}";
 
   //- 即刻依赖waterfall
   script(async data-pjax src=url_for(theme.asset.waterfall))
@@ -108,7 +109,7 @@ div
 
   //- iconfont依赖
   link(rel="stylesheet" href=url_for(theme.asset.ali_iconfont_css))
-  if theme.icons && theme.icons.ali_iconfont_js)
+  if (theme.icons && theme.icons.ali_iconfont_js)
     script(async src=url_for(theme.icons.ali_iconfont_js))
 
   != fragment_cache('injectBottom', function(){return injectHtml(theme.inject.bottom)})
