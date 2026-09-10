@@ -42,6 +42,8 @@ jobs:
           grep -q ".sjm-discover-card" public/css/index.css
           grep -q ".sjm-custom-playlist-grid" public/css/index.css
           grep -q ".sjm-source-select-wrap" public/css/index.css
+          grep -q ".sjm-source-trigger" public/css/index.css
+          grep -q ".sjm-source-menu" public/css/index.css
           test -s public/js/smalljia-music-native.js
           test -s public/js/smalljia-music-gdstudio.js
           test -s public/js/smalljia-music-personal-playlist.js
@@ -94,6 +96,8 @@ jobs:
           grep -q "sjm-row-actions-cluster" public/js/smalljia-music-interactions.js
           grep -q 'event.code !== "Space"' public/js/smalljia-music-interactions.js
           grep -q "app.togglePlay" public/js/smalljia-music-interactions.js
+          grep -q "sjm-source-trigger" public/js/smalljia-music-interactions.js
+          grep -q "sjm-volume-value" public/js/smalljia-music-interactions.js
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-gdstudio.js?v=20260910-5" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
@@ -103,7 +107,8 @@ jobs:
           grep -q "smalljia-music-scrollfix.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-selector.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-retry.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-interactions.js?v=20260910-1" public/music/index.html
+          grep -q "smalljia-music-interactions.js?v=20260910-2" public/music/index.html
+          grep -q 'id="sjm-volume-value"' public/music/index.html
           grep -q "我的 97 首歌单" public/music/index.html
           grep -q "QQ音乐" public/music/index.html
           grep -q "多音源" public/music/index.html
