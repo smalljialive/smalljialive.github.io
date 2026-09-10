@@ -2,7 +2,7 @@ div
   script(src=url_for(theme.asset.utils))
   script(src=url_for(theme.asset.main))
   script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260910-2')
-  script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260910-1')
+  script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260910-2')
   script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
 
   if theme.translate.enable
@@ -62,7 +62,7 @@ div
           getScript("!{url_for(theme.asset.people_js)}", {defer:true})
         } else {
           getScript("!{url_for(theme.asset.gsap_js)}").then(()=>{
-            getScript("!{url_for(theme.asset.people_js)}", {defer:true})
+            getScript("!{url_for(theme.asset.people_js)}", {defer:true});
           });
         }
     if needLoadCountJs
