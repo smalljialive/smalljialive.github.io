@@ -1,6 +1,7 @@
 if theme.menu
   //- for mobile sidebar
   - let sidebarChildHide = theme.hide_sidebar_menu_child ? 'hide' : ''
+  - const navLabelMap = { '笔记文库': '文字集', '优质网站': '百宝箱', '音乐曲库': '音乐馆', '关于本人': '关于我', '碎碎念': '碎碎念' }
 
   .menus_items
     each value, label in theme.menu
@@ -17,10 +18,11 @@ if theme.menu
                   use(xlink:href=`#`+ icon_value)
               else if icon_value.substring(0,4)=="anzhiyu"
                 i.anzhiyufont(style="font-size: 0.9em;" class=icon_value + ' ' + anima_value)
-            span=' '+label
+            span=' '+(navLabelMap[label] || label)
       else
         .menus_item
           a.site-page(href='javascript:void(0);')
+            - const baseLabel = trim(label.split('||')[0])
             if label.split('||')[1]
               - var icon_label = trim(label.split('||')[1])
               - var anima_label = label.split('||')[2] ? trim(label.split('||')[2]) : 'faa-tada'
@@ -31,7 +33,7 @@ if theme.menu
                   use(xlink:href=`#`+ icon_label)
               else if (icon_label.startsWith("anzhiyu"))
                 i.anzhiyufont(style="font-size: 0.9em;" class=icon_label + ' ' + anima_label)
-            span=' '+ trim(label.split('||')[0])
+            span=' '+(navLabelMap[baseLabel] || baseLabel)
           ul.menus_item_child
             each val,lab in value
               li
