@@ -51,6 +51,7 @@ jobs:
           test -s public/js/smalljia-music-scrollfix.js
           test -s public/js/smalljia-music-source-selector.js
           test -s public/js/smalljia-music-source-retry.js
+          test -s public/js/smalljia-music-interactions.js
           test -s public/img/music-placeholder.svg
           node --check public/js/smalljia-music-native.js
           node --check public/js/smalljia-music-gdstudio.js
@@ -61,6 +62,7 @@ jobs:
           node --check public/js/smalljia-music-scrollfix.js
           node --check public/js/smalljia-music-source-selector.js
           node --check public/js/smalljia-music-source-retry.js
+          node --check public/js/smalljia-music-interactions.js
           grep -q "SmallJiaNativeMusic" public/js/smalljia-music-native.js
           grep -q "music-api.gdstudio.xyz/api.php" public/js/smalljia-music-gdstudio.js
           grep -q "hydrateSearchCovers" public/js/smalljia-music-gdstudio.js
@@ -89,6 +91,9 @@ jobs:
           grep -q "findPlayableMatch" public/js/smalljia-music-source-selector.js
           grep -q "自动检查多个音源" public/js/smalljia-music-source-retry.js
           grep -q "CACHE_TTL" public/js/smalljia-music-source-retry.js
+          grep -q "sjm-row-actions-cluster" public/js/smalljia-music-interactions.js
+          grep -q 'event.code !== "Space"' public/js/smalljia-music-interactions.js
+          grep -q "app.togglePlay" public/js/smalljia-music-interactions.js
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-gdstudio.js?v=20260910-5" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
@@ -98,6 +103,7 @@ jobs:
           grep -q "smalljia-music-scrollfix.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-selector.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-retry.js?v=20260910-1" public/music/index.html
+          grep -q "smalljia-music-interactions.js?v=20260910-1" public/music/index.html
           grep -q "我的 97 首歌单" public/music/index.html
           grep -q "QQ音乐" public/music/index.html
           grep -q "多音源" public/music/index.html
