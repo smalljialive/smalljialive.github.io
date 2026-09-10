@@ -39,14 +39,18 @@ jobs:
           test -s public/css/index.css
           grep -q ".sjm-playerbar" public/css/index.css
           grep -q ".sjm-fullscreen" public/css/index.css
+          grep -q ".sjm-discover-card" public/css/index.css
+          grep -q ".sjm-custom-playlist-grid" public/css/index.css
           test -s public/js/smalljia-music-native.js
           test -s public/js/smalljia-music-gdstudio.js
           test -s public/js/smalljia-music-personal-playlist.js
+          test -s public/js/smalljia-music-library.js
           test -s public/js/smalljia-music-fullscreen.js
           test -s public/img/music-placeholder.svg
           node --check public/js/smalljia-music-native.js
           node --check public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-personal-playlist.js
+          node --check public/js/smalljia-music-library.js
           node --check public/js/smalljia-music-fullscreen.js
           grep -q "SmallJiaNativeMusic" public/js/smalljia-music-native.js
           grep -q "music-api.gdstudio.xyz/api.php" public/js/smalljia-music-gdstudio.js
@@ -57,11 +61,18 @@ jobs:
           grep -q '"name":"盛夏的告别"' public/js/smalljia-music-personal-playlist.js
           grep -q '"name":"情歌 (Live)"' public/js/smalljia-music-personal-playlist.js
           grep -q "personal-97" public/js/smalljia-music-personal-playlist.js
+          grep -q "smalljia_music_custom_playlists_v1" public/js/smalljia-music-library.js
+          grep -q "3778678" public/js/smalljia-music-library.js
+          grep -q "3779629" public/js/smalljia-music-library.js
+          grep -q "19723756" public/js/smalljia-music-library.js
+          grep -q "2884035" public/js/smalljia-music-library.js
+          grep -q "连续随机" public/js/smalljia-music-library.js
           grep -q "sjm-web-fullscreen-open" public/js/smalljia-music-fullscreen.js
           grep -q "open(\"screen\")" public/js/smalljia-music-fullscreen.js
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-gdstudio.js?v=20260910-5" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
+          grep -q "smalljia-music-library.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-fullscreen.js?v=20260910-2" public/music/index.html
           grep -q "我的 97 首歌单" public/music/index.html
           grep -q "网页全屏" public/music/index.html
