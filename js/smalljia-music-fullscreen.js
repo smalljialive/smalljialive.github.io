@@ -24,18 +24,25 @@
       this.syncTimer = null;
       this.boundAudio = null;
       this.active = false;
+      this.mode = null;
       this.renderedTrackKey = "";
       this.renderedLyricLength = -1;
       this.onKeydown = event => {
-        if (event.key === "Escape" && this.active && !document.fullscreenElement) this.close(false);
+        if (event.key !== "Escape" || !this.active) return;
+        // 网站全屏没有浏览器 Fullscreen 状态，需要我们自己响应 Esc。
+        // 屏幕全屏的 Esc 由浏览器处理，fullscreenchange 再负责收起沉浸层。
+        if (this.mode === "web" || !document.fullscreenElement) this.close(false);
       };
       this.onFullscreenChange = () => {
-        if (this.active && !document.fullscreenElement && document.fullscreenEnabled) this.close(false);
+        if (this.active && this.mode === "screen" && !document.fullscreenElement) {
+          this.close(false);
+        }
       };
     }
 
     init() {
       this.cacheDom();
+      this.prepareEntryButtons();
       this.bindUi();
       this.waitForApp();
     }
@@ -43,7 +50,8 @@
     cacheDom() {
       const byId = id => this.root.querySelector(`#${id}`) || document.getElementById(id);
       this.dom = {
-        open: byId("sjm-fullscreen-open"),
+        screenOpen: byId("sjm-fullscreen-open"),
+        webOpen: byId("sjm-web-fullscreen-open"),
         overlay: byId("sjm-fullscreen"),
         close: byId("sjm-fullscreen-close"),
         bg: byId("sjm-fullscreen-bg"),
@@ -63,8 +71,31 @@
       };
     }
 
+    prepareEntryButtons() {
+      const screenButton = this.dom.screenOpen;
+      if (!screenButton) return;
+
+      screenButton.textContent = "▣ 屏幕全屏";
+      screenButton.title = "进入电脑屏幕全屏听歌";
+      screenButton.setAttribute("aria-label", "进入电脑屏幕全屏听歌");
+
+      let webButton = this.root.querySelector("#sjm-web-fullscreen-open");
+      if (!webButton) {
+        webButton = document.createElement("button");
+        webButton.id = "sjm-web-fullscreen-open";
+        webButton.type = "button";
+        webButton.className = screenButton.className || "sjm-soft-button";
+        webButton.textContent = "⛶ 网页全屏";
+        webButton.title = "在当前浏览器窗口内全屏听歌";
+        webButton.setAttribute("aria-label", "进入网页全屏听歌");
+        screenButton.parentNode?.insertBefore(webButton, screenButton);
+      }
+      this.dom.webOpen = webButton;
+    }
+
     bindUi() {
-      this.dom.open?.addEventListener("click", () => this.open());
+      this.dom.webOpen?.addEventListener("click", () => this.open("web"));
+      this.dom.screenOpen?.addEventListener("click", () => this.open("screen"));
       this.dom.close?.addEventListener("click", () => this.close(true));
       this.dom.play?.addEventListener("click", () => this.app?.togglePlay());
       this.dom.prev?.addEventListener("click", () => this.app?.previous());
@@ -102,33 +133,53 @@
       this.sync();
     }
 
-    async open() {
-      if (!this.dom.overlay) return;
+    showOverlay(mode) {
+      if (!this.dom.overlay) return false;
       this.active = true;
+      this.mode = mode;
+      this.dom.overlay.dataset.fullscreenMode = mode;
       this.dom.overlay.classList.add("active");
       this.dom.overlay.setAttribute("aria-hidden", "false");
       document.body.classList.add("sjm-fullscreen-open");
       this.sync(true);
       clearInterval(this.syncTimer);
       this.syncTimer = setInterval(() => this.sync(), 350);
+      return true;
+    }
 
+    async open(mode = "web") {
+      if (!this.showOverlay(mode)) return;
+
+      // 网页全屏只覆盖浏览器视口，保留地址栏、标签栏和系统任务栏。
+      if (mode === "web") return;
+
+      // 屏幕全屏才调用浏览器 Fullscreen API。
       if (this.dom.overlay.requestFullscreen && !document.fullscreenElement) {
         try {
           await this.dom.overlay.requestFullscreen();
         } catch (_) {
-          // 浏览器拒绝真正 Fullscreen 时仍保留铺满视口的沉浸层。
+          // 浏览器拒绝 Fullscreen 时自动退化为网页全屏，而不是直接关闭。
+          this.mode = "web";
+          this.dom.overlay.dataset.fullscreenMode = "web";
+          this.app?.showToast?.("浏览器未允许屏幕全屏，已切换为网页全屏");
         }
+      } else {
+        this.mode = "web";
+        this.dom.overlay.dataset.fullscreenMode = "web";
       }
     }
 
     async close(exitNative) {
+      const wasScreen = this.mode === "screen";
       this.active = false;
+      this.mode = null;
       clearInterval(this.syncTimer);
       this.syncTimer = null;
       this.dom.overlay?.classList.remove("active");
+      this.dom.overlay?.removeAttribute("data-fullscreen-mode");
       this.dom.overlay?.setAttribute("aria-hidden", "true");
       document.body.classList.remove("sjm-fullscreen-open");
-      if (exitNative && document.fullscreenElement && document.exitFullscreen) {
+      if (exitNative && wasScreen && document.fullscreenElement && document.exitFullscreen) {
         try { await document.exitFullscreen(); } catch (_) {}
       }
     }
@@ -226,6 +277,9 @@
       document.removeEventListener("keydown", this.onKeydown);
       document.removeEventListener("fullscreenchange", this.onFullscreenChange);
       document.body.classList.remove("sjm-fullscreen-open");
+      if (document.fullscreenElement === this.dom.overlay && document.exitFullscreen) {
+        try { document.exitFullscreen(); } catch (_) {}
+      }
     }
   }
 
@@ -237,11 +291,13 @@
     controller?.destroy();
     controller = new MusicFullscreenController(root);
     controller.init();
+    window.SmallJiaMusicFullscreen = controller;
   };
 
   const destroy = () => {
     controller?.destroy();
     controller = null;
+    window.SmallJiaMusicFullscreen = null;
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
