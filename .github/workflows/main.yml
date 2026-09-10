@@ -45,6 +45,7 @@ jobs:
           test -s public/js/smalljia-music-gdstudio.js
           test -s public/js/smalljia-music-personal-playlist.js
           test -s public/js/smalljia-music-library.js
+          test -s public/js/smalljia-music-daily-import.js
           test -s public/js/smalljia-music-fullscreen.js
           test -s public/js/smalljia-music-scrollfix.js
           test -s public/img/music-placeholder.svg
@@ -52,6 +53,7 @@ jobs:
           node --check public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-personal-playlist.js
           node --check public/js/smalljia-music-library.js
+          node --check public/js/smalljia-music-daily-import.js
           node --check public/js/smalljia-music-fullscreen.js
           node --check public/js/smalljia-music-scrollfix.js
           grep -q "SmallJiaNativeMusic" public/js/smalljia-music-native.js
@@ -70,6 +72,8 @@ jobs:
           grep -q "19723756" public/js/smalljia-music-library.js
           grep -q "2884035" public/js/smalljia-music-library.js
           grep -q "连续随机" public/js/smalljia-music-library.js
+          grep -q "smalljia_music_queue_to_daily_v1" public/js/smalljia-music-daily-import.js
+          grep -q 'TARGET_NAME = "日常"' public/js/smalljia-music-daily-import.js
           grep -q "sjm-web-fullscreen-open" public/js/smalljia-music-fullscreen.js
           grep -q "open(\"screen\")" public/js/smalljia-music-fullscreen.js
           grep -q "scrollInside" public/js/smalljia-music-scrollfix.js
@@ -78,6 +82,7 @@ jobs:
           grep -q "smalljia-music-gdstudio.js?v=20260910-5" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-library.js?v=20260910-1" public/music/index.html
+          grep -q "smalljia-music-daily-import.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-fullscreen.js?v=20260910-2" public/music/index.html
           grep -q "smalljia-music-scrollfix.js?v=20260910-1" public/music/index.html
           grep -q "我的 97 首歌单" public/music/index.html
