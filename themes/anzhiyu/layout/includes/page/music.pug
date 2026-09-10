@@ -31,7 +31,7 @@
       .sjm-sidebar-note
         span PERSONAL MUSIC SPACE
         p 未登录时歌单保存在当前浏览器；登录后自动同步到云端。
-        p 默认歌单：我的 97 首私人清单；播放时由 GD-Studio 匹配音源。
+        p 默认歌单：我的 97 首私人清单；播放时可自由切换网易云、酷我、QQ音乐等音源。
 
     main.sjm-main
       header.sjm-topbar
@@ -89,8 +89,8 @@
           div
             span.sjm-eyebrow ONLINE SEARCH
             h2 在线搜索
-            p 直接使用 GD-Studio 第三方 API 搜索网易云与酷我；直连异常时才启用服务端代理。
-          .sjm-search-badge GD-Studio · 网易云 + 酷我
+            p 搜索框左侧可选择自动、网易云、酷我、QQ音乐或酷狗；所选音源也会用于歌单歌曲的重新匹配播放。
+          .sjm-search-badge GD-Studio · 多音源
         #sjm-search-status.sjm-search-status 输入歌曲名或歌手开始搜索
         #sjm-search-results.sjm-track-list.sjm-track-list-large
 
@@ -184,3 +184,4 @@
   script(src=url_for('/js/smalljia-music-cloud.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-2' data-pjax)
   script(src=url_for('/js/smalljia-music-scrollfix.js') + '?v=20260910-1' data-pjax)
+  script(src=url_for('/js/smalljia-music-source-selector.js') + '?v=20260910-1' data-pjax)
