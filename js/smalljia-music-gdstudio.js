@@ -9,6 +9,7 @@
   const SEARCH_SOURCES = ["netease", "kuwo"];
   const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "kugou", "migu", "joox", "tidal", "qobuz", "ytmusic", "deezer", "spotify"]);
   const FETCH_TIMEOUT = 10000;
+  const COVER_CONCURRENCY = 6;
   const FALLBACK_COVER = "/img/favicon.ico";
 
   const artistText = value => {
@@ -101,7 +102,14 @@
     return "";
   };
 
-  const directImage = value => typeof value === "string" && /^https?:\/\//i.test(value) ? value : "";
+  const normalizeMediaUrl = value => {
+    if (typeof value !== "string") return "";
+    const url = value.trim();
+    if (!/^https?:\/\//i.test(url)) return "";
+    return url.replace(/^http:\/\//i, "https://");
+  };
+
+  const directImage = value => normalizeMediaUrl(value);
 
   const normalizeSearchSong = (song, index) => {
     const source = String(song.source || "netease").toLowerCase();
@@ -136,8 +144,16 @@
     return [];
   };
 
+  const dedupeTracks = tracks => {
+    const seen = new Set();
+    return tracks.filter(track => {
+      if (seen.has(track.key)) return false;
+      seen.add(track.key);
+      return true;
+    }).map((track, index) => ({ ...track, index }));
+  };
+
   const search = async keyword => {
-    // GD-Studio third-party API supports aggregate source search. Try it directly first.
     try {
       const aggregate = await requestAt(DIRECT_API, {
         types: "search",
@@ -147,28 +163,21 @@
         pages: 1,
       });
       const list = normalizeSearchPayload(aggregate);
-      if (list.length) return list.slice(0, 30).map(normalizeSearchSong);
+      if (list.length) return dedupeTracks(list.slice(0, 30).map(normalizeSearchSong));
     } catch (error) {
       console.warn("SmallJia Music: GD aggregate search failed", error);
     }
 
-    // If aggregate search fails, query each source independently. Each request is direct-first + proxy fallback.
     const settled = await Promise.allSettled(
       SEARCH_SOURCES.map(async source => {
         const { payload } = await requestGD({ types: "search", source, name: keyword, count: 15, pages: 1 });
-        return normalizeSearchPayload(payload).map(normalizeSearchSong);
+        return normalizeSearchPayload(payload).map((song, index) => normalizeSearchSong({ ...song, source: song.source || source }, index));
       })
     );
 
     const merged = settled.flatMap(item => item.status === "fulfilled" ? item.value : []);
     if (!merged.length && settled.every(item => item.status === "rejected")) throw new Error("GD-Studio search unavailable");
-
-    const seen = new Set();
-    return merged.filter(track => {
-      if (seen.has(track.key)) return false;
-      seen.add(track.key);
-      return true;
-    }).slice(0, 30).map((track, index) => ({ ...track, index }));
+    return dedupeTracks(merged).slice(0, 30);
   };
 
   const resolveAudio = async track => {
@@ -201,16 +210,34 @@
   };
 
   const resolveCover = async track => {
-    if (directImage(track?.cover)) return track.cover;
+    if (directImage(track?.cover)) return directImage(track.cover);
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.picId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
     try {
       const { payload } = await requestGD({ types: "pic", source, id, size: 500 });
-      return extractUrl(payload);
+      return normalizeMediaUrl(extractUrl(payload));
     } catch (_) {
       return "";
     }
+  };
+
+  const hydrateSearchCovers = async tracks => {
+    const pending = tracks.filter(track => !directImage(track.cover) && track?.__gdStudio?.picId);
+    if (!pending.length) return tracks;
+    let cursor = 0;
+    const worker = async () => {
+      while (cursor < pending.length) {
+        const track = pending[cursor++];
+        try {
+          const cover = await resolveCover(track);
+          if (cover) track.cover = cover;
+        } catch (_) {}
+      }
+    };
+    const workers = Array.from({ length: Math.min(COVER_CONCURRENCY, pending.length) }, () => worker());
+    await Promise.all(workers);
+    return tracks;
   };
 
   const resolveTrack = async track => {
@@ -243,6 +270,9 @@
       this.renderTrackList(this.dom.searchResults, []);
       try {
         const list = await search(query);
+        if (seq !== this.searchSeq || this.destroyed) return;
+        this.setSearchStatus(list.length ? `找到 ${list.length} 个结果，正在加载真实歌曲封面…` : `GD-Studio 没有找到“${query}”`);
+        if (list.length) await hydrateSearchCovers(list);
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
