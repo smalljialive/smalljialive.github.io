@@ -1,4 +1,19 @@
 if theme.menu
+  style.
+    @media screen and (max-width: 768px) {
+      #sidebar #sidebar-menus .menus_items > .menus_item > a.sj-main-nav {
+        font-size: 16px !important;
+        font-weight: 700;
+        line-height: 1.45;
+        padding: 7px 6px 5px !important;
+        margin: 6px 0 3px;
+        letter-spacing: .04em;
+      }
+      #sidebar #sidebar-menus .menus_items > .menus_item > a.sj-main-nav > span {
+        font-size: 16px !important;
+        font-weight: 700;
+      }
+    }
   //- for mobile sidebar
   - let sidebarChildHide = theme.hide_sidebar_menu_child ? 'hide' : ''
   - const navLabelMap = { '笔记文库': '文字集', '优质网站': '百宝箱', '音乐曲库': '音乐馆', '关于本人': '关于我', '碎碎念': '碎碎念' }
@@ -7,7 +22,7 @@ if theme.menu
     each value, label in theme.menu
       if typeof value !== 'object'
         .menus_item
-          a.site-page.faa-parent.animated-hover(href=url_for(trim(value.split('||')[0])))
+          a.site-page.sj-main-nav.faa-parent.animated-hover(href=url_for(trim(value.split('||')[0])))
             if value.split('||')[1]
               - var icon_value = trim(value.split('||')[1])
               - var anima_value = value.split('||')[2] ? trim(value.split('||')[2]) : 'faa-tada'
@@ -23,7 +38,7 @@ if theme.menu
         .menus_item
           - const baseLabel = trim(label.split('||')[0])
           - const parentHref = baseLabel === '笔记文库' ? url_for('/archives/') : 'javascript:void(0);'
-          a.site-page(href=parentHref)
+          a.site-page.sj-main-nav(href=parentHref)
             if label.split('||')[1]
               - var icon_label = trim(label.split('||')[1])
               - var anima_label = label.split('||')[2] ? trim(label.split('||')[2]) : 'faa-tada'
