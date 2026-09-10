@@ -70,12 +70,12 @@
               - const itemAvatar = cleanAvatar ? url_for(cleanAvatar + (group.hundredSuffix || '')) : ''
               - const itemTag = String(item.tag || group.class_name)
               - const searchText = [itemName, itemDesc, group.class_name, itemLink, itemTag].join(' ').toLowerCase()
-              article.sj-toolbox-card(data-url=itemLink data-href=itemLink data-name=itemName data-desc=itemDesc data-avatar=itemAvatar data-tag=itemTag data-category=group.class_name data-search=searchText data-order=itemIndex)
+              article.sj-toolbox-card(class=itemIndex >= 10 ? 'sj-toolbox-hidden' : '' data-url=itemLink data-href=itemLink data-name=itemName data-desc=itemDesc data-avatar=itemAvatar data-tag=itemTag data-category=group.class_name data-search=searchText data-order=itemIndex)
                 a.sj-toolbox-card-link.no-text-decoration(href=itemLink title=itemName target='_blank' rel='noopener noreferrer nofollow')
-                  span.sj-toolbox-card-icon(class=itemAvatar ? 'has-image' : '')
+                  span.sj-toolbox-card-icon
                     span.sj-toolbox-card-fallback= itemName.slice(0, 1).toUpperCase()
                     if itemAvatar
-                      img(src=itemAvatar alt='' loading='lazy' decoding='async' fetchpriority='low' referrerpolicy='no-referrer' width='54' height='54' onerror='this.remove()')
+                      img(data-sjtb-src=itemAvatar alt='' decoding='async' fetchpriority='low' referrerpolicy='no-referrer' width='54' height='54')
                   span.sj-toolbox-card-body
                     span.sj-toolbox-card-title-row
                       strong.sj-toolbox-card-title= itemName
