@@ -48,11 +48,12 @@ jobs:
           grep -q "SmallJiaNativeMusic" public/js/smalljia-music-native.js
           grep -q "music-api.gdstudio.xyz/api.php" public/js/smalljia-music-gdstudio.js
           grep -q "hydrateSearchCovers" public/js/smalljia-music-gdstudio.js
+          grep -q 'switchView("home")' public/js/smalljia-music-gdstudio.js
           grep -q "smalljia-music-proxy-small-jias-projects.vercel.app/api/music" public/js/smalljia-music-gdstudio.js
           grep -q "sjm-web-fullscreen-open" public/js/smalljia-music-fullscreen.js
           grep -q "open(\"screen\")" public/js/smalljia-music-fullscreen.js
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-gdstudio.js?v=20260910-4" public/music/index.html
+          grep -q "smalljia-music-gdstudio.js?v=20260910-5" public/music/index.html
           grep -q "smalljia-music-fullscreen.js?v=20260910-2" public/music/index.html
           grep -q "网页全屏" public/music/index.html
           grep -q "屏幕全屏" public/music/index.html
