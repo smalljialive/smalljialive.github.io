@@ -4,13 +4,11 @@
   if (window.__smallJiaGDStudioProviderLoaded) return;
   window.__smallJiaGDStudioProviderLoaded = true;
 
-  const API_BASE = "https://music-api.gdstudio.xyz/api.php";
-  const SEARCH_SOURCES = "netease,kuwo";
-  const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "kugou", "migu", "joox", "tidal", "qobuz", "ytmusic", "deezer", "spotify"]);
-  const FETCH_TIMEOUT = 10000;
+  const API_BASE = "https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music";
+  const SEARCH_SOURCES = ["netease", "kuwo"];
+  const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "joox", "tidal", "qobuz", "apple", "bilibili", "ytmusic", "spotify"]);
+  const FETCH_TIMEOUT = 12000;
   const FALLBACK_COVER = "/img/favicon.ico";
-
-  const unique = values => [...new Set(values.filter(Boolean))];
 
   const artistText = value => {
     if (Array.isArray(value)) return value.map(item => (typeof item === "string" ? item : item?.name || "")).filter(Boolean).join(" / ") || "未知歌手";
@@ -32,13 +30,9 @@
         cache: "no-store",
         headers: { Accept: "application/json, text/plain, */*" },
       });
-      if (!response.ok) throw new Error(`GD-Studio HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`GD proxy HTTP ${response.status}`);
       const text = await response.text();
-      try {
-        return JSON.parse(text);
-      } catch (_) {
-        return text;
-      }
+      try { return JSON.parse(text); } catch (_) { return text; }
     } finally {
       clearTimeout(timer);
     }
@@ -80,7 +74,7 @@
     }
     if (typeof payload === "object") {
       const original = payload.lyric || payload.lrc || payload.data?.lyric || payload.data?.lrc || "";
-      if (typeof original === "string" && original.trim()) return original;
+      return typeof original === "string" ? original : "";
     }
     return "";
   };
@@ -113,30 +107,36 @@
     };
   };
 
+  const searchSource = async (keyword, source) => {
+    const payload = await request({ types: "search", source, name: keyword, count: 12, pages: 1 });
+    if (!Array.isArray(payload)) return [];
+    return payload.map(normalizeSearchSong);
+  };
+
   const search = async keyword => {
-    const payload = await request({
-      types: "search",
-      source: SEARCH_SOURCES,
-      name: keyword,
-      count: 20,
-      pages: 1,
-    });
-    if (!Array.isArray(payload)) throw new Error("GD-Studio search returned invalid data");
-    return payload.slice(0, 20).map(normalizeSearchSong);
+    const settled = await Promise.allSettled(SEARCH_SOURCES.map(source => searchSource(keyword, source)));
+    const merged = settled.flatMap(item => item.status === "fulfilled" ? item.value : []);
+    if (!merged.length && settled.every(item => item.status === "rejected")) {
+      throw new Error("GD-Studio proxy search unavailable");
+    }
+    const seen = new Set();
+    return merged.filter(track => {
+      if (seen.has(track.key)) return false;
+      seen.add(track.key);
+      return true;
+    }).slice(0, 20).map((track, index) => ({ ...track, index }));
   };
 
   const resolveAudio = async track => {
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.urlId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
-
-    for (const br of [320000, 320]) {
+    for (const br of [999, 740, 320, 192, 128]) {
       try {
-        const payload = await request({ types: "url", source, id, br });
-        const url = extractUrl(payload);
+        const url = extractUrl(await request({ types: "url", source, id, br }));
         if (url) return url;
       } catch (error) {
-        console.warn(`SmallJia Music: GD-Studio audio ${source}/${br} failed`, error);
+        console.warn(`SmallJia Music: GD proxy audio ${source}/${br} failed`, error);
       }
     }
     return "";
@@ -146,12 +146,8 @@
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.lyricId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
-    try {
-      return extractLyric(await request({ types: "lyric", source, id }));
-    } catch (error) {
-      console.warn("SmallJia Music: GD-Studio lyric failed", error);
-      return "";
-    }
+    try { return extractLyric(await request({ types: "lyric", source, id })); }
+    catch (_) { return ""; }
   };
 
   const resolveCover = async track => {
@@ -159,33 +155,19 @@
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.picId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
-    try {
-      return extractUrl(await request({ types: "pic", source, id }));
-    } catch (error) {
-      console.warn("SmallJia Music: GD-Studio cover failed", error);
-      return "";
-    }
+    try { return extractUrl(await request({ types: "pic", source, id, size: 500 })); }
+    catch (_) { return ""; }
   };
 
   const resolveTrack = async track => {
-    const [url, lrc, cover] = await Promise.all([
-      resolveAudio(track),
-      resolveLyric(track),
-      resolveCover(track),
-    ]);
-    return {
-      ...track,
-      url: url || track.url || "",
-      lrc: lrc || track.lrc || "",
-      cover: cover || track.cover || FALLBACK_COVER,
-    };
+    const [url, lrc, cover] = await Promise.all([resolveAudio(track), resolveLyric(track), resolveCover(track)]);
+    return { ...track, url, lrc: lrc || track.lrc || "", cover: cover || track.cover || FALLBACK_COVER };
   };
 
   const patch = app => {
     if (!app || app.__gdStudioPatched || typeof app.renderTrackList !== "function") return false;
     app.__gdStudioPatched = true;
 
-    const originalSearch = app.search.bind(app);
     const originalSelectIndex = app.selectIndex.bind(app);
     const originalPlayTrack = app.playTrack.bind(app);
     const originalSetSourceState = app.setSourceState.bind(app);
@@ -195,7 +177,7 @@
       originalSetSourceState(state, routeLabel);
       if (state !== "ready") return;
       const text = this.dom?.sourceChip?.querySelector("span:last-child");
-      if (text) text.textContent = "GD-Studio 主线路 · Meting 备用";
+      if (text) text.textContent = "GD-Studio 代理线路";
     };
 
     app.search = async function (rawQuery) {
@@ -205,19 +187,20 @@
       this.switchView("search");
       this.setSearchStatus(`正在通过 GD-Studio 搜索“${query}”…`);
       this.renderTrackList(this.dom.searchResults, []);
-
       try {
         const list = await search(query);
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
-        this.setSourceState("ready", "GD-Studio");
-        this.setSearchStatus(list.length ? `GD-Studio 找到 ${list.length} 个结果，点击即可播放` : `没有找到“${query}”`);
+        this.setSourceState("ready", "GD-Studio Proxy");
+        this.setSearchStatus(list.length ? `找到 ${list.length} 个 GD-Studio 结果，点击即可播放` : `GD-Studio 没有找到“${query}”`);
       } catch (error) {
-        console.warn("SmallJia Music: GD-Studio search failed, falling back to Meting", error);
+        console.warn("SmallJia Music: GD-Studio proxy search failed", error);
         if (seq !== this.searchSeq || this.destroyed) return;
-        this.showToast("GD-Studio 搜索暂时不可用，已切换备用线路");
-        return originalSearch(query);
+        this.searchResults = [];
+        this.renderTrackList(this.dom.searchResults, []);
+        this.setSearchStatus("GD-Studio 当前不可用，请稍后再试");
+        this.showToast("GD-Studio 当前不可用，已停止自动切换到试听线路");
       }
     };
 
@@ -225,19 +208,15 @@
       if (!track) return;
       const source = String(track.server || track.source || "netease").toLowerCase();
       if (!track.id || !GD_SOURCES.has(source)) return originalPlayTrack(track);
-
-      this.showToast(`GD-Studio 正在准备：${track.name}`);
-      try {
-        const resolved = await resolveTrack(track);
-        if (!resolved.url) throw new Error("GD-Studio returned no playable URL");
-        const index = this.queue.findIndex(item => item.key === resolved.key);
-        if (index >= 0) Object.assign(this.queue[index], resolved);
-        return originalPlayTrack(resolved);
-      } catch (error) {
-        console.warn("SmallJia Music: GD-Studio track resolve failed, using Meting fallback", error);
-        this.showToast("GD-Studio 音源不可用，正在尝试备用线路");
-        return originalPlayTrack(track);
+      this.showToast(`正在准备：${track.name}`);
+      const resolved = await resolveTrack(track);
+      if (!resolved.url) {
+        this.showToast("GD-Studio 没有返回可播放的完整音源");
+        return;
       }
+      const index = this.queue.findIndex(item => item.key === resolved.key);
+      if (index >= 0) Object.assign(this.queue[index], resolved);
+      return originalPlayTrack(resolved);
     };
 
     app.selectIndex = async function (index, autoplay = true, restorePosition = false) {
@@ -246,66 +225,40 @@
       const normalizedIndex = ((index % this.queue.length) + this.queue.length) % this.queue.length;
       const baseTrack = this.queue[normalizedIndex];
       const source = String(baseTrack?.server || baseTrack?.source || "netease").toLowerCase();
-
       if (!baseTrack?.id || !GD_SOURCES.has(source)) return originalSelectIndex(index, autoplay, restorePosition);
 
       this.currentIndex = normalizedIndex;
       this.currentTrack = baseTrack;
       this.restorePositionPending = restorePosition;
       this.updateCurrentUi();
-
-      let resolved = baseTrack;
-      try {
-        const gdResolved = await resolveTrack(baseTrack);
-        if (token !== selectToken || this.destroyed) return;
-        if (gdResolved.url) {
-          resolved = gdResolved;
-          Object.assign(this.queue[normalizedIndex], gdResolved);
-          this.currentTrack = this.queue[normalizedIndex];
-          this.updateCurrentUi();
-          this.loadLyrics(this.currentTrack);
-        }
-      } catch (error) {
-        console.warn("SmallJia Music: GD-Studio select resolve failed", error);
-      }
-
+      const resolved = await resolveTrack(baseTrack);
       if (token !== selectToken || this.destroyed) return;
-      if (!resolved.url) return originalSelectIndex(index, autoplay, restorePosition);
-
-      const metingFallbacks = typeof this.audioUrls === "function" ? this.audioUrls(baseTrack) : [];
-      this.audioCandidates = unique([resolved.url, ...metingFallbacks]);
-      this.audioCandidateIndex = 0;
-      this.audio.src = this.audioCandidates[0];
-      this.audio.load();
-      if (autoplay) {
-        this.audio.play().catch(error => {
-          console.warn("SmallJia Music: GD-Studio playback rejected", error);
-          this.showToast("播放失败，正在尝试备用线路");
-          this.handleAudioError();
-        });
+      if (!resolved.url) {
+        this.showToast("GD-Studio 没有返回可播放音源");
+        return;
       }
+      Object.assign(this.queue[normalizedIndex], resolved);
+      this.currentTrack = this.queue[normalizedIndex];
+      this.updateCurrentUi();
+      this.loadLyrics(this.currentTrack);
+      this.audioCandidates = [resolved.url];
+      this.audioCandidateIndex = 0;
+      this.audio.src = resolved.url;
+      this.audio.load();
+      if (autoplay) this.audio.play().catch(() => this.showToast("当前 GD-Studio 音源播放失败"));
       this.saveState(true);
     };
 
     const chipText = app.dom?.sourceChip?.querySelector("span:last-child");
-    if (chipText) chipText.textContent = "GD-Studio 主线路 · Meting 备用";
-    app.root?.setAttribute("data-music-provider", "gdstudio");
+    if (chipText) chipText.textContent = "GD-Studio 代理线路";
+    app.root?.setAttribute("data-music-provider", "gdstudio-proxy");
     return true;
   };
 
   const tryPatch = () => patch(window.SmallJiaMusic);
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => setTimeout(tryPatch, 0), { once: true });
-  } else {
-    setTimeout(tryPatch, 0);
-  }
-
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => setTimeout(tryPatch, 0), { once: true });
+  else setTimeout(tryPatch, 0);
   document.addEventListener("pjax:complete", () => setTimeout(tryPatch, 0));
-
   let attempts = 0;
-  const timer = setInterval(() => {
-    attempts += 1;
-    if (tryPatch() || attempts > 80) clearInterval(timer);
-  }, 100);
+  const timer = setInterval(() => { attempts += 1; if (tryPatch() || attempts > 80) clearInterval(timer); }, 100);
 })();
