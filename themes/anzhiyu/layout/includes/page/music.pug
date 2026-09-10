@@ -1,4 +1,4 @@
-#anMusic-page(data-music-id=theme.nav_music.id data-music-server=theme.nav_music.server data-music-volume=theme.nav_music.volume data-current-view="home")
+#anMusic-page(data-music-id=theme.nav_music.id data-music-server=theme.nav_music.server data-music-volume=theme.nav_music.volume data-current-view="home" data-player-engine="native")
   #sjm-music-bg
   .sjm-shell
     aside.sjm-sidebar
@@ -70,7 +70,7 @@
               .sjm-empty.sjm-lyrics-empty
                 .sjm-empty-icon ♫
                 .sjm-empty-title 正在等待歌词
-                .sjm-empty-text 播放器准备好后会自动同步。
+                .sjm-empty-text 播放歌曲后会自动同步。
 
         .sjm-section
           .sjm-section-head
@@ -86,7 +86,7 @@
             span.sjm-eyebrow ONLINE SEARCH
             h2 在线搜索
             p 输入歌曲名或歌手名，搜索结果可直接加入当前播放队列。
-          .sjm-search-badge 网易云 · Meting
+          .sjm-search-badge 网易云 · 双线路
         #sjm-search-status.sjm-search-status 输入歌曲名或歌手开始搜索
         #sjm-search-results.sjm-track-list.sjm-track-list-large
 
@@ -137,96 +137,4 @@
 
   #sjm-toast.sjm-toast(role="status" aria-live="polite")
 
-  //- 保留主题原有 Meting/APlayer 作为隐藏播放引擎与默认歌单数据源。
-  //- 旧控制按钮继续存在但不展示，避免主题原有音乐监听逻辑空引用。
-  #anMusicBtnGetSong.sjm-legacy-control(title="随机歌曲")
-    i(class="anzhiyufont anzhiyu-icon-shuffle")
-  #anMusicRefreshBtn.sjm-legacy-control(title="刷新歌单")
-    i(class="anzhiyufont anzhiyu-icon-arrows-rotate")
-  #anMusicSwitching.sjm-legacy-control(title="切换歌单")
-    i(class="anzhiyufont anzhiyu-icon-repeat")
-  #anMusic-page-meting.sjm-engine
-
-  style.
-    #anMusic-page .sjm-track-cover {
-      appearance: none;
-      border: 0;
-      outline: 0;
-      position: relative;
-      width: 50px;
-      height: 50px;
-      padding: 0;
-      overflow: hidden;
-      border-radius: 12px;
-      background: #eef2f7;
-      cursor: pointer;
-    }
-    #anMusic-page .sjm-track-cover img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    #anMusic-page .sjm-track-cover span {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(24,35,55,.24);
-      color: #fff;
-      font-size: 12px;
-      opacity: 0;
-      transition: .2s ease;
-    }
-    #anMusic-page .sjm-track-row:hover .sjm-track-cover span,
-    #anMusic-page .sjm-track-row.active .sjm-track-cover span { opacity: 1; }
-    #anMusic-page .sjm-track-meta {
-      appearance: none;
-      border: 0;
-      outline: 0;
-      min-width: 0;
-      padding: 0;
-      background: transparent;
-      text-align: left;
-      cursor: pointer;
-    }
-    #anMusic-page .sjm-track-name,
-    #anMusic-page .sjm-track-sub {
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    #anMusic-page .sjm-track-name {
-      color: #2a3548;
-      font-size: 12px;
-      font-weight: 800;
-      line-height: 1.4;
-    }
-    #anMusic-page .sjm-track-sub {
-      margin-top: 3px;
-      color: #7b8799;
-      font-size: 10px;
-    }
-    #anMusic-page .sjm-row-action {
-      appearance: none;
-      border: 0;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: transparent;
-      color: #a2aaba;
-      cursor: pointer;
-      transition: .2s ease;
-    }
-    #anMusic-page .sjm-row-action:hover,
-    #anMusic-page .sjm-row-action.active {
-      background: rgba(255,106,145,.08);
-      color: #f05f8c;
-    }
-    @media screen and (max-width: 768px) {
-      #anMusic-page .sjm-track-cover { width: 44px; height: 44px; }
-    }
-
-  script(src=url_for('/js/smalljia-music.js') + '?v=20260909-3' data-pjax)
+  script(src=url_for('/js/smalljia-music-native.js') + '?v=20260910-1' data-pjax)
