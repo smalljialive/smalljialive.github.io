@@ -28,8 +28,10 @@
   padding-top 32vh
   padding-bottom 32vh
 
-.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
-  top 18px
+// Keep the close button clearly below the fixed site navigation in web-fullscreen mode.
+body.sjm-fullscreen-open .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
+  top 34px !important
+  right 28px
 
 @media screen and (max-width: 980px)
   .sjm-fullscreen[data-fullscreen-mode="web"]
@@ -47,6 +49,10 @@
   .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-lyrics-panel
     min-height 42vh
 
+  body.sjm-fullscreen-open .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
+    top 24px !important
+    right 20px
+
 @media screen and (max-width: 520px)
   .sjm-fullscreen[data-fullscreen-mode="web"]
     top 52px
@@ -59,5 +65,6 @@
     width 150px
     min-width 150px
 
-  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
-    top 10px
+  body.sjm-fullscreen-open .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
+    top 18px !important
+    right 14px
