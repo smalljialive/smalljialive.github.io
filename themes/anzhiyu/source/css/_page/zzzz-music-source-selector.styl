@@ -7,77 +7,286 @@
     display flex
     align-items center
     flex 0 0 auto
-    height 34px
-    margin-left 7px
-    padding 0 24px 0 10px
-    border 1px solid rgba(74,92,134,.12)
-    border-radius 11px
-    background rgba(244,247,255,.9)
-    color #5f6d86
+    height 36px
+    margin 0 14px 0 0
+    padding 0 26px 0 11px
+    border 1px solid rgba(74,92,134,.11)
+    border-radius 12px
+    background linear-gradient(135deg,rgba(247,249,255,.98),rgba(240,244,255,.92))
+    box-shadow inset 0 1px 0 rgba(255,255,255,.8),0 3px 10px rgba(70,87,125,.04)
+    color #55647d
     cursor pointer
     transition .2s ease
 
     &:hover
-      border-color rgba(66,90,239,.28)
-      background rgba(239,243,255,.98)
+      border-color rgba(66,90,239,.24)
+      background linear-gradient(135deg,#f8f9ff,#eef2ff)
+      box-shadow 0 5px 14px rgba(66,90,239,.07)
 
   .sjm-source-select-icon
-    margin-right 5px
+    margin-right 6px
+    color #71809a
     font-size 12px
-    opacity .72
+    opacity .78
     pointer-events none
 
   #sjm-source-select
     appearance none
     -webkit-appearance none
-    min-width 66px
+    min-width 72px
     border 0
     outline 0
     background transparent
-    color #4d5d78
+    color #4b5b76
+    font-family inherit
     font-size 12px
-    font-weight 600
+    font-weight 700
+    letter-spacing .01em
     cursor pointer
 
   .sjm-source-select-arrow
     position absolute
-    right 8px
+    right 9px
     top 50%
     transform translateY(-53%)
+    color #7e8ba0
     font-size 12px
-    opacity .62
+    opacity .72
     pointer-events none
+
+  .sjm-source-select-wrap.sjm-source-customized
+    height auto
+    padding 0
+    border 0
+    background transparent
+    box-shadow none
+    cursor default
+
+    > .sjm-source-select-icon,
+    > .sjm-source-select-arrow
+      display none
+
+  .sjm-source-native-select
+    position absolute !important
+    width 1px !important
+    height 1px !important
+    margin -1px !important
+    padding 0 !important
+    overflow hidden !important
+    clip rect(0 0 0 0) !important
+    clip-path inset(50%) !important
+    border 0 !important
+    opacity 0 !important
+    pointer-events none !important
+
+  .sjm-source-trigger
+    position relative
+    display flex
+    align-items center
+    gap 7px
+    min-width 114px
+    height 36px
+    padding 0 31px 0 11px
+    border 1px solid rgba(74,92,134,.11)
+    border-radius 12px
+    outline 0
+    background linear-gradient(135deg,rgba(247,249,255,.98),rgba(239,243,255,.94))
+    box-shadow inset 0 1px 0 rgba(255,255,255,.82),0 3px 10px rgba(70,87,125,.04)
+    color #4b5b76
+    font-family inherit
+    font-size 12px
+    font-weight 750
+    line-height 1
+    text-align left
+    white-space nowrap
+    cursor pointer
+    transition .2s ease
+
+    &:hover,
+    &:focus-visible
+      border-color rgba(66,90,239,.27)
+      background linear-gradient(135deg,#fafbff,#edf1ff)
+      box-shadow 0 5px 15px rgba(66,90,239,.08)
+
+  .sjm-source-trigger-icon
+    display inline-flex
+    align-items center
+    justify-content center
+    width 18px
+    height 18px
+    border-radius 6px
+    background rgba(66,90,239,.08)
+    color #5268dd
+    font-size 11px
+    pointer-events none
+
+  .sjm-source-trigger-label
+    overflow hidden
+    text-overflow ellipsis
+    pointer-events none
+
+  .sjm-source-trigger-arrow
+    position absolute
+    right 10px
+    top 50%
+    transform translateY(-52%)
+    color #8a95a7
+    font-size 11px
+    transition transform .18s ease
+    pointer-events none
+
+  .sjm-source-customized.open .sjm-source-trigger-arrow
+    transform translateY(-50%) rotate(180deg)
+
+  .sjm-source-menu
+    position absolute
+    z-index 10020
+    left 0
+    top calc(100% + 8px)
+    width 146px
+    padding 6px
+    border 1px solid rgba(74,92,134,.10)
+    border-radius 14px
+    background rgba(255,255,255,.97)
+    box-shadow 0 18px 42px rgba(43,58,91,.16)
+    backdrop-filter blur(18px) saturate(135%)
+    -webkit-backdrop-filter blur(18px) saturate(135%)
+    opacity 0
+    visibility hidden
+    pointer-events none
+    transform translateY(-5px) scale(.98)
+    transform-origin top left
+    transition .16s ease
+
+  .sjm-source-customized.open .sjm-source-menu
+    opacity 1
+    visibility visible
+    pointer-events auto
+    transform none
+
+  .sjm-source-option
+    display flex
+    align-items center
+    justify-content space-between
+    width 100%
+    min-height 34px
+    padding 0 10px
+    border 0
+    border-radius 9px
+    outline 0
+    background transparent
+    color #5e6c82
+    font-family inherit
+    font-size 12px
+    font-weight 650
+    text-align left
+    cursor pointer
+    transition .15s ease
+
+    &:hover,
+    &:focus-visible
+      background #f3f5ff
+      color #425aef
+
+    &.active
+      background rgba(66,90,239,.09)
+      color #425aef
+      font-weight 800
+
+    &.active:after
+      content "✓"
+      color #425aef
+      font-size 11px
+      font-weight 900
 
 [data-theme='dark'] #anMusic-page
   .sjm-source-select-wrap
     border-color rgba(255,255,255,.1)
     background rgba(255,255,255,.06)
     color rgba(255,255,255,.74)
+
   #sjm-source-select
     color rgba(255,255,255,.82)
-    option
-      color #263247
-      background #fff
+
+  .sjm-source-trigger
+    border-color rgba(255,255,255,.10)
+    background rgba(255,255,255,.065)
+    box-shadow inset 0 1px 0 rgba(255,255,255,.035)
+    color rgba(255,255,255,.80)
+
+    &:hover,
+    &:focus-visible
+      border-color rgba(122,139,255,.30)
+      background rgba(255,255,255,.09)
+
+  .sjm-source-trigger-icon
+    background rgba(115,132,255,.14)
+    color #a8b4ff
+
+  .sjm-source-menu
+    border-color rgba(255,255,255,.10)
+    background rgba(28,34,47,.97)
+    box-shadow 0 20px 45px rgba(0,0,0,.30)
+
+  .sjm-source-option
+    color rgba(255,255,255,.70)
+
+    &:hover,
+    &:focus-visible
+      background rgba(255,255,255,.07)
+      color #fff
+
+    &.active
+      background rgba(100,119,255,.15)
+      color #b8c1ff
 
 @media screen and (max-width: 900px)
   #anMusic-page
     .sjm-source-select-wrap
+      margin-right 10px
       padding-left 8px
       padding-right 20px
+
     .sjm-source-select-icon
       display none
+
     #sjm-source-select
       min-width 58px
       font-size 11px
+
+    .sjm-source-select-wrap.sjm-source-customized
+      padding 0
+
+    .sjm-source-trigger
+      min-width 96px
+      padding-left 9px
+      font-size 11px
+
+    .sjm-source-trigger-icon
+      display none
 
 @media screen and (max-width: 620px)
   #anMusic-page
     .sjm-search-form
       flex-wrap nowrap
+
     .sjm-source-select-wrap
-      margin-left 4px
+      margin-right 8px
       height 32px
       padding 0 18px 0 7px
+
     #sjm-source-select
       width 58px
       min-width 58px
+
+    .sjm-source-select-wrap.sjm-source-customized
+      height auto
+      padding 0
+
+    .sjm-source-trigger
+      min-width 82px
+      height 32px
+      padding 0 24px 0 8px
+
+    .sjm-source-menu
+      width 132px
