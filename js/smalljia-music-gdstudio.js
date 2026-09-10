@@ -291,7 +291,10 @@
     app.playTrack = async function (track) {
       if (!track) return;
       const source = String(track.server || track.source || "netease").toLowerCase();
-      if (!track.id || !GD_SOURCES.has(source)) return originalPlayTrack(track);
+      if (!track.id || !GD_SOURCES.has(source)) {
+        this.switchView("home");
+        return originalPlayTrack(track);
+      }
       this.showToast(`正在准备：${track.name}`);
       const resolved = await resolveTrack(track);
       if (!resolved.url) {
@@ -300,6 +303,7 @@
       }
       const index = this.queue.findIndex(item => item.key === resolved.key);
       if (index >= 0) Object.assign(this.queue[index], resolved);
+      this.switchView("home");
       return originalPlayTrack(resolved);
     };
 
