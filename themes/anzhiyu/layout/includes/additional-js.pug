@@ -3,6 +3,7 @@ div
   script(src=url_for(theme.asset.main))
   script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260910-2')
   script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260910-1')
+  script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-1')
 
   if theme.translate.enable
     script(src=url_for(theme.asset.translate))
@@ -79,7 +80,7 @@ div
 
     //- 评论弹幕
     if theme.comment_barrage_config.enable && theme.comments.use == 'Twikoo' && page.comments
-      script(async data-pjax src=url_for(theme.asset.comment_barrage_js))
+      script(async src=url_for(theme.asset.comment_barrage_js))
 
   != partial("includes/third-party/prismjs", {}, { cache: true })
 
