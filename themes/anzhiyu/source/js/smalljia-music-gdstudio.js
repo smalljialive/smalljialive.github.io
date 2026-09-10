@@ -1,13 +1,16 @@
 (function () {
   "use strict";
 
-  if (window.__smallJiaGDStudioProviderLoaded) return;
-  window.__smallJiaGDStudioProviderLoaded = true;
+  const VERSION = "20260910-6";
+  if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
+  window.__smallJiaGDStudioProviderVersion = VERSION;
 
   const DIRECT_API = "https://music-api.gdstudio.xyz/api.php";
   const PROXY_API = "https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music";
+  const MEDIA_PROXY = "https://music-proxy.gdstudio.org/";
+  const CURRENT_BASE = "https://music.gdstudio.xyz/";
   const SEARCH_SOURCES = ["netease", "kuwo"];
-  const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "kugou", "migu", "joox", "tidal", "qobuz", "ytmusic", "deezer", "spotify"]);
+  const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "migu", "joox", "tidal", "qobuz", "ytmusic", "deezer", "spotify"]);
   const FETCH_TIMEOUT = 10000;
   const COVER_CONCURRENCY = 6;
   const FALLBACK_COVER = "/img/favicon.ico";
@@ -45,20 +48,25 @@
   };
 
   const requestGD = async params => {
-    let directError = null;
-    try {
-      return { payload: await requestAt(DIRECT_API, params), route: "direct" };
-    } catch (error) {
-      directError = error;
-      console.warn("SmallJia Music: GD-Studio direct request failed, trying proxy", error);
+    const source = String(params?.source || "netease").toLowerCase();
+    const proxyFirst = source === "tencent" || (source === "kuwo" && params?.types === "url");
+    const routes = proxyFirst
+      ? [[PROXY_API, "proxy"], [DIRECT_API, "direct"]]
+      : [[DIRECT_API, "direct"], [PROXY_API, "proxy"]];
+    let firstError = null;
+
+    for (const [base, route] of routes) {
+      try {
+        return { payload: await requestAt(base, params), route };
+      } catch (error) {
+        if (!firstError) firstError = error;
+        console.warn(`SmallJia Music: GD-Studio ${route} request failed`, error);
+      }
     }
-    try {
-      return { payload: await requestAt(PROXY_API, params), route: "proxy" };
-    } catch (proxyError) {
-      const error = new Error(`GD-Studio direct and proxy unavailable: ${proxyError?.message || proxyError}`);
-      error.cause = directError;
-      throw error;
-    }
+
+    const error = new Error("GD-Studio direct and proxy unavailable");
+    error.cause = firstError;
+    throw error;
   };
 
   const extractUrl = payload => {
@@ -110,6 +118,22 @@
   };
 
   const directImage = value => normalizeMediaUrl(value);
+
+  const buildAudioCandidates = (value, source) => {
+    let url = String(value || "").trim();
+    if (!url) return [];
+    try {
+      if (!/^https?:\/\//i.test(url)) url = new URL(url, CURRENT_BASE).toString();
+    } catch (_) {
+      return [];
+    }
+    if (!/^https?:\/\//i.test(url)) return [];
+
+    const needsProxyFallback = source === "kuwo" || source === "tencent";
+    const proxyUrl = `${MEDIA_PROXY}${url}`;
+    if (url.startsWith("http://")) return needsProxyFallback ? [proxyUrl] : [];
+    return needsProxyFallback ? [url, proxyUrl] : [url];
+  };
 
   const normalizeSearchSong = (song, index) => {
     const source = String(song.source || "netease").toLowerCase();
@@ -183,18 +207,19 @@
   const resolveAudio = async track => {
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.urlId || track?.id || "");
-    if (!id || !GD_SOURCES.has(source)) return "";
+    if (!id || !GD_SOURCES.has(source)) return { url: "", candidates: [] };
 
     for (const br of [999, 740, 320, 320000, 192, 128]) {
       try {
         const { payload } = await requestGD({ types: "url", source, id, br });
         const url = extractUrl(payload);
-        if (url) return url;
+        const candidates = buildAudioCandidates(url, source);
+        if (candidates.length) return { url: candidates[0], candidates };
       } catch (error) {
         console.warn(`SmallJia Music: GD audio ${source}/${br} failed`, error);
       }
     }
-    return "";
+    return { url: "", candidates: [] };
   };
 
   const resolveLyric = async track => {
@@ -241,8 +266,14 @@
   };
 
   const resolveTrack = async track => {
-    const [url, lrc, cover] = await Promise.all([resolveAudio(track), resolveLyric(track), resolveCover(track)]);
-    return { ...track, url, lrc: lrc || track.lrc || "", cover: cover || track.cover || FALLBACK_COVER };
+    const [audio, lrc, cover] = await Promise.all([resolveAudio(track), resolveLyric(track), resolveCover(track)]);
+    return {
+      ...track,
+      url: audio.url,
+      __audioCandidates: audio.candidates,
+      lrc: lrc || track.lrc || "",
+      cover: cover || track.cover || FALLBACK_COVER,
+    };
   };
 
   const patch = app => {
@@ -331,11 +362,11 @@
       this.currentTrack = this.queue[normalizedIndex];
       this.updateCurrentUi();
       this.loadLyrics(this.currentTrack);
-      this.audioCandidates = [resolved.url];
+      this.audioCandidates = resolved.__audioCandidates?.length ? resolved.__audioCandidates.slice() : [resolved.url];
       this.audioCandidateIndex = 0;
-      this.audio.src = resolved.url;
+      this.audio.src = this.audioCandidates[0];
       this.audio.load();
-      if (autoplay) this.audio.play().catch(() => this.showToast("当前 GD-Studio 音源播放失败"));
+      if (autoplay) this.audio.play().catch(() => this.showToast("当前 GD-Studio 音源播放失败，正在尝试备用线路"));
       this.saveState(true);
     };
 
