@@ -1,0 +1,22 @@
+name: Music Source Diagnostics
+
+on:
+  push:
+    branches:
+      - hexo
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+      - name: Test GD Studio sources with 雨下一整晚
+        run: node scripts/check-music-sources.mjs
