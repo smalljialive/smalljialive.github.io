@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-1";
+  const VERSION = "20260910-2";
   if (window.__smallJiaNavMusicPersistenceVersion === VERSION) return;
   window.__smallJiaNavMusicPersistenceVersion = VERSION;
 
@@ -54,6 +54,7 @@
     return !!(
       target.closest(".bber-content-video") ||
       target.closest("video") ||
+      target.closest("iframe") ||
       target.closest(".bber-music")
     );
   };
@@ -89,6 +90,17 @@
     }
   };
 
+  const onWindowBlur = () => {
+    // Cross-origin iframe clicks do not bubble into the parent document.
+    // When an essay iframe receives focus (for example Bilibili), pause the nav player.
+    setTimeout(() => {
+      const active = document.activeElement;
+      if (active instanceof HTMLIFrameElement && active.closest("#essay_page")) {
+        pauseNavMusic("essay-iframe");
+      }
+    }, 0);
+  };
+
   const boot = () => {
     pauseForCurrentRoute();
   };
@@ -97,6 +109,7 @@
   document.addEventListener("play", onMediaPlay, true);
   document.addEventListener("pjax:complete", () => setTimeout(boot, 0));
   window.addEventListener("popstate", () => setTimeout(boot, 0));
+  window.addEventListener("blur", onWindowBlur);
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", boot, { once: true });
