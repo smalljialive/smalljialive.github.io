@@ -1,50 +1,193 @@
 if hexo-config('preloader')
   .loading-bg
-    display: flex;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background: var(--anzhiyu-card-bg);
-    z-index: 1001;
-    opacity: 1;
-    overflow hidden
-    transition: 0.2s;
-    animation: showLoading 0.3s 0s backwards;
-    &::-webkit-scrollbar 
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 100%
+    position: fixed
+    inset: 0
+    background:
+      radial-gradient(circle at 50% 42%, rgba(66, 133, 244, .08) 0, rgba(124, 108, 255, .035) 24%, transparent 52%),
+      var(--anzhiyu-card-bg)
+    z-index: 1001
+    opacity: 1
+    overflow: hidden
+    transition: opacity .38s ease, visibility .38s ease
+    animation: showLoading .28s ease backwards
+    &::-webkit-scrollbar
       display: none
 
   #loading-box
-    user-select none
+    user-select: none
+
+    .loading-card
+      position: relative
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      min-width: 280px
+      padding: 34px 38px 30px
+      border-radius: 28px
+      background: rgba(255, 255, 255, .72)
+      border: 1px solid rgba(120, 130, 160, .12)
+      box-shadow: 0 18px 55px rgba(50, 60, 100, .09)
+      backdrop-filter: blur(18px)
+      -webkit-backdrop-filter: blur(18px)
+      animation: loadingCardIn .42s cubic-bezier(.2,.8,.2,1) backwards
+
+    .loading-avatar-wrap
+      position: relative
+      width: 92px
+      height: 92px
+      display: flex
+      align-items: center
+      justify-content: center
+      margin-bottom: 18px
+
+    .loading-avatar-ring
+      position: absolute
+      inset: 0
+      border-radius: 50%
+      background: conic-gradient(from 0deg, var(--anzhiyu-main), #7c6cff, #46b6ff, var(--anzhiyu-main))
+      animation: loadingRing 3.2s linear infinite
+      box-shadow: 0 10px 30px rgba(82, 106, 255, .18)
+      &:after
+        content: ''
+        position: absolute
+        inset: 4px
+        border-radius: 50%
+        background: var(--anzhiyu-card-bg)
+
     .loading-img
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      margin: auto;
-      border: 4px solid #f0f0f2;
-      animation-duration: 0.2s;
-      animation-name: loadingAction;
-      animation-iteration-count: infinite;
-      animation-direction: alternate;
+      position: relative
+      z-index: 1
+      width: 78px
+      height: 78px
+      object-fit: cover
+      border-radius: 50%
+      border: 3px solid rgba(255, 255, 255, .92)
+      box-shadow: 0 8px 24px rgba(50, 60, 100, .13)
+      opacity: 1
+
     .loading-image-dot
-      width: 30px;
-      height: 30px;
-      background: #6bdf8f;
-      position: absolute;
-      border-radius: 50%;
-      border: 6px solid #fff;
-      top: 50%;
-      left: 50%;
-      transform: translate(18px, 24px);
+      width: 15px
+      height: 15px
+      background: #58d68d
+      position: absolute
+      z-index: 2
+      border-radius: 50%
+      border: 3px solid var(--anzhiyu-card-bg)
+      right: 6px
+      bottom: 8px
+      box-shadow: 0 3px 10px rgba(88, 214, 141, .3)
+
+    .loading-brand
+      color: var(--anzhiyu-fontcolor)
+      font-size: 21px
+      line-height: 1.3
+      font-weight: 700
+      letter-spacing: .02em
+      margin-bottom: 7px
+
+    .loading-message
+      color: var(--anzhiyu-secondtext)
+      font-size: 13px
+      line-height: 1.6
+      margin-bottom: 18px
+
+    .loading-track
+      position: relative
+      width: 186px
+      height: 5px
+      border-radius: 999px
+      background: rgba(120, 130, 160, .12)
+      overflow: hidden
+
+    .loading-progress
+      width: 42%
+      height: 100%
+      border-radius: inherit
+      background: linear-gradient(90deg, #46b6ff, var(--anzhiyu-main), #7c6cff)
+      box-shadow: 0 0 14px rgba(82, 106, 255, .3)
+      animation: loadingProgress 1.35s cubic-bezier(.4,0,.2,1) infinite
+
     &.loaded
       .loading-bg
-        opacity: 0;
-        z-index: -1000;
+        opacity: 0
+        visibility: hidden
+        pointer-events: none
+        z-index: -1000
+      .loading-card
+        transform: translateY(-4px) scale(.985)
 
-  @keyframes loadingAction
-    0% {
-        opacity: 1;
-    }
+  [data-theme='dark'] #loading-box
+    .loading-card
+      background: rgba(24, 26, 34, .76)
+      border-color: rgba(255, 255, 255, .08)
+      box-shadow: 0 18px 55px rgba(0, 0, 0, .25)
 
-    100% {
-        opacity: .4;
-    }
+    .loading-img
+      border-color: rgba(255, 255, 255, .15)
+
+    .loading-track
+      background: rgba(255, 255, 255, .1)
+
+  @media screen and (max-width: 520px)
+    #loading-box
+      .loading-card
+        min-width: 0
+        width: calc(100vw - 64px)
+        max-width: 300px
+        padding: 30px 24px 27px
+        border-radius: 24px
+
+      .loading-avatar-wrap
+        width: 84px
+        height: 84px
+
+      .loading-img
+        width: 70px
+        height: 70px
+
+      .loading-brand
+        font-size: 19px
+
+      .loading-track
+        width: 168px
+
+  @media (prefers-reduced-motion: reduce)
+    #loading-box
+      .loading-card,
+      .loading-avatar-ring,
+      .loading-progress
+        animation: none !important
+
+  @keyframes showLoading
+    0%
+      opacity: 0
+    100%
+      opacity: 1
+
+  @keyframes loadingCardIn
+    0%
+      opacity: 0
+      transform: translateY(8px) scale(.985)
+    100%
+      opacity: 1
+      transform: translateY(0) scale(1)
+
+  @keyframes loadingRing
+    0%
+      transform: rotate(0deg)
+    100%
+      transform: rotate(360deg)
+
+  @keyframes loadingProgress
+    0%
+      transform: translateX(-115%)
+    55%
+      transform: translateX(95%)
+    100%
+      transform: translateX(250%)
