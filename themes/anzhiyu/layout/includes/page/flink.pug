@@ -6,7 +6,7 @@
           .banners-title-small 友情链接
           .banners-title-big=theme.linkPageTop ? theme.linkPageTop.title : "与数百名博主无限进步"
         .banner-button-group
-          if (theme.friends_vue.apiurl)
+          if theme.friends_vue.apiurl
             a.banner-button.secondary.no-text-decoration(onclick="friendChainRandomTransmission()")
               i.anzhiyufont.anzhiyu-icon-paper-plane1
               span.banner-button-text 随机访问
@@ -46,87 +46,27 @@
         a.random-post-all.no-text-decoration(href='/link/') 全部友链
     #random-post
     script(defer data-pjax src=url_for(theme.asset.random_friends_post_js))
-  
-  .flink
+
+  //- Lightweight source for Toolbox 2.0. Keep metadata in DOM without loading
+  //- the legacy cards, remote screenshots, or hundreds of source avatars.
+  .flink.sj-toolbox-data-source(style='display:none')
     if site.data.link
       each i in site.data.link
         if i.class_name
           h2!= i.class_name + "(" + i.link_list.length + ")"
         if i.class_desc
           .flink-desc!=i.class_desc
-        if i.flink_style === 'anzhiyu'
-          div(class=i.lost_contact ? 'anzhiyu-flink-list cf-friends-lost-contact' : 'anzhiyu-flink-list')
-            if i.link_list
-              each item in i.link_list
-                - let color = item.color || ""
-                - let tag = item.tag || ""
-                
-                .flink-list-item
-                  if color == "vip" && tag
-                    span.site-card-tag.vip #[=tag]
-                      i.light
-                  else if color == "speed" && tag
-                    span.site-card-tag.speed #[=tag]
-                  else if tag
-                    span.site-card-tag(style=`background-color: ${color}`) #[=tag]
-                  else if item.recommend
-                    span.site-card-tag 荐
-                  if i.lost_contact
-                    a.cf-friends-link(href=url_for(item.link) title=item.name target="_blank")
-                      if theme.lazyload.enable
-                        img.no-lightbox(data-lazy-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
-                      else
-                        img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
-                      .flink-item-info
-                        .flink-item-name.cf-friends-name-lost-contact= item.name
-                  else
-                    a.cf-friends-link(href=url_for(item.link) cf-href=url_for(item.link) title=item.name target="_blank")
-                      if theme.lazyload.enable
-                        img.cf-friends-avatar.no-lightbox(data-lazy-src=url_for(item.avatar), cf-src=url_for(item.avatar), onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
-                      else
-                        img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) cf-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
-                      .flink-item-info
-                        .flink-item-name.cf-friends-name= item.name
-                        .flink-item-desc(title=item.descr)= item.descr
-        
-        else if i.flink_style === 'telescopic'
-          .telescopic-site-card-group
+        if i.link_list
+          .anzhiyu-flink-list
             each item in i.link_list
-              - let color = item.color || ""
               - let tag = item.tag || ""
-              - let siteshot = item.siteshot || `https://image.thum.io/get/width/400/crop/800/allowJPG/wait/20/noanimate/${item.link}`
-              .site-card
-                if color == "vip" && tag
-                  span.site-card-tag.vip #[=tag]
-                    i.light
-                else if color == "speed" && tag
-                  span.site-card-tag.speed #[=tag]
-                else if tag
-                  span.site-card-tag(style=`background-color: ${color}`) #[=tag]
-                else if item.recommend
-                  span.site-card-tag 荐
-                a.img.no-text-decoration(target='_blank', title=`${item.name}`, href=`${item.link}`, rel='external nofollow')
-                  img.flink-avatar(data-lazy-src=siteshot, onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`, alt=item.name, style="pointer-events: none;", src=`${siteshot}`)
-                a.info.cf-friends-link.no-text-decoration(target='_blank', title=`${item.name}`, href=`${item.link}`, cf-href=url_for(item.link), rel='external nofollow')
-                  .site-card-avatar
-                    img.flink-avatar.cf-friends-avatar.no-fancybox(data-lazy-src=item.avatar, cf-src=url_for(item.avatar), onerror=`this.onerror=null;this.src='${url_for(theme.error_img.flink)}'`, alt=item.name, src=item.avatar)
-                  .site-card-text
-                    span.title.cf-friends-name #[=item.name]
-                    span.desc(title=`${item.descr}`) #[=item.descr]
-        else if i.flink_style === 'flexcard'
-          .flexcard-flink-list
-            each item in i.link_list
-              a.flink-list-card.cf-friends-link(href=url_for(item.link) cf-href=url_for(item.link) target='_blank' data-title=item.descr)
-                .wrapper.cover
-                  - var siteshot = item.siteshot ? url_for(item.siteshot) : 'https://image.thum.io/get/width/400/crop/800/allowJPG/wait/20/noanimate/' + item.link
-                  if theme.lazyload.enable
-                    img.cover.fadeIn(data-lazy-src=siteshot onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.post_page) + `'` alt='cover' )
-                  else
-                    img.cover.fadeIn(src=siteshot onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.post_page) + `'` alt='cover' )    
-                .info
-                  if theme.lazyload.enable
-                    img.cf-friends-avatar.no-lightbox.flink-avatar(data-lazy-src=url_for(item.avatar) cf-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt='cover' )
-                  else
-                    img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) cf-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt='cover' )
-                  span.flink-sitename.cf-friends-name= item.name
-    != page.content
+              .flink-list-item
+                if tag
+                  span.site-card-tag= tag
+                a.cf-friends-link(href=url_for(item.link) cf-href=url_for(item.link) title=item.name target="_blank")
+                  //- cf-src is intentionally metadata only; no src/data-lazy-src here.
+                  img.cf-friends-avatar.no-lightbox(cf-src=url_for(item.avatar) alt="")
+                  .flink-item-info
+                    .flink-item-name.cf-friends-name= item.name
+                    .flink-item-desc(title=item.descr)= item.descr
+  != page.content
