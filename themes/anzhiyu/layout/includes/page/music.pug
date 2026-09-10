@@ -30,7 +30,7 @@
 
       .sjm-sidebar-note
         span PERSONAL MUSIC SPACE
-        p 收藏、历史和播放状态仅保存在当前浏览器。
+        p 未登录时歌单保存在当前浏览器；登录后自动同步到云端。
         p 默认歌单：我的 97 首私人清单；播放时由 GD-Studio 匹配音源。
 
     main.sjm-main
@@ -180,5 +180,7 @@
   script(src=url_for('/js/smalljia-music-personal-playlist.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-library.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-daily-import.js') + '?v=20260910-1' data-pjax)
+  script(src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2' data-pjax)
+  script(src=url_for('/js/smalljia-music-cloud.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-2' data-pjax)
   script(src=url_for('/js/smalljia-music-scrollfix.js') + '?v=20260910-1' data-pjax)
