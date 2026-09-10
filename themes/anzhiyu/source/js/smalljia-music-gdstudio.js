@@ -4,10 +4,11 @@
   if (window.__smallJiaGDStudioProviderLoaded) return;
   window.__smallJiaGDStudioProviderLoaded = true;
 
-  const API_BASE = "https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music";
+  const DIRECT_API = "https://music-api.gdstudio.xyz/api.php";
+  const PROXY_API = "https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music";
   const SEARCH_SOURCES = ["netease", "kuwo"];
-  const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "joox", "tidal", "qobuz", "apple", "bilibili", "ytmusic", "spotify"]);
-  const FETCH_TIMEOUT = 12000;
+  const GD_SOURCES = new Set(["netease", "kuwo", "tencent", "kugou", "migu", "joox", "tidal", "qobuz", "ytmusic", "deezer", "spotify"]);
+  const FETCH_TIMEOUT = 10000;
   const FALLBACK_COVER = "/img/favicon.ico";
 
   const artistText = value => {
@@ -16,25 +17,46 @@
     return value || "未知歌手";
   };
 
-  const request = async params => {
+  const buildUrl = (base, params) => {
+    const url = new URL(base);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") url.searchParams.set(key, String(value));
+    });
+    return url.toString();
+  };
+
+  const requestAt = async (base, params) => {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
     try {
-      const url = new URL(API_BASE);
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== "") url.searchParams.set(key, String(value));
-      });
-      const response = await fetch(url.toString(), {
+      const response = await fetch(buildUrl(base, params), {
         signal: controller.signal,
         credentials: "omit",
         cache: "no-store",
         headers: { Accept: "application/json, text/plain, */*" },
       });
-      if (!response.ok) throw new Error(`GD proxy HTTP ${response.status}`);
+      if (!response.ok) throw new Error(`${base === DIRECT_API ? "GD direct" : "GD proxy"} HTTP ${response.status}`);
       const text = await response.text();
       try { return JSON.parse(text); } catch (_) { return text; }
     } finally {
       clearTimeout(timer);
+    }
+  };
+
+  const requestGD = async params => {
+    let directError = null;
+    try {
+      return { payload: await requestAt(DIRECT_API, params), route: "direct" };
+    } catch (error) {
+      directError = error;
+      console.warn("SmallJia Music: GD-Studio direct request failed, trying proxy", error);
+    }
+    try {
+      return { payload: await requestAt(PROXY_API, params), route: "proxy" };
+    } catch (proxyError) {
+      const error = new Error(`GD-Studio direct and proxy unavailable: ${proxyError?.message || proxyError}`);
+      error.cause = directError;
+      throw error;
     }
   };
 
@@ -107,36 +129,60 @@
     };
   };
 
-  const searchSource = async (keyword, source) => {
-    const payload = await request({ types: "search", source, name: keyword, count: 12, pages: 1 });
-    if (!Array.isArray(payload)) return [];
-    return payload.map(normalizeSearchSong);
+  const normalizeSearchPayload = payload => {
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.data)) return payload.data;
+    if (Array.isArray(payload?.result)) return payload.result;
+    return [];
   };
 
   const search = async keyword => {
-    const settled = await Promise.allSettled(SEARCH_SOURCES.map(source => searchSource(keyword, source)));
-    const merged = settled.flatMap(item => item.status === "fulfilled" ? item.value : []);
-    if (!merged.length && settled.every(item => item.status === "rejected")) {
-      throw new Error("GD-Studio proxy search unavailable");
+    // GD-Studio third-party API supports aggregate source search. Try it directly first.
+    try {
+      const aggregate = await requestAt(DIRECT_API, {
+        types: "search",
+        source: "netease,kuwo",
+        name: keyword,
+        count: 30,
+        pages: 1,
+      });
+      const list = normalizeSearchPayload(aggregate);
+      if (list.length) return list.slice(0, 30).map(normalizeSearchSong);
+    } catch (error) {
+      console.warn("SmallJia Music: GD aggregate search failed", error);
     }
+
+    // If aggregate search fails, query each source independently. Each request is direct-first + proxy fallback.
+    const settled = await Promise.allSettled(
+      SEARCH_SOURCES.map(async source => {
+        const { payload } = await requestGD({ types: "search", source, name: keyword, count: 15, pages: 1 });
+        return normalizeSearchPayload(payload).map(normalizeSearchSong);
+      })
+    );
+
+    const merged = settled.flatMap(item => item.status === "fulfilled" ? item.value : []);
+    if (!merged.length && settled.every(item => item.status === "rejected")) throw new Error("GD-Studio search unavailable");
+
     const seen = new Set();
     return merged.filter(track => {
       if (seen.has(track.key)) return false;
       seen.add(track.key);
       return true;
-    }).slice(0, 20).map((track, index) => ({ ...track, index }));
+    }).slice(0, 30).map((track, index) => ({ ...track, index }));
   };
 
   const resolveAudio = async track => {
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.urlId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
-    for (const br of [999, 740, 320, 192, 128]) {
+
+    for (const br of [999, 740, 320, 320000, 192, 128]) {
       try {
-        const url = extractUrl(await request({ types: "url", source, id, br }));
+        const { payload } = await requestGD({ types: "url", source, id, br });
+        const url = extractUrl(payload);
         if (url) return url;
       } catch (error) {
-        console.warn(`SmallJia Music: GD proxy audio ${source}/${br} failed`, error);
+        console.warn(`SmallJia Music: GD audio ${source}/${br} failed`, error);
       }
     }
     return "";
@@ -146,8 +192,12 @@
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.lyricId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
-    try { return extractLyric(await request({ types: "lyric", source, id })); }
-    catch (_) { return ""; }
+    try {
+      const { payload } = await requestGD({ types: "lyric", source, id });
+      return extractLyric(payload);
+    } catch (_) {
+      return "";
+    }
   };
 
   const resolveCover = async track => {
@@ -155,8 +205,12 @@
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.picId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return "";
-    try { return extractUrl(await request({ types: "pic", source, id, size: 500 })); }
-    catch (_) { return ""; }
+    try {
+      const { payload } = await requestGD({ types: "pic", source, id, size: 500 });
+      return extractUrl(payload);
+    } catch (_) {
+      return "";
+    }
   };
 
   const resolveTrack = async track => {
@@ -177,7 +231,7 @@
       originalSetSourceState(state, routeLabel);
       if (state !== "ready") return;
       const text = this.dom?.sourceChip?.querySelector("span:last-child");
-      if (text) text.textContent = "GD-Studio 代理线路";
+      if (text) text.textContent = "GD-Studio 直连 · 代理备用";
     };
 
     app.search = async function (rawQuery) {
@@ -192,15 +246,15 @@
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
-        this.setSourceState("ready", "GD-Studio Proxy");
+        this.setSourceState("ready", "GD-Studio");
         this.setSearchStatus(list.length ? `找到 ${list.length} 个 GD-Studio 结果，点击即可播放` : `GD-Studio 没有找到“${query}”`);
       } catch (error) {
-        console.warn("SmallJia Music: GD-Studio proxy search failed", error);
+        console.warn("SmallJia Music: GD-Studio search failed", error);
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = [];
         this.renderTrackList(this.dom.searchResults, []);
         this.setSearchStatus("GD-Studio 当前不可用，请稍后再试");
-        this.showToast("GD-Studio 当前不可用，已停止自动切换到试听线路");
+        this.showToast("GD-Studio 直连和备用代理均不可用");
       }
     };
 
@@ -211,7 +265,7 @@
       this.showToast(`正在准备：${track.name}`);
       const resolved = await resolveTrack(track);
       if (!resolved.url) {
-        this.showToast("GD-Studio 没有返回可播放的完整音源");
+        this.showToast("GD-Studio 没有返回可播放音源");
         return;
       }
       const index = this.queue.findIndex(item => item.key === resolved.key);
@@ -231,12 +285,14 @@
       this.currentTrack = baseTrack;
       this.restorePositionPending = restorePosition;
       this.updateCurrentUi();
+
       const resolved = await resolveTrack(baseTrack);
       if (token !== selectToken || this.destroyed) return;
       if (!resolved.url) {
         this.showToast("GD-Studio 没有返回可播放音源");
         return;
       }
+
       Object.assign(this.queue[normalizedIndex], resolved);
       this.currentTrack = this.queue[normalizedIndex];
       this.updateCurrentUi();
@@ -250,8 +306,8 @@
     };
 
     const chipText = app.dom?.sourceChip?.querySelector("span:last-child");
-    if (chipText) chipText.textContent = "GD-Studio 代理线路";
-    app.root?.setAttribute("data-music-provider", "gdstudio-proxy");
+    if (chipText) chipText.textContent = "GD-Studio 直连 · 代理备用";
+    app.root?.setAttribute("data-music-provider", "gdstudio-direct");
     return true;
   };
 
