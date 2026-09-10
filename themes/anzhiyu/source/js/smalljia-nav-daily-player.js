@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-1";
+  const VERSION = "20260910-2";
   if (window.__smallJiaNavDailyPlayerVersion === VERSION) return;
   window.__smallJiaNavDailyPlayerVersion = VERSION;
 
@@ -9,7 +9,11 @@
   const TARGET_NAME = "日常";
   const CACHE_KEY = "smalljia_nav_daily_resolved_v1";
   const CACHE_TTL = 6 * 60 * 60 * 1000;
-  const SUPABASE_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy";
+  const PUBLIC_TTL = 60 * 1000;
+  const SUPABASE_ROOT = "https://yluidpgnvfurcomnexjr.supabase.co";
+  const SUPABASE_API = `${SUPABASE_ROOT}/functions/v1/music-proxy`;
+  const SUPABASE_REST = `${SUPABASE_ROOT}/rest/v1`;
+  const SUPABASE_KEY = "sb_publishable_ouIhEhTVrbsU98a0klTEdA_DEHjJvhT";
   const FALLBACK_COVER = "/img/music-placeholder.svg";
   const SOURCES = ["kuwo", "tencent", "netease"];
   const BITRATES = [999, 740, 320, 320000, 192, 128];
@@ -22,6 +26,9 @@
     signature: "",
     resolving: new Map(),
     installed: false,
+    publicPlaylist: null,
+    publicFetchedAt: 0,
+    syncing: false,
   };
 
   const normalize = value => String(value || "")
@@ -35,7 +42,7 @@
     return String(value || "");
   };
 
-  const readDaily = () => {
+  const readLocalDaily = () => {
     try {
       const list = JSON.parse(localStorage.getItem(PLAYLIST_KEY) || "[]");
       if (!Array.isArray(list)) return null;
@@ -46,6 +53,57 @@
       return null;
     }
   };
+
+  const publicHeaders = () => ({
+    apikey: SUPABASE_KEY,
+    Authorization: `Bearer ${SUPABASE_KEY}`,
+    Accept: "application/json",
+  });
+
+  const fetchPublicDaily = async () => {
+    if (state.publicPlaylist && Date.now() - state.publicFetchedAt < PUBLIC_TTL) return state.publicPlaylist;
+    try {
+      const playlistUrl = `${SUPABASE_REST}/playlists?select=id,name&is_public=eq.true&name=eq.${encodeURIComponent(TARGET_NAME)}&limit=1`;
+      const playlistResponse = await fetch(playlistUrl, { headers: publicHeaders(), cache: "no-store" });
+      if (!playlistResponse.ok) throw new Error(`public playlist HTTP ${playlistResponse.status}`);
+      const playlists = await playlistResponse.json();
+      const playlist = Array.isArray(playlists) ? playlists[0] : null;
+      if (!playlist?.id) return null;
+
+      const fields = "track_key,source,source_track_id,name,artist,album,cover,lyric_id,pic_id,url_id,sort_order";
+      const trackUrl = `${SUPABASE_REST}/playlist_tracks?select=${fields}&playlist_id=eq.${encodeURIComponent(playlist.id)}&order=sort_order.asc`;
+      const trackResponse = await fetch(trackUrl, { headers: publicHeaders(), cache: "no-store" });
+      if (!trackResponse.ok) throw new Error(`public tracks HTTP ${trackResponse.status}`);
+      const rows = await trackResponse.json();
+      const tracks = (Array.isArray(rows) ? rows : []).map(row => ({
+        id: row.source_track_id || "",
+        server: row.source || "netease",
+        source: row.source || "netease",
+        name: row.name || "未知歌曲",
+        artist: row.artist || "未知歌手",
+        album: row.album || "",
+        cover: row.cover || "",
+        url: "",
+        lrc: "",
+        key: row.track_key || `${row.name || "未知歌曲"}::${row.artist || "未知歌手"}`.toLowerCase(),
+        __gdStudio: {
+          source: row.source || "netease",
+          urlId: row.url_id || row.source_track_id || "",
+          lyricId: row.lyric_id || row.source_track_id || "",
+          picId: row.pic_id || row.source_track_id || "",
+        },
+      }));
+      if (!tracks.length) return null;
+      state.publicPlaylist = { id: playlist.id, name: TARGET_NAME, tracks };
+      state.publicFetchedAt = Date.now();
+      return state.publicPlaylist;
+    } catch (error) {
+      console.warn("SmallJia nav music: public Daily fetch failed", error);
+      return state.publicPlaylist;
+    }
+  };
+
+  const loadDaily = async () => readLocalDaily() || await fetchPublicDaily();
 
   const playlistSignature = playlist => JSON.stringify((playlist?.tracks || []).map(track => [
     track?.id || "",
@@ -264,7 +322,7 @@
 
   const notify = message => {
     try {
-      if (window.anzhiyu?.snackbarShow) window.anzhiyu.snackbarShow(message, false, 2500);
+      if (typeof anzhiyu !== "undefined" && anzhiyu?.snackbarShow) anzhiyu.snackbarShow(message, false, 2500);
       else console.info(message);
     } catch (_) {}
   };
@@ -319,7 +377,7 @@
   };
 
   const patchSwitch = ap => {
-    if (!ap?.list || state.aplayer === ap && state.originalSwitch) return;
+    if (!ap?.list || (state.aplayer === ap && state.originalSwitch)) return;
     state.aplayer = ap;
     state.originalSwitch = ap.list.switch.bind(ap.list);
     ap.list.switch = function (index) {
@@ -368,19 +426,25 @@
 
   const findAPlayer = () => document.querySelector("#nav-music meting-js")?.aplayer || null;
 
-  const sync = () => {
-    const playlist = readDaily();
-    if (!playlist) return false;
-    const ap = findAPlayer();
-    if (!ap?.list?.audios) return false;
-    return applyDaily(ap, playlist);
+  const sync = async () => {
+    if (state.syncing) return false;
+    state.syncing = true;
+    try {
+      const playlist = await loadDaily();
+      if (!playlist) return false;
+      const ap = findAPlayer();
+      if (!ap?.list?.audios) return false;
+      return applyDaily(ap, playlist);
+    } finally {
+      state.syncing = false;
+    }
   };
 
   const boot = () => {
     let attempts = 0;
-    const timer = setInterval(() => {
+    const timer = setInterval(async () => {
       attempts += 1;
-      if (sync() || attempts > 200) clearInterval(timer);
+      if (await sync() || attempts > 200) clearInterval(timer);
     }, 100);
   };
 
@@ -391,8 +455,8 @@
     if (event.key === PLAYLIST_KEY) setTimeout(sync, 0);
   });
 
-  setInterval(() => {
-    const playlist = readDaily();
+  setInterval(async () => {
+    const playlist = readLocalDaily() || await fetchPublicDaily();
     if (!playlist) return;
     if (playlistSignature(playlist) !== state.signature || findAPlayer() !== state.aplayer) sync();
   }, 3000);
