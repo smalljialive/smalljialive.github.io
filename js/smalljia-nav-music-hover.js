@@ -1,14 +1,15 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-1";
+  const VERSION = "20260910-2";
   if (window.__smallJiaNavMusicHoverVersion === VERSION) return;
   window.__smallJiaNavMusicHoverVersion = VERSION;
 
   const STYLE_ID = "smalljia-nav-music-hover-style";
 
   const installStyle = () => {
-    if (document.getElementById(STYLE_ID)) return;
+    const oldStyle = document.getElementById(STYLE_ID);
+    if (oldStyle) oldStyle.remove();
     const style = document.createElement("style");
     style.id = STYLE_ID;
     style.textContent = `
@@ -38,8 +39,18 @@
         animation-play-state: paused !important;
       }
 
+      /* Keep playback progress visible on the white compact player. */
+      #nav-music .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played,
       #nav-music.playing .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+        background: var(--anzhiyu-main) !important;
+        background-color: var(--anzhiyu-main) !important;
+        opacity: 0.2 !important;
+        animation: none !important;
         animation-play-state: paused !important;
+      }
+
+      #nav-music:hover .aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played {
+        opacity: 0.26 !important;
       }
 
       #nav-music #nav-music-hoverTips {
@@ -81,8 +92,8 @@
   const bind = () => {
     installStyle();
     const nav = document.getElementById("nav-music");
-    if (!nav || nav.dataset.smalljiaHoverBound === "1") return;
-    nav.dataset.smalljiaHoverBound = "1";
+    if (!nav || nav.dataset.smalljiaHoverBound === VERSION) return;
+    nav.dataset.smalljiaHoverBound = VERSION;
 
     const collapse = () => nav.classList.remove("stretch");
     const expand = () => nav.classList.add("stretch");
