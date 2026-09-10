@@ -1,0 +1,167 @@
+// SmallJia Music now-playing card polish
+// Keep controls comfortable on desktop and preserve all actions on mobile.
+
+.sjm-now-card
+  grid-template-columns 180px minmax(0,1fr)
+  grid-template-areas "cover copy" "actions actions"
+  column-gap 32px
+  row-gap 24px
+  align-items center
+  min-height 310px
+  padding 30px 30px 24px
+
+.sjm-now-card > .sjm-cover-wrap
+  grid-area cover
+
+.sjm-now-card > .sjm-now-copy
+  grid-area copy
+  align-self center
+  min-width 0
+  padding-right 4px
+
+.sjm-now-card > .sjm-now-actions
+  grid-area actions
+
+.sjm-now-copy h2
+  margin-top 9px
+  margin-bottom 8px
+  font-size clamp(28px,2.7vw,40px)
+
+.sjm-now-copy #sjm-now-artist
+  line-height 1.45
+
+.sjm-preview-badge
+  margin-top 12px
+
+.sjm-now-actions
+  display grid
+  grid-template-columns repeat(4,minmax(0,1fr))
+  gap 10px
+  width 100%
+  margin-top 0
+  padding 10px
+  border 1px solid rgba(67,87,130,.09)
+  border-radius 17px
+  background rgba(247,249,253,.82)
+  box-shadow inset 0 1px 0 rgba(255,255,255,.7)
+
+.sjm-now-actions .sjm-soft-button
+  display flex
+  align-items center
+  justify-content center
+  gap 5px
+  width 100%
+  min-width 0
+  min-height 42px
+  padding 0 12px
+  border-radius 12px
+  background rgba(255,255,255,.78)
+  box-shadow 0 4px 14px rgba(57,75,115,.045)
+  color #647187
+  font-size 12px
+  line-height 1
+  white-space nowrap
+  word-break keep-all
+
+.sjm-now-actions .sjm-soft-button:hover
+  transform translateY(-1px)
+  border-color rgba(66,90,239,.18)
+  background #fff
+  box-shadow 0 8px 20px rgba(57,75,115,.08)
+  color #344bc9
+
+.sjm-now-actions #sjm-web-fullscreen-open
+  border-color rgba(66,90,239,.12)
+  background rgba(66,90,239,.055)
+  color #425aef
+
+.sjm-now-actions #sjm-fullscreen-open
+  border-color rgba(104,87,204,.10)
+  background rgba(104,87,204,.045)
+  color #6256b9
+
+.sjm-now-actions #sjm-current-favorite.active
+  border-color rgba(240,95,140,.16)
+  background rgba(240,95,140,.065)
+  color #e95683
+
+@media screen and (max-width:1180px)
+  .sjm-now-card
+    grid-template-columns 150px minmax(0,1fr)
+    column-gap 26px
+    min-height 278px
+    padding 26px 26px 22px
+
+@media screen and (max-width:920px)
+  .sjm-now-card
+    grid-template-columns 180px minmax(0,1fr)
+    column-gap 30px
+    min-height 304px
+
+  .sjm-now-card > .sjm-cover-wrap
+    width 180px
+    height 180px
+
+@media screen and (max-width:768px)
+  .sjm-now-card
+    grid-template-columns 110px minmax(0,1fr)
+    grid-template-areas "cover copy" "actions actions"
+    column-gap 18px
+    row-gap 18px
+    min-height 0
+    padding 20px
+
+  .sjm-now-card > .sjm-cover-wrap
+    width 110px
+    height 110px
+
+  .sjm-now-actions
+    gap 8px
+    padding 8px
+
+  .sjm-now-actions .sjm-soft-button
+    min-height 40px
+    padding 0 8px
+    font-size 11px
+
+@media screen and (max-width:560px)
+  .sjm-now-card
+    grid-template-columns 96px minmax(0,1fr)
+    column-gap 16px
+    row-gap 16px
+    padding 17px
+
+  .sjm-now-card > .sjm-cover-wrap
+    width 96px
+    height 96px
+
+  .sjm-now-copy h2
+    font-size 22px
+
+  .sjm-now-copy #sjm-now-artist
+    font-size 14px
+
+  .sjm-now-actions
+    grid-template-columns repeat(2,minmax(0,1fr))
+
+  .sjm-now-actions .sjm-soft-button,
+  .sjm-now-actions .sjm-soft-button:not(#sjm-current-favorite)
+    display flex !important
+
+@media screen and (max-width:380px)
+  .sjm-now-card
+    grid-template-columns 82px minmax(0,1fr)
+    column-gap 13px
+    padding 14px
+
+  .sjm-now-card > .sjm-cover-wrap
+    width 82px
+    height 82px
+
+  .sjm-now-actions
+    padding 7px
+
+  .sjm-now-actions .sjm-soft-button
+    min-height 38px
+    padding 0 6px
+    font-size 10px
