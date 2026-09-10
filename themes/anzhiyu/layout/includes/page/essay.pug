@@ -183,6 +183,31 @@ if site.data.essay
         #bber .bber-item.essay-archive-hidden {
           display: none !important;
         }
+        #bber #waterfall.essay-filtered-layout {
+          display: grid !important;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          align-items: start;
+          gap: 1rem;
+          height: auto !important;
+          opacity: 1 !important;
+        }
+        #bber #waterfall.essay-filtered-layout .bber-item:not(.essay-archive-hidden) {
+          position: relative !important;
+          inset: auto !important;
+          top: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          transform: none !important;
+          width: 100% !important;
+          margin: 0 !important;
+          display: flex !important;
+        }
+        @media screen and (max-width: 1200px) {
+          #bber #waterfall.essay-filtered-layout {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+        }
         @media screen and (max-width: 768px) {
           #essay-memory-tools {
             grid-template-columns: 1fr;
@@ -193,6 +218,9 @@ if site.data.essay
           .essay-memory-title {
             font-size: 20px;
           }
+          #bber #waterfall.essay-filtered-layout {
+            grid-template-columns: 1fr;
+          }
         }
 
       script.
@@ -201,11 +229,12 @@ if site.data.essay
           if (!root || root.dataset.memoryReady === "1") return;
           root.dataset.memoryReady = "1";
 
+          const waterfallEl = root.querySelector("#waterfall");
           const items = Array.from(root.querySelectorAll("#waterfall .bber-item[data-essay-date]"));
           const todayList = root.querySelector("#essay-today-list");
           const filters = root.querySelector("#essay-year-filters");
           const summary = root.querySelector("#essay-archive-summary");
-          if (!items.length || !todayList || !filters || !summary) return;
+          if (!waterfallEl || !items.length || !todayList || !filters || !summary) return;
 
           const records = items.map(item => {
             const dateText = item.dataset.essayDate || "";
@@ -221,18 +250,46 @@ if site.data.essay
             };
           }).filter(record => record.year);
 
-          const refreshEssayWaterfall = () => {
-            const waterfallEl = root.querySelector("#waterfall");
-            if (!waterfallEl) return;
+          let layoutVersion = 0;
+          const resetWaterfallInlineStyles = () => {
+            waterfallEl.style.removeProperty("height");
+            records.forEach(record => {
+              const item = record.item;
+              item.style.removeProperty("position");
+              item.style.removeProperty("top");
+              item.style.removeProperty("right");
+              item.style.removeProperty("bottom");
+              item.style.removeProperty("left");
+              item.style.removeProperty("transform");
+            });
+          };
 
-            requestAnimationFrame(() => {
+          const refreshEssayWaterfall = (filtered = false) => {
+            const version = ++layoutVersion;
+            if (filtered) {
+              waterfallEl.classList.add("essay-filtered-layout", "show");
+              resetWaterfallInlineStyles();
+              return;
+            }
+
+            waterfallEl.classList.remove("essay-filtered-layout", "show");
+            resetWaterfallInlineStyles();
+
+            const relayout = () => {
+              if (version !== layoutVersion || waterfallEl.classList.contains("essay-filtered-layout")) return;
               if (typeof waterfall === "function") {
-                waterfall(waterfallEl);
+                waterfall("#waterfall");
                 waterfallEl.classList.add("show");
               } else if (typeof anzhiyu !== "undefined" && typeof anzhiyu.reflashEssayWaterFall === "function") {
                 anzhiyu.reflashEssayWaterFall();
+              } else {
+                waterfallEl.classList.add("show");
               }
-            });
+            };
+
+            requestAnimationFrame(() => requestAnimationFrame(relayout));
+            setTimeout(relayout, 120);
+            setTimeout(relayout, 420);
           };
 
           const now = new Date();
@@ -291,16 +348,17 @@ if site.data.essay
             const button = event.target.closest(".essay-year-filter");
             if (!button) return;
             const selectedYear = button.dataset.year;
+            const filtered = selectedYear !== "all";
 
             filters.querySelectorAll(".essay-year-filter").forEach(item => item.classList.toggle("active", item === button));
             records.forEach(record => {
-              const visible = selectedYear === "all" || String(record.year) === selectedYear;
+              const visible = !filtered || String(record.year) === selectedYear;
               record.item.classList.toggle("essay-archive-hidden", !visible);
             });
 
-            refreshEssayWaterfall();
+            refreshEssayWaterfall(filtered);
 
-            if (selectedYear === "all") {
+            if (!filtered) {
               summary.textContent = `共记录 ${records.length} 条碎碎念，时间跨度 ${years[years.length - 1]} — ${years[0]}。`;
             } else {
               summary.textContent = `${selectedYear} 年共留下 ${yearCounts[selectedYear]} 条碎碎念。`;
