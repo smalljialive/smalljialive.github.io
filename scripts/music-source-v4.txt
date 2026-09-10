@@ -1,0 +1,3 @@
+Supabase music-proxy v4 validation marker.
+Test song: 周杰伦 - 雨下一整晚
+Expected sources: netease, kuwo, tencent
