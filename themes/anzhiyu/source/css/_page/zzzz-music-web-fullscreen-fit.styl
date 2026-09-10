@@ -1,0 +1,63 @@
+// Web fullscreen stays inside the browser page, so reserve room for the fixed site nav.
+// Screen fullscreen keeps the original 100vh immersive layout.
+.sjm-fullscreen[data-fullscreen-mode="web"]
+  top 60px
+  bottom 0
+  height auto
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-inner
+  height calc(100vh - 60px)
+  padding 30px 0 26px
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-cover-wrap
+  width 52%
+  max-width 340px
+  min-width 220px
+  margin-bottom 22px
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-controls
+  margin-top 20px
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-progress
+  margin-top 18px
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-lyrics-panel
+  padding-top 22px
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-lyrics
+  padding-top 32vh
+  padding-bottom 32vh
+
+.sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
+  top 18px
+
+@media screen and (max-width: 980px)
+  .sjm-fullscreen[data-fullscreen-mode="web"]
+    top 56px
+
+  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-inner
+    height calc(100vh - 56px)
+    padding 24px 0 20px
+
+  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-cover-wrap
+    width 190px
+    min-width 190px
+    margin-bottom 14px
+
+  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-lyrics-panel
+    min-height 42vh
+
+@media screen and (max-width: 520px)
+  .sjm-fullscreen[data-fullscreen-mode="web"]
+    top 52px
+
+  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-inner
+    height calc(100vh - 52px)
+    padding 18px 0 16px
+
+  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-cover-wrap
+    width 150px
+    min-width 150px
+
+  .sjm-fullscreen[data-fullscreen-mode="web"] .sjm-fullscreen-close
+    top 10px
