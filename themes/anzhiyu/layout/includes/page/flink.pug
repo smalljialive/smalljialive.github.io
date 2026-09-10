@@ -1,72 +1,93 @@
 #article-container
-  if theme.linkPageTop && theme.linkPageTop.enable
-    #flink-banners
-      .banner-top-box
-        .flink-banners-title
-          .banners-title-small 友情链接
-          .banners-title-big=theme.linkPageTop ? theme.linkPageTop.title : "与数百名博主无限进步"
-        .banner-button-group
-          if theme.friends_vue.apiurl
-            a.banner-button.secondary.no-text-decoration(onclick="friendChainRandomTransmission()")
-              i.anzhiyufont.anzhiyu-icon-paper-plane1
-              span.banner-button-text 随机访问
-          if theme.linkPageTop.addFriendPlaceholder && theme.comments.use == 'Twikoo' && theme.twikoo.envId
-            a.banner-button.no-text-decoration(onclick="anzhiyu.addFriendLink()")
-              i.anzhiyufont.anzhiyu-icon-arrow-circle-right
-              span.banner-button-text 申请友链
-      #skills-tags-group-all
-        .tags-group-wrapper
-          - function getAvatarWithoutExclamationMark(url) {
-          -   const index = url.indexOf('!');
-          -   return index !== -1 ? url.substring(0, index) : url;
-          - }
-          each y in [1,2]
-            each i, index in site.data.link.slice(0, 15)
-              - const link_list = i.link_list.slice()
-              - const hundredSuffix = i.hundredSuffix ? i.hundredSuffix : ""
-              - const evenNum = link_list.filter((x, index) => index % 2 === 0);
-              - const oddNum = link_list.filter((x, index) => index % 2 === 1);
-              each item, index2 in link_list.slice(0, Math.min(evenNum.length, oddNum.length))
-                - const index = index2 * 2
-                if (index <= 15 && typeof evenNum[index] !== 'undefined' && typeof oddNum[index] !== 'undefined')
-                  - let oddNumAvatar = getAvatarWithoutExclamationMark(oddNum[index].avatar);
-                  - let evenNumAvatar = getAvatarWithoutExclamationMark(evenNum[index].avatar);
-                  .tags-group-icon-pair
-                    a.tags-group-icon.no-text-decoration(href=url_for(evenNum[index].link), title=evenNum[index].name)
-                      img.no-lightbox(title=evenNum[index].name, src=url_for(evenNumAvatar + hundredSuffix) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=evenNum[index].name)
-                    a.tags-group-icon.no-text-decoration(href=url_for(oddNum[index].link), title=oddNum[index].name)
-                      img.no-lightbox(title=oddNum[index].name, src=url_for(oddNumAvatar + hundredSuffix) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=oddNum[index].name)
-  if theme.friends_vue && theme.friends_vue.enable
-    .title-h2-a
-      .title-h2-a-left
-        h2(style='padding-top:0;margin:.6rem 0 .6rem') 🎣 钓鱼
-        a.random-post-start.no-text-decoration(href='javascript:fetchRandomPost();')
-          i.anzhiyufont.anzhiyu-icon-arrow-rotate-right
-      .title-h2-a-right
-        a.random-post-all.no-text-decoration(href='/link/') 全部友链
-    #random-post
-    script(defer data-pjax src=url_for(theme.asset.random_friends_post_js))
+  - const toolboxGroups = (site.data.link || []).filter(group => group && group.class_name && group.link_list && group.link_list.length)
+  - const toolboxTotal = toolboxGroups.reduce((sum, group) => sum + group.link_list.length, 0)
+  - const categoryIcons = { '优质导航': '🧭', '优质博主': '✦', 'AI工具': 'AI', '强大插件': '⌘', '小工具站': '⚙', '运营专属': '↗', '视频工具': '▶', '资源大全': '◇', '新奇网站': '✧', '知识学堂': '◎', '游戏大全': '◈', '影视仓库': '▣' }
 
-  //- Lightweight source for Toolbox 2.0. Keep metadata in DOM without loading
-  //- the legacy cards, remote screenshots, or hundreds of source avatars.
-  .flink.sj-toolbox-data-source(style='display:none')
-    if site.data.link
-      each i in site.data.link
-        if i.class_name
-          h2!= i.class_name + "(" + i.link_list.length + ")"
-        if i.class_desc
-          .flink-desc!=i.class_desc
-        if i.link_list
-          .anzhiyu-flink-list
-            each item in i.link_list
-              - let tag = item.tag || ""
-              .flink-list-item
-                if tag
-                  span.site-card-tag= tag
-                a.cf-friends-link(href=url_for(item.link) cf-href=url_for(item.link) title=item.name target="_blank")
-                  //- cf-src is intentionally metadata only; no src/data-lazy-src here.
-                  img.cf-friends-avatar.no-lightbox(cf-src=url_for(item.avatar) alt="")
-                  .flink-item-info
-                    .flink-item-name.cf-friends-name= item.name
-                    .flink-item-desc(title=item.descr)= item.descr
+  .sj-toolbox-app(data-total=toolboxTotal)
+    section.sj-toolbox-hero
+      .sj-toolbox-hero-copy
+        span.sj-toolbox-eyebrow SMALLJIA TOOLBOX
+        h1 百宝箱
+        p 把真正好用的网站和工具，整理成随手就能找到的入口。
+        .sj-toolbox-stats= toolboxTotal + ' 个网站 · ' + toolboxGroups.length + ' 个分类'
+      .sj-toolbox-search-wrap
+        span.sj-toolbox-search-icon(aria-hidden='true') ⌕
+        input.sj-toolbox-search(type='search' autocomplete='off' placeholder='搜索网站、用途或关键词…' aria-label='搜索百宝箱')
+        kbd /
+        button.sj-toolbox-search-clear(type='button' aria-label='清空搜索') ×
+
+    section.sj-toolbox-filter-wrap
+      .sj-toolbox-chips
+        button.sj-toolbox-chip.active(type='button' data-category-filter='__all__' aria-pressed='true')
+          span.sj-toolbox-chip-icon ⌘
+          span 全部
+          em= toolboxTotal
+        button.sj-toolbox-chip(type='button' data-category-filter='__favorites__' aria-pressed='false')
+          span.sj-toolbox-chip-icon ★
+          span 常用
+          em(data-favorite-count) 0
+        each group in toolboxGroups
+          button.sj-toolbox-chip(type='button' data-category-filter=group.class_name aria-pressed='false')
+            span.sj-toolbox-chip-icon= categoryIcons[group.class_name] || '✦'
+            span= group.class_name
+            em= group.link_list.length
+      .sj-toolbox-result-note= '按分类浏览，共 ' + toolboxTotal + ' 个网站'
+
+    section.sj-toolbox-smart
+      .sj-toolbox-smart-panel(data-panel='favorites')
+        .sj-toolbox-smart-head
+          div
+            span.sj-toolbox-smart-kicker QUICK ACCESS
+            h2 ★ 我的常用
+          span.sj-toolbox-smart-count
+        .sj-toolbox-mini-grid
+          .sj-toolbox-smart-empty 点击网站卡片右上角的 ☆，把常用入口放到这里。
+      .sj-toolbox-smart-panel(data-panel='recent')
+        .sj-toolbox-smart-head
+          div
+            span.sj-toolbox-smart-kicker RECENT
+            h2 最近使用
+          button.sj-toolbox-clear-recent(type='button') 清空
+        .sj-toolbox-mini-grid
+          .sj-toolbox-smart-empty 你打开过的网站会自动出现在这里。
+
+    .sj-toolbox-sections
+      each group, groupIndex in toolboxGroups
+        section.sj-toolbox-section(data-category=group.class_name data-section-index=groupIndex data-expanded='0')
+          .sj-toolbox-section-head
+            div
+              h2= group.class_name
+              p= group.class_desc || '收藏的网站与工具'
+            span.sj-toolbox-section-count= group.link_list.length + ' 个'
+          .sj-toolbox-grid
+            each item, itemIndex in group.link_list
+              - const itemName = String(item.name || item.link || '网站')
+              - const itemDesc = String(item.descr || '打开网站')
+              - const itemLink = url_for(item.link || '#')
+              - const rawAvatar = String(item.avatar || '')
+              - const bangIndex = rawAvatar.indexOf('!')
+              - const cleanAvatar = bangIndex === -1 ? rawAvatar : rawAvatar.substring(0, bangIndex)
+              - const itemAvatar = cleanAvatar ? url_for(cleanAvatar + (group.hundredSuffix || '')) : ''
+              - const itemTag = String(item.tag || group.class_name)
+              - const searchText = [itemName, itemDesc, group.class_name, itemLink, itemTag].join(' ').toLowerCase()
+              article.sj-toolbox-card(data-url=itemLink data-href=itemLink data-name=itemName data-desc=itemDesc data-avatar=itemAvatar data-tag=itemTag data-category=group.class_name data-search=searchText data-order=itemIndex)
+                a.sj-toolbox-card-link.no-text-decoration(href=itemLink title=itemName target='_blank' rel='noopener noreferrer nofollow')
+                  span.sj-toolbox-card-icon(class=itemAvatar ? 'has-image' : '')
+                    span.sj-toolbox-card-fallback= itemName.slice(0, 1).toUpperCase()
+                    if itemAvatar
+                      img(src=itemAvatar alt='' loading='lazy' decoding='async' fetchpriority='low' referrerpolicy='no-referrer' width='54' height='54' onerror='this.remove()')
+                  span.sj-toolbox-card-body
+                    span.sj-toolbox-card-title-row
+                      strong.sj-toolbox-card-title= itemName
+                      span.sj-toolbox-card-arrow ↗
+                    span.sj-toolbox-card-desc= itemDesc
+                    span.sj-toolbox-card-meta= itemTag
+                button.sj-toolbox-favorite(type='button' data-favorite-url=itemLink aria-label='收藏 ' + itemName aria-pressed='false' title='收藏到我的常用') ☆
+          if group.link_list.length > 10
+            button.sj-toolbox-more(type='button')= '显示更多（' + (group.link_list.length - 10) + '）'
+
+    .sj-toolbox-empty
+      strong 没有找到匹配的网站
+      span 换一个关键词，或者切回“全部”试试。
+
   != page.content
