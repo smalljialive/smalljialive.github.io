@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v5
         with:
           node-version: "24"
+      - name: Validate Qexo essay bridge syntax
+        run: node --check themes/anzhiyu/source/js/smalljia-essay-qexo.js
       - name: Test Qexo talks bridge
         run: node scripts/check-qexo-talks.mjs
       - name: Test GD Studio sources with 雨下一整晚
