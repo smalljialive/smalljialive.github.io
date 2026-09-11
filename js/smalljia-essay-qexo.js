@@ -1,11 +1,11 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260911-1";
+  const VERSION = "20260911-2";
   if (window.__smallJiaEssayQexoVersion === VERSION) return;
   window.__smallJiaEssayQexoVersion = VERSION;
 
-  const QEXO_API = "https://small-tan.vercel.app/pub/talks/";
+  const QEXO_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/qexo-talks-proxy";
   const PAGE_SIZE = 100;
   const MAX_PAGES = 10;
   const MUSIC_PROXY = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy";
@@ -329,7 +329,7 @@
     }
   };
 
-  const playMusicCard = async card, music => {
+  const playMusicCard = async (card, music) => {
     let state = musicStates.get(card);
     if (!state) {
       state = { audio: null, loading: false, resolvedUrl: "", preview: false };
