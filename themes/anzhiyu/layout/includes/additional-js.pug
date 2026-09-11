@@ -63,6 +63,86 @@ div
       script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260911-1')
       script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260911-1')
       script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
+      //- Link 页没有 MetingJS 预先提供真实音频地址，因此先在后台解析当前曲目。
+      //- 这样用户第一次点击播放时是同步播放已解析 URL，不会被浏览器的异步自动播放策略拦截。
+      script.
+        (() => {
+          const SILENT_PREFIX = "data:audio/wav";
+          const MAX_ATTEMPTS = 60;
+          let attempts = 0;
+          let timer = null;
+          let resolvingStarted = false;
+
+          const getPlayer = () => document.querySelector("#nav-music meting-js")?.aplayer || null;
+          const getCurrent = ap => {
+            const index = Number.isInteger(ap?.list?.index) ? ap.list.index : 0;
+            return { index, audio: ap?.list?.audios?.[index] || null };
+          };
+          const isReady = audio => !!(
+            audio &&
+            audio.__smallJiaResolved &&
+            audio.url &&
+            !String(audio.url).startsWith(SILENT_PREFIX)
+          );
+          const setTip = text => {
+            const tip = document.getElementById("nav-music-hoverTips");
+            if (tip && !window.anzhiyu_musicPlaying) tip.textContent = text;
+          };
+
+          const stop = () => {
+            if (timer) clearTimeout(timer);
+            timer = null;
+          };
+
+          const prepare = () => {
+            const ap = getPlayer();
+            if (!ap?.list?.audios?.length) return false;
+
+            const { index, audio } = getCurrent(ap);
+            if (isReady(audio)) {
+              stop();
+              setTip("点击播放");
+              return true;
+            }
+
+            // daily-player 已接管列表后，switch 会触发它自己的单曲解析；只启动一次。
+            if (!resolvingStarted && audio?.__smallJiaDaily && typeof ap.list.switch === "function") {
+              resolvingStarted = true;
+              setTip("音乐准备中…");
+              try { ap.list.switch(index); } catch (error) {
+                console.warn("SmallJia link nav music: pre-resolve failed", error);
+              }
+            }
+            return false;
+          };
+
+          const poll = () => {
+            if (prepare()) return;
+            attempts += 1;
+            if (attempts >= MAX_ATTEMPTS) {
+              stop();
+              setTip("点击重试音乐");
+              return;
+            }
+            timer = setTimeout(poll, attempts < 12 ? 250 : 500);
+          };
+
+          // 页面进入后主动预解析一首即可；不加载整份远程歌单音频，不影响 Link 滚动性能。
+          timer = setTimeout(poll, 350);
+
+          // 若用户在首曲尚未解析完成前点击，先拦住无声播放，并继续准备。
+          document.addEventListener("click", event => {
+            if (!(event.target instanceof Element) || !event.target.closest("#nav-music")) return;
+            const ap = getPlayer();
+            const { audio } = getCurrent(ap);
+            if (isReady(audio)) return;
+
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            setTip("音乐准备中…");
+            if (!timer) timer = setTimeout(poll, 0);
+          }, true);
+        })();
   else
     if theme.translate.enable
       script(src=url_for(theme.asset.translate))
