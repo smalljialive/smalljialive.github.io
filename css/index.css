@@ -26044,12 +26044,33 @@ html.hide-aside .layout > div:first-child {
 }
 
 #aside-content #flip-wrapper #flip-content .back.face {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
   box-sizing: border-box;
-  background-size: 100%;
+  padding: 18px 20px;
+  border-radius: inherit;
+  background: #57bd6a;
+  color: #fff;
+  text-align: center;
 }
+
+#aside-content #flip-wrapper #flip-content .card-wechat-back-text {
+  display: block;
+  font-size: 20px;
+  line-height: 1.45;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(20, 90, 40, 0.16);
+}
+
+[data-theme="dark"] #aside-content #flip-wrapper #flip-content .back.face {
+  background: #57bd6a;
+  color: #fff;
+}
+
 #flip-wrapper:hover #flip-content {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
