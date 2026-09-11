@@ -1,7 +1,7 @@
 div
   - var isLinkSafePage = page.type === 'link' || is_current('/link/')
 
-  //- Link 页保留主题核心脚本和导航音乐核心，继续隔离 PJAX、搜索、瀑布流等重型全站运行时。
+  //- Link 页保留主题核心脚本；其它非必要运行时继续隔离，避免大量友链卡片与全站脚本同时初始化。
   script(src=url_for(theme.asset.utils))
   script(src=url_for(theme.asset.main))
 
@@ -17,137 +17,19 @@ div
     if (theme.icons && theme.icons.ali_iconfont_js)
       script(async src=url_for(theme.icons.ali_iconfont_js))
 
-    //- Link 页只加载 APlayer 本体，不加载 MetingJS。
-    //- MetingJS 会先请求并构建完整网易云歌单，再被日常歌单脚本清空重建；
-    //- 在 Link 大量卡片同时渲染时会产生明显的主线程峰值，容易导致页面无响应。
-    if theme.asset.meting_api
-      script.
-        var meting_api = "!{theme.asset.meting_api}";
-
+    //- Link 直开/刷新采用真正的静态运行模式：首屏不加载 APlayer、MetingJS、歌单和音乐解析脚本。
+    //- 用户第一次点击左下角播放器时才按需加载 APlayer + 日常歌单逻辑；站内 PJAX 进入 Link 时则沿用原播放器。
     if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
-      link(rel='stylesheet' href=url_for(theme.asset.aplayer_css) media="print" onload="this.media='all'")
-      script(src=url_for(theme.asset.aplayer_js))
       script.
-        (() => {
-          const host = document.querySelector("#nav-music meting-js");
-          if (!host || host.aplayer || typeof APlayer !== "function") return;
-
-          const silentUrl = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
-          const fallbackCover = "/img/music-placeholder.svg";
-
-          try {
-            const player = new APlayer({
-              container: host,
-              fixed: false,
-              mini: false,
-              autoplay: false,
-              theme: "var(--anzhiyu-main)",
-              loop: "all",
-              order: "random",
-              preload: "none",
-              volume: Number("!{theme.nav_music.volume}") || 0.5,
-              mutex: true,
-              lrcType: 0,
-              audio: [{
-                name: "日常",
-                artist: "SmallJia",
-                url: silentUrl,
-                cover: fallbackCover,
-                lrc: ""
-              }]
-            });
-
-            host.aplayer = player;
-            window.aplayers = Array.isArray(window.aplayers) ? window.aplayers : [];
-            if (!window.aplayers.includes(player)) window.aplayers.push(player);
-          } catch (error) {
-            console.warn("SmallJia link nav music: lightweight APlayer init failed", error);
-          }
-        })();
-      script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260911-1')
-      script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260911-1')
-      script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
-      //- Link 页没有 MetingJS 预先提供真实音频地址，因此先在后台解析当前曲目。
-      //- 这样用户第一次点击播放时是同步播放已解析 URL，不会被浏览器的异步自动播放策略拦截。
-      script.
-        (() => {
-          const SILENT_PREFIX = "data:audio/wav";
-          const MAX_ATTEMPTS = 60;
-          let attempts = 0;
-          let timer = null;
-          let resolvingStarted = false;
-
-          const getPlayer = () => document.querySelector("#nav-music meting-js")?.aplayer || null;
-          const getCurrent = ap => {
-            const index = Number.isInteger(ap?.list?.index) ? ap.list.index : 0;
-            return { index, audio: ap?.list?.audios?.[index] || null };
-          };
-          // APlayer 可能会重新规范化 audio 对象并丢弃自定义字段，
-          // 因此是否可播放只以真实 URL 为准，不再依赖 __smallJiaResolved 标记。
-          const isReady = audio => !!(
-            audio &&
-            audio.url &&
-            !String(audio.url).startsWith(SILENT_PREFIX)
-          );
-          const setTip = text => {
-            const tip = document.getElementById("nav-music-hoverTips");
-            if (tip && !window.anzhiyu_musicPlaying) tip.textContent = text;
-          };
-
-          const stop = () => {
-            if (timer) clearTimeout(timer);
-            timer = null;
-          };
-
-          const prepare = () => {
-            const ap = getPlayer();
-            if (!ap?.list?.audios?.length) return false;
-
-            const { index, audio } = getCurrent(ap);
-            if (isReady(audio)) {
-              stop();
-              setTip("点击播放");
-              return true;
-            }
-
-            // daily-player 已接管列表后，switch 会触发它自己的单曲解析；只启动一次。
-            if (!resolvingStarted && audio?.__smallJiaDaily && typeof ap.list.switch === "function") {
-              resolvingStarted = true;
-              setTip("音乐准备中…");
-              try { ap.list.switch(index); } catch (error) {
-                console.warn("SmallJia link nav music: pre-resolve failed", error);
-              }
-            }
-            return false;
-          };
-
-          const poll = () => {
-            if (prepare()) return;
-            attempts += 1;
-            if (attempts >= MAX_ATTEMPTS) {
-              stop();
-              setTip("点击重试音乐");
-              return;
-            }
-            timer = setTimeout(poll, attempts < 12 ? 250 : 500);
-          };
-
-          // 页面进入后主动预解析一首即可；不加载整份远程歌单音频，不影响 Link 滚动性能。
-          timer = setTimeout(poll, 350);
-
-          // 若用户在首曲尚未解析完成前点击，先拦住无声播放，并继续准备。
-          document.addEventListener("click", event => {
-            if (!(event.target instanceof Element) || !event.target.closest("#nav-music")) return;
-            const ap = getPlayer();
-            const { audio } = getCurrent(ap);
-            if (isReady(audio)) return;
-
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            setTip("音乐准备中…");
-            if (!timer) timer = setTimeout(poll, 0);
-          }, true);
-        })();
+        window.__smallJiaLinkMusicConfig = {
+          aplayerCss: "!{url_for(theme.asset.aplayer_css)}",
+          aplayerJs: "!{url_for(theme.asset.aplayer_js)}",
+          dailyJs: "!{url_for('/js/smalljia-nav-daily-player.js')}?v=20260911-1",
+          hoverJs: "!{url_for('/js/smalljia-nav-music-hover.js')}?v=20260911-1",
+          persistenceJs: "!{url_for('/js/smalljia-nav-music-persistence.js')}?v=20260910-2",
+          volume: Number("!{theme.nav_music.volume}") || 0.5
+        };
+      script(src=url_for('/js/smalljia-link-nav-player-fix.js') + '?v=20260911-3')
   else
     if theme.translate.enable
       script(src=url_for(theme.asset.translate))
