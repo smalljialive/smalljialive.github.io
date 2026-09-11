@@ -245,13 +245,13 @@
     const scheduleInstall = () => {
       clearTimeout(installTimer);
       installTimer = setTimeout(() => {
-        if (!hasCatalog(app)) installCatalog(app, providerSetSourceState);
+        if (!app.queue?.length && !hasCatalog(app)) installCatalog(app, providerSetSourceState);
       }, 0);
     };
 
     app.setSourceState = function (state, routeLabel) {
       const result = providerSetSourceState(state, routeLabel);
-      if ((state === "ready" || state === "error") && !hasCatalog(this)) scheduleInstall();
+      if ((state === "ready" || state === "error") && !this.queue?.length && !hasCatalog(this)) scheduleInstall();
       return result;
     };
 
@@ -301,7 +301,7 @@
     };
 
     if (app.queue?.length || app.root?.classList.contains("sjm-engine-error")) scheduleInstall();
-    else setTimeout(() => { if (!hasCatalog(app)) installCatalog(app, providerSetSourceState); }, 12000);
+    else setTimeout(() => { if (!app.queue?.length && !hasCatalog(app)) installCatalog(app, providerSetSourceState); }, 12000);
 
     return true;
   };
