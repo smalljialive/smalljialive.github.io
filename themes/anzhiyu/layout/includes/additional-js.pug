@@ -4,11 +4,12 @@ div
   script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260910-2')
   script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260910-2')
   script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
-  script(src=url_for('/js/smalljia-toolbox-v2.js') + '?v=20260910-2')
-  link(rel="stylesheet" href=url_for('/css/smalljia-toolbox-performance.css') + '?v=20260910-4')
-  script(src=url_for('/js/smalljia-toolbox-scroll-state.js') + '?v=20260910-1')
-  link(rel="stylesheet" href=url_for('/css/smalljia-toolbox-category-scroll.css') + '?v=20260910-1')
-  script(src=url_for('/js/smalljia-toolbox-category-scroll.js') + '?v=20260910-1')
+
+  //- The toolbox is now fully static. Keep only one lightweight stylesheet on
+  //- the link page; no card-generation, favicon-observer, scroll-state, or
+  //- category-drag JavaScript runs there anymore.
+  if page.type === 'link' || is_current('/link/')
+    link(rel="stylesheet" href=url_for('/css/smalljia-toolbox-lite.css') + '?v=20260911-lite-1')
 
   if theme.translate.enable
     script(src=url_for(theme.asset.translate))
