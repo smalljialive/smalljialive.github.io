@@ -108,7 +108,10 @@ jobs:
           grep -q 'TARGET_NAME = "日常"' public/js/smalljia-nav-daily-player.js
           grep -q 'const SOURCES = \["kuwo", "tencent", "netease"\]' public/js/smalljia-nav-daily-player.js
           grep -q "is_public=eq.true" public/js/smalljia-nav-daily-player.js
-          grep -q "smalljia-nav-daily-player.js?v=20260910-2" public/index.html
+          grep -Eq 'smalljia-nav-daily-player\.js\?v=[^" ]+' public/index.html
+          grep -Eq 'smalljia-nav-daily-player\.js\?v=[^" ]+' public/link/index.html
+          grep -Eq 'smalljia-nav-music-hover\.js\?v=[^" ]+' public/link/index.html
+          grep -Eq 'smalljia-nav-music-persistence\.js\?v=[^" ]+' public/link/index.html
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-gdstudio.js?v=20260910-6" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
