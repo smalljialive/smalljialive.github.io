@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260911-1";
+  const VERSION = "20260911-2";
   if (window.__smallJiaNavDailyPlayerVersion === VERSION) return;
   window.__smallJiaNavDailyPlayerVersion = VERSION;
 
@@ -415,7 +415,7 @@
     try {
       ap.list.add(audios);
       state.installed = true;
-      const startIndex = Math.floor(Math.random() * state.tracks.length);
+      const startIndex = 0;
       const resolveInitialTrack = () => switchTo(startIndex, wasPlaying);
       if (wasPlaying) resolveInitialTrack();
       else if ("requestIdleCallback" in window) requestIdleCallback(resolveInitialTrack, { timeout: 4000 });
