@@ -1,27 +1,63 @@
+mixin sjtbLiteCard(item, group)
+  - var itemName = String(item.name || item.link || '网站')
+  - var itemDesc = String(item.descr || '打开网站')
+  - var itemLink = url_for(item.link || '#')
+  - var rawAvatar = String(item.avatar || '')
+  - var bangIndex = rawAvatar.indexOf('!')
+  - var cleanAvatar = bangIndex === -1 ? rawAvatar : rawAvatar.substring(0, bangIndex)
+  - var itemAvatar = cleanAvatar ? url_for(cleanAvatar + (group.hundredSuffix || '')) : ''
+  - var itemTag = String(item.tag || group.class_name || '网站')
+  a.sjtb-lite-card.no-text-decoration(href=itemLink title=itemName target='_blank' rel='noopener noreferrer nofollow')
+    span.sjtb-lite-icon
+      span.sjtb-lite-fallback= itemName.slice(0, 1).toUpperCase()
+      if itemAvatar
+        img.no-lightbox(src=itemAvatar loading='lazy' decoding='async' fetchpriority='low' referrerpolicy='no-referrer' width='46' height='46' alt='' onerror="this.style.display='none'")
+    span.sjtb-lite-copy
+      strong.sjtb-lite-title= itemName
+      span.sjtb-lite-desc= itemDesc
+      span.sjtb-lite-meta= itemTag
+
 #article-container
-  //- Toolbox-only source. Keep this page lightweight and do not render the
-  //- legacy friend-link banner/random blocks, because those blocks create many
-  //- remote image requests before Toolbox mounts.
-  .flink.sj-toolbox-data-source(style='display:none')
-    if site.data.link
-      each i in site.data.link
-        if i.class_name
-          h2!= i.class_name + "(" + i.link_list.length + ")"
-        if i.class_desc
-          .flink-desc!=i.class_desc
-        if i.link_list
-          .anzhiyu-flink-list
-            each item in i.link_list
-              - let tag = item.tag || ""
-              .flink-list-item
-                if tag
-                  span.site-card-tag= tag
-                a.cf-friends-link(href=url_for(item.link) cf-href=url_for(item.link) title=item.name target="_blank")
-                  //- Intentionally omit remote avatar URLs for the safe path.
-                  //- Toolbox will use the built-in letter fallback and avoid
-                  //- third-party favicon requests during initial page load.
-                  img.cf-friends-avatar.no-lightbox(alt="")
-                  .flink-item-info
-                    .flink-item-name.cf-friends-name= item.name
-                    .flink-item-desc(title=item.descr)= item.descr
+  - var toolboxGroups = (site.data.link || []).filter(function(group) { return group && group.class_name && group.link_list && group.link_list.length })
+  - var toolboxTotal = toolboxGroups.reduce(function(sum, group) { return sum + group.link_list.length }, 0)
+
+  .sjtb-lite#sjtb-top
+    section.sjtb-lite-hero
+      span.sjtb-lite-eyebrow SMALLJIA TOOLBOX
+      h1 百宝箱
+      p 把常用的网站与工具整理成轻量、直接可用的静态入口。
+      .sjtb-lite-stats= toolboxTotal + ' 个网站 · ' + toolboxGroups.length + ' 个分类'
+
+    nav.sjtb-lite-nav-wrap(aria-label='百宝箱分类导航')
+      .sjtb-lite-nav
+        a.sjtb-lite-chip.no-text-decoration(href='#sjtb-top')
+          span 全部
+          em= toolboxTotal
+        each group, groupIndex in toolboxGroups
+          a.sjtb-lite-chip.no-text-decoration(href='#sjtb-section-' + groupIndex)
+            span= group.class_name
+            em= group.link_list.length
+
+    .sjtb-lite-sections
+      each group, groupIndex in toolboxGroups
+        section.sjtb-lite-section(id='sjtb-section-' + groupIndex)
+          .sjtb-lite-section-head
+            div
+              h2= group.class_name
+              p= group.class_desc || '收藏的网站与工具'
+            span.sjtb-lite-count= group.link_list.length + ' 个'
+
+          .sjtb-lite-grid
+            each item, itemIndex in group.link_list
+              if itemIndex < 10
+                +sjtbLiteCard(item, group)
+
+          if group.link_list.length > 10
+            details.sjtb-lite-more
+              summary= '显示更多（' + (group.link_list.length - 10) + '）'
+              .sjtb-lite-grid
+                each item, itemIndex in group.link_list
+                  if itemIndex >= 10
+                    +sjtbLiteCard(item, group)
+
   != page.content
