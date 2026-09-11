@@ -1,7 +1,7 @@
 div
   - var isLinkSafePage = page.type === 'link' || is_current('/link/')
 
-  //- Link 页只保留主题核心脚本，避免导航音乐、PJAX、搜索、瀑布流等全站运行时抢占主线程。
+  //- Link 页保留主题核心脚本和导航音乐核心，继续隔离 PJAX、搜索、瀑布流等重型全站运行时。
   script(src=url_for(theme.asset.utils))
   script(src=url_for(theme.asset.main))
 
@@ -12,6 +12,17 @@ div
     link(rel="stylesheet" href=url_for(theme.asset.ali_iconfont_css))
     if (theme.icons && theme.icons.ali_iconfont_js)
       script(async src=url_for(theme.icons.ali_iconfont_js))
+
+    //- 仅恢复导航音乐所需的最小依赖，不重新加载搜索、waterfall、PJAX 等运行时。
+    if theme.asset.meting_api
+      script.
+        var meting_api = "!{theme.asset.meting_api}";
+
+    if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
+      include ./third-party/aplayer.pug
+      script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260911-1')
+      script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260911-1')
+      script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
   else
     if theme.translate.enable
       script(src=url_for(theme.asset.translate))
