@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260911-2";
+  const VERSION = "20260911-3";
   if (window.__smallJiaEssayQexoVersion === VERSION) return;
   window.__smallJiaEssayQexoVersion = VERSION;
 
@@ -179,7 +179,7 @@
         if (result?.status && Array.isArray(result.data)) talks.push(...result.data);
       });
     }
-    return talks.sort((a, b) => Number(b?.time || 0) - Number(a?.time || 0));
+    return talks.sort((a, b) => Number(a?.time || 0) - Number(b?.time || 0));
   };
 
   const makeImageBlock = urls => {
@@ -236,9 +236,22 @@
   };
 
   const parseAplayer = values => {
+    const hasMusicValue = [
+      valueOf(values, ["aplayer", "音乐", "music"], ""),
+      valueOf(values, ["music_server", "music_source", "音乐平台", "音乐来源"], ""),
+      valueOf(values, ["music_id", "song_id", "歌曲ID", "音乐ID", "歌曲id", "音乐id"], ""),
+      valueOf(values, ["music_url", "audio_url", "音频地址", "音乐地址"], ""),
+    ].some(value => {
+      if (value && typeof value === "object") {
+        return Object.values(value).some(item => String(item ?? "").trim() !== "");
+      }
+      return String(value ?? "").trim() !== "";
+    });
+    if (!hasMusicValue) return null;
+
     const raw = parseMaybeJson(valueOf(values, ["aplayer", "音乐", "music"], null));
     const objectValue = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
-    const server = normalizeSource(objectValue.server || valueOf(values, ["music_server", "music_source", "音乐平台", "音乐来源", "平台"], ""));
+    const server = normalizeSource(objectValue.server || valueOf(values, ["music_server", "music_source", "音乐平台", "音乐来源"], ""));
     const id = String(objectValue.id || valueOf(values, ["music_id", "song_id", "歌曲ID", "音乐ID", "歌曲id", "音乐id"], "")).trim();
     const directUrl = safeHttpUrl(objectValue.url || valueOf(values, ["music_url", "audio_url", "音频地址", "音乐地址"], ""));
     const title = String(objectValue.title || objectValue.name || valueOf(values, ["music_title", "song_title", "歌名", "歌曲名"], "分享的音乐")).trim();
@@ -449,9 +462,9 @@
 
   const buildTalkItem = talk => {
     const values = talk?.values && typeof talk.values === "object" ? talk.values : {};
-    const from = String(valueOf(values, ["from", "source", "来源", "作者"], "SmallJia")).trim();
+    const from = String(valueOf(values, ["from", "source", "来源", "作者"], "")).trim();
     const address = String(valueOf(values, ["address", "location", "地址", "地点"], "")).trim();
-    const link = safeHttpUrl(valueOf(values, ["link", "url", "链接", "外链"], ""));
+    const link = safeHttpUrl(valueOf(values, ["link", "链接"], ""));
     const images = parseList(valueOf(values, ["image", "images", "图片", "图片链接"], []));
     const videos = parseList(valueOf(values, ["video", "videos", "视频", "视频链接"], []));
     const music = parseAplayer(values);
@@ -578,7 +591,7 @@
         if (!talk?.id || existingIds.has(String(talk.id))) return;
         fragment.appendChild(buildTalkItem(talk));
       });
-      if (fragment.childNodes.length) waterfallEl.prepend(fragment);
+      if (fragment.childNodes.length) waterfallEl.append(fragment);
       root.dataset.qexoLoaded = "1";
       refreshMemoryTools(root);
       relayout(root);
