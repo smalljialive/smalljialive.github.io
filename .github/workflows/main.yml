@@ -48,6 +48,8 @@ jobs:
           grep -q ".sjm-source-select-wrap" public/css/index.css
           grep -q ".sjm-source-trigger" public/css/index.css
           grep -q ".sjm-source-menu" public/css/index.css
+          grep -q ".sjm-fullscreen-vinyl" public/css/index.css
+          grep -q ".sjm-fullscreen-volume-row" public/css/index.css
           test -s public/js/smalljia-music-native.js
           test -s public/js/smalljia-music-gdstudio.js
           test -s public/js/smalljia-music-personal-playlist.js
@@ -96,6 +98,8 @@ jobs:
           grep -q 'TARGET_NAME = "日常"' public/js/smalljia-music-daily-import.js
           grep -q "sjm-web-fullscreen-open" public/js/smalljia-music-fullscreen.js
           grep -q "open(\"screen\")" public/js/smalljia-music-fullscreen.js
+          grep -q "sjm-fullscreen-volume" public/js/smalljia-music-fullscreen.js
+          grep -q "is-playing" public/js/smalljia-music-fullscreen.js
           grep -q "scrollInside" public/js/smalljia-music-scrollfix.js
           grep -q "scrollIntoView" public/js/smalljia-music-scrollfix.js
           grep -q "smalljia_music_source_preference_v1" public/js/smalljia-music-source-selector.js
@@ -128,13 +132,15 @@ jobs:
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-library.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-daily-import.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-fullscreen.js?v=20260910-2" public/music/index.html
+          grep -q "smalljia-music-fullscreen.js?v=20260911-1" public/music/index.html
           grep -q "smalljia-music-scrollfix.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-selector.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-retry.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-compat.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-interactions.js?v=20260910-2" public/music/index.html
           grep -q 'id="sjm-volume-value"' public/music/index.html
+          grep -q 'id="sjm-fullscreen-volume"' public/music/index.html
+          grep -q 'id="sjm-fullscreen-vinyl"' public/music/index.html
           grep -q "我的 97 首歌单" public/music/index.html
           grep -q "QQ音乐" public/music/index.html
           grep -q "多音源" public/music/index.html
