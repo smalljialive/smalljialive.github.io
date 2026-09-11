@@ -115,10 +115,12 @@ jobs:
           grep -q 'const SOURCES = \["kuwo", "tencent", "netease"\]' public/js/smalljia-nav-daily-player.js
           grep -q "is_public=eq.true" public/js/smalljia-nav-daily-player.js
           grep -Eq 'smalljia-nav-daily-player\.js\?v=[^" ]+' public/index.html
-          grep -Eq 'smalljia-link-nav-player-fix\.js\?v=[^" ]+' public/link/index.html
-          grep -q 'window.__smallJiaLinkMusicConfig' public/link/index.html
-          if grep -Eq '<script[^>]+src="[^"]*smalljia-nav-(daily-player|music-hover|music-persistence)\.js' public/link/index.html; then
-            echo "Link page is eagerly loading nav music runtime; expected click-to-load mode"
+          if grep -q 'id="nav-music"' public/link/index.html; then
+            echo "Link page must not render the lower-left nav music player"
+            exit 1
+          fi
+          if grep -Eq 'smalljia-link-nav-player-fix\.js|window\.__smallJiaLinkMusicConfig|smalljia-nav-(daily-player|music-hover|music-persistence)\.js' public/link/index.html; then
+            echo "Link page must not load any nav music runtime"
             exit 1
           fi
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
