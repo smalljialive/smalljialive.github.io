@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260911-3";
+  const VERSION = "20260911-4";
   if (window.__smallJiaEssayQexoVersion === VERSION) return;
   window.__smallJiaEssayQexoVersion = VERSION;
 
@@ -49,8 +49,10 @@
   };
 
   const safeHttpUrl = value => {
+    const raw = String(value ?? "").trim();
+    if (!raw) return "";
     try {
-      const url = new URL(String(value || ""), window.location.href);
+      const url = new URL(raw, window.location.href);
       return /^https?:$/i.test(url.protocol) ? url.href : "";
     } catch (_) {
       return "";
