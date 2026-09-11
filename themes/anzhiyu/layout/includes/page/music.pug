@@ -146,7 +146,10 @@
     .sjm-fullscreen-inner
       section.sjm-fullscreen-player
         .sjm-fullscreen-cover-wrap
-          img#sjm-fullscreen-cover(src="/img/favicon.ico" alt="当前歌曲封面")
+          #sjm-fullscreen-vinyl.sjm-fullscreen-vinyl
+            .sjm-fullscreen-vinyl-grooves(aria-hidden="true")
+            img#sjm-fullscreen-cover(src="/img/favicon.ico" alt="当前歌曲封面")
+            .sjm-fullscreen-vinyl-spindle(aria-hidden="true")
         .sjm-fullscreen-meta
           span.sjm-eyebrow NOW PLAYING
           h2#sjm-fullscreen-title 音乐加载中
@@ -161,6 +164,10 @@
           span#sjm-fullscreen-current 00:00
           input#sjm-fullscreen-progress(type="range" min="0" max="100" value="0" step="0.1" aria-label="全屏播放进度")
           span#sjm-fullscreen-duration 00:00
+        .sjm-fullscreen-volume-row
+          button#sjm-fullscreen-mute.sjm-fullscreen-mute(type="button" aria-label="静音" title="静音") 🔊
+          input#sjm-fullscreen-volume(type="range" min="0" max="100" value="50" step="1" aria-label="全屏音量")
+          span#sjm-fullscreen-volume-value.sjm-fullscreen-volume-value(aria-live="polite") 50%
         p.sjm-fullscreen-hint Esc 退出 · 点击歌词可跳转
 
       section.sjm-fullscreen-lyrics-panel
@@ -183,7 +190,7 @@
   script(src=url_for('/js/smalljia-music-daily-import.js') + '?v=20260910-1' data-pjax)
   script(src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2' data-pjax)
   script(src=url_for('/js/smalljia-music-cloud.js') + '?v=20260910-1' data-pjax)
-  script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260910-2' data-pjax)
+  script(src=url_for('/js/smalljia-music-fullscreen.js') + '?v=20260911-1' data-pjax)
   script(src=url_for('/js/smalljia-music-scrollfix.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-source-selector.js') + '?v=20260910-1' data-pjax)
   script(src=url_for('/js/smalljia-music-backend-router.js') + '?v=20260910-1' data-pjax)
