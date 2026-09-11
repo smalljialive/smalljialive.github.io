@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>碎碎念 | SmallJia Blog</title><meta name="keywords" content="SmallJia的网络乌托邦"><meta name="author" content="SmallJia"><meta name="copyright" content="SmallJia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="碎碎念"><meta name="application-name" content="碎碎念"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="website"><meta property="og:title" content="碎碎念"><meta property="og:url" content="https://smalljialive.github.io/essay/index.html"><meta property="og:site_name" content="SmallJia Blog"><meta property="og:description" content="碎碎念"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://pic.imgdb.cn/item/675938b2d0e0a243d4e1b54a.jpg?_r_=395837b2-208e-f8e4-9f9f-e6cf5a79442d"><meta property="article:author" content="SmallJia"><meta property="article:tag" content="SmallJia的网络乌托邦"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://pic.imgdb.cn/item/675938b2d0e0a243d4e1b54a.jpg?_r_=395837b2-208e-f8e4-9f9f-e6cf5a79442d"><meta name="description" content="碎碎念"><link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260910"><link rel="shortcut icon" href="/favicon.svg?v=20260910"><script src="/js/smalljia-music-ui-fixes.js?v=20260910-1" defer></script><link rel="canonical" href="https://smalljialive.github.io/essay/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>碎碎念 | SmallJia Blog</title><meta name="keywords" content="SmallJia的网络乌托邦"><meta name="author" content="SmallJia"><meta name="copyright" content="SmallJia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="碎碎念"><meta name="application-name" content="碎碎念"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="website"><meta property="og:title" content="碎碎念"><meta property="og:url" content="https://smalljialive.github.io/essay/index.html"><meta property="og:site_name" content="SmallJia Blog"><meta property="og:description" content="碎碎念"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://pic.imgdb.cn/item/675938ffd0e0a243d4e1b56e.jpg?_r_=3939e577-b3ce-6044-eed4-6f038b702497"><meta property="article:author" content="SmallJia"><meta property="article:tag" content="SmallJia的网络乌托邦"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://pic.imgdb.cn/item/675938ffd0e0a243d4e1b56e.jpg?_r_=3939e577-b3ce-6044-eed4-6f038b702497"><meta name="description" content="碎碎念"><link rel="icon" type="image/svg+xml" href="/favicon.svg?v=20260910"><link rel="shortcut icon" href="/favicon.svg?v=20260910"><script src="/js/smalljia-music-ui-fixes.js?v=20260910-1" defer></script><link rel="canonical" href="https://smalljialive.github.io/essay/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   linkPageTop: undefined,
   peoplecanvas: undefined,
   postHeadAiDescription: undefined,
@@ -60,7 +60,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2026-09-11 01:50:43',
+  postUpdate: '2026-09-11 01:51:53',
   postMainColor: '',
 }</script><noscript><style type="text/css">
   #nav {
@@ -199,46 +199,8 @@
     if (box) box.classList.remove('loaded');
   }
 }
-
-const isLinkPage = () => {
-  const path = window.location.pathname.replace(/\/+$/, '') || '/';
-  return path === '/link';
-};
-
-// Link 页不再死等所有外部 favicon 的 window.load，
-// 也不在 DOM 一出来就立即放行。等 DOM 完成后，优先等待浏览器出现空闲时间，
-// 这样既能让主题完成首轮布局/脚本初始化，又不会被慢速第三方图片拖住太久。
-if (isLinkPage()) {
-  let finished = false;
-  const finish = () => {
-    if (finished) return;
-    finished = true;
-    requestAnimationFrame(() => requestAnimationFrame(() => preloader.endLoading()));
-  };
-
-  const waitForIdle = () => {
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(finish, { timeout: 2200 });
-    } else {
-      setTimeout(finish, 900);
-    }
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(waitForIdle, 120);
-    }, { once: true });
-  } else {
-    setTimeout(waitForIdle, 120);
-  }
-
-  // 如果真实 load 更早完成，立即显示页面；最迟约 4 秒放行。
-  window.addEventListener('load', finish, { once: true });
-  setTimeout(finish, 4000);
-} else {
-  window.addEventListener('load', () => { preloader.endLoading() }, { once: true });
-  setTimeout(function(){ preloader.endLoading(); }, 10000);
-}
+window.addEventListener('load', () => { preloader.endLoading() })
+setTimeout(function(){ preloader.endLoading(); }, 10000)
 
 if (true) {
   document.addEventListener('pjax:send', () => { preloader.initLoading() })
