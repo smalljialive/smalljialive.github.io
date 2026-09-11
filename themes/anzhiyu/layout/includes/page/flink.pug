@@ -33,9 +33,9 @@
                   - let evenNumAvatar = getAvatarWithoutExclamationMark(evenNum[index].avatar);
                   .tags-group-icon-pair
                     a.tags-group-icon.no-text-decoration(href=url_for(evenNum[index].link), title=evenNum[index].name)
-                      img.no-lightbox(title=evenNum[index].name, src=url_for(evenNumAvatar + hundredSuffix) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=evenNum[index].name)
+                      img.no-lightbox(title=evenNum[index].name, src=url_for(evenNumAvatar + hundredSuffix) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=evenNum[index].name)
                     a.tags-group-icon.no-text-decoration(href=url_for(oddNum[index].link), title=oddNum[index].name)
-                      img.no-lightbox(title=oddNum[index].name, src=url_for(oddNumAvatar + hundredSuffix) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=oddNum[index].name)
+                      img.no-lightbox(title=oddNum[index].name, src=url_for(oddNumAvatar + hundredSuffix) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=oddNum[index].name)
   if theme.friends_vue && theme.friends_vue.enable
     .title-h2-a
       .title-h2-a-left
@@ -74,17 +74,17 @@
                   if i.lost_contact
                     a.cf-friends-link(href=url_for(item.link) title=item.name target="_blank")
                       if theme.lazyload.enable
-                        img.no-lightbox(data-lazy-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
+                        img.no-lightbox(data-lazy-src=url_for(item.avatar) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
                       else
-                        img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
+                        img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
                       .flink-item-info
                         .flink-item-name.cf-friends-name-lost-contact= item.name
                   else
                     a.cf-friends-link(href=url_for(item.link) cf-href=url_for(item.link) title=item.name target="_blank")
                       if theme.lazyload.enable
-                        img.cf-friends-avatar.no-lightbox(data-lazy-src=url_for(item.avatar), cf-src=url_for(item.avatar), onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
+                        img.cf-friends-avatar.no-lightbox(data-lazy-src=url_for(item.avatar), cf-src=url_for(item.avatar), loading="lazy" decoding="async" fetchpriority="low", onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
                       else
-                        img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) cf-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
+                        img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) cf-src=url_for(item.avatar) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt=item.name )
                       .flink-item-info
                         .flink-item-name.cf-friends-name= item.name
                         .flink-item-desc(title=item.descr)= item.descr
@@ -106,10 +106,10 @@
                 else if item.recommend
                   span.site-card-tag 荐
                 a.img.no-text-decoration(target='_blank', title=`${item.name}`, href=`${item.link}`, rel='external nofollow')
-                  img.flink-avatar(data-lazy-src=siteshot, onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`, alt=item.name, style="pointer-events: none;", src=`${siteshot}`)
+                  img.flink-avatar(data-lazy-src=siteshot, loading="lazy", decoding="async", fetchpriority="low", onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`, alt=item.name, style="pointer-events: none;", src=`${siteshot}`)
                 a.info.cf-friends-link.no-text-decoration(target='_blank', title=`${item.name}`, href=`${item.link}`, cf-href=url_for(item.link), rel='external nofollow')
                   .site-card-avatar
-                    img.flink-avatar.cf-friends-avatar.no-fancybox(data-lazy-src=item.avatar, cf-src=url_for(item.avatar), onerror=`this.onerror=null;this.src='${url_for(theme.error_img.flink)}'`, alt=item.name, src=item.avatar)
+                    img.flink-avatar.cf-friends-avatar.no-fancybox(data-lazy-src=item.avatar, cf-src=url_for(item.avatar), loading="lazy", decoding="async", fetchpriority="low", onerror=`this.onerror=null;this.src='${url_for(theme.error_img.flink)}'`, alt=item.name, src=item.avatar)
                   .site-card-text
                     span.title.cf-friends-name #[=item.name]
                     span.desc(title=`${item.descr}`) #[=item.descr]
@@ -120,13 +120,13 @@
                 .wrapper.cover
                   - var siteshot = item.siteshot ? url_for(item.siteshot) : 'https://image.thum.io/get/width/400/crop/800/allowJPG/wait/20/noanimate/' + item.link
                   if theme.lazyload.enable
-                    img.cover.fadeIn(data-lazy-src=siteshot onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.post_page) + `'` alt='cover' )
+                    img.cover.fadeIn(data-lazy-src=siteshot loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.post_page) + `'` alt='cover' )
                   else
-                    img.cover.fadeIn(src=siteshot onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.post_page) + `'` alt='cover' )    
+                    img.cover.fadeIn(src=siteshot loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.post_page) + `'` alt='cover' )    
                 .info
                   if theme.lazyload.enable
-                    img.cf-friends-avatar.no-lightbox.flink-avatar(data-lazy-src=url_for(item.avatar) cf-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt='cover' )
+                    img.cf-friends-avatar.no-lightbox.flink-avatar(data-lazy-src=url_for(item.avatar) cf-src=url_for(item.avatar) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt='cover' )
                   else
-                    img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) cf-src=url_for(item.avatar) onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt='cover' )
+                    img.cf-friends-avatar.no-lightbox(src=url_for(item.avatar) cf-src=url_for(item.avatar) loading="lazy" decoding="async" fetchpriority="low" onerror=`this.onerror=null;this.src='` + url_for(theme.error_img.flink) + `'` alt='cover' )
                   span.flink-sitename.cf-friends-name= item.name
     != page.content
