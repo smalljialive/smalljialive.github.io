@@ -13,10 +13,6 @@ div
     if (theme.icons && theme.icons.ali_iconfont_js)
       script(async src=url_for(theme.icons.ali_iconfont_js))
   else
-    script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260911-1')
-    script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260911-1')
-    script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
-
     if theme.translate.enable
       script(src=url_for(theme.asset.translate))
 
@@ -129,6 +125,8 @@ div
 
     != partial("includes/third-party/chat/index", {}, { cache: true })
 
+    //- 先加载 APlayer/Meting，再注册 PJAX，最后启动自定义导航音乐逻辑。
+    //- 这样自定义脚本不需要在播放器尚未存在时抢占初始化阶段。
     if theme.aplayerInject && theme.aplayerInject.enable
       if theme.pjax.enable || theme.aplayerInject.per_page
         include ./third-party/aplayer.pug
@@ -137,6 +135,10 @@ div
 
     if theme.pjax.enable
       != partial("includes/third-party/pjax", {}, { cache: true })
+
+    script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260911-1')
+    script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260911-1')
+    script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
 
     if theme.busuanzi.site_uv || theme.busuanzi.site_pv || theme.busuanzi.page_pv
       script(async data-pjax src= theme.asset.busuanzi || '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js')
