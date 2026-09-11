@@ -8,6 +8,10 @@ div
   if isLinkSafePage
     input(type="hidden" name="page-type" id="page-type" value="link")
 
+    //- 保留 PJAX 必需的选择器占位。这样从普通页面进入 Link 时不会退化成整页刷新，
+    //- #nav-music 位于 #body-wrap 之外，可继续沿用原播放器与当前播放状态。
+    .js-pjax
+
     //- Link 页仍保留图标字体，确保导航与页面图标正常显示。
     link(rel="stylesheet" href=url_for(theme.asset.ali_iconfont_css))
     if (theme.icons && theme.icons.ali_iconfont_js)
@@ -78,9 +82,10 @@ div
             const index = Number.isInteger(ap?.list?.index) ? ap.list.index : 0;
             return { index, audio: ap?.list?.audios?.[index] || null };
           };
+          // APlayer 可能会重新规范化 audio 对象并丢弃自定义字段，
+          // 因此是否可播放只以真实 URL 为准，不再依赖 __smallJiaResolved 标记。
           const isReady = audio => !!(
             audio &&
-            audio.__smallJiaResolved &&
             audio.url &&
             !String(audio.url).startsWith(SILENT_PREFIX)
           );
