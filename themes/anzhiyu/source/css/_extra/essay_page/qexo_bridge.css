@@ -1,0 +1,176 @@
+/* Qexo -> SmallJia 碎碎念桥接样式 */
+#bber .sj-qexo-content {
+  gap: .42rem;
+}
+
+#bber .sj-qexo-content p,
+#bber .sj-qexo-content blockquote,
+#bber .sj-qexo-content ul,
+#bber .sj-qexo-content ol,
+#bber .sj-qexo-content pre {
+  margin: 0 0 .42rem;
+}
+
+#bber .sj-qexo-content img,
+#bber .sj-qexo-content video {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: .45rem;
+}
+
+#bber .sj-qexo-content iframe,
+#bber .sj-qexo-bilibili {
+  width: 100%;
+}
+
+#bber .sj-qexo-content iframe,
+#bber .sj-qexo-bilibili iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: var(--style-border-always);
+  border-radius: 12px;
+  margin-top: .45rem;
+}
+
+#bber .sj-qexo-images,
+#bber .sj-qexo-videos {
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+#bber .sj-qexo-images .bber-content-img {
+  flex: 1 1 calc(50% - 6px);
+  min-width: 120px;
+  max-width: 100%;
+}
+
+#bber .sj-qexo-video {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  margin: .4rem 0;
+}
+
+#bber .sj-essay-music {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr) 38px auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 78px;
+  height: auto;
+  padding: 8px 10px;
+  overflow: visible;
+  background: linear-gradient(135deg, var(--anzhiyu-secondbg), var(--anzhiyu-card-bg));
+}
+
+#bber .sj-essay-music-cover {
+  width: 62px;
+  height: 62px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--anzhiyu-background);
+  flex: 0 0 auto;
+}
+
+#bber .sj-essay-music-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#bber .sj-essay-music-meta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#bber .sj-essay-music-meta strong,
+#bber .sj-essay-music-meta span,
+#bber .sj-essay-music-meta small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#bber .sj-essay-music-meta strong {
+  color: var(--anzhiyu-fontcolor);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+#bber .sj-essay-music-meta span {
+  color: var(--anzhiyu-secondtext);
+  font-size: 11px;
+}
+
+#bber .sj-essay-music-meta small {
+  color: var(--anzhiyu-secondtext);
+  font-size: 10px;
+}
+
+#bber .sj-essay-music.is-preview .sj-essay-music-status::before {
+  content: "试听 · ";
+  color: #f59e0b;
+}
+
+#bber .sj-essay-music-play {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--anzhiyu-main);
+  color: var(--anzhiyu-white);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 18px var(--anzhiyu-main-op);
+  transition: transform .18s ease, filter .18s ease;
+}
+
+#bber .sj-essay-music-play:hover {
+  transform: scale(1.06);
+  filter: brightness(1.06);
+}
+
+#bber .sj-essay-music-play:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+#bber .sj-essay-music-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--anzhiyu-secondtext);
+  background: var(--anzhiyu-background);
+  text-decoration: none;
+}
+
+#bber .sj-essay-music-link:hover {
+  color: var(--anzhiyu-white);
+  background: var(--anzhiyu-main);
+}
+
+#bber .sj-essay-audio {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  #bber .sj-essay-music {
+    grid-template-columns: 54px minmax(0, 1fr) 36px auto;
+    gap: 8px;
+  }
+
+  #bber .sj-essay-music-cover {
+    width: 54px;
+    height: 54px;
+  }
+}
