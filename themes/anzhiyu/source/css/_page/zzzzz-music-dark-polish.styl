@@ -1,0 +1,49 @@
+// Final dark-mode polish for the dedicated music page.
+// Loaded after the light skin and earlier compatibility layers.
+
+html[data-theme="dark"] #anMusic-page
+  // Song names must stay readable on dark cards, including dynamically rendered rows.
+  .sjm-track-row .sjm-track-copy strong,
+  .sjm-track-row .sjm-track-copy strong *,
+  .sjm-track-row .sjm-track-title,
+  .sjm-track-row [data-track-title],
+  .sjm-player-track .sjm-player-meta strong
+    color #fff !important
+    opacity 1 !important
+
+  .sjm-track-row .sjm-track-copy span
+    color rgba(255,255,255,.58) !important
+
+  // Keep the four now-playing shortcuts integrated with the dark card instead of looking like a bright white panel.
+  .sjm-now-actions
+    border-color rgba(255,255,255,.075) !important
+    background rgba(7,12,22,.58) !important
+    box-shadow inset 0 1px 0 rgba(255,255,255,.035), 0 8px 24px rgba(0,0,0,.10) !important
+
+  .sjm-now-actions .sjm-soft-button
+    border-color rgba(255,255,255,.075) !important
+    background rgba(255,255,255,.035) !important
+    box-shadow none !important
+    color rgba(255,255,255,.72) !important
+
+  .sjm-now-actions .sjm-soft-button:hover,
+  .sjm-now-actions .sjm-soft-button.active
+    border-color rgba(124,139,255,.24) !important
+    background rgba(100,118,255,.105) !important
+    color #fff !important
+    box-shadow none !important
+
+  .sjm-now-actions #sjm-web-fullscreen-open,
+  .sjm-now-actions #sjm-fullscreen-open,
+  .sjm-now-actions #sjm-current-add-playlist
+    border-color rgba(118,132,255,.16) !important
+    background rgba(90,108,235,.075) !important
+    color #aeb8ff !important
+
+  .sjm-now-actions #sjm-current-favorite
+    color rgba(255,255,255,.64) !important
+
+  .sjm-now-actions #sjm-current-favorite.active
+    border-color rgba(255,122,162,.20) !important
+    background rgba(255,106,145,.09) !important
+    color #ff9bbb !important
