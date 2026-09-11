@@ -2,26 +2,20 @@
   "use strict";
 
   if (!/^\/link\/?$/i.test(window.location.pathname || "")) return;
-  if (window.__smallJiaLinkNavPlayerFix) return;
-  window.__smallJiaLinkNavPlayerFix = true;
+  if (window.__smallJiaLinkNavMusicLazy) return;
+  window.__smallJiaLinkNavMusicLazy = true;
 
-  const SILENT_PREFIX = "data:audio/wav";
-  const MAX_ATTEMPTS = 80;
-  let attempts = 0;
-  let timer = null;
-  let resolveRequested = false;
+  const config = window.__smallJiaLinkMusicConfig || {};
+  const nav = document.getElementById("nav-music");
+  const host = nav?.querySelector("meting-js");
+  if (!nav || !host) return;
 
-  const getPlayer = () => document.querySelector("#nav-music meting-js")?.aplayer || null;
-
-  const currentEntry = ap => {
-    const audios = ap?.list?.audios || [];
-    const index = Number.isInteger(ap?.list?.index) ? ap.list.index : 0;
-    return { audios, index, audio: audios[index] || null };
-  };
-
-  const isRealUrl = audio => {
-    const url = String(audio?.url || "");
-    return /^https?:\/\//i.test(url) && !url.startsWith(SILENT_PREFIX);
+  const SILENT_URL = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+  const FALLBACK_COVER = "/img/music-placeholder.svg";
+  const state = {
+    phase: "idle",
+    promise: null,
+    player: null,
   };
 
   const setTip = text => {
@@ -29,105 +23,183 @@
     if (tip && !window.anzhiyu_musicPlaying) tip.textContent = text;
   };
 
-  const syncMediaSource = (ap, audio) => {
-    if (!ap?.audio || !isRealUrl(audio)) return false;
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-    let target = String(audio.url || "");
-    try { target = new URL(target, window.location.href).href; } catch (_) {}
-
-    let current = ap.audio.currentSrc || ap.audio.src || "";
-    try { current = current ? new URL(current, window.location.href).href : ""; } catch (_) {}
-
-    if (current === target) return true;
-
-    const wasPlaying = !ap.audio.paused;
-    try {
-      ap.audio.src = audio.url;
-      ap.audio.load();
-      if (wasPlaying) {
-        const playPromise = ap.audio.play();
-        if (playPromise && typeof playPromise.catch === "function") playPromise.catch(() => {});
-      }
-      return true;
-    } catch (error) {
-      console.warn("SmallJia link nav music: failed to sync resolved audio source", error);
-      return false;
-    }
+  const loadCss = href => {
+    if (!href) return;
+    if (document.querySelector(`link[data-smalljia-link-music-css="${href}"]`)) return;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.dataset.smalljiaLinkMusicCss = href;
+    document.head.appendChild(link);
   };
 
-  const dailyListReady = ({ audios }) => {
+  const loadScript = src => {
+    if (!src) return Promise.reject(new Error("missing script url"));
+    const existing = Array.from(document.scripts).find(item => item.src === new URL(src, location.href).href);
+    if (existing?.dataset.smalljiaLoaded === "true") return Promise.resolve();
+
+    return new Promise((resolve, reject) => {
+      if (existing) {
+        existing.addEventListener("load", resolve, { once: true });
+        existing.addEventListener("error", reject, { once: true });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = false;
+      script.dataset.smalljiaLinkMusicLoader = "true";
+      script.addEventListener("load", () => {
+        script.dataset.smalljiaLoaded = "true";
+        resolve();
+      }, { once: true });
+      script.addEventListener("error", () => reject(new Error(`failed to load ${src}`)), { once: true });
+      document.body.appendChild(script);
+    });
+  };
+
+  const createPlayer = () => {
+    if (host.aplayer) return host.aplayer;
+    if (typeof APlayer !== "function") throw new Error("APlayer is not available");
+
+    const player = new APlayer({
+      container: host,
+      fixed: false,
+      mini: false,
+      autoplay: false,
+      theme: "var(--anzhiyu-main)",
+      loop: "all",
+      order: "random",
+      preload: "none",
+      volume: Number(config.volume) || 0.5,
+      mutex: true,
+      lrcType: 0,
+      audio: [{
+        name: "音乐准备中",
+        artist: "SmallJia",
+        url: SILENT_URL,
+        cover: FALLBACK_COVER,
+        lrc: "",
+      }],
+    });
+
+    host.aplayer = player;
+    window.aplayers = Array.isArray(window.aplayers) ? window.aplayers : [];
+    if (!window.aplayers.includes(player)) window.aplayers.push(player);
+    return player;
+  };
+
+  const hasDailyList = player => {
+    const audios = player?.list?.audios || [];
     if (!audios.length) return false;
     if (audios.length > 1) return true;
-    const only = audios[0];
-    return String(only?.name || "") !== "日常" || String(only?.artist || "") !== "SmallJia";
+    return String(audios[0]?.name || "") !== "音乐准备中";
   };
 
-  const stop = () => {
-    if (timer) clearTimeout(timer);
-    timer = null;
+  const currentEntry = player => {
+    const audios = player?.list?.audios || [];
+    const index = Number.isInteger(player?.list?.index) ? player.list.index : 0;
+    return { index, audio: audios[index] || audios[0] || null };
+  };
+
+  const isRealAudio = audio => /^https?:\/\//i.test(String(audio?.url || ""));
+
+  const waitFor = async (predicate, timeoutMs, intervalMs) => {
+    const started = Date.now();
+    while (Date.now() - started < timeoutMs) {
+      const result = predicate();
+      if (result) return result;
+      await wait(intervalMs);
+    }
+    return null;
+  };
+
+  const syncResolvedSource = (player, audio) => {
+    if (!player?.audio || !isRealAudio(audio)) return false;
+    const target = String(audio.url);
+    if (player.audio.src !== target && player.audio.currentSrc !== target) {
+      player.audio.src = target;
+      player.audio.load();
+    }
+    return true;
   };
 
   const prepare = () => {
-    const ap = getPlayer();
-    if (!ap?.list?.audios?.length) return false;
+    if (state.phase === "ready") return Promise.resolve(state.player);
+    if (state.promise) return state.promise;
 
-    const entry = currentEntry(ap);
-    if (isRealUrl(entry.audio)) {
-      syncMediaSource(ap, entry.audio);
-      stop();
-      setTip("点击播放");
-      return true;
-    }
+    state.phase = "loading";
+    setTip("正在加载音乐…");
 
-    if (dailyListReady(entry) && typeof ap.list.switch === "function" && !resolveRequested) {
-      resolveRequested = true;
-      setTip("音乐准备中…");
-      try {
-        // daily-player 会在这里接管 switch，只解析当前这一首，不加载完整 MetingJS 歌单。
-        ap.list.switch(entry.index);
-      } catch (error) {
-        console.warn("SmallJia link nav music: resolve request failed", error);
+    state.promise = (async () => {
+      loadCss(config.aplayerCss);
+      await loadScript(config.aplayerJs);
+
+      const player = createPlayer();
+      state.player = player;
+
+      // APlayer 创建完成后才加载自定义音乐逻辑。Link 首屏不再执行任何歌单请求、
+      // 轮询或远程解析，只有用户第一次点击播放器时才开始初始化。
+      await loadScript(config.dailyJs);
+      await Promise.all([
+        loadScript(config.hoverJs),
+        loadScript(config.persistenceJs),
+      ]);
+
+      const dailyReady = await waitFor(() => hasDailyList(player), 12000, 150);
+      if (!dailyReady) throw new Error("daily playlist initialization timed out");
+
+      // daily-player 已经 patch 了 list.switch；主动选择当前曲目，只解析这一首。
+      let entry = currentEntry(player);
+      if (!isRealAudio(entry.audio) && typeof player.list?.switch === "function") {
+        player.list.switch(entry.index);
       }
-    }
 
-    return false;
+      const resolved = await waitFor(() => {
+        entry = currentEntry(player);
+        return isRealAudio(entry.audio) ? entry.audio : null;
+      }, 15000, 150);
+
+      if (!resolved) throw new Error("current track resolution timed out");
+      syncResolvedSource(player, resolved);
+
+      state.phase = "ready";
+      setTip("音乐已就绪 · 点击播放");
+      return player;
+    })().catch(error => {
+      state.phase = "error";
+      state.promise = null;
+      console.warn("SmallJia link nav music: lazy initialization failed", error);
+      setTip("音乐加载失败 · 点击重试");
+      throw error;
+    });
+
+    return state.promise;
   };
 
-  const poll = () => {
-    if (prepare()) return;
-    attempts += 1;
-    if (attempts >= MAX_ATTEMPTS) {
-      stop();
-      setTip("点击重试音乐");
-      return;
-    }
-    timer = setTimeout(poll, attempts < 16 ? 250 : 500);
-  };
+  // Link 直开/刷新时，第一次点击只负责加载播放器和解析第一首歌。
+  // 准备完成后第二次点击走主题原生 anzhiyu.musicToggle()，从而保持浏览器播放策略稳定。
+  nav.addEventListener("click", event => {
+    if (state.phase === "ready") return;
 
-  // 如果用户过早点击，继续触发当前歌曲解析；一旦 URL 已解析则确保真正写入 audio.src。
-  document.addEventListener("click", event => {
-    if (!(event.target instanceof Element) || !event.target.closest("#nav-music")) return;
-    const ap = getPlayer();
-    if (!ap) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
 
-    const entry = currentEntry(ap);
-    if (isRealUrl(entry.audio)) {
-      syncMediaSource(ap, entry.audio);
+    if (state.phase === "loading") {
+      setTip("正在加载音乐…");
       return;
     }
 
-    setTip("音乐准备中…");
-    if (dailyListReady(entry) && typeof ap.list.switch === "function") {
-      try { ap.list.switch(entry.index); } catch (_) {}
-    }
-    if (!timer) timer = setTimeout(poll, 0);
+    prepare().catch(() => {});
   }, true);
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      timer = setTimeout(poll, 250);
-    }, { once: true });
-  } else {
-    timer = setTimeout(poll, 250);
-  }
+  setTip("点击加载音乐");
+
+  window.SmallJiaLinkNavMusic = {
+    prepare,
+    get phase() { return state.phase; },
+    get player() { return state.player; },
+  };
 })();
