@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - hexo
+  schedule:
+    # GitHub Actions cron uses UTC. 16:00 UTC = 00:00 UTC+8 (China/Singapore).
+    - cron: "0 16 * * *"
+  workflow_dispatch:
 
 concurrency:
   group: hexo-pages-deploy
@@ -56,6 +60,7 @@ jobs:
           test -s public/js/smalljia-music-source-compat.js
           test -s public/js/smalljia-music-interactions.js
           test -s public/js/smalljia-nav-daily-player.js
+          test -s public/js/smalljia-link-nav-player-fix.js
           test -s public/img/music-placeholder.svg
           node --check public/js/smalljia-music-native.js
           node --check public/js/smalljia-music-gdstudio.js
@@ -69,6 +74,7 @@ jobs:
           node --check public/js/smalljia-music-source-compat.js
           node --check public/js/smalljia-music-interactions.js
           node --check public/js/smalljia-nav-daily-player.js
+          node --check public/js/smalljia-link-nav-player-fix.js
           grep -q "SmallJiaNativeMusic" public/js/smalljia-music-native.js
           grep -q "music-api.gdstudio.xyz/api.php" public/js/smalljia-music-gdstudio.js
           grep -q "music-proxy.gdstudio.org" public/js/smalljia-music-gdstudio.js
@@ -109,9 +115,12 @@ jobs:
           grep -q 'const SOURCES = \["kuwo", "tencent", "netease"\]' public/js/smalljia-nav-daily-player.js
           grep -q "is_public=eq.true" public/js/smalljia-nav-daily-player.js
           grep -Eq 'smalljia-nav-daily-player\.js\?v=[^" ]+' public/index.html
-          grep -Eq 'smalljia-nav-daily-player\.js\?v=[^" ]+' public/link/index.html
-          grep -Eq 'smalljia-nav-music-hover\.js\?v=[^" ]+' public/link/index.html
-          grep -Eq 'smalljia-nav-music-persistence\.js\?v=[^" ]+' public/link/index.html
+          grep -Eq 'smalljia-link-nav-player-fix\.js\?v=[^" ]+' public/link/index.html
+          grep -q 'window.__smallJiaLinkMusicConfig' public/link/index.html
+          if grep -Eq 'smalljia-nav-(daily-player|music-hover|music-persistence)\.js\?v=' public/link/index.html; then
+            echo "Link page is eagerly loading nav music runtime; expected click-to-load mode"
+            exit 1
+          fi
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-gdstudio.js?v=20260910-6" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
