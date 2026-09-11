@@ -1,3 +1,9 @@
+style.
+  /* 中控台内音乐按钮只负责播放/暂停，不再把左下角播放器放大搬进中控台。 */
+  body:has(#console.show) #nav-music {
+    display: none !important;
+  }
+
 #console
   if theme.reward && theme.reward.enable && theme.reward.QR_code && theme.reward.QR_code.length
     .console-card-group-reward
