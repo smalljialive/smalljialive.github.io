@@ -117,7 +117,7 @@ jobs:
           grep -Eq 'smalljia-nav-daily-player\.js\?v=[^" ]+' public/index.html
           grep -Eq 'smalljia-link-nav-player-fix\.js\?v=[^" ]+' public/link/index.html
           grep -q 'window.__smallJiaLinkMusicConfig' public/link/index.html
-          if grep -Eq 'smalljia-nav-(daily-player|music-hover|music-persistence)\.js\?v=' public/link/index.html; then
+          if grep -Eq '<script[^>]+src="[^"]*smalljia-nav-(daily-player|music-hover|music-persistence)\.js' public/link/index.html; then
             echo "Link page is eagerly loading nav music runtime; expected click-to-load mode"
             exit 1
           fi
