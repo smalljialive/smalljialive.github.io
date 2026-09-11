@@ -55,6 +55,7 @@ for (const target of targets) {
         contentLength: String(talk?.content ?? "").length,
         contentPreview: String(talk?.content ?? "").slice(0, 120),
         valueKeys: talk?.values && typeof talk.values === "object" ? Object.keys(talk.values) : [],
+        values: talk?.values && typeof talk.values === "object" ? talk.values : {},
       }))
     );
   } catch (error) {
