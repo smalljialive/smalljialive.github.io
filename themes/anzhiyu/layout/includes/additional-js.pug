@@ -17,19 +17,17 @@ div
     if (theme.icons && theme.icons.ali_iconfont_js)
       script(async src=url_for(theme.icons.ali_iconfont_js))
 
-    //- Link 直开/刷新采用真正的静态运行模式：首屏不加载 APlayer、MetingJS、歌单和音乐解析脚本。
-    //- 用户第一次点击左下角播放器时才按需加载 APlayer + 日常歌单逻辑；站内 PJAX 进入 Link 时则沿用原播放器。
+    //- Link 直开/刷新采用真正的静态运行模式：首屏不加载 APlayer、MetingJS、daily-player、
+    //- hover 或 persistence。用户第一次点击左下角播放器时，仅解析一首真实音频并创建独立 APlayer。
+    //- 站内 PJAX 进入 Link 时仍沿用原播放器与当前播放状态。
     if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
       script.
         window.__smallJiaLinkMusicConfig = {
           aplayerCss: "!{url_for(theme.asset.aplayer_css)}",
           aplayerJs: "!{url_for(theme.asset.aplayer_js)}",
-          dailyJs: "!{url_for('/js/smalljia-nav-daily-player.js')}?v=20260911-1",
-          hoverJs: "!{url_for('/js/smalljia-nav-music-hover.js')}?v=20260911-1",
-          persistenceJs: "!{url_for('/js/smalljia-nav-music-persistence.js')}?v=20260910-2",
           volume: Number("!{theme.nav_music.volume}") || 0.5
         };
-      script(src=url_for('/js/smalljia-link-nav-player-fix.js') + '?v=20260911-3')
+      script(src=url_for('/js/smalljia-link-nav-player-fix.js') + '?v=20260911-4')
   else
     if theme.translate.enable
       script(src=url_for(theme.asset.translate))
