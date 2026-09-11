@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-2";
+  const VERSION = "20260911-1";
   if (window.__smallJiaNavDailyPlayerVersion === VERSION) return;
   window.__smallJiaNavDailyPlayerVersion = VERSION;
 
@@ -9,7 +9,8 @@
   const TARGET_NAME = "日常";
   const CACHE_KEY = "smalljia_nav_daily_resolved_v1";
   const CACHE_TTL = 6 * 60 * 60 * 1000;
-  const PUBLIC_TTL = 60 * 1000;
+  const PUBLIC_TTL = 10 * 60 * 1000;
+  const BACKGROUND_SYNC_INTERVAL = 5 * 60 * 1000;
   const SUPABASE_ROOT = "https://yluidpgnvfurcomnexjr.supabase.co";
   const SUPABASE_API = `${SUPABASE_ROOT}/functions/v1/music-proxy`;
   const SUPABASE_REST = `${SUPABASE_ROOT}/rest/v1`;
@@ -29,6 +30,8 @@
     publicPlaylist: null,
     publicFetchedAt: 0,
     syncing: false,
+    bootTimer: null,
+    bootAttempts: 0,
   };
 
   const normalize = value => String(value || "")
@@ -413,7 +416,10 @@
       ap.list.add(audios);
       state.installed = true;
       const startIndex = Math.floor(Math.random() * state.tracks.length);
-      switchTo(startIndex, wasPlaying);
+      const resolveInitialTrack = () => switchTo(startIndex, wasPlaying);
+      if (wasPlaying) resolveInitialTrack();
+      else if ("requestIdleCallback" in window) requestIdleCallback(resolveInitialTrack, { timeout: 4000 });
+      else setTimeout(resolveInitialTrack, 1200);
       const tips = document.getElementById("nav-music-hoverTips");
       if (tips && !window.anzhiyu_musicPlaying) tips.textContent = `日常 · ${state.tracks.length} 首`;
       console.info(`SmallJia nav music: 已接管为「日常」歌单，共 ${state.tracks.length} 首`);
@@ -428,36 +434,76 @@
 
   const sync = async () => {
     if (state.syncing) return false;
+    const ap = findAPlayer();
+    if (!ap?.list?.audios) return false;
+
     state.syncing = true;
     try {
       const playlist = await loadDaily();
       if (!playlist) return false;
-      const ap = findAPlayer();
-      if (!ap?.list?.audios) return false;
       return applyDaily(ap, playlist);
     } finally {
       state.syncing = false;
     }
   };
 
+  const stopBootTimer = () => {
+    if (state.bootTimer) clearTimeout(state.bootTimer);
+    state.bootTimer = null;
+    state.bootAttempts = 0;
+  };
+
   const boot = () => {
-    let attempts = 0;
-    const timer = setInterval(async () => {
-      attempts += 1;
-      if (await sync() || attempts > 200) clearInterval(timer);
-    }, 100);
+    stopBootTimer();
+
+    const trySync = async () => {
+      const ap = findAPlayer();
+      if (ap?.list?.audios) {
+        stopBootTimer();
+        await sync();
+        return;
+      }
+
+      state.bootAttempts += 1;
+      if (state.bootAttempts >= 40) {
+        stopBootTimer();
+        return;
+      }
+      state.bootTimer = setTimeout(trySync, 250);
+    };
+
+    state.bootTimer = setTimeout(trySync, 150);
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
   else setTimeout(boot, 0);
-  document.addEventListener("pjax:complete", () => setTimeout(sync, 50));
+
+  document.addEventListener("pjax:complete", () => setTimeout(boot, 150));
   window.addEventListener("storage", event => {
-    if (event.key === PLAYLIST_KEY) setTimeout(sync, 0);
+    if (event.key === PLAYLIST_KEY) setTimeout(() => {
+      state.publicPlaylist = null;
+      state.publicFetchedAt = 0;
+      sync();
+    }, 0);
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && findAPlayer()?.list?.audios && !state.installed) setTimeout(sync, 100);
   });
 
   setInterval(async () => {
-    const playlist = readLocalDaily() || await fetchPublicDaily();
+    if (document.hidden) return;
+    const ap = findAPlayer();
+    if (!ap?.list?.audios) return;
+
+    const localPlaylist = readLocalDaily();
+    if (localPlaylist) {
+      if (playlistSignature(localPlaylist) !== state.signature || ap !== state.aplayer) await sync();
+      return;
+    }
+
+    const playlist = await fetchPublicDaily();
     if (!playlist) return;
-    if (playlistSignature(playlist) !== state.signature || findAPlayer() !== state.aplayer) sync();
-  }, 3000);
+    if (playlistSignature(playlist) !== state.signature || ap !== state.aplayer) await sync();
+  }, BACKGROUND_SYNC_INTERVAL);
 })();
