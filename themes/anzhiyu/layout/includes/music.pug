@@ -5,3 +5,7 @@
   a#nav-music-hoverTips(onclick='anzhiyu.musicToggle()' accesskey="m") 播放音乐
   #console-music-bg
   meting-js(id=nav_music_id server=nav_music_server type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume=nav_music_volume)
+
+//- 仅在直接打开 /link/ 时加载轻量播放器修复；PJAX 进入 Link 时继续复用原播放器实例。
+if page.type === 'link' || is_current('/link/')
+  script(defer src=url_for('/js/smalljia-link-nav-player-fix.js') + '?v=20260911-1')
