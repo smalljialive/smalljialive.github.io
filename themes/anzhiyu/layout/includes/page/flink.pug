@@ -2,16 +2,10 @@ mixin sjtbLiteCard(item, group)
   - var itemName = String(item.name || item.link || '网站')
   - var itemDesc = String(item.descr || '打开网站')
   - var itemLink = url_for(item.link || '#')
-  - var rawAvatar = String(item.avatar || '')
-  - var bangIndex = rawAvatar.indexOf('!')
-  - var cleanAvatar = bangIndex === -1 ? rawAvatar : rawAvatar.substring(0, bangIndex)
-  - var itemAvatar = cleanAvatar ? url_for(cleanAvatar + (group.hundredSuffix || '')) : ''
   - var itemTag = String(item.tag || group.class_name || '网站')
   a.sjtb-lite-card.no-text-decoration(href=itemLink title=itemName target='_blank' rel='noopener noreferrer nofollow')
-    span.sjtb-lite-icon
+    span.sjtb-lite-icon(aria-hidden='true')
       span.sjtb-lite-fallback= itemName.slice(0, 1).toUpperCase()
-      if itemAvatar
-        img.no-lightbox(src=itemAvatar loading='lazy' decoding='async' fetchpriority='low' referrerpolicy='no-referrer' width='46' height='46' alt='' onerror="this.style.display='none'")
     span.sjtb-lite-copy
       strong.sjtb-lite-title= itemName
       span.sjtb-lite-desc= itemDesc
