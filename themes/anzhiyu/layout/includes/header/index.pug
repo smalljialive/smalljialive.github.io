@@ -33,7 +33,7 @@ header#page-header(class=`${isHomeClass}` style=home_index_img_bg)
           section.main-hero-waves-area.waves-area
             svg.waves-svg(xmlns='http://www.w3.org/2000/svg', xlink='http://www.w3.org/1999/xlink', viewBox='0 24 150 28', preserveAspectRatio='none', shape-rendering='auto')
               defs
-                path#gentle-wave(d='M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z')
+                path#gentle-wave(d='M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 -18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z')
               g.parallax
                 use(href='#gentle-wave', x='48', y='0')
                 use(href='#gentle-wave', x='48', y='3')
@@ -45,10 +45,8 @@ header#page-header(class=`${isHomeClass}` style=home_index_img_bg)
     else if is_home() 
       #site-info
         h1#site-title=site_title
-        if theme.subtitle.enable
-          - var loadSubJs = true
-          #site-subtitle
-            span#subtitle
+        #site-subtitle
+          span#subtitle 风经过这里，留下了一些字
         if(theme.social)
           #site_social_icons
             !=fragment_cache('social', function(){return partial('includes/header/social')})
