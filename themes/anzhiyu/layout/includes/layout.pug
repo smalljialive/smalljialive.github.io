@@ -81,7 +81,8 @@ html(lang=config.language data-theme=theme.display_mode class=htmlClassHideAside
       !=partial('includes/shortcutKey', {}, {cache: true})
     include ./rightside.pug
 
-    if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
+    //- Link 是重内容页面，完全不渲染左下角导航音乐播放器，避免播放器运行时与大量友链卡片同时工作。
+    if page.type !== 'link' && (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
       include ./music.pug
     !=partial('includes/third-party/search/index', {}, {cache: true})
     if theme.rightClickMenu && theme.rightClickMenu.enable
