@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260911-2";
+  const VERSION = "20260911-3";
   if (window.__smallJiaNavDailyPlayerVersion === VERSION) return;
   window.__smallJiaNavDailyPlayerVersion = VERSION;
 
@@ -379,6 +379,15 @@
     }
   };
 
+  const pickRandomIndex = currentIndex => {
+    const total = state.tracks.length;
+    if (total <= 1) return 0;
+    const current = Number.isInteger(Number(currentIndex)) ? Number(currentIndex) : -1;
+    if (current < 0 || current >= total) return Math.floor(Math.random() * total);
+    const offset = 1 + Math.floor(Math.random() * (total - 1));
+    return (current + offset) % total;
+  };
+
   const patchSwitch = ap => {
     if (!ap?.list || (state.aplayer === ap && state.originalSwitch)) return;
     state.aplayer = ap;
@@ -386,6 +395,14 @@
     ap.list.switch = function (index) {
       const shouldPlay = !!(window.anzhiyu_musicPlaying || (ap.audio && !ap.audio.paused));
       switchTo(index, shouldPlay);
+    };
+
+    // Keep one and only one random selector for the nav player.
+    // First play, natural end and the next button all use pickRandomIndex().
+    ap.skipForward = function () {
+      const current = Number(ap.list?.index);
+      const nextIndex = pickRandomIndex(Number.isFinite(current) ? current : -1);
+      switchTo(nextIndex, true);
     };
   };
 
@@ -415,7 +432,7 @@
     try {
       ap.list.add(audios);
       state.installed = true;
-      const startIndex = 0;
+      const startIndex = pickRandomIndex(-1);
       const resolveInitialTrack = () => switchTo(startIndex, wasPlaying);
       if (wasPlaying) resolveInitialTrack();
       else if ("requestIdleCallback" in window) requestIdleCallback(resolveInitialTrack, { timeout: 4000 });
