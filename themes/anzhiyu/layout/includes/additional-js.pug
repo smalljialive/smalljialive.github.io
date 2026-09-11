@@ -13,13 +13,53 @@ div
     if (theme.icons && theme.icons.ali_iconfont_js)
       script(async src=url_for(theme.icons.ali_iconfont_js))
 
-    //- 仅恢复导航音乐所需的最小依赖，不重新加载搜索、waterfall、PJAX 等运行时。
+    //- Link 页只加载 APlayer 本体，不加载 MetingJS。
+    //- MetingJS 会先请求并构建完整网易云歌单，再被日常歌单脚本清空重建；
+    //- 在 Link 大量卡片同时渲染时会产生明显的主线程峰值，容易导致页面无响应。
     if theme.asset.meting_api
       script.
         var meting_api = "!{theme.asset.meting_api}";
 
     if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
-      include ./third-party/aplayer.pug
+      link(rel='stylesheet' href=url_for(theme.asset.aplayer_css) media="print" onload="this.media='all'")
+      script(src=url_for(theme.asset.aplayer_js))
+      script.
+        (() => {
+          const host = document.querySelector("#nav-music meting-js");
+          if (!host || host.aplayer || typeof APlayer !== "function") return;
+
+          const silentUrl = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=";
+          const fallbackCover = "/img/music-placeholder.svg";
+
+          try {
+            const player = new APlayer({
+              container: host,
+              fixed: false,
+              mini: false,
+              autoplay: false,
+              theme: "var(--anzhiyu-main)",
+              loop: "all",
+              order: "random",
+              preload: "none",
+              volume: Number("!{theme.nav_music.volume}") || 0.5,
+              mutex: true,
+              lrcType: 0,
+              audio: [{
+                name: "日常",
+                artist: "SmallJia",
+                url: silentUrl,
+                cover: fallbackCover,
+                lrc: ""
+              }]
+            });
+
+            host.aplayer = player;
+            window.aplayers = Array.isArray(window.aplayers) ? window.aplayers : [];
+            if (!window.aplayers.includes(player)) window.aplayers.push(player);
+          } catch (error) {
+            console.warn("SmallJia link nav music: lightweight APlayer init failed", error);
+          }
+        })();
       script(src=url_for('/js/smalljia-nav-daily-player.js') + '?v=20260911-1')
       script(src=url_for('/js/smalljia-nav-music-hover.js') + '?v=20260911-1')
       script(src=url_for('/js/smalljia-nav-music-persistence.js') + '?v=20260910-2')
