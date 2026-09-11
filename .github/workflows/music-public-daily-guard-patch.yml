@@ -28,8 +28,8 @@ jobs:
 
           replacements = [
               (
-                  'if (!hasCatalog(app)) installCatalog(app, providerSetSourceState);',
-                  'if (!app.queue?.length && !hasCatalog(app)) installCatalog(app, providerSetSourceState);',
+                  'installTimer = setTimeout(() => {\n        if (!hasCatalog(app)) installCatalog(app, providerSetSourceState);\n      }, 0);',
+                  'installTimer = setTimeout(() => {\n        if (!app.queue?.length && !hasCatalog(app)) installCatalog(app, providerSetSourceState);\n      }, 0);',
               ),
               (
                   'if ((state === "ready" || state === "error") && !hasCatalog(this)) scheduleInstall();',
