@@ -1,15 +1,46 @@
-- loading_img = theme.preloader.avatar ? theme.preloader.avatar : theme.avatar.img
 #loading-box
-  .loading-bg(role='status' aria-live='polite' aria-label='页面加载中')
+  .loading-bg(role='status' aria-live='polite' aria-label='页面加载中，正在连接空间站')
     .loading-card
-      .loading-avatar-wrap
-        .loading-avatar-ring
-        img.loading-img(alt="Small Jia" class='nolazyload' src=url_for(loading_img))
-        .loading-image-dot
+      .loading-orbit-scene(aria-hidden='true')
+        .loading-celestial.loading-earth
+          .loading-earth-glow
+          svg.loading-earth-icon(viewBox='0 0 120 120' role='presentation')
+            circle(cx='60' cy='60' r='50')
+            path(d='M25 41c9-13 20-21 34-26 2 7 1 14-4 19-5 5-12 6-15 12-3 5-1 11 4 16-8 3-16 1-22-4-2-6-1-12 3-17Z')
+            path(d='M73 16c13 4 25 13 33 25-7 2-14 2-20-2-6-3-10-9-13-15-1-3-1-6 0-8Z')
+            path(d='M72 53c8-4 18-2 24 5 6 7 8 16 7 25-8 11-19 19-32 23-3-8-2-16 2-23 3-6 8-11 8-18-1-5-4-9-9-12Z')
+            path.loading-earth-line(d='M18 60h84M60 10c15 15 22 32 22 50s-7 35-22 50M60 10C45 25 38 42 38 60s7 35 22 50')
+          .loading-transmitter
+        .loading-connection
+          .loading-beam
+          .loading-signal.loading-signal-1
+          .loading-signal.loading-signal-2
+          .loading-signal.loading-signal-3
+          .loading-signal.loading-signal-4
+          .loading-packet.loading-packet-1 01
+          .loading-packet.loading-packet-2 ·
+          .loading-link-wave.loading-link-wave-1
+          .loading-link-wave.loading-link-wave-2
+        .loading-celestial.loading-station
+          .loading-station-glow
+          svg.loading-station-icon(viewBox='0 0 160 120' role='presentation')
+            rect.loading-panel(x='5' y='41' width='43' height='38' rx='4')
+            path.loading-panel-line(d='M16 41v38M27 41v38M38 41v38M5 53h43M5 66h43')
+            rect.loading-panel(x='112' y='41' width='43' height='38' rx='4')
+            path.loading-panel-line(d='M123 41v38M134 41v38M145 41v38M112 53h43M112 66h43')
+            path.loading-truss(d='M48 54h18M94 54h18M48 68h18M94 68h18')
+            rect.loading-module(x='62' y='35' width='36' height='50' rx='12')
+            circle.loading-window(cx='80' cy='51' r='7')
+            rect.loading-module-small(x='68' y='83' width='24' height='12' rx='4')
+            path.loading-antenna(d='M80 35V20M72 21h16M80 20l10-9')
+            circle.loading-antenna-tip(cx='91' cy='10' r='3')
+          .loading-receiver
       .loading-brand= config.title || 'Small Jia'
-      .loading-message 空间站正在重新连接
-      .loading-track(aria-hidden='true')
-        .loading-progress
+      .loading-message 正在建立地球与空间站的轨道通信
+      .loading-status-row
+        span.loading-status-dot
+        span.loading-status-text CONNECTING
+        span.loading-status-code UPLINK // 01
 script.
   const preloader = {
     endLoading: () => {

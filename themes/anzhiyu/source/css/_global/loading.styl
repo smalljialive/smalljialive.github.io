@@ -8,7 +8,8 @@ if hexo-config('preloader')
     position: fixed
     inset: 0
     background:
-      radial-gradient(circle at 50% 42%, rgba(66, 133, 244, .08) 0, rgba(124, 108, 255, .035) 24%, transparent 52%),
+      radial-gradient(circle at 22% 34%, rgba(70, 182, 255, .11) 0, rgba(70, 182, 255, .035) 20%, transparent 46%),
+      radial-gradient(circle at 78% 60%, rgba(124, 108, 255, .10) 0, rgba(124, 108, 255, .03) 22%, transparent 48%),
       var(--anzhiyu-card-bg)
     z-index: 1001
     opacity: 1
@@ -17,6 +18,17 @@ if hexo-config('preloader')
     animation: showLoading .28s ease backwards
     &::-webkit-scrollbar
       display: none
+    &:before
+      content: ''
+      position: absolute
+      inset: 0
+      pointer-events: none
+      opacity: .34
+      background-image:
+        radial-gradient(circle, rgba(66, 90, 239, .24) 0 1px, transparent 1.5px),
+        radial-gradient(circle, rgba(70, 182, 255, .2) 0 1px, transparent 1.5px)
+      background-size: 68px 68px, 94px 94px
+      background-position: 10px 18px, 42px 56px
 
   #loading-box
     user-select: none
@@ -27,61 +39,229 @@ if hexo-config('preloader')
       flex-direction: column
       align-items: center
       justify-content: center
-      min-width: 280px
-      padding: 34px 38px 30px
+      width: min(470px, calc(100vw - 48px))
+      padding: 31px 34px 25px
       border-radius: 28px
-      background: rgba(255, 255, 255, .72)
-      border: 1px solid rgba(120, 130, 160, .12)
-      box-shadow: 0 18px 55px rgba(50, 60, 100, .09)
-      backdrop-filter: blur(18px)
-      -webkit-backdrop-filter: blur(18px)
+      background: rgba(255, 255, 255, .74)
+      border: 1px solid rgba(120, 130, 160, .13)
+      box-shadow: 0 20px 62px rgba(50, 60, 100, .11)
+      backdrop-filter: blur(19px)
+      -webkit-backdrop-filter: blur(19px)
       animation: loadingCardIn .42s cubic-bezier(.2,.8,.2,1) backwards
 
-    .loading-avatar-wrap
-      position: relative
-      width: 92px
-      height: 92px
+    .loading-orbit-scene
+      width: 100%
+      height: 112px
       display: flex
       align-items: center
       justify-content: center
-      margin-bottom: 18px
+      position: relative
+      margin-bottom: 12px
 
-    .loading-avatar-ring
+    .loading-celestial
+      position: relative
+      flex: 0 0 auto
+      display: flex
+      align-items: center
+      justify-content: center
+      z-index: 3
+
+    .loading-earth
+      width: 92px
+      height: 92px
+      animation: loadingEarthFloat 3.2s ease-in-out infinite
+
+    .loading-earth-glow
       position: absolute
-      inset: 0
+      inset: 9px
       border-radius: 50%
-      background: conic-gradient(from 0deg, var(--anzhiyu-main), #7c6cff, #46b6ff, var(--anzhiyu-main))
-      animation: loadingRing 3.2s linear infinite
-      box-shadow: 0 10px 30px rgba(82, 106, 255, .18)
+      background: rgba(70, 182, 255, .16)
+      filter: blur(14px)
+      animation: loadingGlowPulse 2.2s ease-in-out infinite
+
+    .loading-earth-icon
+      width: 82px
+      height: 82px
+      overflow: visible
+      filter: drop-shadow(0 10px 18px rgba(50, 110, 210, .17))
+      circle
+        fill: #4aa8ff
+        stroke: #2979e9
+        stroke-width: 4
+      path:not(.loading-earth-line)
+        fill: #66c783
+        stroke: rgba(28, 121, 74, .25)
+        stroke-width: 1.2
+      .loading-earth-line
+        fill: none
+        stroke: rgba(255, 255, 255, .30)
+        stroke-width: 1.4
+
+    .loading-transmitter
+      position: absolute
+      right: 0
+      top: 50%
+      width: 10px
+      height: 10px
+      margin-top: -5px
+      border-radius: 50%
+      background: #46b6ff
+      box-shadow: 0 0 0 4px rgba(70, 182, 255, .12), 0 0 18px rgba(70, 182, 255, .7)
+      &:before,
       &:after
         content: ''
         position: absolute
-        inset: 4px
+        left: 50%
+        top: 50%
+        width: 18px
+        height: 18px
+        margin-left: -9px
+        margin-top: -9px
+        border: 1px solid rgba(70, 182, 255, .48)
         border-radius: 50%
-        background: var(--anzhiyu-card-bg)
+        animation: loadingTransmitPulse 1.8s ease-out infinite
+      &:after
+        animation-delay: .9s
 
-    .loading-img
+    .loading-connection
       position: relative
-      z-index: 1
-      width: 78px
-      height: 78px
-      object-fit: cover
-      border-radius: 50%
-      border: 3px solid rgba(255, 255, 255, .92)
-      box-shadow: 0 8px 24px rgba(50, 60, 100, .13)
-      opacity: 1
-
-    .loading-image-dot
-      width: 15px
-      height: 15px
-      background: #58d68d
-      position: absolute
+      flex: 1 1 auto
+      min-width: 138px
+      height: 70px
+      margin: 0 5px
       z-index: 2
+
+    .loading-beam
+      position: absolute
+      left: 0
+      right: 0
+      top: 50%
+      height: 2px
+      margin-top: -1px
+      border-radius: 999px
+      background: repeating-linear-gradient(90deg, rgba(70, 182, 255, .18) 0 7px, rgba(66, 90, 239, .58) 7px 14px, rgba(124, 108, 255, .18) 14px 21px)
+      background-size: 42px 2px
+      box-shadow: 0 0 10px rgba(66, 90, 239, .14)
+      animation: loadingBeamFlow 1.05s linear infinite
+      &:before
+        content: ''
+        position: absolute
+        inset: -8px 0
+        background: linear-gradient(90deg, transparent, rgba(70, 182, 255, .10), rgba(124, 108, 255, .11), transparent)
+        filter: blur(5px)
+
+    .loading-signal
+      position: absolute
+      top: 50%
+      left: 0
+      width: 8px
+      height: 8px
+      margin-top: -4px
       border-radius: 50%
-      border: 3px solid var(--anzhiyu-card-bg)
-      right: 6px
-      bottom: 8px
-      box-shadow: 0 3px 10px rgba(88, 214, 141, .3)
+      background: #fff
+      border: 2px solid #46b6ff
+      box-shadow: 0 0 12px rgba(70, 182, 255, .85)
+      opacity: 0
+      animation: loadingSignalFly 2.1s cubic-bezier(.36,.04,.3,1) infinite
+
+    .loading-signal-2
+      animation-delay: .52s
+    .loading-signal-3
+      animation-delay: 1.04s
+    .loading-signal-4
+      animation-delay: 1.56s
+
+    .loading-packet
+      position: absolute
+      top: 12px
+      left: 0
+      color: rgba(66, 90, 239, .54)
+      font-size: 8px
+      font-family: Consolas, Monaco, monospace
+      letter-spacing: .08em
+      opacity: 0
+      animation: loadingPacketFly 3.2s linear infinite
+
+    .loading-packet-2
+      top: auto
+      bottom: 11px
+      animation-delay: 1.6s
+      color: rgba(70, 182, 255, .58)
+
+    .loading-link-wave
+      position: absolute
+      right: -5px
+      top: 50%
+      width: 16px
+      height: 16px
+      margin-top: -8px
+      border: 1px solid rgba(124, 108, 255, .5)
+      border-radius: 50%
+      opacity: 0
+      animation: loadingReceiveWave 1.7s ease-out infinite
+
+    .loading-link-wave-2
+      animation-delay: .85s
+
+    .loading-station
+      width: 112px
+      height: 92px
+      animation: loadingStationFloat 2.8s ease-in-out infinite
+
+    .loading-station-glow
+      position: absolute
+      width: 68px
+      height: 42px
+      border-radius: 50%
+      background: rgba(124, 108, 255, .14)
+      filter: blur(15px)
+      animation: loadingGlowPulse 2s ease-in-out infinite reverse
+
+    .loading-station-icon
+      width: 112px
+      height: 84px
+      overflow: visible
+      filter: drop-shadow(0 10px 18px rgba(55, 65, 120, .15))
+      .loading-panel
+        fill: #5268d9
+        stroke: #344ab9
+        stroke-width: 2
+      .loading-panel-line
+        fill: none
+        stroke: rgba(255, 255, 255, .28)
+        stroke-width: 1
+      .loading-truss,
+      .loading-antenna
+        fill: none
+        stroke: #77829a
+        stroke-width: 4
+        stroke-linecap: round
+      .loading-module
+        fill: #f5f7fb
+        stroke: #9aa4ba
+        stroke-width: 3
+      .loading-module-small
+        fill: #cfd5e2
+        stroke: #929db4
+        stroke-width: 2
+      .loading-window
+        fill: #46b6ff
+        stroke: #2e80d8
+        stroke-width: 2
+      .loading-antenna-tip
+        fill: #7c6cff
+
+    .loading-receiver
+      position: absolute
+      left: 3px
+      top: 50%
+      width: 9px
+      height: 9px
+      margin-top: -4px
+      border-radius: 50%
+      background: #7c6cff
+      box-shadow: 0 0 14px rgba(124, 108, 255, .65)
+      animation: loadingReceiverBlink 1.05s ease-in-out infinite
 
     .loading-brand
       color: var(--anzhiyu-fontcolor)
@@ -95,23 +275,37 @@ if hexo-config('preloader')
       color: var(--anzhiyu-secondtext)
       font-size: 13px
       line-height: 1.6
-      margin-bottom: 18px
+      margin-bottom: 13px
 
-    .loading-track
-      position: relative
-      width: 186px
-      height: 5px
-      border-radius: 999px
-      background: rgba(120, 130, 160, .12)
-      overflow: hidden
+    .loading-status-row
+      display: flex
+      align-items: center
+      gap: 7px
+      min-width: 238px
+      padding: 8px 11px
+      border-radius: 12px
+      background: rgba(66, 90, 239, .055)
+      border: 1px solid rgba(66, 90, 239, .08)
+      color: var(--anzhiyu-secondtext)
+      font-family: Consolas, Monaco, monospace
+      font-size: 9px
+      letter-spacing: .08em
 
-    .loading-progress
-      width: 42%
-      height: 100%
-      border-radius: inherit
-      background: linear-gradient(90deg, #46b6ff, var(--anzhiyu-main), #7c6cff)
-      box-shadow: 0 0 14px rgba(82, 106, 255, .3)
-      animation: loadingProgress 1.35s cubic-bezier(.4,0,.2,1) infinite
+    .loading-status-dot
+      width: 7px
+      height: 7px
+      border-radius: 50%
+      background: #58d68d
+      box-shadow: 0 0 9px rgba(88, 214, 141, .55)
+      animation: loadingStatusBlink 1.15s ease-in-out infinite
+
+    .loading-status-text
+      color: var(--anzhiyu-fontcolor)
+      font-weight: 700
+
+    .loading-status-code
+      margin-left: auto
+      opacity: .62
 
     &.loaded
       .loading-bg
@@ -124,45 +318,88 @@ if hexo-config('preloader')
 
   [data-theme='dark'] #loading-box
     .loading-card
-      background: rgba(24, 26, 34, .76)
+      background: rgba(24, 26, 34, .79)
       border-color: rgba(255, 255, 255, .08)
-      box-shadow: 0 18px 55px rgba(0, 0, 0, .25)
+      box-shadow: 0 20px 62px rgba(0, 0, 0, .27)
 
-    .loading-img
-      border-color: rgba(255, 255, 255, .15)
+    .loading-earth-icon
+      filter: drop-shadow(0 10px 20px rgba(70, 182, 255, .22))
 
-    .loading-track
-      background: rgba(255, 255, 255, .1)
+    .loading-station-icon
+      .loading-module
+        fill: #dfe4ed
+      .loading-module-small
+        fill: #adb7c9
+
+    .loading-status-row
+      background: rgba(124, 108, 255, .07)
+      border-color: rgba(255, 255, 255, .07)
 
   @media screen and (max-width: 520px)
     #loading-box
       .loading-card
-        min-width: 0
-        width: calc(100vw - 64px)
-        max-width: 300px
-        padding: 30px 24px 27px
+        width: calc(100vw - 36px)
+        padding: 27px 20px 23px
         border-radius: 24px
 
-      .loading-avatar-wrap
-        width: 84px
-        height: 84px
+      .loading-orbit-scene
+        height: 96px
 
-      .loading-img
-        width: 70px
-        height: 70px
+      .loading-earth
+        width: 74px
+        height: 74px
+
+      .loading-earth-icon
+        width: 68px
+        height: 68px
+
+      .loading-connection
+        min-width: 82px
+        margin: 0 2px
+
+      .loading-station
+        width: 89px
+        height: 74px
+
+      .loading-station-icon
+        width: 89px
+        height: 68px
 
       .loading-brand
         font-size: 19px
 
-      .loading-track
-        width: 168px
+      .loading-message
+        font-size: 12px
+        text-align: center
+
+      .loading-status-row
+        min-width: 0
+        width: 100%
+        max-width: 250px
+
+      .loading-packet
+        display: none
 
   @media (prefers-reduced-motion: reduce)
     #loading-box
       .loading-card,
-      .loading-avatar-ring,
-      .loading-progress
+      .loading-earth,
+      .loading-earth-glow,
+      .loading-transmitter:before,
+      .loading-transmitter:after,
+      .loading-beam,
+      .loading-signal,
+      .loading-packet,
+      .loading-link-wave,
+      .loading-station,
+      .loading-station-glow,
+      .loading-receiver,
+      .loading-status-dot
         animation: none !important
+      .loading-signal
+        opacity: .7
+        &:nth-of-type(n+3)
+          display: none
 
   @keyframes showLoading
     0%
@@ -178,16 +415,84 @@ if hexo-config('preloader')
       opacity: 1
       transform: translateY(0) scale(1)
 
-  @keyframes loadingRing
-    0%
-      transform: rotate(0deg)
-    100%
-      transform: rotate(360deg)
+  @keyframes loadingEarthFloat
+    0%, 100%
+      transform: translateY(2px) rotate(-1deg)
+    50%
+      transform: translateY(-4px) rotate(1deg)
 
-  @keyframes loadingProgress
+  @keyframes loadingStationFloat
+    0%, 100%
+      transform: translateY(-2px) rotate(.5deg)
+    50%
+      transform: translateY(4px) rotate(-.7deg)
+
+  @keyframes loadingGlowPulse
+    0%, 100%
+      opacity: .55
+      transform: scale(.92)
+    50%
+      opacity: 1
+      transform: scale(1.08)
+
+  @keyframes loadingTransmitPulse
     0%
-      transform: translateX(-115%)
-    55%
-      transform: translateX(95%)
+      opacity: .7
+      transform: scale(.35)
     100%
-      transform: translateX(250%)
+      opacity: 0
+      transform: scale(2.35)
+
+  @keyframes loadingBeamFlow
+    0%
+      background-position: 0 0
+    100%
+      background-position: 42px 0
+
+  @keyframes loadingSignalFly
+    0%
+      left: 0
+      opacity: 0
+      transform: scale(.62)
+    12%
+      opacity: 1
+    78%
+      opacity: 1
+    100%
+      left: calc(100% - 8px)
+      opacity: 0
+      transform: scale(1.05)
+
+  @keyframes loadingPacketFly
+    0%
+      left: 3%
+      opacity: 0
+    12%
+      opacity: .8
+    82%
+      opacity: .65
+    100%
+      left: 91%
+      opacity: 0
+
+  @keyframes loadingReceiveWave
+    0%
+      opacity: .65
+      transform: scale(.35)
+    100%
+      opacity: 0
+      transform: scale(2.1)
+
+  @keyframes loadingReceiverBlink
+    0%, 100%
+      opacity: .5
+      transform: scale(.82)
+    50%
+      opacity: 1
+      transform: scale(1.15)
+
+  @keyframes loadingStatusBlink
+    0%, 100%
+      opacity: .45
+    50%
+      opacity: 1
