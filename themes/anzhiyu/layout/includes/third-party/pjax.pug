@@ -32,9 +32,9 @@ script.
       const navMeting = document.querySelector('#nav-music meting-js')
       const navAplayer = navMeting && navMeting.aplayer
       const navMusic = document.getElementById('nav-music')
+      const players = Array.from(window.aplayers)
 
-      for (let i = 0; i < window.aplayers.length; i++) {
-        const player = window.aplayers[i]
+      for (const player of players) {
         if (!player) continue
 
         const playerContainer = player.container || (player.template && player.template.container) || null
@@ -78,7 +78,11 @@ script.
     // baidu analytics
     typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
 
-    typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+    // The nav player survives PJAX. Only re-run Meting when the new page actually
+    // contains a page-level meting-js element; otherwise loadMeting would revisit
+    // the persistent navigation player on every route change.
+    const pageMeting = Array.from(document.querySelectorAll('meting-js')).some(item => !item.closest('#nav-music'))
+    typeof loadMeting === 'function' && pageMeting && loadMeting()
 
     // prismjs
     typeof Prism === 'object' && Prism.highlightAll()
