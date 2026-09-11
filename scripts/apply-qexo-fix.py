@@ -4,18 +4,23 @@ bridge = Path("themes/anzhiyu/source/js/smalljia-essay-qexo.js")
 text = bridge.read_text(encoding="utf-8")
 old_version = 'const VERSION = "20260911-1";'
 old_api = 'const QEXO_API = "https://small-tan.vercel.app/pub/talks/";'
+old_play = 'const playMusicCard = async card, music => {'
 new_version = 'const VERSION = "20260911-2";'
 new_api = 'const QEXO_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/qexo-talks-proxy";'
+new_play = 'const playMusicCard = async (card, music) => {'
 
-if old_version not in text:
-    raise SystemExit("Expected bridge version marker not found")
-if old_api not in text:
-    raise SystemExit("Expected Qexo API marker not found")
+for marker, label in [
+    (old_version, "bridge version"),
+    (old_api, "Qexo API"),
+    (old_play, "playMusicCard syntax"),
+]:
+    if marker not in text:
+        raise SystemExit(f"Expected {label} marker not found")
 
-bridge.write_text(
-    text.replace(old_version, new_version, 1).replace(old_api, new_api, 1),
-    encoding="utf-8",
-)
+text = text.replace(old_version, new_version, 1)
+text = text.replace(old_api, new_api, 1)
+text = text.replace(old_play, new_play, 1)
+bridge.write_text(text, encoding="utf-8")
 
 page = Path("themes/anzhiyu/layout/page.pug")
 page_text = page.read_text(encoding="utf-8")
