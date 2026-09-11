@@ -1,0 +1,82 @@
+name: Apply Nav Music Single Random Patch
+
+on:
+  push:
+    branches:
+      - hexo
+    paths:
+      - .github/workflows/nav-music-single-random-patch.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Patch nav music random behavior
+        shell: python
+        run: |
+          from pathlib import Path
+
+          player = Path("themes/anzhiyu/source/js/smalljia-nav-daily-player.js")
+          text = player.read_text(encoding="utf-8")
+
+          replacements = [
+              ('const VERSION = "20260911-2";', 'const VERSION = "20260911-3";'),
+              ('      const startIndex = 0;', '      const startIndex = pickRandomIndex(-1);'),
+          ]
+          for old, new in replacements:
+              if new in text:
+                  continue
+              if text.count(old) != 1:
+                  raise SystemExit(f"Expected one match in {player}: {old!r}, found {text.count(old)}")
+              text = text.replace(old, new, 1)
+
+          marker = '  const patchSwitch = ap => {\n'
+          helper = '''  const pickRandomIndex = currentIndex => {\n    const total = state.tracks.length;\n    if (total <= 1) return 0;\n    const current = Number.isInteger(Number(currentIndex)) ? Number(currentIndex) : -1;\n    if (current < 0 || current >= total) return Math.floor(Math.random() * total);\n    const offset = 1 + Math.floor(Math.random() * (total - 1));\n    return (current + offset) % total;\n  };\n\n'''
+          if helper not in text:
+              if text.count(marker) != 1:
+                  raise SystemExit(f"Expected one patchSwitch marker, found {text.count(marker)}")
+              text = text.replace(marker, helper + marker, 1)
+
+          old_patch = '''    ap.list.switch = function (index) {\n      const shouldPlay = !!(window.anzhiyu_musicPlaying || (ap.audio && !ap.audio.paused));\n      switchTo(index, shouldPlay);\n    };\n'''
+          new_patch = '''    ap.list.switch = function (index) {\n      const shouldPlay = !!(window.anzhiyu_musicPlaying || (ap.audio && !ap.audio.paused));\n      switchTo(index, shouldPlay);\n    };\n\n    // Keep one and only one random selector for the nav player.\n    // First play, natural end and the next button all use pickRandomIndex().\n    ap.skipForward = function () {\n      const current = Number(ap.list?.index);\n      const nextIndex = pickRandomIndex(Number.isFinite(current) ? current : -1);\n      switchTo(nextIndex, true);\n    };\n'''
+          if new_patch not in text:
+              if text.count(old_patch) != 1:
+                  raise SystemExit(f"Expected one switch patch block, found {text.count(old_patch)}")
+              text = text.replace(old_patch, new_patch, 1)
+
+          player.write_text(text, encoding="utf-8", newline="\n")
+
+          additional = Path("themes/anzhiyu/layout/includes/additional-js.pug")
+          text = additional.read_text(encoding="utf-8")
+          old = "smalljia-nav-daily-player.js') + '?v=20260911-2'"
+          new = "smalljia-nav-daily-player.js') + '?v=20260911-3'"
+          if new not in text:
+              if text.count(old) != 1:
+                  raise SystemExit(f"Expected one cache-version match, found {text.count(old)}")
+              text = text.replace(old, new, 1)
+          additional.write_text(text, encoding="utf-8", newline="\n")
+
+      - name: Validate nav player
+        run: |
+          node --check themes/anzhiyu/source/js/smalljia-nav-daily-player.js
+          grep -q 'order="list"' themes/anzhiyu/layout/includes/music.pug
+          grep -q 'pickRandomIndex(-1)' themes/anzhiyu/source/js/smalljia-nav-daily-player.js
+
+      - name: Commit patch
+        run: |
+          if git diff --quiet -- themes/anzhiyu/source/js/smalljia-nav-daily-player.js themes/anzhiyu/layout/includes/additional-js.pug; then
+            echo "Patch already applied."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add themes/anzhiyu/source/js/smalljia-nav-daily-player.js themes/anzhiyu/layout/includes/additional-js.pug
+          git commit -m "fix(nav-music): use one random selector"
+          git push origin HEAD:hexo
