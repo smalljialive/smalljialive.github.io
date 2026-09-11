@@ -26339,12 +26339,10 @@ html.hide-aside .layout > div:first-child {
   background-size: 100%;
 }
 
-#aside-content #flip-wrapper #flip-content .back.face {
+#aside-content #flip-wrapper #flip-content .card-wechat-front {
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-transform: rotateY(180deg);
-  transform: rotateY(180deg);
   box-sizing: border-box;
   padding: 18px 20px;
   border-radius: inherit;
@@ -26353,16 +26351,23 @@ html.hide-aside .layout > div:first-child {
   text-align: center;
 }
 
-#aside-content #flip-wrapper #flip-content .card-wechat-back-text {
+#aside-content #flip-wrapper #flip-content .card-wechat-front-text {
   display: block;
-  font-size: 20px;
+  font-size: 22px;
   line-height: 1.45;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   text-shadow: 0 2px 8px rgba(20, 90, 40, 0.16);
 }
 
-[data-theme="dark"] #aside-content #flip-wrapper #flip-content .back.face {
+#aside-content #flip-wrapper #flip-content .back.face {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+  box-sizing: border-box;
+  border-radius: inherit;
+}
+
+[data-theme="dark"] #aside-content #flip-wrapper #flip-content .card-wechat-front {
   background: #57bd6a;
   color: #fff;
 }
