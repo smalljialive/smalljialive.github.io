@@ -21,8 +21,39 @@ script.
       if (box) box.classList.remove('loaded');
     }
   }
-  window.addEventListener('load', () => { preloader.endLoading() })
-  setTimeout(function(){ preloader.endLoading(); }, 10000)
+
+  const isLinkPage = /^\/link\/?$/.test(window.location.pathname)
+
+  if (isLinkPage) {
+    let linkReleased = false
+    const releaseLink = () => {
+      if (linkReleased) return
+      linkReleased = true
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => preloader.endLoading())
+      })
+    }
+
+    const releaseWhenReady = () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(releaseLink, { timeout: 700 })
+      } else {
+        setTimeout(releaseLink, 120)
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', releaseWhenReady, { once: true })
+    } else {
+      releaseWhenReady()
+    }
+
+    window.addEventListener('load', releaseLink, { once: true })
+    setTimeout(releaseLink, 2500)
+  } else {
+    window.addEventListener('load', () => { preloader.endLoading() })
+    setTimeout(function(){ preloader.endLoading(); }, 10000)
+  }
 
   if (!{theme.pjax && theme.pjax.enable}) {
     document.addEventListener('pjax:send', () => { preloader.initLoading() })
