@@ -1,15 +1,17 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-2";
+  const VERSION = "20260911-1";
   if (window.__smallJiaNavMusicHoverVersion === VERSION) return;
   window.__smallJiaNavMusicHoverVersion = VERSION;
 
   const STYLE_ID = "smalljia-nav-music-hover-style";
+  let retryTimer = null;
+  let retryIndex = 0;
+  const RETRY_DELAYS = [300, 900, 1800];
 
   const installStyle = () => {
-    const oldStyle = document.getElementById(STYLE_ID);
-    if (oldStyle) oldStyle.remove();
+    if (document.getElementById(STYLE_ID)) return;
     const style = document.createElement("style");
     style.id = STYLE_ID;
     style.textContent = `
@@ -92,14 +94,15 @@
   const bind = () => {
     installStyle();
     const nav = document.getElementById("nav-music");
-    if (!nav || nav.dataset.smalljiaHoverBound === VERSION) return;
+    if (!nav) return false;
+    if (nav.dataset.smalljiaHoverBound === VERSION) return true;
     nav.dataset.smalljiaHoverBound = VERSION;
 
     const collapse = () => nav.classList.remove("stretch");
     const expand = () => nav.classList.add("stretch");
 
-    nav.addEventListener("mouseenter", expand);
-    nav.addEventListener("mouseleave", collapse);
+    nav.addEventListener("mouseenter", expand, { passive: true });
+    nav.addEventListener("mouseleave", collapse, { passive: true });
 
     const observer = new MutationObserver(() => {
       if (!nav.matches(":hover") && nav.classList.contains("stretch")) {
@@ -109,19 +112,39 @@
     observer.observe(nav, { attributes: true, attributeFilter: ["class"] });
 
     if (!nav.matches(":hover")) collapse();
+    return true;
   };
 
-  const boot = () => {
-    installStyle();
-    let tries = 0;
-    const timer = setInterval(() => {
-      tries += 1;
-      bind();
-      if (document.getElementById("nav-music") || tries > 100) clearInterval(timer);
-    }, 100);
+  const stopRetry = () => {
+    if (retryTimer) clearTimeout(retryTimer);
+    retryTimer = null;
+    retryIndex = 0;
   };
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, { once: true });
-  else boot();
-  document.addEventListener("pjax:complete", () => setTimeout(bind, 0));
+  const scheduleBind = () => {
+    stopRetry();
+    if (bind()) return;
+
+    const tryBind = () => {
+      if (bind()) {
+        stopRetry();
+        return;
+      }
+      if (retryIndex >= RETRY_DELAYS.length) {
+        stopRetry();
+        return;
+      }
+      retryTimer = setTimeout(tryBind, RETRY_DELAYS[retryIndex++]);
+    };
+
+    retryTimer = setTimeout(tryBind, RETRY_DELAYS[retryIndex++]);
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", scheduleBind, { once: true });
+  } else {
+    scheduleBind();
+  }
+
+  document.addEventListener("pjax:complete", () => setTimeout(scheduleBind, 0));
 })();
