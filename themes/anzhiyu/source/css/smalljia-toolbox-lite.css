@@ -1,7 +1,24 @@
 /* SmallJia Toolbox Lite
  * Static, low-overhead link page inspired by the native AnZhiYu friend-link page.
- * No runtime card generation, no scroll observers, and no layout-changing hover effects.
+ * No runtime card generation, no scroll observers, no remote favicons, and no
+ * layout-changing hover effects.
  */
+
+/* link page intentionally does not load the theme main runtime. Keep the shell
+ * visible and hide controls that depend on that runtime. */
+#nav {
+  opacity: 1 !important;
+}
+
+#rightside,
+#nav-music,
+#local-search,
+#console,
+#randomPost_button,
+#search-button,
+#center-console + label.widget {
+  display: none !important;
+}
 
 #article-container .sjtb-lite {
   width: 100%;
@@ -131,6 +148,8 @@
   border: var(--style-border);
   border-radius: 20px;
   background: var(--anzhiyu-card-bg);
+  content-visibility: auto;
+  contain-intrinsic-size: 520px;
 }
 
 .sjtb-lite-section-head {
@@ -222,15 +241,8 @@
   font-weight: 800;
 }
 
-.sjtb-lite-icon img {
-  position: absolute;
-  inset: 0;
-  width: 100% !important;
-  height: 100% !important;
-  margin: 0 !important;
-  border-radius: inherit !important;
-  object-fit: contain;
-  background: var(--anzhiyu-card-bg);
+.sjtb-lite-card:hover .sjtb-lite-fallback {
+  color: #fff;
 }
 
 .sjtb-lite-copy {
@@ -335,7 +347,7 @@
 
 @media (max-width: 820px) {
   .sjtb-lite-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .sjtb-lite-section { padding: 16px; }
+  .sjtb-lite-section { padding: 16px; contain-intrinsic-size: 760px; }
   .sjtb-lite-hero { padding: 20px; }
 }
 
@@ -345,6 +357,7 @@
   .sjtb-lite-card { min-height: 92px; }
   .sjtb-lite-nav { scrollbar-width: none; }
   .sjtb-lite-nav::-webkit-scrollbar { display: none; }
+  .sjtb-lite-section { contain-intrinsic-size: 1280px; }
 }
 
 @media (hover: none), (prefers-reduced-motion: reduce) {
