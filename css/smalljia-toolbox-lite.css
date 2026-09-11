@@ -186,7 +186,6 @@
   color: var(--anzhiyu-fontcolor) !important;
   text-decoration: none !important;
   contain: layout paint style;
-  transform: translateZ(0);
   transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
 }
 
