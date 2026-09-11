@@ -16,6 +16,8 @@
     return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
   };
 
+  const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
   class MusicFullscreenController {
     constructor(root) {
       this.root = root;
@@ -27,6 +29,7 @@
       this.mode = null;
       this.renderedTrackKey = "";
       this.renderedLyricLength = -1;
+      this.lastNonZeroVolume = 0.5;
       this.onKeydown = event => {
         if (event.key !== "Escape" || !this.active) return;
         // 网站全屏没有浏览器 Fullscreen 状态，需要我们自己响应 Esc。
@@ -55,6 +58,7 @@
         overlay: byId("sjm-fullscreen"),
         close: byId("sjm-fullscreen-close"),
         bg: byId("sjm-fullscreen-bg"),
+        vinyl: byId("sjm-fullscreen-vinyl"),
         cover: byId("sjm-fullscreen-cover"),
         title: byId("sjm-fullscreen-title"),
         artist: byId("sjm-fullscreen-artist"),
@@ -65,6 +69,9 @@
         progress: byId("sjm-fullscreen-progress"),
         current: byId("sjm-fullscreen-current"),
         duration: byId("sjm-fullscreen-duration"),
+        volume: byId("sjm-fullscreen-volume"),
+        volumeValue: byId("sjm-fullscreen-volume-value"),
+        mute: byId("sjm-fullscreen-mute"),
         lyrics: byId("sjm-fullscreen-lyrics"),
         previewMain: byId("sjm-preview-badge"),
         previewFullscreen: byId("sjm-fullscreen-preview"),
@@ -104,6 +111,8 @@
         if (!this.audio || !Number.isFinite(this.audio.duration) || this.audio.duration <= 0) return;
         this.audio.currentTime = this.audio.duration * (Number(this.dom.progress.value) / 100);
       });
+      this.dom.volume?.addEventListener("input", () => this.setVolumeFromControl());
+      this.dom.mute?.addEventListener("click", () => this.toggleMute());
       document.addEventListener("keydown", this.onKeydown);
       document.addEventListener("fullscreenchange", this.onFullscreenChange);
     }
@@ -125,12 +134,58 @@
     attachApp(app) {
       this.app = app;
       this.audio = app.audio;
+      if (this.audio.volume > 0) this.lastNonZeroVolume = this.audio.volume;
       if (this.boundAudio === this.audio) return;
       this.boundAudio = this.audio;
-      ["play", "pause", "loadedmetadata", "durationchange", "timeupdate", "emptied"].forEach(eventName => {
+      ["play", "pause", "loadedmetadata", "durationchange", "timeupdate", "emptied", "volumechange"].forEach(eventName => {
         this.audio.addEventListener(eventName, () => this.sync());
       });
       this.sync();
+    }
+
+    setVolumeFromControl() {
+      if (!this.audio || !this.dom.volume) return;
+      const next = clamp(Number(this.dom.volume.value) / 100, 0, 1);
+      this.audio.muted = false;
+      this.audio.volume = next;
+      if (next > 0) this.lastNonZeroVolume = next;
+      if (this.app?.dom?.volume) this.app.dom.volume.value = String(Math.round(next * 100));
+      this.app?.saveState?.(true);
+      this.syncVolume();
+    }
+
+    toggleMute() {
+      if (!this.audio) return;
+      const muted = this.audio.muted || this.audio.volume <= 0;
+      if (muted) {
+        const restored = clamp(this.lastNonZeroVolume || 0.5, 0.05, 1);
+        this.audio.muted = false;
+        this.audio.volume = restored;
+        if (this.app?.dom?.volume) this.app.dom.volume.value = String(Math.round(restored * 100));
+      } else {
+        if (this.audio.volume > 0) this.lastNonZeroVolume = this.audio.volume;
+        this.audio.muted = true;
+      }
+      this.app?.saveState?.(true);
+      this.syncVolume();
+    }
+
+    syncVolume() {
+      if (!this.audio) return;
+      if (this.audio.volume > 0 && !this.audio.muted) this.lastNonZeroVolume = this.audio.volume;
+      const effective = this.audio.muted ? 0 : clamp(this.audio.volume, 0, 1);
+      const percent = Math.round(effective * 100);
+      if (this.dom.volume) this.dom.volume.value = String(percent);
+      if (this.dom.volumeValue) {
+        this.dom.volumeValue.textContent = `${percent}%`;
+        this.dom.volumeValue.title = `当前音量 ${percent}%`;
+      }
+      if (this.dom.mute) {
+        const icon = percent === 0 ? "🔇" : percent < 50 ? "🔉" : "🔊";
+        this.dom.mute.textContent = icon;
+        this.dom.mute.title = percent === 0 ? "取消静音" : "静音";
+        this.dom.mute.setAttribute("aria-label", percent === 0 ? "取消静音" : "静音");
+      }
     }
 
     showOverlay(mode) {
@@ -202,6 +257,7 @@
         this.dom.play.textContent = playing ? "❚❚" : "▶";
         this.dom.play.setAttribute("aria-label", playing ? "暂停" : "播放");
       }
+      this.dom.vinyl?.classList.toggle("is-playing", playing);
 
       const current = this.audio.currentTime || 0;
       const duration = this.audio.duration || 0;
@@ -211,6 +267,7 @@
         this.dom.progress.value = Number.isFinite(duration) && duration > 0 ? String((current / duration) * 100) : "0";
       }
 
+      this.syncVolume();
       this.syncPreviewBadge(duration);
       this.syncLyrics(forceLyrics || this.renderedTrackKey !== (track?.key || "") || this.renderedLyricLength !== (this.app.lyrics?.length || 0));
       this.highlightLyric();
