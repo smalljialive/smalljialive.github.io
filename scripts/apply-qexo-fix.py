@@ -2,34 +2,60 @@ from pathlib import Path
 
 bridge = Path("themes/anzhiyu/source/js/smalljia-essay-qexo.js")
 text = bridge.read_text(encoding="utf-8")
-old_version = 'const VERSION = "20260911-1";'
-old_api = 'const QEXO_API = "https://small-tan.vercel.app/pub/talks/";'
-old_play = 'const playMusicCard = async card, music => {'
-new_version = 'const VERSION = "20260911-2";'
-new_api = 'const QEXO_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/qexo-talks-proxy";'
-new_play = 'const playMusicCard = async (card, music) => {'
 
-for marker, label in [
-    (old_version, "bridge version"),
-    (old_api, "Qexo API"),
-    (old_play, "playMusicCard syntax"),
-]:
-    if marker not in text:
+replacements = [
+    (
+        'const VERSION = "20260911-2";',
+        'const VERSION = "20260911-3";',
+        "bridge version",
+    ),
+    (
+        'return talks.sort((a, b) => Number(b?.time || 0) - Number(a?.time || 0));',
+        'return talks.sort((a, b) => Number(a?.time || 0) - Number(b?.time || 0));',
+        "talk ordering",
+    ),
+    (
+        'const from = String(valueOf(values, ["from", "source", "来源", "作者"], "SmallJia")).trim();',
+        'const from = String(valueOf(values, ["from", "source", "来源", "作者"], "")).trim();',
+        "source fallback",
+    ),
+    (
+        'const link = safeHttpUrl(valueOf(values, ["link", "url", "链接", "外链"], ""));',
+        'const link = safeHttpUrl(valueOf(values, ["link", "链接"], ""));',
+        "explicit link field",
+    ),
+    (
+        'if (fragment.childNodes.length) waterfallEl.prepend(fragment);',
+        'if (fragment.childNodes.length) waterfallEl.append(fragment);',
+        "append ordering",
+    ),
+]
+
+for old, new, label in replacements:
+    if old not in text:
         raise SystemExit(f"Expected {label} marker not found")
+    text = text.replace(old, new, 1)
 
-text = text.replace(old_version, new_version, 1)
-text = text.replace(old_api, new_api, 1)
-text = text.replace(old_play, new_play, 1)
+old_parse = '''  const parseAplayer = values => {\n    const raw = parseMaybeJson(valueOf(values, ["aplayer", "音乐", "music"], null));'''
+new_parse = '''  const parseAplayer = values => {\n    const hasMusicValue = [\n      valueOf(values, ["aplayer", "音乐", "music"], ""),\n      valueOf(values, ["music_server", "music_source", "音乐平台", "音乐来源"], ""),\n      valueOf(values, ["music_id", "song_id", "歌曲ID", "音乐ID", "歌曲id", "音乐id"], ""),\n      valueOf(values, ["music_url", "audio_url", "音频地址", "音乐地址"], ""),\n    ].some(value => {\n      if (value && typeof value === "object") {\n        return Object.values(value).some(item => String(item ?? "").trim() !== "");\n      }\n      return String(value ?? "").trim() !== "";\n    });\n    if (!hasMusicValue) return null;\n\n    const raw = parseMaybeJson(valueOf(values, ["aplayer", "音乐", "music"], null));'''
+
+if old_parse not in text:
+    raise SystemExit("Expected parseAplayer marker not found")
+text = text.replace(old_parse, new_parse, 1)
+text = text.replace(
+    '["music_server", "music_source", "音乐平台", "音乐来源", "平台"]',
+    '["music_server", "music_source", "音乐平台", "音乐来源"]',
+    1,
+)
+
 bridge.write_text(text, encoding="utf-8")
 
 page = Path("themes/anzhiyu/layout/page.pug")
 page_text = page.read_text(encoding="utf-8")
-old_block = """        script(src=url_for('/js/smalljia-essay-qexo-proxy.js') + '?v=20260911-1')
-        script(src=url_for('/js/smalljia-essay-qexo.js') + '?v=20260911-1')"""
-new_block = """        script(src=url_for('/js/smalljia-essay-qexo.js') + '?v=20260911-2')"""
+old_page = "script(src=url_for('/js/smalljia-essay-qexo.js') + '?v=20260911-2')"
+new_page = "script(src=url_for('/js/smalljia-essay-qexo.js') + '?v=20260911-3')"
+if old_page not in page_text:
+    raise SystemExit("Expected essay script version marker not found")
+page.write_text(page_text.replace(old_page, new_page, 1), encoding="utf-8")
 
-if old_block not in page_text:
-    raise SystemExit("Expected essay script block not found")
-
-page.write_text(page_text.replace(old_block, new_block, 1), encoding="utf-8")
-print("Qexo essay bridge patched")
+print("Qexo essay ordering and optional-field behavior patched")
