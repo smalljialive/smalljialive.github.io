@@ -8,26 +8,13 @@ div
   if isLinkSafePage
     input(type="hidden" name="page-type" id="page-type" value="link")
 
-    //- 保留 PJAX 必需的选择器占位。这样从普通页面进入 Link 时不会退化成整页刷新，
-    //- #nav-music 位于 #body-wrap 之外，可继续沿用原播放器与当前播放状态。
+    //- 保留结构占位，但 Link 页不加载 PJAX、APlayer、MetingJS 或任何导航音乐运行时。
     .js-pjax
 
     //- Link 页仍保留图标字体，确保导航与页面图标正常显示。
     link(rel="stylesheet" href=url_for(theme.asset.ali_iconfont_css))
     if (theme.icons && theme.icons.ali_iconfont_js)
       script(async src=url_for(theme.icons.ali_iconfont_js))
-
-    //- Link 直开/刷新采用真正的静态运行模式：首屏不加载 APlayer、MetingJS、daily-player、
-    //- hover 或 persistence。用户第一次点击左下角播放器时，仅解析一首真实音频并创建独立 APlayer。
-    //- 站内 PJAX 进入 Link 时仍沿用原播放器与当前播放状态。
-    if (theme.nav_music.enable || theme.nav_music.console_widescreen_music)
-      script.
-        window.__smallJiaLinkMusicConfig = {
-          aplayerCss: "!{url_for(theme.asset.aplayer_css)}",
-          aplayerJs: "!{url_for(theme.asset.aplayer_js)}",
-          volume: Number("!{theme.nav_music.volume}") || 0.5
-        };
-      script(src=url_for('/js/smalljia-link-nav-player-fix.js') + '?v=20260911-4')
   else
     if theme.translate.enable
       script(src=url_for(theme.asset.translate))
