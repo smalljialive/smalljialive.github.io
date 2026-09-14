@@ -6,72 +6,37 @@
 - sjCommentSourceMap[url_for('/essay/')] = '碎碎念'
 - const sjCommentSourceJson = JSON.stringify(sjCommentSourceMap).replace(/</g, '\\u003c')
 
-.comment-center-page
+.comment-center-page.comment-center-admin-page
   .comment-center-hero
     .comment-center-hero-icon
       i.anzhiyufont.anzhiyu-icon-comments
     .comment-center-hero-copy
-      h1 评论中心
-      p 集中查看全站最新评论，快速找到访客在哪篇文章提出了问题。
-    .comment-center-hero-badge 免费聚合 · Twikoo
+      h1 评论管理中心
+      p 登录后集中查看、隐藏或删除全站留言，并快速定位留言来源页面。
+    .comment-center-hero-badge 管理员专用
 
-  .comment-center-toolbar
-    .comment-center-search
-      i.anzhiyufont.anzhiyu-icon-magnifying-glass
-      input#commentCenterSearch(type='search' placeholder='搜索昵称、评论内容或文章标题…' autocomplete='off')
-    button#commentCenterRefresh.comment-center-refresh(type='button')
-      i.anzhiyufont.anzhiyu-icon-arrows-rotate
-      span 刷新
-
-  .comment-center-stats
-    .comment-center-stat
-      span.comment-center-stat-label 已载入
-      strong#commentCenterCount --
-      span 条评论
-    .comment-center-stat
-      span.comment-center-stat-label 涉及页面
-      strong#commentCenterPages --
-      span 个
-    .comment-center-stat
-      span.comment-center-stat-label 最近更新
-      strong#commentCenterLatest --
-
-  .comment-center-notice
+  .comment-center-notice.comment-center-security
     i.anzhiyufont.anzhiyu-icon-circle-info
-    span 此页聚合的是公开评论。回复、删除和审核仍在原文评论区通过 Twikoo 管理员认证完成，不会在前端保存管理员密码。
+    span 评论内容和管理操作只有通过 Twikoo 管理员认证后才会显示。管理员密码不会写入网站源码或 GitHub。
 
-  #commentCenterLoading.comment-center-loading
-    each item in [1, 2, 3]
-      .comment-center-skeleton
-        .comment-center-skeleton-avatar
-        .comment-center-skeleton-lines
-          span
-          span
-          span
-
-  #commentCenterList.comment-center-list(style='display:none')
-  #commentCenterEmpty.comment-center-empty(style='display:none')
-    i.anzhiyufont.anzhiyu-icon-comments
-    strong 暂时没有匹配的评论
-    span 换一个关键词试试，或点击“刷新”。
+  .comment-center-admin-card
+    .comment-center-admin-card-head
+      .comment-center-admin-card-copy
+        strong Twikoo 评论管理
+        span 可查看原文、标记垃圾、置顶和删除评论。
+      button#commentCenterOpenAdmin.comment-center-open-admin(type='button') 打开管理后台
+    #commentCenterAdminStatus.comment-center-admin-status 正在加载安全管理后台…
+    #commentCenterAdminHost.comment-center-admin-host
 
 script.
   (() => {
     const envId = 'https://smalljia-twikoo.vercel.app'
     const scriptUrl = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.22/dist/twikoo.all.min.js'
     const sourceMapRaw = !{sjCommentSourceJson}
+    const host = document.getElementById('commentCenterAdminHost')
+    const statusEl = document.getElementById('commentCenterAdminStatus')
+    const openBtn = document.getElementById('commentCenterOpenAdmin')
     const sourceMap = new Map()
-    const state = { comments: [], query: '' }
-
-    const $ = (selector) => document.querySelector(selector)
-    const listEl = $('#commentCenterList')
-    const loadingEl = $('#commentCenterLoading')
-    const emptyEl = $('#commentCenterEmpty')
-    const searchEl = $('#commentCenterSearch')
-    const refreshEl = $('#commentCenterRefresh')
-    const countEl = $('#commentCenterCount')
-    const pagesEl = $('#commentCenterPages')
-    const latestEl = $('#commentCenterLatest')
 
     function normalizePath(value) {
       try {
@@ -87,8 +52,7 @@ script.
     }
 
     Object.entries(sourceMapRaw).forEach(([key, title]) => {
-      const normalized = normalizePath(key)
-      sourceMap.set(normalized, String(title || ''))
+      sourceMap.set(normalizePath(key), String(title || ''))
     })
     sourceMap.set('/essay/', sourceMap.get('/essay/') || '碎碎念')
 
@@ -107,104 +71,10 @@ script.
       return sourceMap.get(path) || fallbackTitle(path)
     }
 
-    function formatTime(timestamp) {
-      const value = Number(timestamp)
-      if (!value) return '未知时间'
-      try {
-        return new Intl.DateTimeFormat('zh-CN', {
-          year: 'numeric', month: '2-digit', day: '2-digit',
-          hour: '2-digit', minute: '2-digit'
-        }).format(new Date(value))
-      } catch (error) {
-        return new Date(value).toLocaleString()
-      }
-    }
-
-    function createElement(tag, className, text) {
-      const el = document.createElement(tag)
-      if (className) el.className = className
-      if (typeof text !== 'undefined') el.textContent = text
-      return el
-    }
-
-    function renderStats(items) {
-      countEl.textContent = String(items.length)
-      pagesEl.textContent = String(new Set(items.map(item => normalizePath(item.url))).size)
-      latestEl.textContent = items.length ? (items[0].relativeTime || formatTime(items[0].created)) : '--'
-    }
-
-    function makeCard(item) {
-      const path = normalizePath(item.url)
-      const title = getSourceTitle(item.url)
-      const card = createElement('article', 'comment-center-card')
-
-      const avatar = createElement('div', 'comment-center-avatar')
-      const img = document.createElement('img')
-      img.loading = 'lazy'
-      img.referrerPolicy = 'no-referrer'
-      img.alt = (item.nick || '访客') + ' 的头像'
-      img.src = item.avatar || 'https://cravatar.cn/avatar/' + (item.mailMd5 || '') + '?d=mp&s=96'
-      img.onerror = () => { img.src = '/img/favicon.ico' }
-      avatar.appendChild(img)
-
-      const body = createElement('div', 'comment-center-card-body')
-      const meta = createElement('div', 'comment-center-meta')
-      const author = createElement('strong', 'comment-center-author', item.nick || '匿名访客')
-      const time = createElement('span', 'comment-center-time', item.relativeTime || formatTime(item.created))
-      meta.append(author, time)
-
-      const content = createElement('p', 'comment-center-content', (item.commentText || '').trim() || '（无文本内容）')
-
-      const source = createElement('div', 'comment-center-source')
-      const sourceLabel = createElement('span', 'comment-center-source-label', '来源')
-      const sourceTitle = createElement('strong', 'comment-center-source-title', title)
-      const sourcePath = createElement('code', 'comment-center-source-path', path)
-      source.append(sourceLabel, sourceTitle, sourcePath)
-
-      const actions = createElement('div', 'comment-center-card-actions')
-      const open = createElement('a', 'comment-center-open')
-      open.href = path + '#post-comment'
-      open.textContent = '查看原文并回复'
-      open.target = '_self'
-      const copy = createElement('button', 'comment-center-copy', '复制链接')
-      copy.type = 'button'
-      copy.addEventListener('click', async () => {
-        const absolute = new URL(path + '#post-comment', location.origin).href
-        try {
-          await navigator.clipboard.writeText(absolute)
-          copy.textContent = '已复制'
-          setTimeout(() => { copy.textContent = '复制链接' }, 1400)
-        } catch (error) {
-          window.prompt('复制这个链接：', absolute)
-        }
-      })
-      actions.append(open, copy)
-
-      body.append(meta, content, source, actions)
-      card.append(avatar, body)
-      return card
-    }
-
-    function render() {
-      const keyword = state.query.trim().toLowerCase()
-      const filtered = state.comments.filter(item => {
-        if (!keyword) return true
-        const haystack = [item.nick, item.commentText, getSourceTitle(item.url), normalizePath(item.url)]
-          .filter(Boolean).join(' ').toLowerCase()
-        return haystack.includes(keyword)
-      })
-
-      listEl.replaceChildren()
-      filtered.forEach(item => listEl.appendChild(makeCard(item)))
-      listEl.style.display = filtered.length ? '' : 'none'
-      emptyEl.style.display = filtered.length ? 'none' : ''
-      renderStats(state.comments)
-    }
-
-    function loadTwikooScript() {
-      if (window.twikoo && typeof window.twikoo.getRecentComments === 'function') return Promise.resolve()
+    function loadTwikoo() {
+      if (window.twikoo && typeof window.twikoo.init === 'function') return Promise.resolve()
       return new Promise((resolve, reject) => {
-        const existing = document.querySelector('script[data-smalljia-comment-center]')
+        const existing = document.querySelector('script[data-smalljia-comment-admin]')
         if (existing) {
           existing.addEventListener('load', resolve, { once: true })
           existing.addEventListener('error', reject, { once: true })
@@ -213,48 +83,88 @@ script.
         const script = document.createElement('script')
         script.src = scriptUrl
         script.async = true
-        script.dataset.smalljiaCommentCenter = '1'
+        script.dataset.smalljiaCommentAdmin = '1'
         script.onload = resolve
         script.onerror = reject
         document.head.appendChild(script)
       })
     }
 
-    async function loadComments() {
-      refreshEl.disabled = true
-      loadingEl.style.display = ''
-      listEl.style.display = 'none'
-      emptyEl.style.display = 'none'
+    function openAdmin() {
+      const root = host && host.querySelector('#twikoo')
+      if (!root) return false
+      const vm = root.__vue__
+      if (vm && vm.$data && Object.prototype.hasOwnProperty.call(vm.$data, 'showAdmin')) {
+        vm.showAdmin = true
+        return true
+      }
+      const icons = root.querySelectorAll('.tk-comments-actions .tk-icon.__comments')
+      if (icons.length >= 3) {
+        icons[icons.length - 1].click()
+        return true
+      }
+      return false
+    }
+
+    function openAdminWithRetry() {
+      let tries = 0
+      const timer = setInterval(() => {
+        tries += 1
+        if (openAdmin() || tries >= 50) {
+          clearInterval(timer)
+          if (tries >= 50 && !host.querySelector('.tk-admin.__show')) {
+            statusEl.textContent = '后台已加载。若登录框没有自动打开，请点击“打开管理后台”。'
+          }
+        }
+      }, 200)
+    }
+
+    function decorateSources() {
+      const admin = host && host.querySelector('.tk-admin-comment')
+      if (!admin) return
+      const vm = admin.__vue__
+      if (!vm || !Array.isArray(vm.comments)) return
+      const items = admin.querySelectorAll('.tk-admin-comment-item')
+      items.forEach((item, index) => {
+        if (item.querySelector('.sj-admin-source')) return
+        const comment = vm.comments[index]
+        if (!comment || !comment.url) return
+        const path = normalizePath(comment.url)
+        const source = document.createElement('div')
+        source.className = 'sj-admin-source'
+        const label = document.createElement('span')
+        label.textContent = '来源'
+        const title = document.createElement('strong')
+        title.textContent = getSourceTitle(comment.url)
+        const code = document.createElement('code')
+        code.textContent = path
+        source.append(label, title, code)
+        const meta = item.querySelector('.tk-admin-comment-meta')
+        if (meta) meta.insertAdjacentElement('afterend', source)
+        else item.prepend(source)
+      })
+    }
+
+    async function initAdmin() {
       try {
-        await loadTwikooScript()
-        const comments = await window.twikoo.getRecentComments({
+        await loadTwikoo()
+        await window.twikoo.init({
           envId,
-          pageSize: 100,
-          includeReply: true
+          el: '#commentCenterAdminHost',
+          path: '/comment-center/'
         })
-        state.comments = Array.isArray(comments) ? comments : []
-        render()
+        statusEl.textContent = '管理后台已加载。未登录时请先输入管理员密码。'
+        openAdminWithRetry()
+        const observer = new MutationObserver(decorateSources)
+        observer.observe(host, { childList: true, subtree: true })
+        setInterval(decorateSources, 1000)
       } catch (error) {
-        console.error('评论中心加载失败', error)
-        listEl.replaceChildren()
-        const errorCard = createElement('div', 'comment-center-error')
-        errorCard.append(
-          createElement('strong', '', '评论中心暂时加载失败'),
-          createElement('span', '', '请稍后刷新页面重试。')
-        )
-        listEl.appendChild(errorCard)
-        listEl.style.display = ''
-      } finally {
-        loadingEl.style.display = 'none'
-        refreshEl.disabled = false
+        console.error('评论管理后台加载失败', error)
+        statusEl.textContent = '管理后台加载失败，请刷新页面重试。'
+        statusEl.classList.add('is-error')
       }
     }
 
-    searchEl.addEventListener('input', () => {
-      state.query = searchEl.value || ''
-      render()
-    })
-    refreshEl.addEventListener('click', loadComments)
-
-    loadComments()
+    openBtn.addEventListener('click', openAdminWithRetry)
+    initAdmin()
   })()
