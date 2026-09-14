@@ -14,6 +14,8 @@ block content
       when 'essay'
         include includes/page/essay.pug
         script(src=url_for('/js/smalljia-essay-qexo.js') + '?v=20260911-4')
+        if page.comments !== false
+          include includes/page/essay-comments.pug
       when 'room'
         include includes/page/room.pug
       when 'about'
