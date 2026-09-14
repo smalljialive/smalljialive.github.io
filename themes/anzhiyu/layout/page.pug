@@ -16,6 +16,8 @@ block content
         script(src=url_for('/js/smalljia-essay-qexo.js') + '?v=20260911-4')
         if page.comments !== false
           include includes/page/essay-comments.pug
+      when 'comment_center'
+        include includes/page/comment-center.pug
       when 'room'
         include includes/page/room.pug
       when 'about'
