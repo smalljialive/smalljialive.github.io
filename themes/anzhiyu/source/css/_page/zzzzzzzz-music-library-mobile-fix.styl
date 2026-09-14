@@ -1,0 +1,61 @@
+// Final mobile layout fix for the custom playlist/library headers.
+// The shared .sjm-page-head is a horizontal flex row on desktop; on mobile
+// the full-width action button must move below the copy instead of squeezing it.
+
+@media screen and (max-width: 720px)
+  #anMusic-page .sjm-library-head
+    display flex
+    flex-direction column
+    align-items stretch
+    justify-content flex-start
+    width 100%
+    gap 14px
+
+  #anMusic-page .sjm-library-head > div
+    width 100%
+    min-width 0
+    max-width 100%
+
+  #anMusic-page .sjm-library-head .sjm-eyebrow
+    white-space nowrap
+
+  #anMusic-page .sjm-library-head h2
+    width 100%
+    margin-top 5px
+    margin-bottom 5px
+    white-space normal
+    word-break normal
+    overflow-wrap break-word
+
+  #anMusic-page .sjm-library-head p
+    width 100%
+    max-width none
+    margin 0
+    line-height 1.6
+    white-space normal
+    word-break normal
+    overflow-wrap break-word
+
+  #anMusic-page .sjm-library-head .sjm-discover-primary
+    flex 0 0 auto
+    width 100%
+    max-width 100%
+    min-height 44px
+    margin 0
+
+@media screen and (max-width: 430px)
+  #anMusic-page .sjm-library-head
+    gap 12px
+    padding 14px
+
+  #anMusic-page .sjm-library-head h2
+    font-size 21px
+    line-height 1.3
+
+  #anMusic-page .sjm-library-head p
+    font-size 12px
+    line-height 1.65
+
+  #anMusic-page .sjm-library-head .sjm-discover-primary
+    min-height 42px
+    border-radius 12px
