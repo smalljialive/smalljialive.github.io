@@ -17,6 +17,11 @@ if theme.aside.card_webinfo.enable
             .item-name= _p('aside.card_webinfo.runtime.name') + " :"
           .item-count#runtimeshow(data-publishDate=date_xml(theme.runtimeshow.publish_date))
             i.anzhiyufont.anzhiyu-icon-spinner.anzhiyu-spin
+        .webinfo-item
+          .webinfo-item-title
+            i.anzhiyufont.anzhiyu-icon-calendar-days
+            .item-name 建站日期 :
+          .item-count= date(theme.runtimeshow.publish_date, 'YYYY-MM-DD')
       if theme.wordcount.enable && theme.wordcount.total_wordcount
         .webinfo-item
           .webinfo-item-title
