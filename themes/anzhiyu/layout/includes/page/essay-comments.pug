@@ -1,0 +1,56 @@
+hr
+#post-comment.essay-visitor-comments
+  .comment-head
+    .comment-headline
+      i.anzhiyufont.anzhiyu-icon-comments
+      span 访客留言
+    .comment-randomInfo
+      span 路过这里的话，留下一句话吧。
+
+  .comment-wrap
+    div
+      #twikoo-wrap
+
+script.
+  (() => {
+    const envId = 'https://smalljia-twikoo.vercel.app'
+    const scriptUrl = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.22/dist/twikoo.all.min.js'
+
+    const initTwikoo = () => {
+      const el = document.getElementById('twikoo-wrap')
+      if (!el || typeof twikoo !== 'object') return
+
+      twikoo.init({
+        envId,
+        el: '#twikoo-wrap',
+        onCommentLoaded: () => {
+          if (window.anzhiyu && typeof anzhiyu.loadLightbox === 'function') {
+            anzhiyu.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+          }
+        }
+      })
+    }
+
+    const loadTwikoo = () => {
+      if (typeof twikoo === 'object') {
+        initTwikoo()
+        return
+      }
+
+      const existing = document.querySelector('script[data-smalljia-twikoo]')
+      if (existing) {
+        existing.addEventListener('load', initTwikoo, { once: true })
+        return
+      }
+
+      const script = document.createElement('script')
+      script.src = scriptUrl
+      script.async = true
+      script.dataset.smalljiaTwikoo = '1'
+      script.onload = initTwikoo
+      script.onerror = () => console.error('Twikoo 前端脚本加载失败')
+      document.head.appendChild(script)
+    }
+
+    loadTwikoo()
+  })()
