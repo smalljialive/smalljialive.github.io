@@ -1,0 +1,47 @@
+// Restore normal document scrolling on the dedicated music page.
+// This file intentionally loads after zzzzzz-music-mobile-fix.styl.
+
+@media screen and (max-width: 768px)
+  body[data-type="music"]
+    height auto !important
+    min-height 100%
+    overflow-x clip !important
+    overflow-y auto !important
+    overscroll-behavior-y auto
+    touch-action pan-y
+    -webkit-overflow-scrolling touch
+
+  body[data-type="music"] #body-wrap,
+  body[data-type="music"] #content-inner,
+  body[data-type="music"] .layout,
+  body[data-type="music"] #page,
+  #anMusic-page
+    height auto
+    max-height none
+    overflow-x clip
+    overflow-y visible
+
+  #anMusic-page
+    overflow-x clip !important
+    overflow-y visible !important
+    touch-action pan-y
+
+  .sjm-shell,
+  .sjm-main,
+  .sjm-view,
+  .sjm-now-grid
+    overflow-y visible
+
+  .sjm-sidebar
+    overflow-x clip
+    overflow-y visible
+
+  .sjm-nav
+    touch-action pan-x pan-y
+
+  // Fullscreen mode still needs to lock the document behind the overlay.
+  body[data-type="music"].sjm-fullscreen-open
+    height 100vh !important
+    height 100dvh !important
+    overflow hidden !important
+    touch-action none
