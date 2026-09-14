@@ -1,0 +1,467 @@
+/*
+ * SmallJia Twikoo 管理后台最终作用域修复
+ * Twikoo 初始化会替换 commentCenterAdminHost，因此不要依赖该挂载节点的 class。
+ * 使用稳定父级 .comment-center-admin-card + #twikoo 作为作用域。
+ */
+
+.comment-center-admin-card #twikoo {
+  position: relative !important;
+  height: min(78vh, 820px) !important;
+  min-height: 640px !important;
+  overflow: hidden !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+}
+
+.comment-center-admin-card #twikoo > .tk-comments,
+.comment-center-admin-card #twikoo > .tk-footer {
+  display: none !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-container,
+.comment-center-admin-card #twikoo .tk-admin {
+  height: 100% !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-container {
+  overflow: hidden !important;
+}
+
+/* 后台主体：彻底覆盖 Twikoo 默认黑色蒙层 */
+.comment-center-admin-card #twikoo .tk-admin {
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  border-radius: 0 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin::-webkit-scrollbar-thumb {
+  border-radius: 999px !important;
+  background: var(--anzhiyu-secondtext) !important;
+}
+
+/* 关闭按钮 */
+.comment-center-admin-card #twikoo .tk-admin-close {
+  z-index: 20 !important;
+  top: .7rem !important;
+  left: calc(100% - 3.5rem) !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  padding: .72rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 50% !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-secondbg) !important;
+  box-shadow: none !important;
+  transition: .2s ease !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-close:hover {
+  color: var(--anzhiyu-white) !important;
+  background: var(--anzhiyu-main) !important;
+  transform: rotate(90deg) !important;
+}
+
+/* 登录 / 首次设置密码 */
+.comment-center-admin-card #twikoo .tk-login,
+.comment-center-admin-card #twikoo .tk-regist {
+  box-sizing: border-box !important;
+  min-height: 520px !important;
+  justify-content: center !important;
+  padding: 2rem !important;
+  color: var(--anzhiyu-fontcolor) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-login-title {
+  margin: 0 0 1.2rem !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-password,
+.comment-center-admin-card #twikoo .tk-login-msg {
+  width: min(620px, 92%) !important;
+  color: var(--anzhiyu-fontcolor) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-login-msg a {
+  color: var(--anzhiyu-main) !important;
+}
+
+/* 管理面板 */
+.comment-center-admin-card #twikoo .tk-panel {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 980px !important;
+  margin: 0 auto !important;
+  padding: 1.5rem 1.55rem 2rem !important;
+  color: var(--anzhiyu-fontcolor) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-panel-title {
+  align-items: center !important;
+  min-height: 46px !important;
+  padding: 0 3rem .9rem 0 !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-panel-logout {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 34px !important;
+  padding: 0 .8rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 9px !important;
+  color: var(--anzhiyu-secondtext) !important;
+  background: var(--anzhiyu-secondbg) !important;
+  font-size: .78rem !important;
+  font-weight: 650 !important;
+  text-decoration: none !important;
+}
+
+.comment-center-admin-card #twikoo .tk-panel-logout:hover {
+  border-color: var(--anzhiyu-main) !important;
+  color: var(--anzhiyu-main) !important;
+}
+
+/* 顶部标签页 */
+.comment-center-admin-card #twikoo .tk-panel .tk-tabs {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: .35rem !important;
+  margin: 0 0 1rem !important;
+  padding: .35rem !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: var(--anzhiyu-secondbg) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-panel .tk-tab {
+  margin: 0 !important;
+  padding: .5rem .8rem !important;
+  border: 0 !important;
+  border-radius: 9px !important;
+  color: var(--anzhiyu-secondtext) !important;
+  background: transparent !important;
+  line-height: 1.2 !important;
+  font-size: .82rem !important;
+  font-weight: 650 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-panel .tk-tab:hover {
+  color: var(--anzhiyu-main) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-panel .tk-tab.__active {
+  color: var(--anzhiyu-white) !important;
+  background: var(--anzhiyu-main) !important;
+  box-shadow: 0 5px 14px rgba(66, 90, 239, .14) !important;
+}
+
+/* 搜索筛选 */
+.comment-center-admin-card #twikoo .tk-admin-comment-filter {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 110px auto !important;
+  gap: .55rem !important;
+  align-items: center !important;
+  width: 100% !important;
+  padding: .8rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 14px !important;
+  background: var(--anzhiyu-secondbg) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment-filter-keyword {
+  width: 100% !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment-filter-type {
+  width: 100% !important;
+  height: 36px !important;
+  margin: 0 !important;
+  padding: 0 .7rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 9px !important;
+  outline: 0 !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  font: inherit !important;
+  font-size: .8rem !important;
+  appearance: auto !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment-filter-type option {
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+}
+
+/* 输入框 */
+.comment-center-admin-card #twikoo .el-input__inner,
+.comment-center-admin-card #twikoo .el-textarea__inner,
+.comment-center-admin-card #twikoo .tk-admin-config-input input,
+.comment-center-admin-card #twikoo .tk-admin-config-select,
+.comment-center-admin-card #twikoo textarea {
+  border: var(--style-border-always) !important;
+  border-radius: 9px !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  box-shadow: none !important;
+}
+
+.comment-center-admin-card #twikoo .el-input__inner:focus,
+.comment-center-admin-card #twikoo .el-textarea__inner:focus,
+.comment-center-admin-card #twikoo .tk-admin-config-input input:focus,
+.comment-center-admin-card #twikoo .tk-admin-config-select:focus,
+.comment-center-admin-card #twikoo textarea:focus {
+  border-color: var(--anzhiyu-main) !important;
+  box-shadow: 0 0 0 3px rgba(66, 90, 239, .08) !important;
+}
+
+.comment-center-admin-card #twikoo .el-input-group__prepend,
+.comment-center-admin-card #twikoo .el-input-group__append {
+  border-color: var(--anzhiyu-card-border, rgba(60, 60, 67, .14)) !important;
+  color: var(--anzhiyu-secondtext) !important;
+  background: var(--anzhiyu-secondbg) !important;
+}
+
+.comment-center-admin-card #twikoo .el-button--primary,
+.comment-center-admin-card #twikoo .tk-regist-button {
+  border-color: var(--anzhiyu-main) !important;
+  border-radius: 9px !important;
+  color: var(--anzhiyu-white) !important;
+  background: var(--anzhiyu-main) !important;
+  font-weight: 650 !important;
+}
+
+/* 评论卡片 */
+.comment-center-admin-card #twikoo .tk-admin-comment-list {
+  display: grid !important;
+  gap: .8rem !important;
+  width: 100% !important;
+  margin-top: .85rem !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment-item {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 1rem 1.05rem .85rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 16px !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  box-shadow: var(--anzhiyu-shadow-border) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment-meta {
+  gap: .2rem !important;
+  margin: 0 0 .65rem !important;
+  color: var(--anzhiyu-secondtext) !important;
+  font-size: .78rem !important;
+  line-height: 1.6 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment-meta .tk-avatar {
+  width: 38px !important;
+  height: 38px !important;
+  margin-right: .45rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 50% !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment a {
+  color: var(--anzhiyu-main) !important;
+  text-decoration: none !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment a:hover {
+  text-decoration: underline !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-comment .tk-content {
+  margin: .2rem 0 .7rem !important;
+  padding: .75rem .85rem !important;
+  border-radius: 11px !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-secondbg) !important;
+  font-size: .88rem !important;
+  line-height: 1.75 !important;
+}
+
+/* 来源文章提示 */
+.comment-center-admin-card #twikoo .sj-admin-source {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: .5rem !important;
+  margin: .1rem 0 .7rem !important;
+  padding: .58rem .7rem !important;
+  border: 1px solid rgba(66, 90, 239, .16) !important;
+  border-radius: 10px !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: rgba(66, 90, 239, .06) !important;
+  font-size: .78rem !important;
+}
+
+.comment-center-admin-card #twikoo .sj-admin-source span {
+  color: var(--anzhiyu-secondtext) !important;
+  font-size: .7rem !important;
+}
+
+.comment-center-admin-card #twikoo .sj-admin-source strong {
+  overflow: hidden !important;
+  color: var(--anzhiyu-main) !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.comment-center-admin-card #twikoo .sj-admin-source code {
+  overflow: hidden !important;
+  max-width: 300px !important;
+  color: var(--anzhiyu-secondtext) !important;
+  background: transparent !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* 管理动作按钮 */
+.comment-center-admin-card #twikoo .tk-admin-actions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: .4rem !important;
+  margin: .15rem 0 0 !important;
+  padding: .7rem 0 0 !important;
+  border-top: var(--style-border-always) !important;
+  border-bottom: 0 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-actions .el-button {
+  margin: 0 !important;
+  padding: .4rem .65rem !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  color: var(--anzhiyu-main) !important;
+  background: rgba(66, 90, 239, .08) !important;
+  font-size: .76rem !important;
+  font-weight: 650 !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-actions .el-button:last-child {
+  color: #f56c6c !important;
+  background: rgba(245, 108, 108, .10) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-actions .el-button:hover {
+  color: var(--anzhiyu-white) !important;
+  background: var(--anzhiyu-main) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-actions .el-button:last-child:hover {
+  color: #fff !important;
+  background: #f56c6c !important;
+}
+
+/* 分页 */
+.comment-center-admin-card #twikoo .tk-pagination {
+  margin-top: 1rem !important;
+  color: var(--anzhiyu-secondtext) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-pagination .el-pagination,
+.comment-center-admin-card #twikoo .tk-pagination button,
+.comment-center-admin-card #twikoo .tk-pagination li {
+  color: var(--anzhiyu-fontcolor) !important;
+  background: transparent !important;
+}
+
+.comment-center-admin-card #twikoo .tk-pagination li.active {
+  color: var(--anzhiyu-white) !important;
+  background: var(--anzhiyu-main) !important;
+  border-radius: 7px !important;
+}
+
+/* 配置页 / 导入 / 导出 */
+.comment-center-admin-card #twikoo .tk-admin-config,
+.comment-center-admin-card #twikoo .tk-admin-import,
+.comment-center-admin-card #twikoo .tk-admin-export {
+  color: var(--anzhiyu-fontcolor) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-config-group {
+  margin-bottom: .7rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: 12px !important;
+  background: var(--anzhiyu-card-bg) !important;
+}
+
+.comment-center-admin-card #twikoo .tk-admin-warn {
+  padding: .7rem .8rem !important;
+  border: 1px solid rgba(255, 170, 0, .18) !important;
+  border-radius: 10px !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: rgba(255, 170, 0, .08) !important;
+}
+
+/* 深色模式仍使用 AnZhiYu 变量，不恢复 Twikoo 纯黑蒙层 */
+[data-theme="dark"] .comment-center-admin-card #twikoo .tk-admin,
+[data-theme="dark"] .comment-center-admin-card #twikoo .tk-admin-comment-item,
+[data-theme="dark"] .comment-center-admin-card #twikoo .tk-admin-config-group {
+  background: var(--anzhiyu-card-bg) !important;
+  box-shadow: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .comment-center-admin-card #twikoo {
+    height: 76vh !important;
+    min-height: 560px !important;
+  }
+
+  .comment-center-admin-card #twikoo .tk-panel {
+    padding: 1rem .8rem 1.5rem !important;
+  }
+
+  .comment-center-admin-card #twikoo .tk-panel-title {
+    padding-right: 2.7rem !important;
+    font-size: 1.15rem !important;
+  }
+
+  .comment-center-admin-card #twikoo .tk-panel .tk-tabs {
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .comment-center-admin-card #twikoo .tk-admin-comment-filter {
+    grid-template-columns: 1fr !important;
+  }
+
+  .comment-center-admin-card #twikoo .sj-admin-source {
+    grid-template-columns: 1fr !important;
+  }
+
+  .comment-center-admin-card #twikoo .sj-admin-source code {
+    max-width: 100% !important;
+  }
+
+  .comment-center-admin-card #twikoo .tk-login,
+  .comment-center-admin-card #twikoo .tk-regist {
+    padding: 1rem !important;
+  }
+
+  .comment-center-admin-card #twikoo .tk-password,
+  .comment-center-admin-card #twikoo .tk-login-msg {
+    width: 100% !important;
+  }
+}
