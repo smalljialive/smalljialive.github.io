@@ -11,6 +11,15 @@ div
     //- 保留结构占位，但 Link 页不加载 PJAX、APlayer、MetingJS 或任何导航音乐运行时。
     .js-pjax
 
+    //- 核心 main/utils 在 Link 页仍会调用灯箱与提示组件，因此只补回这两个必要运行时。
+    if theme.medium_zoom
+      script(src=url_for(theme.asset.medium_zoom))
+    else if theme.fancybox
+      script(src=url_for(theme.asset.fancybox))
+
+    if theme.snackbar.enable
+      script(src=url_for(theme.asset.snackbar))
+
     //- Link 页仍保留图标字体，确保导航与页面图标正常显示。
     link(rel="stylesheet" href=url_for(theme.asset.ali_iconfont_css))
     if (theme.icons && theme.icons.ali_iconfont_js)
