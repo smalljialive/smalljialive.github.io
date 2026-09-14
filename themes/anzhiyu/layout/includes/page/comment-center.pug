@@ -33,10 +33,13 @@ script.
     const envId = 'https://smalljia-twikoo.vercel.app'
     const scriptUrl = 'https://cdn.jsdelivr.net/npm/twikoo@1.7.22/dist/twikoo.all.min.js'
     const sourceMapRaw = !{sjCommentSourceJson}
-    const host = document.getElementById('commentCenterAdminHost')
     const statusEl = document.getElementById('commentCenterAdminStatus')
     const openBtn = document.getElementById('commentCenterOpenAdmin')
     const sourceMap = new Map()
+
+    function getTwikooRoot() {
+      return document.querySelector('.comment-center-admin-card #twikoo')
+    }
 
     function normalizePath(value) {
       try {
@@ -91,13 +94,15 @@ script.
     }
 
     function openAdmin() {
-      const root = host && host.querySelector('#twikoo')
+      const root = getTwikooRoot()
       if (!root) return false
+
       const vm = root.__vue__
       if (vm && vm.$data && Object.prototype.hasOwnProperty.call(vm.$data, 'showAdmin')) {
         vm.showAdmin = true
         return true
       }
+
       const icons = root.querySelectorAll('.tk-comments-actions .tk-icon.__comments')
       if (icons.length >= 3) {
         icons[icons.length - 1].click()
@@ -110,17 +115,25 @@ script.
       let tries = 0
       const timer = setInterval(() => {
         tries += 1
-        if (openAdmin() || tries >= 50) {
+        const root = getTwikooRoot()
+        if (openAdmin()) {
           clearInterval(timer)
-          if (tries >= 50 && !host.querySelector('.tk-admin.__show')) {
-            statusEl.textContent = '后台已加载。若登录框没有自动打开，请点击“打开管理后台”。'
-          }
+          statusEl.textContent = '管理员入口已打开。请输入 Twikoo 管理员密码登录。'
+          return
+        }
+        if (tries >= 50) {
+          clearInterval(timer)
+          const gear = root && root.querySelector('.tk-comments-actions .tk-icon.__comments:last-child')
+          statusEl.textContent = gear
+            ? '请点击评论框右下角的小齿轮进入管理员登录。'
+            : '管理员入口暂未就绪，请刷新页面后重试。'
         }
       }, 200)
     }
 
     function decorateSources() {
-      const admin = host && host.querySelector('.tk-admin-comment')
+      const root = getTwikooRoot()
+      const admin = root && root.querySelector('.tk-admin-comment')
       if (!admin) return
       const vm = admin.__vue__
       if (!vm || !Array.isArray(vm.comments)) return
@@ -155,8 +168,12 @@ script.
         })
         statusEl.textContent = '管理后台已加载。未登录时请先输入管理员密码。'
         openAdminWithRetry()
-        const observer = new MutationObserver(decorateSources)
-        observer.observe(host, { childList: true, subtree: true })
+
+        const root = getTwikooRoot()
+        if (root) {
+          const observer = new MutationObserver(decorateSources)
+          observer.observe(root, { childList: true, subtree: true })
+        }
         setInterval(decorateSources, 1000)
       } catch (error) {
         console.error('评论管理后台加载失败', error)
