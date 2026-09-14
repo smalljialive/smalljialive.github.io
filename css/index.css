@@ -29561,6 +29561,532 @@ body[data-type="envelope"] #page #post-comment .tk-comments-container > .tk-comm
   box-shadow: none;
 }
 
+/* ============================================================
+ * SmallJia Twikoo 评论区
+ * 参考卡片式评论布局，并完全复用 AnZhiYu 主题色变量。
+ * 仅作用于本站自定义的文章 / 碎碎念评论区。
+ * ============================================================ */
+#post-comment.article-visitor-comments,
+#post-comment.essay-visitor-comments {
+  --sj-comment-radius: 18px;
+  --sj-comment-radius-sm: 12px;
+  --sj-comment-gap: 14px;
+  position: relative;
+  margin-top: 2rem;
+  padding: 0;
+  background: transparent;
+}
+
+#post-comment.article-visitor-comments .comment-head,
+#post-comment.essay-visitor-comments .comment-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 0.9rem;
+  padding: 0 0.15rem;
+}
+
+#post-comment.article-visitor-comments .comment-headline,
+#post-comment.essay-visitor-comments .comment-headline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--anzhiyu-fontcolor);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+#post-comment.article-visitor-comments .comment-headline i,
+#post-comment.essay-visitor-comments .comment-headline i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  color: var(--anzhiyu-main);
+  background: var(--anzhiyu-secondbg);
+  font-size: 1rem;
+}
+
+#post-comment.article-visitor-comments .comment-randomInfo,
+#post-comment.essay-visitor-comments .comment-randomInfo {
+  color: var(--anzhiyu-secondtext);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-align: right;
+}
+
+#post-comment.article-visitor-comments .comment-wrap,
+#post-comment.essay-visitor-comments .comment-wrap {
+  margin: 0;
+  padding: 0;
+}
+
+#post-comment.article-visitor-comments #twikoo-wrap,
+#post-comment.essay-visitor-comments #twikoo-wrap {
+  min-height: 60px;
+}
+
+/* Twikoo 自带标题与外层标题重复，隐藏即可。 */
+#post-comment.article-visitor-comments #twikoo .tk-comments-title,
+#post-comment.essay-visitor-comments #twikoo .tk-comments-title {
+  display: none !important;
+}
+
+/* -------------------- 输入区 -------------------- */
+#post-comment.article-visitor-comments #twikoo .tk-submit,
+#post-comment.essay-visitor-comments #twikoo .tk-submit {
+  position: relative;
+  overflow: visible !important;
+  margin: 0 0 1.2rem !important;
+  padding: 1rem !important;
+  border: var(--style-border-always);
+  border-radius: var(--sj-comment-radius);
+  background: var(--anzhiyu-card-bg);
+  box-shadow: var(--anzhiyu-shadow-border);
+}
+
+/* 顶部默认头像在紧凑布局里隐藏，留更多空间给输入内容。 */
+#post-comment.article-visitor-comments #twikoo .tk-submit > .tk-row > .tk-avatar,
+#post-comment.essay-visitor-comments #twikoo .tk-submit > .tk-row > .tk-avatar {
+  display: none !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-submit > .tk-row > .tk-col,
+#post-comment.essay-visitor-comments #twikoo .tk-submit > .tk-row > .tk-col {
+  width: 100%;
+  min-width: 0;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-input,
+#post-comment.essay-visitor-comments #twikoo .tk-input {
+  margin: 0 !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .el-textarea__inner,
+#post-comment.essay-visitor-comments #twikoo .el-textarea__inner {
+  min-height: 165px !important;
+  padding: 1rem 1rem 2.8rem !important;
+  resize: vertical;
+  border: var(--style-border-always) !important;
+  border-radius: var(--sj-comment-radius-sm) !important;
+  outline: none !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  box-shadow: none !important;
+  font-family: inherit;
+  line-height: 1.8;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .el-textarea__inner:hover,
+#post-comment.essay-visitor-comments #twikoo .el-textarea__inner:hover {
+  border-color: var(--anzhiyu-main) !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .el-textarea__inner:focus,
+#post-comment.essay-visitor-comments #twikoo .el-textarea__inner:focus {
+  border-color: var(--anzhiyu-main) !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--anzhiyu-main) 12%, transparent) !important;
+}
+
+#post-comment.article-visitor-comments #twikoo input::placeholder,
+#post-comment.article-visitor-comments #twikoo textarea::placeholder,
+#post-comment.essay-visitor-comments #twikoo input::placeholder,
+#post-comment.essay-visitor-comments #twikoo textarea::placeholder {
+  color: var(--anzhiyu-secondtext) !important;
+  opacity: 0.72;
+}
+
+/* 表情 / 图片等工具栏贴近大输入框左下角。 */
+#post-comment.article-visitor-comments #twikoo .tk-row.actions,
+#post-comment.essay-visitor-comments #twikoo .tk-row.actions {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 38px;
+  margin: -2.75rem 0 0 !important;
+  padding: 0 0.75rem 0.55rem;
+  pointer-events: none;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-row.actions > *,
+#post-comment.essay-visitor-comments #twikoo .tk-row.actions > * {
+  pointer-events: auto;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-row-actions-start,
+#post-comment.essay-visitor-comments #twikoo .tk-row-actions-start {
+  position: static !important;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  transform: none !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-submit-action-icon,
+#post-comment.article-visitor-comments #twikoo .tk-action-icon,
+#post-comment.essay-visitor-comments #twikoo .tk-submit-action-icon,
+#post-comment.essay-visitor-comments #twikoo .tk-action-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  color: var(--anzhiyu-secondtext) !important;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-submit-action-icon:hover,
+#post-comment.article-visitor-comments #twikoo .tk-action-icon:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-submit-action-icon:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-action-icon:hover {
+  color: var(--anzhiyu-main) !important;
+  background: var(--anzhiyu-secondbg);
+  transform: translateY(-1px);
+}
+
+/* 昵称 / 邮箱 / 网址：参考图采用同一行三栏。 */
+#post-comment.article-visitor-comments #twikoo .tk-meta-input,
+#post-comment.essay-visitor-comments #twikoo .tk-meta-input {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100% !important;
+  margin: 0.75rem 0 0 !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-meta-input .el-input,
+#post-comment.essay-visitor-comments #twikoo .tk-meta-input .el-input {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-meta-input .el-input-group,
+#post-comment.essay-visitor-comments #twikoo .tk-meta-input .el-input-group {
+  overflow: hidden;
+  border: var(--style-border-always);
+  border-radius: 10px;
+  background: var(--anzhiyu-card-bg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-meta-input .el-input-group:hover,
+#post-comment.article-visitor-comments #twikoo .tk-meta-input .el-input-group:focus-within,
+#post-comment.essay-visitor-comments #twikoo .tk-meta-input .el-input-group:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-meta-input .el-input-group:focus-within {
+  border-color: var(--anzhiyu-main);
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-meta-input .el-input-group:focus-within,
+#post-comment.essay-visitor-comments #twikoo .tk-meta-input .el-input-group:focus-within {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--anzhiyu-main) 10%, transparent);
+}
+
+#post-comment.article-visitor-comments #twikoo .el-input-group__prepend,
+#post-comment.essay-visitor-comments #twikoo .el-input-group__prepend {
+  border: 0 !important;
+  border-right: var(--style-border-always) !important;
+  padding: 0 0.8rem !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-secondbg) !important;
+  font-weight: 600;
+}
+
+#post-comment.article-visitor-comments #twikoo .el-input__inner,
+#post-comment.essay-visitor-comments #twikoo .el-input__inner {
+  height: 42px !important;
+  border: 0 !important;
+  outline: 0 !important;
+  padding: 0 0.8rem !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  box-shadow: none !important;
+}
+
+/* 发送按钮：使用网站主色，保持轻量而不抢文章内容。 */
+#post-comment.article-visitor-comments #twikoo .tk-send,
+#post-comment.article-visitor-comments #twikoo button.el-button--primary,
+#post-comment.essay-visitor-comments #twikoo .tk-send,
+#post-comment.essay-visitor-comments #twikoo button.el-button--primary {
+  position: static !important;
+  min-width: 106px;
+  height: 40px !important;
+  margin: 0 !important;
+  padding: 0 1.15rem !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  color: var(--anzhiyu-white) !important;
+  background: var(--anzhiyu-main) !important;
+  box-shadow: 0 7px 16px color-mix(in srgb, var(--anzhiyu-main) 20%, transparent);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-send:hover,
+#post-comment.article-visitor-comments #twikoo button.el-button--primary:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-send:hover,
+#post-comment.essay-visitor-comments #twikoo button.el-button--primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 9px 20px color-mix(in srgb, var(--anzhiyu-main) 26%, transparent);
+}
+
+#post-comment.article-visitor-comments #twikoo .el-button--primary.is-disabled,
+#post-comment.essay-visitor-comments #twikoo .el-button--primary.is-disabled {
+  opacity: 0.42;
+  filter: grayscale(0.15);
+  transform: none;
+  box-shadow: none;
+}
+
+/* -------------------- 评论列表 -------------------- */
+#post-comment.article-visitor-comments #twikoo .tk-comments-container,
+#post-comment.essay-visitor-comments #twikoo .tk-comments-container {
+  margin-top: 0.35rem;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-comments-container > .tk-comment,
+#post-comment.essay-visitor-comments #twikoo .tk-comments-container > .tk-comment {
+  margin: 0 0 var(--sj-comment-gap) !important;
+  padding: 1.15rem 1.2rem !important;
+  border: var(--style-border-always) !important;
+  border-radius: var(--sj-comment-radius) !important;
+  background: var(--anzhiyu-card-bg) !important;
+  box-shadow: var(--anzhiyu-shadow-border);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-comments-container > .tk-comment:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-comments-container > .tk-comment:hover {
+  border-color: var(--anzhiyu-main) !important;
+  box-shadow: var(--anzhiyu-shadow-main);
+  transform: translateY(-1px);
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-avatar,
+#post-comment.essay-visitor-comments #twikoo .tk-avatar {
+  overflow: hidden;
+  width: 42px !important;
+  height: 42px !important;
+  border: var(--style-border-always);
+  border-radius: 50% !important;
+  background: var(--anzhiyu-secondbg);
+  box-shadow: var(--anzhiyu-shadow-border);
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-avatar .tk-avatar-img,
+#post-comment.essay-visitor-comments #twikoo .tk-avatar .tk-avatar-img {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  object-fit: cover;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-nick,
+#post-comment.essay-visitor-comments #twikoo .tk-nick {
+  color: var(--anzhiyu-fontcolor) !important;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-time,
+#post-comment.essay-visitor-comments #twikoo .tk-time {
+  color: var(--anzhiyu-secondtext) !important;
+  font-size: 0.76rem;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-content,
+#post-comment.essay-visitor-comments #twikoo .tk-content {
+  margin-top: 0.65rem !important;
+  color: var(--anzhiyu-fontcolor) !important;
+  font-size: 0.94rem;
+  line-height: 1.85;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-content p,
+#post-comment.essay-visitor-comments #twikoo .tk-content p {
+  margin: 0 0 0.45rem;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-content img,
+#post-comment.essay-visitor-comments #twikoo .tk-content img {
+  border-radius: 10px;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-extras,
+#post-comment.essay-visitor-comments #twikoo .tk-extras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.75rem !important;
+  color: var(--anzhiyu-secondtext) !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-extra,
+#post-comment.essay-visitor-comments #twikoo .tk-extra {
+  margin: 0 !important;
+  padding: 0.2rem 0.5rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  color: var(--anzhiyu-secondtext) !important;
+  background: var(--anzhiyu-secondbg) !important;
+  font-size: 0.72rem !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-actions a,
+#post-comment.essay-visitor-comments #twikoo .tk-actions a {
+  color: var(--anzhiyu-secondtext) !important;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-actions a:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-actions a:hover {
+  color: var(--anzhiyu-main) !important;
+  background: var(--anzhiyu-secondbg);
+}
+
+/* 回复层级：不再套一层大卡片，用左侧主色线 + 浅背景区分。 */
+#post-comment.article-visitor-comments #twikoo .tk-replies,
+#post-comment.essay-visitor-comments #twikoo .tk-replies {
+  max-height: none !important;
+  margin-top: 0.9rem !important;
+  padding: 0.2rem 0 0.1rem 0.9rem !important;
+  border-left: 3px solid color-mix(in srgb, var(--anzhiyu-main) 55%, var(--anzhiyu-card-bg));
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-replies .tk-comment,
+#post-comment.essay-visitor-comments #twikoo .tk-replies .tk-comment {
+  margin: 0 !important;
+  padding: 0.9rem 0 0 !important;
+  border: 0 !important;
+  border-top: var(--style-border-dashed) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-replies .tk-comment:first-child,
+#post-comment.essay-visitor-comments #twikoo .tk-replies .tk-comment:first-child {
+  border-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-expand,
+#post-comment.essay-visitor-comments #twikoo .tk-expand {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.65rem 1rem;
+  border: var(--style-border-always);
+  border-radius: 999px;
+  color: var(--anzhiyu-secondtext);
+  background: var(--anzhiyu-card-bg);
+  box-shadow: none;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-expand:hover,
+#post-comment.essay-visitor-comments #twikoo .tk-expand:hover {
+  border-color: var(--anzhiyu-main);
+  color: var(--anzhiyu-white);
+  background: var(--anzhiyu-main);
+}
+
+#post-comment.article-visitor-comments #twikoo .tk-tag,
+#post-comment.article-visitor-comments #twikoo .tk-tag-green,
+#post-comment.essay-visitor-comments #twikoo .tk-tag,
+#post-comment.essay-visitor-comments #twikoo .tk-tag-green {
+  padding: 0.12rem 0.45rem !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  font-size: 0.68rem !important;
+}
+
+/* 深色模式不另写死颜色，只降低投影，保持主题变量接管背景。 */
+[data-theme="dark"] #post-comment.article-visitor-comments #twikoo .tk-submit,
+[data-theme="dark"] #post-comment.article-visitor-comments #twikoo .tk-comments-container > .tk-comment,
+[data-theme="dark"] #post-comment.essay-visitor-comments #twikoo .tk-submit,
+[data-theme="dark"] #post-comment.essay-visitor-comments #twikoo .tk-comments-container > .tk-comment {
+  box-shadow: none;
+}
+
+/* -------------------- 移动端 -------------------- */
+@media screen and (max-width: 768px) {
+  #post-comment.article-visitor-comments,
+  #post-comment.essay-visitor-comments {
+    margin-top: 1.5rem;
+  }
+
+  #post-comment.article-visitor-comments .comment-head,
+  #post-comment.essay-visitor-comments .comment-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  #post-comment.article-visitor-comments .comment-headline,
+  #post-comment.essay-visitor-comments .comment-headline {
+    font-size: 1.18rem;
+  }
+
+  #post-comment.article-visitor-comments .comment-randomInfo,
+  #post-comment.essay-visitor-comments .comment-randomInfo {
+    padding-left: 2.55rem;
+    text-align: left;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .tk-submit,
+  #post-comment.essay-visitor-comments #twikoo .tk-submit {
+    padding: 0.75rem !important;
+    border-radius: 14px;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .el-textarea__inner,
+  #post-comment.essay-visitor-comments #twikoo .el-textarea__inner {
+    min-height: 145px !important;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .tk-meta-input,
+  #post-comment.essay-visitor-comments #twikoo .tk-meta-input {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .tk-row.actions,
+  #post-comment.essay-visitor-comments #twikoo .tk-row.actions {
+    align-items: flex-end;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .tk-send,
+  #post-comment.article-visitor-comments #twikoo button.el-button--primary,
+  #post-comment.essay-visitor-comments #twikoo .tk-send,
+  #post-comment.essay-visitor-comments #twikoo button.el-button--primary {
+    min-width: 88px;
+    height: 38px !important;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .tk-comments-container > .tk-comment,
+  #post-comment.essay-visitor-comments #twikoo .tk-comments-container > .tk-comment {
+    padding: 0.95rem !important;
+    border-radius: 14px !important;
+  }
+
+  #post-comment.article-visitor-comments #twikoo .tk-avatar,
+  #post-comment.essay-visitor-comments #twikoo .tk-avatar {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
 [data-theme="dark"] #universe {
   display: block;
   position: fixed;
