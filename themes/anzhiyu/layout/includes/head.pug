@@ -72,6 +72,7 @@ if theme.fancybox
 
 if site.data.essay || theme.home_top.swiper.enable
   link(rel='stylesheet' href=url_for(theme.home_top.swiper.swiper_css) media="print" onload="this.media='all'")
+  script(src=url_for(theme.home_top.swiper.swiper_js) defer)
 
 //- google_adsense
 !=partial('includes/head/google_adsense', {}, {cache: true})
