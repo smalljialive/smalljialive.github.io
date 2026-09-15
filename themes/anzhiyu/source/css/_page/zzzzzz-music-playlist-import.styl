@@ -1,0 +1,295 @@
+// SmallJia external playlist import
+.sjm-playlist-head-actions
+  display flex
+  align-items center
+  justify-content flex-end
+  gap 9px
+
+.sjm-import-playlist-button
+  min-height 42px
+  padding 0 16px
+  white-space nowrap
+
+.sjm-playlist-import-modal
+  position fixed
+  inset 0
+  z-index 10060
+  display flex
+  align-items center
+  justify-content center
+  padding 24px
+  opacity 0
+  pointer-events none
+  transition opacity .18s ease
+
+.sjm-playlist-import-modal[hidden]
+  display none
+
+.sjm-playlist-import-modal.active
+  opacity 1
+  pointer-events auto
+
+.sjm-playlist-import-backdrop
+  position absolute
+  inset 0
+  border 0
+  background rgba(21,28,44,.48)
+  backdrop-filter blur(8px)
+  cursor default
+
+.sjm-playlist-import-panel
+  position relative
+  z-index 1
+  display flex
+  width min(720px, 100%)
+  max-height min(820px, calc(100vh - 48px))
+  flex-direction column
+  overflow hidden
+  border 1px solid rgba(68,85,126,.10)
+  border-radius 24px
+  background rgba(255,255,255,.97)
+  box-shadow 0 28px 90px rgba(30,42,70,.24)
+
+.sjm-playlist-import-head
+  display flex
+  align-items flex-start
+  justify-content space-between
+  gap 18px
+  padding 24px 26px 18px
+  border-bottom 1px solid rgba(68,85,126,.07)
+
+.sjm-playlist-import-head h3
+  margin 4px 0 5px
+  color #202b3d
+  font-size 21px
+
+.sjm-playlist-import-head p
+  margin 0
+  color #7b879a
+  font-size 12px
+  line-height 1.65
+
+.sjm-playlist-import-close
+  display flex
+  flex 0 0 auto
+  align-items center
+  justify-content center
+  width 34px
+  height 34px
+  border 0
+  border-radius 50%
+  background rgba(68,85,126,.06)
+  color #68758d
+  font-size 23px
+  cursor pointer
+
+.sjm-playlist-import-body
+  overflow-y auto
+  padding 20px 26px
+
+.sjm-import-field
+  display flex
+  flex-direction column
+  gap 8px
+
+.sjm-import-field > span,
+.sjm-import-bulk summary
+  color #344159
+  font-size 12px
+  font-weight 750
+
+#sjm-import-share,
+#sjm-import-bulk-text
+  width 100%
+  box-sizing border-box
+  resize vertical
+  border 1px solid rgba(68,85,126,.11)
+  border-radius 14px
+  background #f8f9fd
+  color #26344b
+  font-family inherit
+  font-size 13px
+  line-height 1.65
+  outline none
+  padding 12px 14px
+  transition .18s ease
+
+#sjm-import-share:focus,
+#sjm-import-bulk-text:focus
+  border-color rgba(66,90,239,.32)
+  background #fff
+  box-shadow 0 0 0 3px rgba(66,90,239,.07)
+
+.sjm-import-provider-row
+  display flex
+  align-items center
+  gap 7px
+  margin-top 11px
+  color #8691a4
+  font-size 11px
+
+.sjm-import-provider-row b
+  color #425aef
+  font-size 12px
+
+.sjm-import-provider-row small
+  margin-left auto
+  color #a0a8b7
+
+.sjm-import-actions
+  display flex
+  align-items center
+  gap 12px
+  margin-top 16px
+
+#sjm-import-status
+  min-width 0
+  color #7b879a
+  font-size 12px
+  line-height 1.55
+
+.sjm-import-preview
+  margin-top 16px
+  overflow hidden
+  border 1px solid rgba(68,85,126,.08)
+  border-radius 16px
+  background rgba(248,249,253,.86)
+
+.sjm-import-preview-head
+  display flex
+  align-items center
+  justify-content space-between
+  gap 14px
+  padding 13px 14px
+  border-bottom 1px solid rgba(68,85,126,.07)
+
+.sjm-import-preview-head > div
+  display flex
+  min-width 0
+  flex-direction column
+  gap 3px
+
+.sjm-import-preview-head strong
+  overflow hidden
+  color #293750
+  font-size 13px
+  text-overflow ellipsis
+  white-space nowrap
+
+.sjm-import-preview-head span,
+.sjm-import-preview-head em
+  color #8994a7
+  font-size 10px
+  font-style normal
+
+.sjm-import-preview-head em
+  flex 0 0 auto
+  padding 4px 8px
+  border-radius 999px
+  background rgba(55,184,121,.08)
+  color #279467
+
+.sjm-import-preview-row
+  display grid
+  grid-template-columns 30px minmax(0,1fr) minmax(90px,.55fr)
+  gap 9px
+  align-items center
+  min-height 39px
+  padding 0 14px
+  border-bottom 1px solid rgba(68,85,126,.055)
+
+.sjm-import-preview-row:last-of-type
+  border-bottom 0
+
+.sjm-import-preview-row span
+  color #a2aab8
+  font-size 10px
+
+.sjm-import-preview-row strong,
+.sjm-import-preview-row em
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.sjm-import-preview-row strong
+  color #35425a
+  font-size 12px
+  font-weight 650
+
+.sjm-import-preview-row em
+  color #8893a6
+  font-size 11px
+  font-style normal
+
+.sjm-import-preview > p
+  margin 0
+  padding 10px 14px
+  border-top 1px solid rgba(68,85,126,.055)
+  color #929cac
+  font-size 10px
+
+.sjm-import-bulk
+  margin-top 18px
+  padding 12px 14px
+  border 1px dashed rgba(68,85,126,.12)
+  border-radius 14px
+  background rgba(250,251,254,.82)
+
+.sjm-import-bulk summary
+  cursor pointer
+  user-select none
+
+.sjm-import-bulk p
+  margin 10px 0
+  color #8c97aa
+  font-size 11px
+  line-height 1.65
+
+.sjm-import-bulk .sjm-soft-button
+  margin-top 9px
+
+.sjm-playlist-import-footer
+  display flex
+  align-items center
+  justify-content flex-end
+  gap 9px
+  padding 15px 26px 20px
+  border-top 1px solid rgba(68,85,126,.07)
+
+@media screen and (max-width: 768px)
+  .sjm-playlist-head-actions
+    width 100%
+    justify-content flex-start
+    flex-wrap wrap
+
+  .sjm-playlist-import-modal
+    align-items flex-end
+    padding 10px
+
+  .sjm-playlist-import-panel
+    max-height calc(100vh - 20px)
+    border-radius 20px
+
+  .sjm-playlist-import-head
+    padding 20px 18px 15px
+
+  .sjm-playlist-import-body
+    padding 16px 18px
+
+  .sjm-import-provider-row small
+    display none
+
+  .sjm-import-actions
+    align-items flex-start
+    flex-direction column
+
+  .sjm-import-preview-row
+    grid-template-columns 26px minmax(0,1fr)
+
+  .sjm-import-preview-row em
+    grid-column 2
+    margin-top -7px
+    padding-bottom 7px
+
+  .sjm-playlist-import-footer
+    padding 13px 18px 17px
