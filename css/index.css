@@ -15283,6 +15283,506 @@ html[data-theme="dark"] #anMusic-page .sjm-now-actions #sjm-current-favorite.act
     height: 38px;
   }
 }
+.sjm-playlist-head-actions {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -moz-box-pack: end;
+  -o-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  gap: 9px;
+}
+.sjm-import-playlist-button {
+  min-height: 42px;
+  padding: 0 16px;
+  white-space: nowrap;
+}
+.sjm-playlist-import-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10060;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  pointer-events: none;
+  -webkit-transition: opacity 0.18s ease;
+  -moz-transition: opacity 0.18s ease;
+  -o-transition: opacity 0.18s ease;
+  -ms-transition: opacity 0.18s ease;
+  transition: opacity 0.18s ease;
+}
+.sjm-playlist-import-modal[hidden] {
+  display: none;
+}
+.sjm-playlist-import-modal.active {
+  opacity: 1;
+  -ms-filter: none;
+  filter: none;
+  pointer-events: auto;
+}
+.sjm-playlist-import-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(21,28,44,0.48);
+  backdrop-filter: blur(8px);
+  cursor: default;
+}
+.sjm-playlist-import-panel {
+  position: relative;
+  z-index: 1;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  width: 720px;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(68,85,126,0.1);
+  border-radius: 24px;
+  background: rgba(255,255,255,0.97);
+  -webkit-box-shadow: 0 28px 90px rgba(30,42,70,0.24);
+  box-shadow: 0 28px 90px rgba(30,42,70,0.24);
+}
+.sjm-playlist-import-head {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  -o-box-align: start;
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 26px 18px;
+  border-bottom: 1px solid rgba(68,85,126,0.07);
+}
+.sjm-playlist-import-head h3 {
+  margin: 4px 0 5px;
+  color: #202b3d;
+  font-size: 21px;
+}
+.sjm-playlist-import-head p {
+  margin: 0;
+  color: #7b879a;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.sjm-playlist-import-close {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -o-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(68,85,126,0.06);
+  color: #68758d;
+  font-size: 23px;
+  cursor: pointer;
+}
+.sjm-playlist-import-body {
+  overflow-y: auto;
+  padding: 20px 26px;
+}
+.sjm-import-field {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 8px;
+}
+.sjm-import-field > span,
+.sjm-import-bulk summary {
+  color: #344159;
+  font-size: 12px;
+  font-weight: 750;
+}
+#sjm-import-share,
+#sjm-import-bulk-text {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  resize: vertical;
+  border: 1px solid rgba(68,85,126,0.11);
+  border-radius: 14px;
+  background: #f8f9fd;
+  color: #26344b;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.65;
+  outline: none;
+  padding: 12px 14px;
+  -webkit-transition: 0.18s ease;
+  -moz-transition: 0.18s ease;
+  -o-transition: 0.18s ease;
+  -ms-transition: 0.18s ease;
+  transition: 0.18s ease;
+}
+#sjm-import-share:focus,
+#sjm-import-bulk-text:focus {
+  border-color: rgba(66,90,239,0.32);
+  background: #fff;
+  -webkit-box-shadow: 0 0 0 3px rgba(66,90,239,0.07);
+  box-shadow: 0 0 0 3px rgba(66,90,239,0.07);
+}
+.sjm-import-provider-row {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 7px;
+  margin-top: 11px;
+  color: #8691a4;
+  font-size: 11px;
+}
+.sjm-import-provider-row b {
+  color: #425aef;
+  font-size: 12px;
+}
+.sjm-import-provider-row small {
+  margin-left: auto;
+  color: #a0a8b7;
+}
+.sjm-import-actions {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+#sjm-import-status {
+  min-width: 0;
+  color: #7b879a;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.sjm-import-preview {
+  margin-top: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(68,85,126,0.08);
+  border-radius: 16px;
+  background: rgba(248,249,253,0.86);
+}
+.sjm-import-preview-head {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -moz-box-pack: justify;
+  -o-box-pack: justify;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 14px;
+  border-bottom: 1px solid rgba(68,85,126,0.07);
+}
+.sjm-import-preview-head > div {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  min-width: 0;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -o-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  gap: 3px;
+}
+.sjm-import-preview-head strong {
+  overflow: hidden;
+  color: #293750;
+  font-size: 13px;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sjm-import-preview-head span,
+.sjm-import-preview-head em {
+  color: #8994a7;
+  font-size: 10px;
+  font-style: normal;
+}
+.sjm-import-preview-head em {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -o-box-flex: 1;
+  box-flex: 1;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(55,184,121,0.08);
+  color: #279467;
+}
+.sjm-import-preview-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) minmax(90px, 0.55fr);
+  gap: 9px;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  min-height: 39px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(68,85,126,0.055);
+}
+.sjm-import-preview-row:last-of-type {
+  border-bottom: 0;
+}
+.sjm-import-preview-row span {
+  color: #a2aab8;
+  font-size: 10px;
+}
+.sjm-import-preview-row strong,
+.sjm-import-preview-row em {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sjm-import-preview-row strong {
+  color: #35425a;
+  font-size: 12px;
+  font-weight: 650;
+}
+.sjm-import-preview-row em {
+  color: #8893a6;
+  font-size: 11px;
+  font-style: normal;
+}
+.sjm-import-preview > p {
+  margin: 0;
+  padding: 10px 14px;
+  border-top: 1px solid rgba(68,85,126,0.055);
+  color: #929cac;
+  font-size: 10px;
+}
+.sjm-import-bulk {
+  margin-top: 18px;
+  padding: 12px 14px;
+  border: 1px dashed rgba(68,85,126,0.12);
+  border-radius: 14px;
+  background: rgba(250,251,254,0.82);
+}
+.sjm-import-bulk summary {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.sjm-import-bulk p {
+  margin: 10px 0;
+  color: #8c97aa;
+  font-size: 11px;
+  line-height: 1.65;
+}
+.sjm-import-bulk .sjm-soft-button {
+  margin-top: 9px;
+}
+.sjm-playlist-import-footer {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -moz-box-pack: end;
+  -o-box-pack: end;
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  gap: 9px;
+  padding: 15px 26px 20px;
+  border-top: 1px solid rgba(68,85,126,0.07);
+}
+@media screen and (max-width: 768px) {
+  .sjm-playlist-head-actions {
+    width: 100%;
+    -webkit-box-pack: start;
+    -moz-box-pack: start;
+    -o-box-pack: start;
+    -ms-flex-pack: start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    -webkit-box-lines: multiple;
+    -moz-box-lines: multiple;
+    -o-box-lines: multiple;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .sjm-playlist-import-modal {
+    -webkit-box-align: end;
+    -moz-box-align: end;
+    -o-box-align: end;
+    -ms-flex-align: end;
+    -webkit-align-items: flex-end;
+    align-items: flex-end;
+    padding: 10px;
+  }
+  .sjm-playlist-import-panel {
+    max-height: calc(100vh - 20px);
+    border-radius: 20px;
+  }
+  .sjm-playlist-import-head {
+    padding: 20px 18px 15px;
+  }
+  .sjm-playlist-import-body {
+    padding: 16px 18px;
+  }
+  .sjm-import-provider-row small {
+    display: none;
+  }
+  .sjm-import-actions {
+    -webkit-box-align: start;
+    -moz-box-align: start;
+    -o-box-align: start;
+    -ms-flex-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    -o-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .sjm-import-preview-row {
+    grid-template-columns: 26px minmax(0, 1fr);
+  }
+  .sjm-import-preview-row em {
+    grid-column: 2;
+    margin-top: -7px;
+    padding-bottom: 7px;
+  }
+  .sjm-playlist-import-footer {
+    padding: 13px 18px 17px;
+  }
+}
 @media screen and (max-width: 768px) {
   body[data-type="music"] {
     height: auto !important;
