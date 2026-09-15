@@ -1,0 +1,96 @@
+// SmallJia random discovery category selector
+.sjm-discovery-category-panel
+  display grid
+  grid-template-columns minmax(190px, .32fr) 1fr
+  gap 22px
+  align-items center
+  margin-top 16px
+  padding 18px 22px
+  border 1px solid rgba(68,85,126,.08)
+  border-radius 20px
+  background rgba(255,255,255,.72)
+  box-shadow 0 14px 38px rgba(48,65,102,.06)
+  backdrop-filter blur(14px)
+
+.sjm-discovery-category-title
+  display flex
+  min-width 0
+  flex-direction column
+  gap 3px
+
+.sjm-discovery-category-title strong
+  color #28364d
+  font-size 15px
+  line-height 1.45
+
+.sjm-discovery-category-title small
+  color #929cab
+  font-size 11px
+  line-height 1.5
+
+.sjm-discovery-category-list
+  display flex
+  flex-wrap wrap
+  justify-content flex-end
+  gap 8px
+
+.sjm-discovery-category
+  min-height 34px
+  padding 0 13px
+  border 1px solid rgba(77,91,128,.10)
+  border-radius 999px
+  background rgba(247,249,255,.82)
+  color #65718a
+  font-size 12px
+  font-weight 650
+  line-height 1
+  cursor pointer
+  transition .18s ease
+
+.sjm-discovery-category:hover
+  transform translateY(-1px)
+  border-color rgba(66,90,239,.20)
+  background rgba(241,244,255,.96)
+  color #425aef
+
+.sjm-discovery-category.active
+  border-color rgba(66,90,239,.20)
+  background linear-gradient(135deg,rgba(66,90,239,.13),rgba(138,107,255,.12))
+  box-shadow inset 0 0 0 1px rgba(66,90,239,.04),0 7px 18px rgba(66,90,239,.08)
+  color #425aef
+
+.sjm-discovery-category:focus-visible
+  outline 2px solid rgba(66,90,239,.42)
+  outline-offset 2px
+
+@media screen and (max-width: 900px)
+  .sjm-discovery-category-panel
+    grid-template-columns 1fr
+    gap 12px
+
+  .sjm-discovery-category-list
+    justify-content flex-start
+
+@media screen and (max-width: 768px)
+  .sjm-discovery-category-panel
+    margin-top 12px
+    padding 16px
+    border-radius 18px
+
+  .sjm-discovery-category-title small
+    display none
+
+  .sjm-discovery-category-list
+    flex-wrap nowrap
+    overflow-x auto
+    padding 2px 2px 6px
+    scrollbar-width none
+    -webkit-overflow-scrolling touch
+
+  .sjm-discovery-category-list::-webkit-scrollbar
+    display none
+
+  .sjm-discovery-category
+    flex 0 0 auto
+    min-height 32px
+    padding 0 12px
