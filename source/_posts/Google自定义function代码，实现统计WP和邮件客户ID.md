@@ -10,7 +10,7 @@ tags:
 - 谷歌Ads
 title: Google Ads 离线转化回传实操：WordPress + GCLID + WhatsApp + Email
 top_img: https://pic1.imgdb.cn/i/034Pah6g2XQDWFik1HllM0.png
-updated: '2026-09-16T11:07:02.389+08:00'
+updated: '2026-09-16T14:15:56.841+08:00'
 ---
 # Google Ads 离线转化回传实操：WordPress + GCLID + WhatsApp + Email
 
@@ -21,6 +21,8 @@ updated: '2026-09-16T11:07:02.389+08:00'
 更合适的做法是：
 
 **保存 GCLID → 生成 Lead ID → 关联 WhatsApp / Email → 确认有效询盘 → 回传 Google Ads。**
+
+![ScreenShot_2026-09-16_141749_678](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/605c892159814c6eb00deafc30b86bbd.png)
 
 ## 一、什么是 GCLID
 
