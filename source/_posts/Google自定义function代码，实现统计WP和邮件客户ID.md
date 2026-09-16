@@ -3,12 +3,14 @@ abbrlink: ''
 categories:
 - - 代码细节
 - - WordPress
+cover: https://pic1.imgdb.cn/i/034Pah6g2XQDWFik1HllM0.png
 date: '2026-09-16T10:50:05.079856+08:00'
 tags:
 - WordPress
 - 谷歌Ads
 title: Google Ads 离线转化回传实操：WordPress + GCLID + WhatsApp + Email
-updated: '2026-09-16T10:50:12.289+08:00'
+top_img: https://pic1.imgdb.cn/i/034Pah6g2XQDWFik1HllM0.png
+updated: '2026-09-16T11:07:02.389+08:00'
 ---
 # Google Ads 离线转化回传实操：WordPress + GCLID + WhatsApp + Email
 
