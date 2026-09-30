@@ -4,14 +4,14 @@ categories:
 - - WordPress
 - - 代码细节
 comments: false
-cover: null
+cover: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/995c4297e0254378384c38f328a20fe5.png
 date: '2026-09-30T11:01:30.983398+08:00'
 tags:
 - WordPress
 - 网站建设
 title: WordPress 升级 PHP 8 后 QQ 邮箱 SMTP 无法发送邮件的排查与解决方法
-top_img: null
-updated: '2026-09-30T11:01:33.712+08:00'
+top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/995c4297e0254378384c38f328a20fe5.png
+updated: '2026-09-30T11:04:46.971+08:00'
 ---
 # WordPress 升级 PHP 8 后 QQ 邮箱 SMTP 无法发送邮件的排查与解决方法
 
@@ -26,6 +26,8 @@ Failed to enable crypto
 那么问题通常并不是 QQ 邮箱不支持 PHP 8，而是 **PHP 8 环境中的 SSL/TLS CA 证书配置异常**。
 
 本文记录一次实际排查过程和最终解决方法，方便以后快速处理。
+
+![105fc52f-42ad-4586-bc4d-1839fdfb3f1b](https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/995c4297e0254378384c38f328a20fe5.png)
 
 ---
 
