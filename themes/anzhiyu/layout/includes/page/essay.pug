@@ -60,6 +60,13 @@ if site.data.essay
                     if item.aplayer
                       .bber-music
                         meting-js(id=item.aplayer.id, server=item.aplayer.server, type="song", mutex="true",preload="none", theme="var(--anzhiyu-main)", data-lrctype="0", order="list")
+                  if item.audio
+                    .bber-audio
+                      if item.audio_title
+                        .bber-audio-title= item.audio_title
+                      audio(controls preload="none")
+                        source(src=url_for(item.audio) type="audio/mpeg")
+                        | 您的浏览器不支持音频播放。
                 hr
                 .bber-bottom
                   .bber-info
@@ -83,6 +90,24 @@ if site.data.essay
                       i.anzhiyufont.anzhiyu-icon-message
 
       style.
+        #essay_page .bber-audio {
+          width: 100%;
+          min-width: 0;
+          max-width: 100%;
+          margin: 12px 0 14px;
+        }
+        #essay_page .bber-audio-title {
+          margin-bottom: 7px;
+          font-size: 14px;
+          font-weight: 600;
+          color: var(--anzhiyu-fontcolor);
+          overflow-wrap: anywhere;
+        }
+        #essay_page .bber-audio audio {
+          display: block;
+          width: 100%;
+          max-width: 100%;
+        }
         #essay-memory-tools {
           display: grid;
           grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
@@ -224,6 +249,20 @@ if site.data.essay
         }
 
       script.
+        window.initEssayAudio = function () {
+          const root = document.getElementById("essay_page");
+          if (!root || root.dataset.audioReady === "1") return;
+          root.dataset.audioReady = "1";
+          root.addEventListener("play", function (event) {
+            const current = event.target;
+            if (!(current instanceof HTMLAudioElement) || !current.closest(".bber-audio")) return;
+            root.querySelectorAll(".bber-audio audio").forEach(function (other) {
+              if (other !== current && !other.paused) other.pause();
+            });
+          }, true);
+        };
+        window.initEssayAudio();
+
         window.initEssayMemories = function () {
           const root = document.getElementById("essay_page");
           if (!root || root.dataset.memoryReady === "1") return;
