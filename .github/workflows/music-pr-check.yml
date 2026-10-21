@@ -31,6 +31,39 @@ jobs:
           node --check themes/anzhiyu/source/js/smalljia-music-source-selector.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-retry.js
           grep -q 'music-proxy' themes/anzhiyu/source/js/smalljia-music-gdstudio.js
+      - name: Diagnose GD-Studio searches without changing production
+        shell: bash
+        run: |
+          node <<'NODE'
+          const { createHash } = require('node:crypto');
+          const sources = ['netease', 'kuwo'];
+          const report = ['### External search endpoint diagnostics', '| Source | Legacy GET | Signed POST |', '|---|---|---|'];
+          const query = '人间蜉蝣';
+          async function probe(url, options = {}) {
+            try {
+              const res = await fetch(url, { ...options, signal: AbortSignal.timeout(9000) });
+              const body = await res.text();
+              let data;
+              try { data = JSON.parse(body); } catch { data = null; }
+              const arr = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : Array.isArray(data?.result) ? data.result : [];
+              return res.status + '/' + arr.length;
+            } catch (e) { return 'error/' + e.name; }
+          }
+          let time = String(Math.floor(Date.now()/1000));
+          try { const t = await fetch('https://music.gdstudio.xyz/time', { signal: AbortSignal.timeout(4000) }); if (t.ok) time = (await t.text()).trim(); } catch {}
+          for (const source of sources) {
+            const params = new URLSearchParams({ types: 'search', source, name: query, count: '5', pages: '1' });
+            const get = await probe('https://music-api.gdstudio.xyz/api.php?' + params);
+            const version = '20260801';
+            const encoded = encodeURIComponent(query).replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
+            const sign = createHash('md5').update(time.slice(0, 9) + '|music.gdstudio.xyz|' + version + '|' + encoded).digest('hex').slice(-8).toUpperCase();
+            params.set('s', sign);
+            const post = await probe('https://music.gdstudio.xyz/api.php', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: params.toString() });
+            report.push('| ' + source + ' | ' + get + ' | ' + post + ' |');
+          }
+          require('node:fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, report.join('\n') + '\n');
+          console.log(report.join('\n'));
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
