@@ -418,6 +418,40 @@ jobs:
           console.log(rows.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
           NODE
+      - name: Probe multiple Meting search results without exposing media URLs
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const {default:Meting}=await import('@meting/core');
+          const summary=['### Multiple-song Meting probe','| Source | Query | Songs | HTTP(S) URLs returned | Errors |','|---|---|---:|---:|---:|'];
+          for(const source of ['netease','kuwo']) for(const query of ['轻音乐','生日快乐']) {
+            const client=new Meting(source);client.format(true);
+            let songs=[],urls=0,errors=0;
+            try {
+              const r=await Promise.race([client.search(query,{limit:4,page:1}),new Promise((_,rej)=>setTimeout(()=>rej(Error('search timeout')),7000))]);
+              const parsed=typeof r==='string'?JSON.parse(r):r;
+              songs=Array.isArray(parsed)?parsed.slice(0,4):[];
+              for(const song of songs)try {
+                const raw=await Promise.race([client.url(song.url_id||song.id,128),new Promise((_,rej)=>setTimeout(()=>rej(Error('url timeout')),5000))]);
+                const a=typeof raw==='string'?JSON.parse(raw):raw;
+                const entry=Array.isArray(a)?a[0]:a;
+                const url=typeof entry==='string'?entry:entry?.url;
+                if(typeof url==='string'&&/^https?:\/\//.test(url))urls++;
+              } catch{errors++;}
+            }catch{errors++;}
+            summary.push('| '+source+' | '+query+' | '+songs.length+' | '+urls+' | '+errors+' |');
+          }
+          console.log(summary.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
+          NODE
+      - name: Cloudflare Workers compatibility build probe for Meting
+        run: |
+          npx --yes wrangler@4 deploy workers/netease-test/src/index.js --dry-run --outdir /tmp/smalljia-worker-build
+          node <<'NODE'
+          const fs=require('node:fs');
+          const bundle=fs.readdirSync('/tmp/smalljia-worker-build');
+          console.log('PASS: isolated Worker bundle generated; this does not prove Meting core can run inside Workers:',bundle.join(','));
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
