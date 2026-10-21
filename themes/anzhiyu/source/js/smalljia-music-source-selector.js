@@ -180,9 +180,10 @@
       try {
         const list = await searchOneSource(source, query, 12);
         list.sort((a, b) => score(b, target) - score(a, target));
-        const best = list[0];
-        if (!best || score(best, target) < 70) continue;
-        if (await hasPlayableUrl(best)) return best;
+        for (const candidate of list.slice(0, 5)) {
+          if (score(candidate, target) < 70) break;
+          if (await hasPlayableUrl(candidate)) return candidate;
+        }
       } catch (error) {
         console.warn(`SmallJia Music: source ${source} match failed`, error);
       }
