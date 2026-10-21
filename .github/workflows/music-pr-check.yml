@@ -261,6 +261,35 @@ jobs:
           console.log(log.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,log.join('\n')+'\n');
           NODE
+      - name: Probe community Meting APIs without production deployment
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const endpoints=['https://v.iarc.top/','https://api.mizore.cn/meting/api.php'];
+          const checks=[['netease','search','晴天'],['netease','song','186016'],['netease','url','186016'],['kuwo','search','晴天']];
+          const lines=['### Public Meting endpoints (metadata only; no audio download)','| API | Source | Type | HTTP | Shape / redirect | ms |','|---|---|---|---|---|---|'];
+          for(const endpoint of endpoints)for(const [server,type,id] of checks){
+            const url=new URL(endpoint);url.searchParams.set('server',server);url.searchParams.set('type',type);url.searchParams.set('id',id);
+            const start=Date.now();let status='-',shape='-';
+            try{
+              const response=await fetch(url,{signal:AbortSignal.timeout(7000),redirect:'manual',headers:{Accept:'application/json, text/plain, */*'}});
+              status=String(response.status);
+              const redirect=response.headers.get('location');
+              if(redirect)shape='redirect: '+(new URL(redirect,url).hostname);
+              else{
+                const body=(await response.text()).slice(0,100000);
+                let parsed;try{parsed=JSON.parse(body)}catch{}
+                if(Array.isArray(parsed))shape='array '+parsed.length+(parsed[0]?.url?' with url field':'');
+                else if(parsed&&typeof parsed==='object')shape='object '+Object.keys(parsed).slice(0,5).join(',');
+                else shape='text '+body.length+' characters';
+              }
+            }catch(e){status=e.name;shape='request failed'}
+            lines.push('| '+new URL(endpoint).hostname+' | '+server+' | '+type+' | '+status+' | '+shape.replaceAll('|','/')+' | '+(Date.now()-start)+' |');
+          }
+          console.log(lines.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
