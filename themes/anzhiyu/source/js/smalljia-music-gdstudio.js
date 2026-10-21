@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-3";
+  const VERSION = "20261021-qq-search-4";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -265,15 +265,30 @@
     return tracks;
   };
 
+  // Only the audio URL is on the critical path to first sound.
+  // Lyrics and artwork are loaded after playback has been initiated.
   const resolveTrack = async track => {
-    const [audio, lrc, cover] = await Promise.all([resolveAudio(track), resolveLyric(track), resolveCover(track)]);
+    const audio = await resolveAudio(track);
     return {
       ...track,
       url: audio.url,
       __audioCandidates: audio.candidates,
-      lrc: lrc || track.lrc || "",
-      cover: cover || track.cover || FALLBACK_COVER,
+      lrc: track.lrc || "",
+      cover: track.cover || FALLBACK_COVER,
     };
+  };
+
+  const hydratePlayingMetadata = (app, resolved) => {
+    const key = resolved.key;
+    Promise.allSettled([resolveLyric(resolved), resolveCover(resolved)]).then(results => {
+      if (app.destroyed || app.currentTrack?.key !== key) return;
+      const lyric = results[0].status === "fulfilled" ? results[0].value : "";
+      const cover = results[1].status === "fulfilled" ? results[1].value : "";
+      if (lyric) app.currentTrack.lrc = lyric;
+      if (cover) app.currentTrack.cover = cover;
+      if (lyric) app.loadLyrics(app.currentTrack);
+      if (cover) app.updateCurrentUi();
+    });
   };
 
   const patch = app => {
@@ -335,7 +350,9 @@
       const index = this.queue.findIndex(item => item.key === resolved.key);
       if (index >= 0) Object.assign(this.queue[index], resolved);
       this.switchView("home");
-      return originalPlayTrack(resolved);
+      const result = await originalPlayTrack(resolved);
+      hydratePlayingMetadata(this, resolved);
+      return result;
     };
 
     app.selectIndex = async function (index, autoplay = true, restorePosition = false) {
@@ -368,6 +385,7 @@
       this.audio.load();
       if (autoplay) this.audio.play().catch(() => this.showToast("当前 GD-Studio 音源播放失败，正在尝试备用线路"));
       this.saveState(true);
+      hydratePlayingMetadata(this, resolved);
     };
 
     const chipText = app.dom?.sourceChip?.querySelector("span:last-child");
