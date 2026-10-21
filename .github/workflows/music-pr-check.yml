@@ -446,12 +446,12 @@ jobs:
           NODE
       - name: Cloudflare Workers compatibility build probe for Meting
         run: |
-          npx --yes wrangler@4 deploy workers/netease-test/src/index.js --dry-run --outdir /tmp/smalljia-worker-build
-          node <<'NODE'
-          const fs=require('node:fs');
-          const bundle=fs.readdirSync('/tmp/smalljia-worker-build');
-          console.log('PASS: isolated Worker bundle generated; this does not prove Meting core can run inside Workers:',bundle.join(','));
+          cat > meting-worker-probe.mjs <<'NODE'
+          import Meting from '@meting/core';
+          export default {async fetch(){const instance=new Meting('netease');instance.format(true);return Response.json({loaded:typeof instance.search==='function'});}};
           NODE
+          npx --yes wrangler@4 deploy meting-worker-probe.mjs --name smalljia-meting-probe --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat --dry-run --outdir /tmp/smalljia-meting-bundle
+          echo "Meting bundle built, but actual Cloudflare runtime requests remain unverified"
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
