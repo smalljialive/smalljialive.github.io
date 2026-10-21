@@ -100,6 +100,30 @@ jobs:
           console.log(rows.join('\n'));
           (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, rows.join('\n') + '\n');
           NODE
+      - name: Verify playback lifecycle invariants
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const assert = await import('node:assert/strict');
+          const src = fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-gdstudio.js', 'utf8');
+          const segment = (start, end) => src.slice(src.indexOf(start), src.indexOf(end, src.indexOf(start)));
+          const resolution = segment('const resolveTrack =', 'const hydratePlayingMetadata');
+          assert.match(resolution, /await resolveAudio\(track\)/, 'audio URL required');
+          assert.doesNotMatch(resolution, /await resolveLyric|await resolveCover|Promise\.all/, 'lyrics and artwork must not block initial playback');
+          const search = segment('app.search = async function', 'app.playTrack = async function');
+          assert.match(search, /this\.renderTrackList\(this\.dom\.searchResults, list\);[\s\S]*hydrateSearchCovers\(list\)\.then/, 'results must render before covers');
+          const play = segment('app.playTrack = async function', 'app.selectIndex = async function');
+          assert.match(play, /token !== playToken/, 'stale play clicks must be ignored');
+          assert.match(play, /\+\+selectToken/, 'play click invalidates queue selection');
+          const select = segment('app.selectIndex = async function', 'const chipText');
+          assert.match(select, /token !== selectToken/, 'stale queue selection must be ignored');
+          assert.match(select, /\+\+playToken/, 'queue selection invalidates pending play click');
+          assert.doesNotMatch(select, /this\.loadLyrics\(this\.currentTrack\)/, 'avoid premature lyric loading');
+          const audio = segment('const resolveAudio =', 'const resolveLyric');
+          assert.match(audio, /audioUrlInflight\.has\(key\)/, 'concurrent resolves deduplicated');
+          assert.match(audio, /audioUrlCache\.get\(key\)/, 'brief URL reuse enabled');
+          console.log('PASS: 9 playback lifecycle invariants');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
