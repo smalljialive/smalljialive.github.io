@@ -23,7 +23,9 @@ export default {
         const results=typeof raw==='string'?JSON.parse(raw):raw;
         if(!Array.isArray(results))return output({error:'INVALID_UPSTREAM_RESPONSE',source,shape:typeof results},502);
         if(!results.length)return output({songs:[],diagnostic:{source,category:'EMPTY_UPSTREAM_LIST'}});
-        return output({songs:results.slice(0,10).map(s=>({id:String(s.id||''),name:String(s.name||''),artist:Array.isArray(s.artist)?s.artist:[],url_id:String(s.url_id||s.id||''),pic_id:String(s.pic_id||''),lyric_id:String(s.lyric_id||'')})).filter(s=>s.id)});
+        const songs=results.slice(0,10).map(s=>({id:String(s.id||s.songid||s.rid||''),name:String(s.name||s.title||''),artist:Array.isArray(s.artist)?s.artist:[],url_id:String(s.url_id||s.id||s.songid||s.rid||''),pic_id:String(s.pic_id||''),lyric_id:String(s.lyric_id||'')})).filter(s=>s.id);
+        if(!songs.length)return output({songs:[],diagnostic:{source,category:'RESULT_MAPPING_EMPTY',upstreamCount:results.length,firstFields:Object.keys(results[0]||{}).filter(k=>/^[a-zA-Z][a-zA-Z0-9_]{0,30}$/.test(k)).slice(0,12)}});
+        return output({songs});
       }
       const raw=await deadline(client.url(id,128),6000);
       const parsed=typeof raw==='string'?JSON.parse(raw):raw;
