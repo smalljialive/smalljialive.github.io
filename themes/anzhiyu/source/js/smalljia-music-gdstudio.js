@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-1";
+  const VERSION = "20261021-qq-search-2";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -177,7 +177,7 @@
     }).map((track, index) => ({ ...track, index }));
   };
 
-  const QQ_SEARCH_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy-v5-test";
+  const QQ_SEARCH_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy";
 
   const search = async keyword => {
     const payload = await requestAt(QQ_SEARCH_API, {
@@ -300,8 +300,8 @@
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
-        this.setSourceState("ready", "GD-Studio");
-        this.setSearchStatus(list.length ? `找到 ${list.length} 个 QQ 音乐结果，点击即可播放` : `GD-Studio 没有找到“${query}”`);
+        this.setSourceState("ready", "QQ 音乐");
+        this.setSearchStatus(list.length ? `找到 ${list.length} 个 QQ 音乐结果，点击即可播放` : `QQ 音乐没有找到“${query}”`);
       } catch (error) {
         console.warn("SmallJia Music: GD-Studio search failed", error);
         if (seq !== this.searchSeq || this.destroyed) return;
@@ -364,7 +364,7 @@
     };
 
     const chipText = app.dom?.sourceChip?.querySelector("span:last-child");
-    if (chipText) chipText.textContent = "GD-Studio 直连 · 代理备用";
+    if (chipText) chipText.textContent = "QQ 音乐搜索 · Supabase";
     app.root?.setAttribute("data-music-provider", "gdstudio-direct");
     return true;
   };
