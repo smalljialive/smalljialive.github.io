@@ -1,11 +1,11 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-1";
+  const VERSION = "20261021-2";
   if (window.__smallJiaMusicSourceCompatVersion === VERSION) return;
   window.__smallJiaMusicSourceCompatVersion = VERSION;
 
-  const PROXY_API = "https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music";
+  const PROXY_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy";
   const MEDIA_PROXY = "https://music-proxy.gdstudio.org/";
   const SOURCE_LABELS = { auto: "自动选源", netease: "网易云", kuwo: "酷我", tencent: "QQ音乐" };
   const AUTO_ORDER = ["kuwo", "tencent", "netease"];
@@ -204,11 +204,15 @@
       if (pref === "tencent") return findTencentMatch(target);
       if (pref !== "auto") return previousFind ? previousFind(target) : null;
 
-      if (previousFind) {
-        const old = await previousFind(target);
-        if (old && String(old.server || old.source || "") !== "kugou") return old;
+      try {
+        const qq = await findTencentMatch(target);
+        if (qq) return qq;
+      } catch (error) {
+        console.warn("SmallJia Music: QQ auto-match unavailable", error);
       }
-      try { return await findTencentMatch(target); } catch (_) { return null; }
+      if (!previousFind) return null;
+      const old = await previousFind(target);
+      return old && String(old.server || old.source || "") !== "kugou" ? old : null;
     };
 
     const previousSearch = app.search.bind(app);
