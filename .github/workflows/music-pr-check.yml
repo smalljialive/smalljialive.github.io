@@ -349,7 +349,7 @@ jobs:
             response=await worker.fetch(new Request('https://worker.example/url?id=42'),env);
             assert.equal(response.status,200);
             assert.equal((await response.json()).url,'https://cdn.example.org/song.mp3');
-            assert(upstream.every(u=>u.startsWith('https://api.example.org/')));
+            assert.ok(upstream.every(u=>u.startsWith('https://api.example.org/')));
             response=await worker.fetch(new Request('https://worker.example/url?id=bad'),env);
             assert.equal(response.status,400);
             response=await worker.fetch(new Request('https://worker.example/search?q=x'),{NETEASE_PROVIDER_URL:'http://bad.example.org'});
