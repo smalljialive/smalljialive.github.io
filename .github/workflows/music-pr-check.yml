@@ -500,6 +500,36 @@ jobs:
           assert.doesNotMatch(code,/console\.log\(error/);
           console.log('PASS: diagnostic categories present and avoid raw upstream errors');
           NODE
+      - name: Probe mmp.cc published APIs without affecting production
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('node:fs');
+          const cases=[
+            ['kuwo-public-search','https://api.mmp.cc/api/kuwo?action=search_song&msg=%E8%BD%BB%E9%9F%B3%E4%B9%90'],
+            ['mkplayer-netease-search','https://music.mmp.cc/api.php?types=search&source=netease&name=%E8%BD%BB%E9%9F%B3%E4%B9%90'],
+            ['mkplayer-qq-search','https://music.mmp.cc/api.php?types=search&source=tencent&name=%E8%BD%BB%E9%9F%B3%E4%B9%90']
+          ];
+          const rows=['### mmp.cc external API diagnostics (read-only)','| Endpoint | HTTP | Content type | Shape | ms |','|---|---|---|---|---:|'];
+          for(const [label,url] of cases) {
+            const start=Date.now();let status='-',type='-',shape='-';
+            try{
+              const response=await fetch(url,{signal:AbortSignal.timeout(8000),redirect:'manual',headers:{accept:'application/json'}});
+              status=String(response.status);type=(response.headers.get('content-type')||'-').split(';')[0];
+              const data=(await response.text()).slice(0,8000);
+              let json;try{json=JSON.parse(data)}catch{}
+              if(Array.isArray(json))shape='array:'+json.length;
+              else if(json&&typeof json==='object'){
+                const fields=Object.keys(json).filter(k=>/^[A-Za-z_]+$/.test(k)).slice(0,7).join(',');
+                const audio=json.play_url||json.url||json.data?.play_url||json.data?.url;
+                shape='object:'+fields+'; media='+(/https?:\/\//.test(String(audio||''))?'present':'absent');
+              }else shape='non-JSON';
+            }catch(e){status=e.name;}
+            rows.push('| '+label+' | '+status+' | '+type+' | '+shape+' | '+(Date.now()-start)+' |');
+          }
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
