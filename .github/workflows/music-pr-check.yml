@@ -136,6 +136,6 @@ jobs:
           node --check public/js/smalljia-music-source-selector.js
           node --check public/js/smalljia-music-source-retry.js
           node --check public/js/smalljia-music-source-compat.js
-          grep -q 'smalljia-music-source-compat.js?v=20261021-2' public/music/index.html
+          grep -q 'smalljia-music-source-compat.js?v=20261021-3' public/music/index.html
           grep -q 'smalljia-music-source-selector.js?v=20261021-2' public/music/index.html
           grep -q 'smalljia-music-source-retry.js?v=20261021-2' public/music/index.html
