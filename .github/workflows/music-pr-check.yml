@@ -35,7 +35,7 @@ jobs:
         shell: bash
         run: |
           node <<'NODE'
-          const { createHash } = require('node:crypto');
+          const { createHash } = await import('node:crypto');
           const sources = ['netease', 'kuwo'];
           const report = ['### External search endpoint diagnostics', '| Source | Legacy GET | Signed POST |', '|---|---|---|'];
           const query = '人间蜉蝣';
@@ -61,7 +61,7 @@ jobs:
             const post = await probe('https://music.gdstudio.xyz/api.php', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }, body: params.toString() });
             report.push('| ' + source + ' | ' + get + ' | ' + post + ' |');
           }
-          require('node:fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, report.join('\n') + '\n');
+          (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, report.join('\n') + '\n');
           console.log(report.join('\n'));
           NODE
       - name: Generate Hexo site
