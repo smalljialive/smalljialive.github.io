@@ -1,13 +1,14 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-1";
+  const VERSION = "20261021-2";
   if (window.__smallJiaMusicSourceSelectorVersion === VERSION) return;
   window.__smallJiaMusicSourceSelectorVersion = VERSION;
 
   const STORAGE_KEY = "smalljia_music_source_preference_v1";
   const DIRECT_API = "https://music-api.gdstudio.xyz/api.php";
   const PROXY_API = "https://smalljia-music-proxy-small-jias-projects.vercel.app/api/music";
+  const SUPABASE_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy";
   const SOURCE_OPTIONS = [
     { value: "auto", label: "自动选源" },
     { value: "netease", label: "网易云" },
@@ -15,7 +16,7 @@
     { value: "tencent", label: "QQ音乐" },
     { value: "kugou", label: "酷狗" },
   ];
-  const AUTO_ORDER = ["kuwo", "tencent", "netease", "kugou"];
+  const AUTO_ORDER = ["tencent", "kuwo", "netease"];
   const SOURCE_LABELS = Object.fromEntries(SOURCE_OPTIONS.map(item => [item.value, item.label]));
   const FETCH_TIMEOUT = 9000;
 
@@ -69,6 +70,7 @@
   };
 
   const requestApi = async params => {
+    if (params?.source === "tencent") return requestAt(SUPABASE_API, params);
     try { return await requestAt(DIRECT_API, params); }
     catch (_) { return requestAt(PROXY_API, params); }
   };
@@ -168,7 +170,7 @@
     const pref = getPreference();
     if (pref !== "auto") return [pref];
     const current = String(track?.server || track?.source || "").toLowerCase();
-    return [...new Set([current, ...AUTO_ORDER].filter(Boolean))];
+    return [...new Set([...AUTO_ORDER, current].filter(Boolean))];
   };
 
   const findPlayableMatch = async target => {
@@ -178,9 +180,10 @@
       try {
         const list = await searchOneSource(source, query, 12);
         list.sort((a, b) => score(b, target) - score(a, target));
-        const best = list[0];
-        if (!best || score(best, target) < 70) continue;
-        if (await hasPlayableUrl(best)) return best;
+        for (const candidate of list.slice(0, 5)) {
+          if (score(candidate, target) < 70) break;
+          if (await hasPlayableUrl(candidate)) return candidate;
+        }
       } catch (error) {
         console.warn(`SmallJia Music: source ${source} match failed`, error);
       }

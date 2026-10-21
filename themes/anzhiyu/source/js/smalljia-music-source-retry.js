@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-1";
+  const VERSION = "20261021-2";
   if (window.__smallJiaMusicSourceRetryVersion === VERSION) return;
   window.__smallJiaMusicSourceRetryVersion = VERSION;
 
@@ -36,6 +36,7 @@
     app.playTrack = async function (track) {
       if (!track) return;
       const pref = sourceApi.get();
+      if (track.id && String(track.server || track.source || "") === "tencent" && (pref === "auto" || pref === "tencent")) return originalPlayTrack(track);
       this.showToast?.(`正在${pref === "auto" ? "自动检查多个音源" : `检查${sourceApi.labels?.[pref] || pref}`}：${track.name}`);
       try {
         const match = await getPlayableMatch(track, sourceApi);
@@ -58,6 +59,7 @@
       const normalizedIndex = ((index % this.queue.length) + this.queue.length) % this.queue.length;
       const track = this.queue[normalizedIndex];
       const pref = sourceApi.get();
+      if (track?.id && String(track.server || track.source || "") === "tencent" && (pref === "auto" || pref === "tencent")) return originalSelectIndex(index, autoplay, restorePosition);
       this.showToast?.(`正在${pref === "auto" ? "自动检查多个音源" : `检查${sourceApi.labels?.[pref] || pref}`}：${track?.name || "歌曲"}`);
       try {
         const match = await getPlayableMatch(track, sourceApi);
