@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-6";
+  const VERSION = "20261021-qq-search-7";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -317,6 +317,7 @@
     const originalPlayTrack = app.playTrack.bind(app);
     const originalSetSourceState = app.setSourceState.bind(app);
     let selectToken = 0;
+    let playToken = 0;
 
     app.setSourceState = function (state, routeLabel) {
       originalSetSourceState(state, routeLabel);
@@ -335,13 +336,17 @@
       try {
         const list = await search(query);
         if (seq !== this.searchSeq || this.destroyed) return;
-        this.setSearchStatus(list.length ? `找到 ${list.length} 个结果，正在加载真实歌曲封面…` : `QQ 音乐没有找到“${query}”`);
-        if (list.length) await hydrateSearchCovers(list);
-        if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
         this.setSourceState("ready", "QQ 音乐");
         this.setSearchStatus(list.length ? `找到 ${list.length} 个 QQ 音乐结果，点击即可播放` : `QQ 音乐没有找到“${query}”`);
+        // Artwork must not delay displaying or playing the search results.
+        if (list.length) {
+          hydrateSearchCovers(list).then(() => {
+            if (seq !== this.searchSeq || this.destroyed) return;
+            this.renderTrackList(this.dom.searchResults, list);
+          }).catch(error => console.warn("SmallJia Music: cover hydration failed", error));
+        }
       } catch (error) {
         console.warn("SmallJia Music: GD-Studio search failed", error);
         if (seq !== this.searchSeq || this.destroyed) return;
@@ -359,8 +364,10 @@
         this.switchView("home");
         return originalPlayTrack(track);
       }
+      const token = ++playToken;
       this.showToast(`正在准备：${track.name}`);
       const resolved = await resolveTrack(track);
+      if (token !== playToken || this.destroyed) return;
       if (!resolved.url) {
         this.showToast("暂时无法获取播放地址，请尝试其他版本或稍后重试");
         return;
@@ -368,8 +375,10 @@
       const index = this.queue.findIndex(item => item.key === resolved.key);
       if (index >= 0) Object.assign(this.queue[index], resolved);
       this.switchView("home");
-      const result = await originalPlayTrack(resolved);
+      // Start optional metadata without waiting for the base player promise.
+      const playResult = originalPlayTrack(resolved);
       hydratePlayingMetadata(this, resolved);
+      const result = await playResult;
       return result;
     };
 
