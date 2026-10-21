@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-3";
+  const VERSION = "20261021-qq-search-8";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -29,9 +29,9 @@
     return url.toString();
   };
 
-  const requestAt = async (base, params) => {
+  const requestAt = async (base, params, timeoutMs = FETCH_TIMEOUT) => {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const response = await fetch(buildUrl(base, params), {
         signal: controller.signal,
@@ -52,7 +52,7 @@
     if (source === "tencent") {
       // Send QQ searches, streaming URLs, lyrics and covers directly to the
       // working Supabase endpoint instead of relying on window.fetch rewrites.
-      const payload = await requestAt(QQ_SEARCH_API, params);
+      const payload = await requestAt(QQ_SEARCH_API, params, params?.types === "url" ? 5500 : FETCH_TIMEOUT);
       if (payload?.error) throw new Error(`QQ Music API: ${payload.error}`);
       return { payload, route: "supabase-tencent" };
     }
@@ -204,22 +204,40 @@
     )).slice(0, 30);
   };
 
+  const AUDIO_URL_CACHE_MS = 90 * 1000;
+  const audioUrlCache = new Map();
+  const audioUrlInflight = new Map();
   const resolveAudio = async track => {
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.urlId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return { url: "", candidates: [] };
+    const key = `${source}:${id}`;
+    const cached = audioUrlCache.get(key);
+    if (cached && cached.expires > Date.now()) return { ...cached.value, candidates: cached.value.candidates.slice() };
+    if (audioUrlInflight.has(key)) return audioUrlInflight.get(key);
 
-    for (const br of [999, 740, 320, 320000, 192, 128]) {
-      try {
-        const { payload } = await requestGD({ types: "url", source, id, br });
-        const url = extractUrl(payload);
-        const candidates = buildAudioCandidates(url, source);
-        if (candidates.length) return { url: candidates[0], candidates };
-      } catch (error) {
-        console.warn(`SmallJia Music: GD audio ${source}/${br} failed`, error);
+    const job = (async () => {
+      // For QQ, 999 is a working quality selector. Avoid repeatedly trying
+      // six variants on every click when this source is unavailable.
+      const rates = source === "tencent" ? [999, 320] : [999, 740, 320, 192, 128];
+      for (const br of rates) {
+        try {
+          const { payload } = await requestGD({ types: "url", source, id, br });
+          const candidates = buildAudioCandidates(extractUrl(payload), source);
+          if (candidates.length) {
+            const value = { url: candidates[0], candidates };
+            audioUrlCache.set(key, { expires: Date.now() + AUDIO_URL_CACHE_MS, value });
+            return { ...value, candidates: candidates.slice() };
+          }
+        } catch (error) {
+          console.warn(`SmallJia Music: audio ${source}/${br} failed`, error);
+        }
       }
-    }
-    return { url: "", candidates: [] };
+      return { url: "", candidates: [] };
+    })();
+    audioUrlInflight.set(key, job);
+    try { return await job; }
+    finally { audioUrlInflight.delete(key); }
   };
 
   const resolveLyric = async track => {
@@ -265,15 +283,30 @@
     return tracks;
   };
 
+  // Only the audio URL is on the critical path to first sound.
+  // Lyrics and artwork are loaded after playback has been initiated.
   const resolveTrack = async track => {
-    const [audio, lrc, cover] = await Promise.all([resolveAudio(track), resolveLyric(track), resolveCover(track)]);
+    const audio = await resolveAudio(track);
     return {
       ...track,
       url: audio.url,
       __audioCandidates: audio.candidates,
-      lrc: lrc || track.lrc || "",
-      cover: cover || track.cover || FALLBACK_COVER,
+      lrc: track.lrc || "",
+      cover: track.cover || FALLBACK_COVER,
     };
+  };
+
+  const hydratePlayingMetadata = (app, resolved) => {
+    const key = resolved.key;
+    Promise.allSettled([resolveLyric(resolved), resolveCover(resolved)]).then(results => {
+      if (app.destroyed || app.currentTrack?.key !== key) return;
+      const lyric = results[0].status === "fulfilled" ? results[0].value : "";
+      const cover = results[1].status === "fulfilled" ? results[1].value : "";
+      if (lyric) app.currentTrack.lrc = lyric;
+      if (cover) app.currentTrack.cover = cover;
+      if (lyric) app.loadLyrics(app.currentTrack);
+      if (cover) app.updateCurrentUi();
+    });
   };
 
   const patch = app => {
@@ -284,6 +317,7 @@
     const originalPlayTrack = app.playTrack.bind(app);
     const originalSetSourceState = app.setSourceState.bind(app);
     let selectToken = 0;
+    let playToken = 0;
 
     app.setSourceState = function (state, routeLabel) {
       originalSetSourceState(state, routeLabel);
@@ -302,13 +336,17 @@
       try {
         const list = await search(query);
         if (seq !== this.searchSeq || this.destroyed) return;
-        this.setSearchStatus(list.length ? `找到 ${list.length} 个结果，正在加载真实歌曲封面…` : `QQ 音乐没有找到“${query}”`);
-        if (list.length) await hydrateSearchCovers(list);
-        if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
         this.setSourceState("ready", "QQ 音乐");
         this.setSearchStatus(list.length ? `找到 ${list.length} 个 QQ 音乐结果，点击即可播放` : `QQ 音乐没有找到“${query}”`);
+        // Artwork must not delay displaying or playing the search results.
+        if (list.length) {
+          hydrateSearchCovers(list).then(() => {
+            if (seq !== this.searchSeq || this.destroyed) return;
+            this.renderTrackList(this.dom.searchResults, list);
+          }).catch(error => console.warn("SmallJia Music: cover hydration failed", error));
+        }
       } catch (error) {
         console.warn("SmallJia Music: GD-Studio search failed", error);
         if (seq !== this.searchSeq || this.destroyed) return;
@@ -326,21 +364,29 @@
         this.switchView("home");
         return originalPlayTrack(track);
       }
+      const token = ++playToken;
+      ++selectToken;
       this.showToast(`正在准备：${track.name}`);
       const resolved = await resolveTrack(track);
+      if (token !== playToken || this.destroyed) return;
       if (!resolved.url) {
-        this.showToast("GD-Studio 没有返回可播放音源");
+        this.showToast("暂时无法获取播放地址，请尝试其他版本或稍后重试");
         return;
       }
       const index = this.queue.findIndex(item => item.key === resolved.key);
       if (index >= 0) Object.assign(this.queue[index], resolved);
       this.switchView("home");
-      return originalPlayTrack(resolved);
+      // Start optional metadata without waiting for the base player promise.
+      const playResult = originalPlayTrack(resolved);
+      hydratePlayingMetadata(this, resolved);
+      const result = await playResult;
+      return result;
     };
 
     app.selectIndex = async function (index, autoplay = true, restorePosition = false) {
       if (!this.queue?.length) return;
       const token = ++selectToken;
+      ++playToken;
       const normalizedIndex = ((index % this.queue.length) + this.queue.length) % this.queue.length;
       const baseTrack = this.queue[normalizedIndex];
       const source = String(baseTrack?.server || baseTrack?.source || "netease").toLowerCase();
@@ -361,13 +407,15 @@
       Object.assign(this.queue[normalizedIndex], resolved);
       this.currentTrack = this.queue[normalizedIndex];
       this.updateCurrentUi();
-      this.loadLyrics(this.currentTrack);
+      // Lyrics are fetched after audio starts; do not block or parse stale lyrics.
       this.audioCandidates = resolved.__audioCandidates?.length ? resolved.__audioCandidates.slice() : [resolved.url];
+      this.playbackRequested = Boolean(autoplay);
       this.audioCandidateIndex = 0;
       this.audio.src = this.audioCandidates[0];
       this.audio.load();
       if (autoplay) this.audio.play().catch(() => this.showToast("当前 GD-Studio 音源播放失败，正在尝试备用线路"));
       this.saveState(true);
+      hydratePlayingMetadata(this, resolved);
     };
 
     const chipText = app.dom?.sourceChip?.querySelector("span:last-child");
