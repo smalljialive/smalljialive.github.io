@@ -383,6 +383,38 @@ jobs:
           console.log(rows.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
           NODE
+      - name: Install Meting core for isolated probe
+        run: npm install --no-save --ignore-scripts --no-audit --no-fund @meting/core@1.6.2
+      - name: Smoke test Meting core on temporary Node runtime
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const rows=['### Meting core live probe','| Source | Step | Result |','|---|---|---|'];
+          try {
+            const {default:Meting}=await import('@meting/core');
+            for(const source of ['netease','kuwo']) {
+              const client=new Meting(source);client.format(true);
+              try {
+                const raw=await Promise.race([client.search('晴天',{limit:3,page:1}),new Promise((_,reject)=>setTimeout(()=>reject(Error('timeout')),7500))]);
+                let data;try{data=JSON.parse(raw)}catch{}
+                const items=Array.isArray(data)?data:[];
+                rows.push('| '+source+' | search | '+items.length+' results |');
+                if(items.length) {
+                  const song=items[0];
+                  try {
+                    const result=await Promise.race([client.url(song.url_id||song.id,128),new Promise((_,reject)=>setTimeout(()=>reject(Error('timeout')),7500))]);
+                    let audio;try{audio=JSON.parse(result)}catch{}
+                    const url=Array.isArray(audio)?audio[0]?.url:audio?.url;
+                    rows.push('| '+source+' | audio | '+(typeof url==='string'&&/^https:\/\//.test(url)?'HTTPS URL present':'no verified HTTPS URL')+' |');
+                  }catch(e){rows.push('| '+source+' | audio | '+e.message.slice(0,50).replaceAll('|','/')+' |');}
+                }
+              } catch(e){rows.push('| '+source+' | search | '+e.message.slice(0,50).replaceAll('|','/')+' |');}
+            }
+          }catch(e){rows.push('| npm package | load | '+e.message.slice(0,60).replaceAll('|','/')+' |');}
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
