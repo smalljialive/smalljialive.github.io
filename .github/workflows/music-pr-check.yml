@@ -7,6 +7,8 @@ on:
       - "themes/anzhiyu/source/js/smalljia-music-gdstudio.js"
       - "themes/anzhiyu/layout/includes/page/music.pug"
       - ".github/workflows/music-pr-check.yml"
+      - "themes/anzhiyu/source/js/smalljia-music-source-selector.js"
+      - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
   workflow_dispatch:
 
 permissions:
@@ -26,6 +28,8 @@ jobs:
       - name: Validate JavaScript
         run: |
           node --check themes/anzhiyu/source/js/smalljia-music-gdstudio.js
+          node --check themes/anzhiyu/source/js/smalljia-music-source-selector.js
+          node --check themes/anzhiyu/source/js/smalljia-music-source-retry.js
           grep -q 'music-proxy' themes/anzhiyu/source/js/smalljia-music-gdstudio.js
       - name: Generate Hexo site
         run: npx hexo generate
@@ -36,3 +40,7 @@ jobs:
           grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-3' public/music/index.html
           grep -q 'source: "tencent"' public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-gdstudio.js
+          node --check public/js/smalljia-music-source-selector.js
+          node --check public/js/smalljia-music-source-retry.js
+          grep -q 'smalljia-music-source-selector.js?v=20261021-2' public/music/index.html
+          grep -q 'smalljia-music-source-retry.js?v=20261021-2' public/music/index.html
