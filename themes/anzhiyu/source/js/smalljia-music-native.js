@@ -367,6 +367,7 @@
       this.restorePositionPending = restorePosition;
       this.audioCandidates = this.audioUrls(track);
       this.audioCandidateIndex = 0;
+      this.playbackRequested = Boolean(autoplay);
       this.updateCurrentUi();
       this.loadLyrics(track);
 
@@ -406,8 +407,13 @@
         this.selectIndex(this.currentIndex >= 0 ? this.currentIndex : 0, true, false);
         return;
       }
-      if (this.audio.paused) this.audio.play().catch(() => this.showToast("播放失败，请换一首试试"));
-      else this.audio.pause();
+      if (this.audio.paused) {
+        this.playbackRequested = true;
+        this.audio.play().catch(() => this.showToast("播放失败，请换一首试试"));
+      } else {
+        this.playbackRequested = false;
+        this.audio.pause();
+      }
     }
 
     previous() {
@@ -453,7 +459,7 @@
         this.audioCandidateIndex = nextCandidate;
         // The failed first attempt can leave audio.paused=true and time=0
         // even though the user explicitly requested playback.
-        const shouldPlay = this.audio.autoplay || !this.audio.paused || this.audio.currentTime > 0;
+        const shouldPlay = Boolean(this.playbackRequested) || !this.audio.paused || this.audio.currentTime > 0;
         this.audio.src = this.audioCandidates[nextCandidate];
         this.audio.load();
         if (shouldPlay) this.audio.play().catch(() => {});
