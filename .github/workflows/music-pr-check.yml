@@ -197,6 +197,29 @@ jobs:
           assert.throws(()=>context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'http://example.org'}));
           console.log('PASS: NetEase adapter search, standard URL, paid/empty filtering, HTTPS configuration');
           NODE
+      - name: Inspect upstream NetEase API runtime without deployment
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const host = 'https://raw.githubusercontent.com/NeteaseCloudMusicApiEnhanced/api-enhanced/main/';
+          const modules = ['package.json', 'module/cloudsearch.js', 'module/song_url_v1.js'];
+          const results = [];
+          for (const file of modules) {
+            const resp = await fetch(host + file, {signal:AbortSignal.timeout(10000)});
+            if (!resp.ok) throw new Error(file+' HTTP '+resp.status);
+            const body = await resp.text();
+            results.push(file + ' fetched (' + body.length + ' chars)');
+            if (file === 'package.json') {
+              const pkg = JSON.parse(body);
+              if (!pkg.scripts?.start || !pkg.dependencies?.express) throw new Error('Expected Node server runtime not found');
+            }
+            if (file === 'module/cloudsearch.js' && !body.includes('/api/cloudsearch/pc')) throw new Error('Search route changed');
+            if (file === 'module/song_url_v1.js' && !body.includes('/api/song/enhance/player/url/v1')) throw new Error('Audio route changed');
+          }
+          console.log(results.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### NetEase upstream contract check\n'+results.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
