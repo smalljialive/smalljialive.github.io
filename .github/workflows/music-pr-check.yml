@@ -7,6 +7,8 @@ on:
       - "themes/anzhiyu/source/js/smalljia-music-gdstudio.js"
       - "themes/anzhiyu/layout/includes/page/music.pug"
       - ".github/workflows/music-pr-check.yml"
+      - "workers/meting-experiment/**"
+      - "workers/netease-test/**"
       - "themes/anzhiyu/source/js/smalljia-music-source-selector.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-compat.js"
