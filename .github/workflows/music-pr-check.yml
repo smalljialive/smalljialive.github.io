@@ -106,7 +106,7 @@ jobs:
         run: |
           test -s public/music/index.html
           test -s public/js/smalljia-music-gdstudio.js
-          grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-5' public/music/index.html
+          grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-6' public/music/index.html
           grep -q 'source: "tencent"' public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-source-selector.js
