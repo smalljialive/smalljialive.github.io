@@ -4,6 +4,7 @@ import Meting from '@meting/core';
 const cors={'access-control-allow-origin':'https://smalljialive.github.io','cache-control':'no-store','x-content-type-options':'nosniff'};
 const output=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...cors,'content-type':'application/json; charset=utf-8'}});
 const deadline=(promise,ms)=>Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(Error('UPSTREAM_TIMEOUT')),ms))]);
+const safeError=(error)=>{const msg=String(error?.message||'');if(msg==='UPSTREAM_TIMEOUT')return 'TIMEOUT';if(/fetch failed|network|connect/i.test(msg))return 'NETWORK';if(error instanceof SyntaxError)return 'INVALID_JSON';return 'OTHER';};
 export default {
   async fetch(req){
     const url=new URL(req.url);
@@ -20,7 +21,8 @@ export default {
       if(url.pathname==='/search'){
         const raw=await deadline(client.search(query,{page:1,limit:10}),6000);
         const results=typeof raw==='string'?JSON.parse(raw):raw;
-        if(!Array.isArray(results))return output({error:'INVALID_UPSTREAM_RESPONSE'},502);
+        if(!Array.isArray(results))return output({error:'INVALID_UPSTREAM_RESPONSE',source,shape:typeof results},502);
+        if(!results.length)return output({songs:[],diagnostic:{source,category:'EMPTY_UPSTREAM_LIST'}});
         return output({songs:results.slice(0,10).map(s=>({id:String(s.id||''),name:String(s.name||''),artist:Array.isArray(s.artist)?s.artist:[],url_id:String(s.url_id||s.id||''),pic_id:String(s.pic_id||''),lyric_id:String(s.lyric_id||'')})).filter(s=>s.id)});
       }
       const raw=await deadline(client.url(id,128),6000);
@@ -31,6 +33,6 @@ export default {
       try{audio=new URL(candidate);if(!['https:','http:'].includes(audio.protocol)||audio.username||audio.password)throw Error();}catch{return output({url:null,reason:'NO_VALID_URL'});}
       // A URL alone does not confirm playable audio, licensing, or browser CORS.
       return output({url:audio.href,verifiedPlayback:false});
-    }catch{return output({error:'UPSTREAM_ERROR_OR_TIMEOUT'},502);}
+    }catch(error){return output({error:'UPSTREAM_ERROR_OR_TIMEOUT',diagnostic:{source,category:safeError(error)}},502);}
   }
 };
