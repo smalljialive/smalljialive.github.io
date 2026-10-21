@@ -194,6 +194,10 @@ jobs:
           assert.equal(await restricted.url(123),'');
           const noAudio=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:null,fee:0}]})})});
           assert.equal(await noAudio.url(123),'');
+          const malicious=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({code:200,data:[{url:'javascript:alert(1)',fee:0}]})})});
+          assert.equal(await malicious.url(123),'');
+          const denied=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({code:403,data:[{url:'https://example.org/audio.mp3',fee:0}]})})});
+          assert.equal(await denied.url(123),'');
           assert.throws(()=>context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'http://example.org'}));
           console.log('PASS: NetEase adapter search, standard URL, paid/empty filtering, HTTPS configuration');
           NODE
