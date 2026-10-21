@@ -409,6 +409,7 @@
       this.updateCurrentUi();
       // Lyrics are fetched after audio starts; do not block or parse stale lyrics.
       this.audioCandidates = resolved.__audioCandidates?.length ? resolved.__audioCandidates.slice() : [resolved.url];
+      this.playbackRequested = Boolean(autoplay);
       this.audioCandidateIndex = 0;
       this.audio.src = this.audioCandidates[0];
       this.audio.load();
