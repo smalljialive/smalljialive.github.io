@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-2";
+  const VERSION = "20261021-qq-search-3";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -49,6 +49,13 @@
 
   const requestGD = async params => {
     const source = String(params?.source || "netease").toLowerCase();
+    if (source === "tencent") {
+      // Send QQ searches, streaming URLs, lyrics and covers directly to the
+      // working Supabase endpoint instead of relying on window.fetch rewrites.
+      const payload = await requestAt(QQ_SEARCH_API, params);
+      if (payload?.error) throw new Error(`QQ Music API: ${payload.error}`);
+      return { payload, route: "supabase-tencent" };
+    }
     const proxyFirst = source === "tencent" || (source === "kuwo" && params?.types === "url");
     const routes = proxyFirst
       ? [[PROXY_API, "proxy"], [DIRECT_API, "direct"]]
