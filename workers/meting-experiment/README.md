@@ -33,3 +33,9 @@ npx wrangler deploy
 Option B, GitHub Actions/manual deployment is possible after the account ID and a least-privilege Cloudflare API token are configured as GitHub Actions **secrets**. Never put tokens, cookies, or account identifiers into code or chat messages.
 
 Keep the original `smalljia-netease-test` Worker and existing Supabase music proxy unchanged. Run `/health`, search and sample URL probes on the isolated test domain before changing any website code.
+
+## Staged GitHub Actions deployment
+
+A restricted manual workflow is staged in `.github/workflows/deploy-meting-worker.yml`. GitHub only exposes a new manual `workflow_dispatch` workflow in the Actions tab once that workflow exists on the repository's default branch (`hexo`). **It is NOT currently runnable from this open draft PR.** Do not merge PR #46 just to enable a deploy button because it contains other experimental work. A separately reviewed workflow-only change to `hexo` is one possible future option, requiring owner approval.
+
+When available, the workflow requires explicit confirmation `DEPLOY_TEST_WORKER` and GitHub Actions repository secrets `CLOUDFLARE_API_TOKEN` (scoped Workers Scripts Edit) and `CLOUDFLARE_ACCOUNT_ID`. Never share a token in chat, or commit it to the repository. GitHub branch scope and permissions should be reviewed before enabling deployments. Until then, Wrangler locally is the only described deployment path.
