@@ -494,6 +494,8 @@ jobs:
           assert.match(code,/TIMEOUT/);
           assert.match(code,/NETWORK/);
           assert.match(code,/INVALID_JSON/);
+          assert.match(code,/TYPE_ERROR/);
+          assert.match(code,/REFERENCE_ERROR/);
           assert.match(code,/diagnostic:\{source,category:safeError\(error\)\}/);
           assert.doesNotMatch(code,/console\.log\(error/);
           console.log('PASS: diagnostic categories present and avoid raw upstream errors');
