@@ -4,7 +4,7 @@ import Meting from '@meting/core';
 const cors={'access-control-allow-origin':'https://smalljialive.github.io','cache-control':'no-store','x-content-type-options':'nosniff'};
 const output=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{...cors,'content-type':'application/json; charset=utf-8'}});
 const deadline=(promise,ms)=>Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(Error('UPSTREAM_TIMEOUT')),ms))]);
-const safeError=(error)=>{const msg=String(error?.message||'');if(msg==='UPSTREAM_TIMEOUT')return 'TIMEOUT';if(/fetch failed|network|connect/i.test(msg))return 'NETWORK';if(error instanceof SyntaxError)return 'INVALID_JSON';return 'OTHER';};
+const safeError=(error)=>{const msg=String(error?.message||'');if(msg==='UPSTREAM_TIMEOUT')return 'TIMEOUT';if(/fetch failed|network|connect/i.test(msg))return 'NETWORK';if(error instanceof SyntaxError)return 'INVALID_JSON';if(error instanceof TypeError)return 'TYPE_ERROR';if(error instanceof ReferenceError)return 'REFERENCE_ERROR';if(/crypto|digest|subtle/i.test(msg))return 'CRYPTO';if(/unsupported|not implemented|not supported/i.test(msg))return 'UNSUPPORTED_RUNTIME';return 'OTHER';};
 export default {
   async fetch(req){
     const url=new URL(req.url);
@@ -33,6 +33,6 @@ export default {
       try{audio=new URL(candidate);if(!['https:','http:'].includes(audio.protocol)||audio.username||audio.password)throw Error();}catch{return output({url:null,reason:'NO_VALID_URL'});}
       // A URL alone does not confirm playable audio, licensing, or browser CORS.
       return output({url:audio.href,verifiedPlayback:false});
-    }catch(error){return output({error:'UPSTREAM_ERROR_OR_TIMEOUT',diagnostic:{source,category:safeError(error)}},502);}
+    }catch(error){return output({error:'UPSTREAM_ERROR_OR_TIMEOUT',diagnostic:{source,category:safeError(error),errorName:['TypeError','ReferenceError','SyntaxError','RangeError'].includes(error?.name)?error.name:'OTHER',stage:url.pathname==='/search'?'search':'url'}},502);}
   }
 };
