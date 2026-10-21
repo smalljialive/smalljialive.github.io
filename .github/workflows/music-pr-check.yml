@@ -484,6 +484,20 @@ jobs:
           NODE
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8788/search?source=unknown)" = 400
           echo "PASS: rejects unsupported provider at runtime"
+      - name: Verify Meting diagnostics fail-closed using mocked provider
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          const code=fs.readFileSync('workers/meting-experiment/src/index.js','utf8');
+          assert.match(code,/EMPTY_UPSTREAM_LIST/);
+          assert.match(code,/TIMEOUT/);
+          assert.match(code,/NETWORK/);
+          assert.match(code,/INVALID_JSON/);
+          assert.match(code,/diagnostic:\{source,category:safeError\(error\)\}/);
+          assert.doesNotMatch(code,/console\.log\(error/);
+          console.log('PASS: diagnostic categories present and avoid raw upstream errors');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
