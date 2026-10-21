@@ -312,6 +312,21 @@ jobs:
           console.log(lines.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\n')+'\n');
           NODE
+      - name: Check isolated Cloudflare Worker contract
+        run: |
+          node --check workers/netease-test/src/index.js
+          node --input-type=module <<'NODE'
+          const assert=await import('node:assert/strict');
+          const {default:worker}=await import('./workers/netease-test/src/index.js');
+          const call=(path,env={})=>worker.fetch(new Request('https://worker.example'+path),env);
+          let r=await call('/health');let data=await r.json();
+          assert.equal(data.status,'ok');assert.equal(data.providerConfigured,false);
+          r=await call('/search?q=Test');assert.equal(r.status,503);
+          r=await call('/url?id=1');assert.equal(r.status,503);
+          r=await call('/missing');assert.equal(r.status,404);
+          r=await call('/search?q=');assert.equal(r.status,503);
+          console.log('PASS: Worker health and no-provider fail-closed smoke checks');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
