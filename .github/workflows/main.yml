@@ -127,7 +127,7 @@ jobs:
             echo "Link page must not load any nav music runtime"
             exit 1
           fi
-          grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
+          grep -q "smalljia-music-native.js?v=20261021-1" public/music/index.html
           grep -q "smalljia-music-gdstudio.js?v=20261021-qq-search-8" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-library.js?v=20260910-1" public/music/index.html
