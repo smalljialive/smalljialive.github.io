@@ -36,7 +36,14 @@
       async url(id) {
         const payload = await request(base, "song/url/v1", { id, level: "standard" }, fetcher);
         const audio = payload?.data?.[0];
-        if (!audio || audio.fee > 0 || audio.freeTrialInfo || typeof audio.url !== "string" || !/^https:\/\//.test(audio.url)) return "";
+        // Reject preview-only, unavailable and restricted responses. An API HTTP
+        // success or non-null URL alone does not establish playable rights.
+        if (payload?.code !== 200 && payload?.code !== undefined) return "";
+        if (!audio || Number(audio.fee || 0) > 0 || audio.freeTrialInfo || typeof audio.url !== "string") return "";
+        try {
+          const parsed = new URL(audio.url);
+          if (parsed.protocol !== "https:" || !parsed.hostname || parsed.username || parsed.password) return "";
+        } catch (_) { return ""; }
         return audio.url;
       }
     };
