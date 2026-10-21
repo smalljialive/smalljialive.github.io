@@ -128,7 +128,7 @@ jobs:
             exit 1
           fi
           grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-gdstudio.js?v=20261021-qq-search-3" public/music/index.html
+          grep -q "smalljia-music-gdstudio.js?v=20261021-qq-search-4" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-library.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-daily-import.js?v=20260910-1" public/music/index.html
