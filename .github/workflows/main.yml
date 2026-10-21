@@ -134,8 +134,8 @@ jobs:
           grep -q "smalljia-music-daily-import.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-fullscreen.js?v=20260911-1" public/music/index.html
           grep -q "smalljia-music-scrollfix.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-source-selector.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-source-retry.js?v=20260910-1" public/music/index.html
+          grep -q "smalljia-music-source-selector.js?v=20261021-2" public/music/index.html
+          grep -q "smalljia-music-source-retry.js?v=20261021-2" public/music/index.html
           grep -q "smalljia-music-source-compat.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-interactions.js?v=20260910-2" public/music/index.html
           grep -q 'id="sjm-volume-value"' public/music/index.html
