@@ -1,0 +1,38 @@
+name: Validate Music Fix (No Deploy)
+
+on:
+  pull_request:
+    branches: [hexo]
+    paths:
+      - "themes/anzhiyu/source/js/smalljia-music-gdstudio.js"
+      - "themes/anzhiyu/layout/includes/page/music.pug"
+      - ".github/workflows/music-pr-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Validate JavaScript
+        run: |
+          node --check themes/anzhiyu/source/js/smalljia-music-gdstudio.js
+          grep -q 'music-proxy' themes/anzhiyu/source/js/smalljia-music-gdstudio.js
+      - name: Generate Hexo site
+        run: npx hexo generate
+      - name: Validate generated music page
+        run: |
+          test -s public/music/index.html
+          test -s public/js/smalljia-music-gdstudio.js
+          grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-3' public/music/index.html
+          grep -q 'source: "tencent"' public/js/smalljia-music-gdstudio.js
+          node --check public/js/smalljia-music-gdstudio.js
