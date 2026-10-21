@@ -246,7 +246,7 @@ jobs:
           const fs=await import('node:fs');
           const base='http://127.0.0.1:3998';
           const log=['### Isolated NetEase Enhanced runtime','| Check | Result |','|---|---|'];
-          for(const [label,path] of [['search','/cloudsearch?keywords=%E6%99%B4%E5%A4%A9&limit=2'],['audio','/song/url/v1?id=186016&level=standard']]){
+          for(const [label,path] of [['search','/cloudsearch?keywords=%E6%99%B4%E5%A4%A9&limit=2'],['audio-186016','/song/url/v1?id=186016&level=standard'],['audio-186016-legacy','/song/url?id=186016&br=128000'],['audio-185809','/song/url/v1?id=185809&level=standard'],['audio-1330348068','/song/url/v1?id=1330348068&level=standard']]){
             try {
               const response=await fetch(base+path,{signal:AbortSignal.timeout(9000)});
               const data=await response.json();
@@ -254,7 +254,7 @@ jobs:
               const aud=data?.data?.[0];
               const result=label==='search'
                 ? 'HTTP '+response.status+', songs '+(Array.isArray(songs)?songs.length:'none')
-                : 'HTTP '+response.status+', url '+(typeof aud?.url==='string'?'present':'absent')+', fee '+(aud?.fee??'unknown');
+                : 'HTTP '+response.status+', code '+(data?.code??'missing')+', url '+(typeof aud?.url==='string'?'present':'absent')+', fee '+(aud?.fee??'unknown')+', message '+String(data?.message||data?.msg||'').slice(0,80).replaceAll('|','/');
               log.push('| '+label+' | '+result+' |');
             }catch(error){log.push('| '+label+' | '+error.name+' |');}
           }
