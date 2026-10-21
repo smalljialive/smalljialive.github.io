@@ -11,6 +11,7 @@ on:
       - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-compat.js"
       - "themes/anzhiyu/source/js/smalljia-music-native.js"
+      - "themes/anzhiyu/source/js/smalljia-music-netease-enhanced-adapter.js"
   workflow_dispatch:
 
 permissions:
@@ -163,6 +164,38 @@ jobs:
           }
           console.log(rows.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, rows.join('\n')+'\n');
+          NODE
+      - name: Validate isolated NetEase adapter contract
+        run: |
+          node --check themes/anzhiyu/source/js/smalljia-music-netease-enhanced-adapter.js
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const vm = await import('node:vm');
+          const assert = await import('node:assert/strict');
+          const context = { URL, AbortController, setTimeout, clearTimeout };
+          vm.runInNewContext(fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-netease-enhanced-adapter.js', 'utf8'), context);
+          const requested = [];
+          const adapter = context.SmallJiaNeteaseEnhancedAdapter.create({
+            baseUrl: 'https://example.org/',
+            fetcher: async url => {
+              requested.push(url);
+              const parsed = new URL(url);
+              if (parsed.pathname.endsWith('/cloudsearch')) return {ok:true,json:async()=>({result:{songs:[{id:123,name:'Test',ar:[{name:'Artist'}],al:{name:'Album',picUrl:'https://example.org/cover.jpg'}}]}})};
+              return {ok:true,json:async()=>({data:[{url:'https://example.org/test.mp3',fee:0,freeTrialInfo:null}]})};
+            }
+          });
+          const songs=await adapter.search('Test');
+          assert.equal(songs.length,1);
+          assert.equal(songs[0].id,'123');
+          assert.equal(await adapter.url(123),'https://example.org/test.mp3');
+          assert(requested.some(url=>url.includes('/cloudsearch?')));
+          assert(requested.some(url=>url.includes('/song/url/v1?')));
+          const restricted=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:'https://example.org/paid.mp3',fee:1}]})})});
+          assert.equal(await restricted.url(123),'');
+          const noAudio=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:null,fee:0}]})})});
+          assert.equal(await noAudio.url(123),'');
+          assert.throws(()=>context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'http://example.org'}));
+          console.log('PASS: NetEase adapter search, standard URL, paid/empty filtering, HTTPS configuration');
           NODE
       - name: Generate Hexo site
         run: npx hexo generate
