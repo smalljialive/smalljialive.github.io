@@ -327,6 +327,36 @@ jobs:
           r=await call('/search?q=');assert.equal(r.status,503);
           console.log('PASS: Worker health and no-provider fail-closed smoke checks');
           NODE
+      - name: Verify Worker provider responses with isolated mocks
+        run: |
+          node --input-type=module <<'NODE'
+          const assert=await import('node:assert/strict');
+          const {default:worker}=await import('./workers/netease-test/src/index.js');
+          const originalFetch=globalThis.fetch;
+          const upstream=[];
+          globalThis.fetch=async url=>{
+            upstream.push(String(url));
+            const path=new URL(url).pathname;
+            if(path==='/cloudsearch') return Response.json({code:200,result:{songs:[{id:42,name:'Song',ar:[{name:'Artist'}],al:{name:'Album',picUrl:''}}]}});
+            if(path==='/song/url/v1')return Response.json({code:200,data:[{url:'https://cdn.example.org/song.mp3',fee:0,freeTrialInfo:null}]});
+            throw Error('Unexpected upstream path');
+          };
+          try {
+            const env={NETEASE_PROVIDER_URL:'https://api.example.org'};
+            let response=await worker.fetch(new Request('https://worker.example/search?q=Song'),env);
+            assert.equal(response.status,200);
+            const songs=await response.json();assert.equal(songs.songs[0].id,'42');
+            response=await worker.fetch(new Request('https://worker.example/url?id=42'),env);
+            assert.equal(response.status,200);
+            assert.equal((await response.json()).url,'https://cdn.example.org/song.mp3');
+            assert(upstream.every(u=>u.startsWith('https://api.example.org/')));
+            response=await worker.fetch(new Request('https://worker.example/url?id=bad'),env);
+            assert.equal(response.status,400);
+            response=await worker.fetch(new Request('https://worker.example/search?q=x'),{NETEASE_PROVIDER_URL:'http://bad.example.org'});
+            assert.equal(response.status,503);
+            console.log('PASS: Worker search, unrestricted URL, parameter guard, HTTPS provider config');
+          } finally{globalThis.fetch=originalFetch;}
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
