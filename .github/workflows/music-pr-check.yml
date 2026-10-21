@@ -126,6 +126,22 @@ jobs:
           assert.match(audio, /audioUrlCache\.get\(key\)/, 'brief URL reuse enabled');
           console.log('PASS: 9 playback lifecycle invariants');
           NODE
+      - name: Check audio fallback intent behavior
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const assert = await import('node:assert/strict');
+          const source = fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-native.js', 'utf8');
+          const start = source.indexOf('handleAudioError() {');
+          const end = source.indexOf('    updateCurrentUi() {', start);
+          assert.ok(start >= 0 && end > start);
+          const body = source.slice(start, end);
+          assert.match(body, /const shouldPlay = Boolean\(this\.playbackRequested\)/);
+          assert.match(body, /this\.playbackRequested = false;/);
+          assert.match(body, /if \(shouldPlay\) this\.audio\.play\(\)/);
+          assert.doesNotMatch(body, /!this\.audio\.paused \|\| this\.audio\.currentTime/);
+          console.log('PASS: audio fallback preserves explicit pause and playback intent');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
