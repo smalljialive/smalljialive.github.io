@@ -10,6 +10,7 @@ on:
       - "themes/anzhiyu/source/js/smalljia-music-source-selector.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-compat.js"
+      - "themes/anzhiyu/source/js/smalljia-music-native.js"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +29,7 @@ jobs:
         run: npm ci
       - name: Validate JavaScript
         run: |
+          node --check themes/anzhiyu/source/js/smalljia-music-native.js
           node --check themes/anzhiyu/source/js/smalljia-music-gdstudio.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-selector.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-retry.js
@@ -132,6 +134,8 @@ jobs:
           test -s public/js/smalljia-music-gdstudio.js
           grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-8' public/music/index.html
           grep -q 'source: "tencent"' public/js/smalljia-music-gdstudio.js
+          node --check public/js/smalljia-music-native.js
+          grep -q "smalljia-music-native.js?v=20261021-1" public/music/index.html
           node --check public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-source-selector.js
           node --check public/js/smalljia-music-source-retry.js
