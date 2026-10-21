@@ -461,6 +461,29 @@ jobs:
           if(!files.length)throw Error('No Worker build artifacts');
           console.log('PASS experimental Meting Worker build artifacts:',files.join(','));
           NODE
+      - name: Smoke test Meting Worker under local workerd runtime
+        shell: bash
+        run: |
+          set -e
+          (npx --yes wrangler@4 dev workers/meting-experiment/src/index.js --local --port 8788 --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat > /tmp/meting-workerd.log 2>&1) &
+          worker_pid=$!
+          trap 'kill $worker_pid 2>/dev/null || true' EXIT
+          ready=0
+          for i in $(seq 1 35); do
+            if curl -fsS --max-time 2 http://127.0.0.1:8788/health > /tmp/meting-health.json; then ready=1; break; fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then cat /tmp/meting-workerd.log; exit 1; fi
+          node <<'NODE'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const health=JSON.parse(fs.readFileSync('/tmp/meting-health.json','utf8'));
+          assert.equal(health.status,'ok');
+          assert.equal(health.adapter,'meting-core');
+          console.log('PASS: Meting imported and instantiated in local workerd runtime');
+          NODE
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8788/search?source=unknown)" = 400
+          echo "PASS: rejects unsupported provider at runtime"
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
