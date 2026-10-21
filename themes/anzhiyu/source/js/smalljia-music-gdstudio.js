@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260910-6";
+  const VERSION = "20261021-qq-search-1";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -177,31 +177,24 @@
     }).map((track, index) => ({ ...track, index }));
   };
 
+  const QQ_SEARCH_API = "https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy-v5-test";
+
   const search = async keyword => {
-    try {
-      const aggregate = await requestAt(DIRECT_API, {
-        types: "search",
-        source: "netease,kuwo",
-        name: keyword,
-        count: 30,
-        pages: 1,
-      });
-      const list = normalizeSearchPayload(aggregate);
-      if (list.length) return dedupeTracks(list.slice(0, 30).map(normalizeSearchSong));
-    } catch (error) {
-      console.warn("SmallJia Music: GD aggregate search failed", error);
+    const payload = await requestAt(QQ_SEARCH_API, {
+      types: "search",
+      source: "tencent",
+      name: keyword,
+      count: 30,
+      pages: 1,
+    });
+    const list = normalizeSearchPayload(payload);
+    if (!list.length) {
+      if (payload?.error) throw new Error(`QQ search: ${payload.error}`);
+      return [];
     }
-
-    const settled = await Promise.allSettled(
-      SEARCH_SOURCES.map(async source => {
-        const { payload } = await requestGD({ types: "search", source, name: keyword, count: 15, pages: 1 });
-        return normalizeSearchPayload(payload).map((song, index) => normalizeSearchSong({ ...song, source: song.source || source }, index));
-      })
-    );
-
-    const merged = settled.flatMap(item => item.status === "fulfilled" ? item.value : []);
-    if (!merged.length && settled.every(item => item.status === "rejected")) throw new Error("GD-Studio search unavailable");
-    return dedupeTracks(merged).slice(0, 30);
+    return dedupeTracks(list.map((song, index) =>
+      normalizeSearchSong({ ...song, source: "tencent" }, index)
+    )).slice(0, 30);
   };
 
   const resolveAudio = async track => {
@@ -289,7 +282,7 @@
       originalSetSourceState(state, routeLabel);
       if (state !== "ready") return;
       const text = this.dom?.sourceChip?.querySelector("span:last-child");
-      if (text) text.textContent = "GD-Studio 直连 · 代理备用";
+      if (text) text.textContent = "QQ 音乐搜索 · Supabase 备用";
     };
 
     app.search = async function (rawQuery) {
@@ -297,25 +290,25 @@
       if (!query) return this.setSearchStatus("请输入歌曲名或歌手名");
       const seq = ++this.searchSeq;
       this.switchView("search");
-      this.setSearchStatus(`正在通过 GD-Studio 搜索“${query}”…`);
+      this.setSearchStatus(`正在通过 QQ 音乐搜索“${query}”…`);
       this.renderTrackList(this.dom.searchResults, []);
       try {
         const list = await search(query);
         if (seq !== this.searchSeq || this.destroyed) return;
-        this.setSearchStatus(list.length ? `找到 ${list.length} 个结果，正在加载真实歌曲封面…` : `GD-Studio 没有找到“${query}”`);
+        this.setSearchStatus(list.length ? `找到 ${list.length} 个结果，正在加载真实歌曲封面…` : `QQ 音乐没有找到“${query}”`);
         if (list.length) await hydrateSearchCovers(list);
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = list;
         this.renderTrackList(this.dom.searchResults, list);
         this.setSourceState("ready", "GD-Studio");
-        this.setSearchStatus(list.length ? `找到 ${list.length} 个 GD-Studio 结果，点击即可播放` : `GD-Studio 没有找到“${query}”`);
+        this.setSearchStatus(list.length ? `找到 ${list.length} 个 QQ 音乐结果，点击即可播放` : `GD-Studio 没有找到“${query}”`);
       } catch (error) {
         console.warn("SmallJia Music: GD-Studio search failed", error);
         if (seq !== this.searchSeq || this.destroyed) return;
         this.searchResults = [];
         this.renderTrackList(this.dom.searchResults, []);
-        this.setSearchStatus("GD-Studio 当前不可用，请稍后再试");
-        this.showToast("GD-Studio 直连和备用代理均不可用");
+        this.setSearchStatus("QQ 音乐搜索暂时不可用，请稍后再试");
+        this.showToast("QQ 音乐搜索接口暂时不可用");
       }
     };
 
