@@ -404,9 +404,12 @@ jobs:
                   const song=items[0];
                   try {
                     const result=await Promise.race([client.url(song.url_id||song.id,128),new Promise((_,reject)=>setTimeout(()=>reject(Error('timeout')),7500))]);
-                    let audio;try{audio=JSON.parse(result)}catch{}
-                    const url=Array.isArray(audio)?audio[0]?.url:audio?.url;
-                    rows.push('| '+source+' | audio | '+(typeof url==='string'&&/^https:\/\//.test(url)?'HTTPS URL present':'no verified HTTPS URL')+' |');
+                    let audio;try{audio=typeof result==='string'?JSON.parse(result):result}catch{}
+                    const entry=Array.isArray(audio)?audio[0]:audio;
+                    const url=typeof entry==='string'?entry:(entry?.url||entry?.data?.[0]?.url);
+                    const scheme=typeof url==='string'&&/^https?:\/\//.test(url)?new URL(url).protocol:'none';
+                    const shape=Array.isArray(audio)?'array':audio&&typeof audio==='object'?'object:'+Object.keys(audio).slice(0,5).join(','):typeof audio;
+                    rows.push('| '+source+' | audio | '+shape+'; URL '+scheme+' |');
                   }catch(e){rows.push('| '+source+' | audio | '+e.message.slice(0,50).replaceAll('|','/')+' |');}
                 }
               } catch(e){rows.push('| '+source+' | search | '+e.message.slice(0,50).replaceAll('|','/')+' |');}
