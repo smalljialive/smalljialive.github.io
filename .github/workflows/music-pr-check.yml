@@ -452,6 +452,15 @@ jobs:
           NODE
           npx --yes wrangler@4 deploy meting-worker-probe.mjs --name smalljia-meting-probe --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat --dry-run --outdir /tmp/smalljia-meting-bundle
           echo "Meting bundle built, but actual Cloudflare runtime requests remain unverified"
+      - name: Dry-run compile real Meting Worker experiment
+        run: |
+          npx --yes wrangler@4 deploy workers/meting-experiment/src/index.js --name smalljia-meting-experiment --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat --dry-run --outdir /tmp/meting-worker-experiment
+          node --input-type=module <<'NODE'
+          const fs=await import('node:fs');
+          const files=fs.readdirSync('/tmp/meting-worker-experiment');
+          if(!files.length)throw Error('No Worker build artifacts');
+          console.log('PASS experimental Meting Worker build artifacts:',files.join(','));
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
