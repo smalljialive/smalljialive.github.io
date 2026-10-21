@@ -142,6 +142,28 @@ jobs:
           assert.doesNotMatch(body, /!this\.audio\.paused \|\| this\.audio\.currentTime/);
           console.log('PASS: audio fallback preserves explicit pause and playback intent');
           NODE
+      - name: Probe published GD Studio API host alternatives (no production changes)
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const hosts = ['https://music-api.gdstudio.xyz/api.php', 'https://music.gdstudio.org/api.php', 'https://music.gdstudio.xyz/api.php'];
+          const sources = ['netease', 'kuwo'];
+          const rows = ['### Isolated API reachability probe', '| Host | Source | Status | JSON array | Elapsed ms |', '|---|---|---|---|---|'];
+          for (const host of hosts) for (const source of sources) {
+            const q = new URLSearchParams({types:'search', source, name:'晴天', count:'2', pages:'1'});
+            const started=Date.now(); let status='-',shape='-';
+            try {
+              const res = await fetch(host+'?'+q, {signal:AbortSignal.timeout(6500),headers:{Accept:'application/json'}});
+              status=String(res.status);
+              const raw=await res.text();
+              let data; try {data=JSON.parse(raw);}catch{}
+              shape=Array.isArray(data)?'yes':Array.isArray(data?.data)?'data':Array.isArray(data?.results)?'results':'no';
+            } catch(e){status=e.name;}
+            rows.push('| '+new URL(host).hostname+' | '+source+' | '+status+' | '+shape+' | '+(Date.now()-started)+' |');
+          }
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, rows.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
