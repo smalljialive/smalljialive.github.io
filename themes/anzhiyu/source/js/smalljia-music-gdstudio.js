@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-7";
+  const VERSION = "20261021-qq-search-8";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -365,6 +365,7 @@
         return originalPlayTrack(track);
       }
       const token = ++playToken;
+      ++selectToken;
       this.showToast(`正在准备：${track.name}`);
       const resolved = await resolveTrack(track);
       if (token !== playToken || this.destroyed) return;
@@ -385,6 +386,7 @@
     app.selectIndex = async function (index, autoplay = true, restorePosition = false) {
       if (!this.queue?.length) return;
       const token = ++selectToken;
+      ++playToken;
       const normalizedIndex = ((index % this.queue.length) + this.queue.length) % this.queue.length;
       const baseTrack = this.queue[normalizedIndex];
       const source = String(baseTrack?.server || baseTrack?.source || "netease").toLowerCase();
@@ -405,7 +407,7 @@
       Object.assign(this.queue[normalizedIndex], resolved);
       this.currentTrack = this.queue[normalizedIndex];
       this.updateCurrentUi();
-      this.loadLyrics(this.currentTrack);
+      // Lyrics are fetched after audio starts; do not block or parse stale lyrics.
       this.audioCandidates = resolved.__audioCandidates?.length ? resolved.__audioCandidates.slice() : [resolved.url];
       this.audioCandidateIndex = 0;
       this.audio.src = this.audioCandidates[0];
