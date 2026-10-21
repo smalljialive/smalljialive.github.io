@@ -357,6 +357,32 @@ jobs:
             console.log('PASS: Worker search, unrestricted URL, parameter guard, HTTPS provider config');
           } finally{globalThis.fetch=originalFetch;}
           NODE
+      - name: Probe candidate multi-platform demo APIs (no production changes)
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const cases=[
+            ['ourcraft-health','https://music.yuncan.xyz/api?action=health'],
+            ['ourcraft-netease-search','https://music.yuncan.xyz/api?server=netease&type=search&id=%E6%99%B4%E5%A4%A9&limit=2'],
+            ['ourcraft-kuwo-search','https://music.yuncan.xyz/api?server=kuwo&type=search&id=%E6%99%B4%E5%A4%A9&limit=2'],
+            ['ourcraft-netease-url','https://music.yuncan.xyz/api?server=netease&type=url&id=174944&json=1'],
+            ['meting-demo-search','https://api.i-meto.com/meting/demo?server=netease&type=search&id=%E6%99%B4%E5%A4%A9']
+          ];
+          const rows=['### Candidate public demo endpoints (not proof of licensed playback)','| Probe | HTTP | Data shape | ms |','|---|---|---|---|'];
+          for(const [name,url] of cases){
+            const started=Date.now();let status='-',shape='-';
+            try{
+              const res=await fetch(url,{signal:AbortSignal.timeout(6000),redirect:'manual',headers:{accept:'application/json'}});
+              status=String(res.status);
+              const body=(await res.text()).slice(0,50000);
+              let j;try{j=JSON.parse(body)}catch{}
+              shape=Array.isArray(j)?'array '+j.length:j&&typeof j==='object'?'object '+Object.keys(j).slice(0,4).join(','):'text '+body.length;
+            }catch(e){status=e.name;}
+            rows.push('| '+name+' | '+status+' | '+shape+' | '+(Date.now()-started)+' |');
+          }
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
