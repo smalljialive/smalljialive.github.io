@@ -459,13 +459,14 @@
         this.audioCandidateIndex = nextCandidate;
         // The failed first attempt can leave audio.paused=true and time=0
         // even though the user explicitly requested playback.
-        const shouldPlay = Boolean(this.playbackRequested) || !this.audio.paused || this.audio.currentTime > 0;
+        const shouldPlay = Boolean(this.playbackRequested);
         this.audio.src = this.audioCandidates[nextCandidate];
         this.audio.load();
         if (shouldPlay) this.audio.play().catch(() => {});
         this.showToast("主音源不可用，正在尝试备用线路");
         return;
       }
+      this.playbackRequested = false;
       this.updatePlayButton(false);
       this.showToast("当前歌曲暂时无法播放，请尝试下一首");
     }
