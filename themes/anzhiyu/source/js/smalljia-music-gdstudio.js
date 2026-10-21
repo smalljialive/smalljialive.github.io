@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-4";
+  const VERSION = "20261021-qq-search-5";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -204,22 +204,40 @@
     )).slice(0, 30);
   };
 
+  const AUDIO_URL_CACHE_MS = 90 * 1000;
+  const audioUrlCache = new Map();
+  const audioUrlInflight = new Map();
   const resolveAudio = async track => {
     const source = String(track?.__gdStudio?.source || track?.server || track?.source || "netease").toLowerCase();
     const id = String(track?.__gdStudio?.urlId || track?.id || "");
     if (!id || !GD_SOURCES.has(source)) return { url: "", candidates: [] };
+    const key = `${source}:${id}`;
+    const cached = audioUrlCache.get(key);
+    if (cached && cached.expires > Date.now()) return { ...cached.value, candidates: cached.value.candidates.slice() };
+    if (audioUrlInflight.has(key)) return audioUrlInflight.get(key);
 
-    for (const br of [999, 740, 320, 320000, 192, 128]) {
-      try {
-        const { payload } = await requestGD({ types: "url", source, id, br });
-        const url = extractUrl(payload);
-        const candidates = buildAudioCandidates(url, source);
-        if (candidates.length) return { url: candidates[0], candidates };
-      } catch (error) {
-        console.warn(`SmallJia Music: GD audio ${source}/${br} failed`, error);
+    const job = (async () => {
+      // For QQ, 999 is a working quality selector. Avoid repeatedly trying
+      // six variants on every click when this source is unavailable.
+      const rates = source === "tencent" ? [999, 320] : [999, 740, 320, 192, 128];
+      for (const br of rates) {
+        try {
+          const { payload } = await requestGD({ types: "url", source, id, br });
+          const candidates = buildAudioCandidates(extractUrl(payload), source);
+          if (candidates.length) {
+            const value = { url: candidates[0], candidates };
+            audioUrlCache.set(key, { expires: Date.now() + AUDIO_URL_CACHE_MS, value });
+            return { ...value, candidates: candidates.slice() };
+          }
+        } catch (error) {
+          console.warn(`SmallJia Music: audio ${source}/${br} failed`, error);
+        }
       }
-    }
-    return { url: "", candidates: [] };
+      return { url: "", candidates: [] };
+    })();
+    audioUrlInflight.set(key, job);
+    try { return await job; }
+    finally { audioUrlInflight.delete(key); }
   };
 
   const resolveLyric = async track => {
