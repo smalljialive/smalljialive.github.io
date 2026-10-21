@@ -451,7 +451,9 @@
       const nextCandidate = this.audioCandidateIndex + 1;
       if (nextCandidate < this.audioCandidates.length) {
         this.audioCandidateIndex = nextCandidate;
-        const shouldPlay = !this.audio.paused || this.audio.currentTime > 0;
+        // The failed first attempt can leave audio.paused=true and time=0
+        // even though the user explicitly requested playback.
+        const shouldPlay = this.audio.autoplay || !this.audio.paused || this.audio.currentTime > 0;
         this.audio.src = this.audioCandidates[nextCandidate];
         this.audio.load();
         if (shouldPlay) this.audio.play().catch(() => {});
