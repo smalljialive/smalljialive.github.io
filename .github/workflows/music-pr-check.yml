@@ -66,6 +66,40 @@ jobs:
           (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, report.join('\n') + '\n');
           console.log(report.join('\n'));
           NODE
+      - name: Diagnose QQ song playability without deploying
+        shell: bash
+        run: |
+          node <<'NODE'
+          const api = 'https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy';
+          const ids = ['0029encG3ig7Ke'];
+          const rows = ['### QQ playback probe (sample track; no media file saved)', '| Song ID | API | Audio HTTP | Media MIME |', '|---|---|---|---|'];
+          for (const id of ids) {
+            try {
+              const query = new URLSearchParams({ types: 'url', source: 'tencent', id, br: '999' });
+              const response = await fetch(api + '?' + query, {signal: AbortSignal.timeout(10000)});
+              const data = await response.json();
+              const mediaUrl = typeof data?.url === 'string' ? data.url : (typeof data?.data?.url === 'string' ? data.data.url : '');
+              if (!mediaUrl || !/^https:\/\//.test(mediaUrl)) {
+                rows.push('| ' + id + ' | ' + response.status + ' / no URL | n/a | n/a |');
+                continue;
+              }
+              let code = '-', type = '-';
+              try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 9000);
+                try {
+                  const media = await fetch(mediaUrl, { headers: { Range: 'bytes=0-0', Accept: 'audio/*' }, signal: controller.signal });
+                  code = String(media.status);
+                  type = (media.headers.get('content-type') || 'missing').split(';')[0];
+                  await media.body?.cancel();
+                } finally { clearTimeout(timer); }
+              } catch(e) { code = 'error:' + e.name; }
+              rows.push('| ' + id + ' | ' + response.status + ' / URL | ' + code + ' | ' + type + ' |');
+            } catch (e) { rows.push('| ' + id + ' | error:' + e.name + ' | n/a | n/a |'); }
+          }
+          console.log(rows.join('\n'));
+          (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, rows.join('\n') + '\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
