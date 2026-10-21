@@ -9,6 +9,7 @@ on:
       - ".github/workflows/music-pr-check.yml"
       - "themes/anzhiyu/source/js/smalljia-music-source-selector.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
+      - "themes/anzhiyu/source/js/smalljia-music-source-compat.js"
   workflow_dispatch:
 
 permissions:
@@ -30,6 +31,7 @@ jobs:
           node --check themes/anzhiyu/source/js/smalljia-music-gdstudio.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-selector.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-retry.js
+          node --check themes/anzhiyu/source/js/smalljia-music-source-compat.js
           grep -q 'music-proxy' themes/anzhiyu/source/js/smalljia-music-gdstudio.js
       - name: Diagnose GD-Studio searches without changing production
         shell: bash
@@ -75,5 +77,7 @@ jobs:
           node --check public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-source-selector.js
           node --check public/js/smalljia-music-source-retry.js
+          node --check public/js/smalljia-music-source-compat.js
+          grep -q 'smalljia-music-source-compat.js?v=20261021-2' public/music/index.html
           grep -q 'smalljia-music-source-selector.js?v=20261021-2' public/music/index.html
           grep -q 'smalljia-music-source-retry.js?v=20261021-2' public/music/index.html
