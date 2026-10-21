@@ -1,0 +1,47 @@
+name: Deploy Isolated Meting Worker (Manual Only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DEPLOY_TEST_WORKER to deploy ONLY smalljia-meting-experiment'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: meting-worker-manual-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-meting-experiment:
+    if: ${{ inputs.confirmation == 'DEPLOY_TEST_WORKER' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify Cloudflare credential configuration
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -n "$CF_TOKEN" || { echo "::error::Missing CLOUDFLARE_API_TOKEN secret"; exit 1; }
+          test -n "$CF_ACCOUNT" || { echo "::error::Missing CLOUDFLARE_ACCOUNT_ID secret"; exit 1; }
+      - name: Install dependencies
+        working-directory: workers/meting-experiment
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Deploy isolated Worker only
+        working-directory: workers/meting-experiment
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy
+      - name: Summarize safe deployment
+        run: |
+          echo 'Deployed **smalljia-meting-experiment** only.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This did not merge PR #46, update Hexo Pages, change QQ playback or replace smalljia-netease-test.' >> "$GITHUB_STEP_SUMMARY"

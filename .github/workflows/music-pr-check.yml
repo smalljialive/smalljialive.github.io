@@ -11,6 +11,7 @@ on:
       - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-compat.js"
       - "themes/anzhiyu/source/js/smalljia-music-native.js"
+      - "themes/anzhiyu/source/js/smalljia-music-netease-enhanced-adapter.js"
   workflow_dispatch:
 
 permissions:
@@ -142,6 +143,347 @@ jobs:
           assert.doesNotMatch(body, /!this\.audio\.paused \|\| this\.audio\.currentTime/);
           console.log('PASS: audio fallback preserves explicit pause and playback intent');
           NODE
+      - name: Probe published GD Studio API host alternatives (no production changes)
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const hosts = ['https://music-api.gdstudio.xyz/api.php', 'https://music.gdstudio.org/api.php', 'https://music.gdstudio.xyz/api.php'];
+          const sources = ['netease', 'kuwo'];
+          const rows = ['### Isolated API reachability probe', '| Host | Source | Status | JSON array | Elapsed ms |', '|---|---|---|---|---|'];
+          for (const host of hosts) for (const source of sources) {
+            const q = new URLSearchParams({types:'search', source, name:'晴天', count:'2', pages:'1'});
+            const started=Date.now(); let status='-',shape='-';
+            try {
+              const res = await fetch(host+'?'+q, {signal:AbortSignal.timeout(6500),headers:{Accept:'application/json'}});
+              status=String(res.status);
+              const raw=await res.text();
+              let data; try {data=JSON.parse(raw);}catch{}
+              shape=Array.isArray(data)?'yes':Array.isArray(data?.data)?'data':Array.isArray(data?.results)?'results':'no';
+            } catch(e){status=e.name;}
+            rows.push('| '+new URL(host).hostname+' | '+source+' | '+status+' | '+shape+' | '+(Date.now()-started)+' |');
+          }
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, rows.join('\n')+'\n');
+          NODE
+      - name: Validate isolated NetEase adapter contract
+        run: |
+          node --check themes/anzhiyu/source/js/smalljia-music-netease-enhanced-adapter.js
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const vm = await import('node:vm');
+          const assert = await import('node:assert/strict');
+          const context = { URL, AbortController, setTimeout, clearTimeout };
+          vm.runInNewContext(fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-netease-enhanced-adapter.js', 'utf8'), context);
+          const requested = [];
+          const adapter = context.SmallJiaNeteaseEnhancedAdapter.create({
+            baseUrl: 'https://example.org/',
+            fetcher: async url => {
+              requested.push(url);
+              const parsed = new URL(url);
+              if (parsed.pathname.endsWith('/cloudsearch')) return {ok:true,json:async()=>({result:{songs:[{id:123,name:'Test',ar:[{name:'Artist'}],al:{name:'Album',picUrl:'https://example.org/cover.jpg'}}]}})};
+              return {ok:true,json:async()=>({data:[{url:'https://example.org/test.mp3',fee:0,freeTrialInfo:null}]})};
+            }
+          });
+          const songs=await adapter.search('Test');
+          assert.equal(songs.length,1);
+          assert.equal(songs[0].id,'123');
+          assert.equal(await adapter.url(123),'https://example.org/test.mp3');
+          assert.ok(requested.some(url=>url.includes('/cloudsearch?')));
+          assert.ok(requested.some(url=>url.includes('/song/url/v1?')));
+          const restricted=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:'https://example.org/paid.mp3',fee:1}]})})});
+          assert.equal(await restricted.url(123),'');
+          const noAudio=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:null,fee:0}]})})});
+          assert.equal(await noAudio.url(123),'');
+          const malicious=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({code:200,data:[{url:'javascript:alert(1)',fee:0}]})})});
+          assert.equal(await malicious.url(123),'');
+          const denied=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({code:403,data:[{url:'https://example.org/audio.mp3',fee:0}]})})});
+          assert.equal(await denied.url(123),'');
+          assert.throws(()=>context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'http://example.org'}));
+          console.log('PASS: NetEase adapter search, standard URL, paid/empty filtering, HTTPS configuration');
+          NODE
+      - name: Inspect upstream NetEase API runtime without deployment
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const host = 'https://raw.githubusercontent.com/NeteaseCloudMusicApiEnhanced/api-enhanced/main/';
+          const modules = ['package.json', 'module/cloudsearch.js', 'module/song_url_v1.js'];
+          const results = [];
+          for (const file of modules) {
+            const resp = await fetch(host + file, {signal:AbortSignal.timeout(10000)});
+            if (!resp.ok) throw new Error(file+' HTTP '+resp.status);
+            const body = await resp.text();
+            results.push(file + ' fetched (' + body.length + ' chars)');
+            if (file === 'package.json') {
+              const pkg = JSON.parse(body);
+              if (!pkg.scripts?.start || !pkg.dependencies?.express) throw new Error('Expected Node server runtime not found');
+            }
+            if (file === 'module/cloudsearch.js' && !body.includes('/api/cloudsearch/pc')) throw new Error('Search route changed');
+            if (file === 'module/song_url_v1.js' && !body.includes('/api/song/enhance/player/url/v1')) throw new Error('Audio route changed');
+          }
+          console.log(results.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### NetEase upstream contract check\n'+results.join('\n')+'\n');
+          NODE
+      - name: Smoke test NetEase Enhanced in ephemeral Node runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          TEMP_DIR="$(mktemp -d)"
+          trap 'kill "${API_PID:-0}" 2>/dev/null || true; rm -rf "$TEMP_DIR"' EXIT
+          git clone --depth 1 https://github.com/NeteaseCloudMusicApiEnhanced/api-enhanced.git "$TEMP_DIR/api"
+          cd "$TEMP_DIR/api"
+          npm install --omit=dev --ignore-scripts --no-audit --no-fund
+          PORT=3998 ENABLE_GENERAL_UNBLOCK=false ENABLE_PROXY=false node app.js >"$TEMP_DIR/server.log" 2>&1 &
+          API_PID=$!
+          ready=0
+          for i in $(seq 1 25); do
+            if curl -fsS --max-time 1 http://127.0.0.1:3998/ >/dev/null 2>&1; then ready=1; break; fi
+            if ! kill -0 "$API_PID" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            tail -40 "$TEMP_DIR/server.log"
+            echo "Enhanced runtime failed to become ready"
+            exit 1
+          fi
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const base='http://127.0.0.1:3998';
+          const log=['### Isolated NetEase Enhanced runtime','| Check | Result |','|---|---|'];
+          for(const [label,path] of [['search','/cloudsearch?keywords=%E6%99%B4%E5%A4%A9&limit=2'],['audio-186016','/song/url/v1?id=186016&level=standard'],['audio-186016-legacy','/song/url?id=186016&br=128000'],['audio-185809','/song/url/v1?id=185809&level=standard'],['audio-1330348068','/song/url/v1?id=1330348068&level=standard']]){
+            try {
+              const response=await fetch(base+path,{signal:AbortSignal.timeout(9000)});
+              const data=await response.json();
+              const songs=data?.result?.songs;
+              const aud=data?.data?.[0];
+              const result=label==='search'
+                ? 'HTTP '+response.status+', songs '+(Array.isArray(songs)?songs.length:'none')
+                : 'HTTP '+response.status+', code '+(data?.code??'missing')+', url '+(typeof aud?.url==='string'?'present':'absent')+', fee '+(aud?.fee??'unknown')+', message '+String(data?.message||data?.msg||'').slice(0,80).replaceAll('|','/');
+              log.push('| '+label+' | '+result+' |');
+            }catch(error){log.push('| '+label+' | '+error.name+' |');}
+          }
+          // Live candidate audit: never accept a song URL merely because API returns HTTP 200.
+          // Inspect only normal standard-quality results; do not request unblock endpoints.
+          try {
+            const search=await fetch(base+'/cloudsearch?keywords='+encodeURIComponent('纯音乐')+'&limit=8',{signal:AbortSignal.timeout(9000)});
+            const data=await search.json();
+            const ids=(data?.result?.songs||[]).slice(0,6).map(song=>song.id).filter(Boolean);
+            let clear=0,restricted=0,empty=0,errors=0;
+            for(const id of ids){
+              try {
+                const response=await fetch(base+'/song/url/v1?id='+encodeURIComponent(id)+'&level=standard',{signal:AbortSignal.timeout(6500)});
+                const result=await response.json(), song=result?.data?.[0];
+                if (response.ok && result?.code===200 && typeof song?.url==='string' && song.url.startsWith('https://') && Number(song?.fee||0)===0 && !song.freeTrialInfo) clear++;
+                else if (Number(song?.fee||0)>0 || song?.freeTrialInfo) restricted++;
+                else empty++;
+              }catch(e){errors++;}
+            }
+            log.push('| live unrestricted candidates | '+clear+' usable URLs / '+ids.length+' candidates; '+restricted+' restricted, '+empty+' empty, '+errors+' errors |');
+          }catch(e){log.push('| live unrestricted candidates | '+e.name+' |');}
+          console.log(log.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,log.join('\n')+'\n');
+          NODE
+      - name: Probe community Meting APIs without production deployment
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const endpoints=['https://v.iarc.top/','https://api.mizore.cn/meting/api.php'];
+          const checks=[['netease','search','晴天'],['netease','song','186016'],['netease','url','186016'],['kuwo','search','晴天']];
+          const lines=['### Public Meting endpoints (metadata only; no audio download)','| API | Source | Type | HTTP | Shape / redirect | ms |','|---|---|---|---|---|---|'];
+          for(const endpoint of endpoints)for(const [server,type,id] of checks){
+            const url=new URL(endpoint);url.searchParams.set('server',server);url.searchParams.set('type',type);url.searchParams.set('id',id);
+            const start=Date.now();let status='-',shape='-';
+            try{
+              const response=await fetch(url,{signal:AbortSignal.timeout(7000),redirect:'manual',headers:{Accept:'application/json, text/plain, */*'}});
+              status=String(response.status);
+              const redirect=response.headers.get('location');
+              if(redirect)shape='redirect: '+(new URL(redirect,url).hostname);
+              else{
+                const body=(await response.text()).slice(0,100000);
+                let parsed;try{parsed=JSON.parse(body)}catch{}
+                if(Array.isArray(parsed))shape='array '+parsed.length+(parsed[0]?.url?' with url field':'');
+                else if(parsed&&typeof parsed==='object')shape='object '+Object.keys(parsed).slice(0,5).join(',');
+                else shape='text '+body.length+' characters';
+              }
+            }catch(e){status=e.name;shape='request failed'}
+            lines.push('| '+new URL(endpoint).hostname+' | '+server+' | '+type+' | '+status+' | '+shape.replaceAll('|','/')+' | '+(Date.now()-start)+' |');
+          }
+          console.log(lines.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,lines.join('\n')+'\n');
+          NODE
+      - name: Check isolated Cloudflare Worker contract
+        run: |
+          node --check workers/netease-test/src/index.js
+          node --input-type=module <<'NODE'
+          const assert=await import('node:assert/strict');
+          const {default:worker}=await import('./workers/netease-test/src/index.js');
+          const call=(path,env={})=>worker.fetch(new Request('https://worker.example'+path),env);
+          let r=await call('/health');let data=await r.json();
+          assert.equal(data.status,'ok');assert.equal(data.providerConfigured,false);
+          r=await call('/search?q=Test');assert.equal(r.status,503);
+          r=await call('/url?id=1');assert.equal(r.status,503);
+          r=await call('/missing');assert.equal(r.status,404);
+          r=await call('/search?q=');assert.equal(r.status,503);
+          console.log('PASS: Worker health and no-provider fail-closed smoke checks');
+          NODE
+      - name: Verify Worker provider responses with isolated mocks
+        run: |
+          node --input-type=module <<'NODE'
+          const assert=await import('node:assert/strict');
+          const {default:worker}=await import('./workers/netease-test/src/index.js');
+          const originalFetch=globalThis.fetch;
+          const upstream=[];
+          globalThis.fetch=async url=>{
+            upstream.push(String(url));
+            const path=new URL(url).pathname;
+            if(path==='/cloudsearch') return Response.json({code:200,result:{songs:[{id:42,name:'Song',ar:[{name:'Artist'}],al:{name:'Album',picUrl:''}}]}});
+            if(path==='/song/url/v1')return Response.json({code:200,data:[{url:'https://cdn.example.org/song.mp3',fee:0,freeTrialInfo:null}]});
+            throw Error('Unexpected upstream path');
+          };
+          try {
+            const env={NETEASE_PROVIDER_URL:'https://api.example.org'};
+            let response=await worker.fetch(new Request('https://worker.example/search?q=Song'),env);
+            assert.equal(response.status,200);
+            const songs=await response.json();assert.equal(songs.songs[0].id,'42');
+            response=await worker.fetch(new Request('https://worker.example/url?id=42'),env);
+            assert.equal(response.status,200);
+            assert.equal((await response.json()).url,'https://cdn.example.org/song.mp3');
+            assert.ok(upstream.every(u=>u.startsWith('https://api.example.org/')));
+            response=await worker.fetch(new Request('https://worker.example/url?id=bad'),env);
+            assert.equal(response.status,400);
+            response=await worker.fetch(new Request('https://worker.example/search?q=x'),{NETEASE_PROVIDER_URL:'http://bad.example.org'});
+            assert.equal(response.status,503);
+            console.log('PASS: Worker search, unrestricted URL, parameter guard, HTTPS provider config');
+          } finally{globalThis.fetch=originalFetch;}
+          NODE
+      - name: Probe candidate multi-platform demo APIs (no production changes)
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const cases=[
+            ['ourcraft-health','https://music.yuncan.xyz/api?action=health'],
+            ['ourcraft-netease-search','https://music.yuncan.xyz/api?server=netease&type=search&id=%E6%99%B4%E5%A4%A9&limit=2'],
+            ['ourcraft-kuwo-search','https://music.yuncan.xyz/api?server=kuwo&type=search&id=%E6%99%B4%E5%A4%A9&limit=2'],
+            ['ourcraft-netease-url','https://music.yuncan.xyz/api?server=netease&type=url&id=174944&json=1'],
+            ['meting-demo-search','https://api.i-meto.com/meting/demo?server=netease&type=search&id=%E6%99%B4%E5%A4%A9']
+          ];
+          const rows=['### Candidate public demo endpoints (not proof of licensed playback)','| Probe | HTTP | Data shape | ms |','|---|---|---|---|'];
+          for(const [name,url] of cases){
+            const started=Date.now();let status='-',shape='-';
+            try{
+              const res=await fetch(url,{signal:AbortSignal.timeout(6000),redirect:'manual',headers:{accept:'application/json'}});
+              status=String(res.status);
+              const body=(await res.text()).slice(0,50000);
+              let j;try{j=JSON.parse(body)}catch{}
+              shape=Array.isArray(j)?'array '+j.length:j&&typeof j==='object'?'object '+Object.keys(j).slice(0,4).join(','):'text '+body.length;
+            }catch(e){status=e.name;}
+            rows.push('| '+name+' | '+status+' | '+shape+' | '+(Date.now()-started)+' |');
+          }
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
+          NODE
+      - name: Install Meting core for isolated probe
+        run: npm install --no-save --ignore-scripts --no-audit --no-fund @meting/core@1.6.2
+      - name: Smoke test Meting core on temporary Node runtime
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const rows=['### Meting core live probe','| Source | Step | Result |','|---|---|---|'];
+          try {
+            const {default:Meting}=await import('@meting/core');
+            for(const source of ['netease','kuwo']) {
+              const client=new Meting(source);client.format(true);
+              try {
+                const raw=await Promise.race([client.search('晴天',{limit:3,page:1}),new Promise((_,reject)=>setTimeout(()=>reject(Error('timeout')),7500))]);
+                let data;try{data=JSON.parse(raw)}catch{}
+                const items=Array.isArray(data)?data:[];
+                rows.push('| '+source+' | search | '+items.length+' results |');
+                if(items.length) {
+                  const song=items[0];
+                  try {
+                    const result=await Promise.race([client.url(song.url_id||song.id,128),new Promise((_,reject)=>setTimeout(()=>reject(Error('timeout')),7500))]);
+                    let audio;try{audio=typeof result==='string'?JSON.parse(result):result}catch{}
+                    const entry=Array.isArray(audio)?audio[0]:audio;
+                    const url=typeof entry==='string'?entry:(entry?.url||entry?.data?.[0]?.url);
+                    const scheme=typeof url==='string'&&/^https?:\/\//.test(url)?new URL(url).protocol:'none';
+                    const shape=Array.isArray(audio)?'array':audio&&typeof audio==='object'?'object:'+Object.keys(audio).slice(0,5).join(','):typeof audio;
+                    rows.push('| '+source+' | audio | '+shape+'; URL '+scheme+' |');
+                  }catch(e){rows.push('| '+source+' | audio | '+e.message.slice(0,50).replaceAll('|','/')+' |');}
+                }
+              } catch(e){rows.push('| '+source+' | search | '+e.message.slice(0,50).replaceAll('|','/')+' |');}
+            }
+          }catch(e){rows.push('| npm package | load | '+e.message.slice(0,60).replaceAll('|','/')+' |');}
+          console.log(rows.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
+          NODE
+      - name: Probe multiple Meting search results without exposing media URLs
+        run: |
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const {default:Meting}=await import('@meting/core');
+          const summary=['### Multiple-song Meting probe','| Source | Query | Songs | HTTP(S) URLs returned | Errors |','|---|---|---:|---:|---:|'];
+          for(const source of ['netease','kuwo']) for(const query of ['轻音乐','生日快乐']) {
+            const client=new Meting(source);client.format(true);
+            let songs=[],urls=0,errors=0;
+            try {
+              const r=await Promise.race([client.search(query,{limit:4,page:1}),new Promise((_,rej)=>setTimeout(()=>rej(Error('search timeout')),7000))]);
+              const parsed=typeof r==='string'?JSON.parse(r):r;
+              songs=Array.isArray(parsed)?parsed.slice(0,4):[];
+              for(const song of songs)try {
+                const raw=await Promise.race([client.url(song.url_id||song.id,128),new Promise((_,rej)=>setTimeout(()=>rej(Error('url timeout')),5000))]);
+                const a=typeof raw==='string'?JSON.parse(raw):raw;
+                const entry=Array.isArray(a)?a[0]:a;
+                const url=typeof entry==='string'?entry:entry?.url;
+                if(typeof url==='string'&&/^https?:\/\//.test(url))urls++;
+              } catch{errors++;}
+            }catch{errors++;}
+            summary.push('| '+source+' | '+query+' | '+songs.length+' | '+urls+' | '+errors+' |');
+          }
+          console.log(summary.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,summary.join('\n')+'\n');
+          NODE
+      - name: Cloudflare Workers compatibility build probe for Meting
+        run: |
+          cat > meting-worker-probe.mjs <<'NODE'
+          import Meting from '@meting/core';
+          export default {async fetch(){const instance=new Meting('netease');instance.format(true);return Response.json({loaded:typeof instance.search==='function'});}};
+          NODE
+          npx --yes wrangler@4 deploy meting-worker-probe.mjs --name smalljia-meting-probe --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat --dry-run --outdir /tmp/smalljia-meting-bundle
+          echo "Meting bundle built, but actual Cloudflare runtime requests remain unverified"
+      - name: Dry-run compile real Meting Worker experiment
+        run: |
+          npx --yes wrangler@4 deploy workers/meting-experiment/src/index.js --name smalljia-meting-experiment --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat --dry-run --outdir /tmp/meting-worker-experiment
+          node --input-type=module <<'NODE'
+          const fs=await import('node:fs');
+          const files=fs.readdirSync('/tmp/meting-worker-experiment');
+          if(!files.length)throw Error('No Worker build artifacts');
+          console.log('PASS experimental Meting Worker build artifacts:',files.join(','));
+          NODE
+      - name: Smoke test Meting Worker under local workerd runtime
+        shell: bash
+        run: |
+          set -e
+          (npx --yes wrangler@4 dev workers/meting-experiment/src/index.js --local --port 8788 --compatibility-date 2026-10-21 --compatibility-flags nodejs_compat > /tmp/meting-workerd.log 2>&1) &
+          worker_pid=$!
+          trap 'kill $worker_pid 2>/dev/null || true' EXIT
+          ready=0
+          for i in $(seq 1 35); do
+            if curl -fsS --max-time 2 http://127.0.0.1:8788/health > /tmp/meting-health.json; then ready=1; break; fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then cat /tmp/meting-workerd.log; exit 1; fi
+          node <<'NODE'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const health=JSON.parse(fs.readFileSync('/tmp/meting-health.json','utf8'));
+          assert.equal(health.status,'ok');
+          assert.equal(health.adapter,'meting-core');
+          console.log('PASS: Meting imported and instantiated in local workerd runtime');
+          NODE
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8788/search?source=unknown)" = 400
+          echo "PASS: rejects unsupported provider at runtime"
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page

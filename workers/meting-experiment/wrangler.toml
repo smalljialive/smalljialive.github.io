@@ -1,0 +1,8 @@
+name = "smalljia-meting-experiment"
+main = "src/index.js"
+compatibility_date = "2026-10-21"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+# Independent preview Worker. This file does not change the existing
+# smalljia-netease-test Worker or the production QQ music proxy.
