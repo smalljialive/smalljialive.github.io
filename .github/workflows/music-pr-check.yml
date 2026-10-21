@@ -220,6 +220,47 @@ jobs:
           console.log(results.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, '### NetEase upstream contract check\n'+results.join('\n')+'\n');
           NODE
+      - name: Smoke test NetEase Enhanced in ephemeral Node runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          TEMP_DIR="$(mktemp -d)"
+          trap 'kill "${API_PID:-0}" 2>/dev/null || true; rm -rf "$TEMP_DIR"' EXIT
+          git clone --depth 1 https://github.com/NeteaseCloudMusicApiEnhanced/api-enhanced.git "$TEMP_DIR/api"
+          cd "$TEMP_DIR/api"
+          npm install --omit=dev --ignore-scripts --no-audit --no-fund
+          PORT=3998 ENABLE_GENERAL_UNBLOCK=false ENABLE_PROXY=false node app.js >"$TEMP_DIR/server.log" 2>&1 &
+          API_PID=$!
+          ready=0
+          for i in $(seq 1 25); do
+            if curl -fsS --max-time 1 http://127.0.0.1:3998/ >/dev/null 2>&1; then ready=1; break; fi
+            if ! kill -0 "$API_PID" 2>/dev/null; then break; fi
+            sleep 1
+          done
+          if [ "$ready" -ne 1 ]; then
+            tail -40 "$TEMP_DIR/server.log"
+            echo "Enhanced runtime failed to become ready"
+            exit 1
+          fi
+          node <<'NODE'
+          const fs=await import('node:fs');
+          const base='http://127.0.0.1:3998';
+          const log=['### Isolated NetEase Enhanced runtime','| Check | Result |','|---|---|'];
+          for(const [label,path] of [['search','/cloudsearch?keywords=%E6%99%B4%E5%A4%A9&limit=2'],['audio','/song/url/v1?id=186016&level=standard']]){
+            try {
+              const response=await fetch(base+path,{signal:AbortSignal.timeout(9000)});
+              const data=await response.json();
+              const songs=data?.result?.songs;
+              const aud=data?.data?.[0];
+              const result=label==='search'
+                ? 'HTTP '+response.status+', songs '+(Array.isArray(songs)?songs.length:'none')
+                : 'HTTP '+response.status+', url '+(typeof aud?.url==='string'?'present':'absent')+', fee '+(aud?.fee??'unknown');
+              log.push('| '+label+' | '+result+' |');
+            }catch(error){log.push('| '+label+' | '+error.name+' |');}
+          }
+          console.log(log.join('\n'));
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,log.join('\n')+'\n');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
