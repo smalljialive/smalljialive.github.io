@@ -10,6 +10,7 @@ on:
       - "themes/anzhiyu/source/js/smalljia-music-source-selector.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-retry.js"
       - "themes/anzhiyu/source/js/smalljia-music-source-compat.js"
+      - "themes/anzhiyu/source/js/smalljia-music-native.js"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +29,7 @@ jobs:
         run: npm ci
       - name: Validate JavaScript
         run: |
+          node --check themes/anzhiyu/source/js/smalljia-music-native.js
           node --check themes/anzhiyu/source/js/smalljia-music-gdstudio.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-selector.js
           node --check themes/anzhiyu/source/js/smalljia-music-source-retry.js
@@ -66,18 +68,94 @@ jobs:
           (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, report.join('\n') + '\n');
           console.log(report.join('\n'));
           NODE
+      - name: Diagnose QQ song playability without deploying
+        shell: bash
+        run: |
+          node <<'NODE'
+          const api = 'https://yluidpgnvfurcomnexjr.supabase.co/functions/v1/music-proxy';
+          const ids = ['0029encG3ig7Ke'];
+          const rows = ['### QQ playback probe (sample track; no media file saved)', '| Song ID | API | Audio HTTP | Media MIME |', '|---|---|---|---|'];
+          for (const id of ids) {
+            try {
+              const query = new URLSearchParams({ types: 'url', source: 'tencent', id, br: '999' });
+              const response = await fetch(api + '?' + query, {signal: AbortSignal.timeout(10000)});
+              const data = await response.json();
+              const mediaUrl = typeof data?.url === 'string' ? data.url : (typeof data?.data?.url === 'string' ? data.data.url : '');
+              if (!mediaUrl || !/^https:\/\//.test(mediaUrl)) {
+                rows.push('| ' + id + ' | ' + response.status + ' / no URL | n/a | n/a |');
+                continue;
+              }
+              let code = '-', type = '-';
+              try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 9000);
+                try {
+                  const media = await fetch(mediaUrl, { headers: { Range: 'bytes=0-0', Accept: 'audio/*' }, signal: controller.signal });
+                  code = String(media.status);
+                  type = (media.headers.get('content-type') || 'missing').split(';')[0];
+                  await media.body?.cancel();
+                } finally { clearTimeout(timer); }
+              } catch(e) { code = 'error:' + e.name; }
+              rows.push('| ' + id + ' | ' + response.status + ' / URL | ' + code + ' | ' + type + ' |');
+            } catch (e) { rows.push('| ' + id + ' | error:' + e.name + ' | n/a | n/a |'); }
+          }
+          console.log(rows.join('\n'));
+          (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, rows.join('\n') + '\n');
+          NODE
+      - name: Verify playback lifecycle invariants
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const assert = await import('node:assert/strict');
+          const src = fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-gdstudio.js', 'utf8');
+          const segment = (start, end) => src.slice(src.indexOf(start), src.indexOf(end, src.indexOf(start)));
+          const resolution = segment('const resolveTrack =', 'const hydratePlayingMetadata');
+          assert.match(resolution, /await resolveAudio\(track\)/, 'audio URL required');
+          assert.doesNotMatch(resolution, /await resolveLyric|await resolveCover|Promise\.all/, 'lyrics and artwork must not block initial playback');
+          const search = segment('app.search = async function', 'app.playTrack = async function');
+          assert.match(search, /this\.renderTrackList\(this\.dom\.searchResults, list\);[\s\S]*hydrateSearchCovers\(list\)\.then/, 'results must render before covers');
+          const play = segment('app.playTrack = async function', 'app.selectIndex = async function');
+          assert.match(play, /token !== playToken/, 'stale play clicks must be ignored');
+          assert.match(play, /\+\+selectToken/, 'play click invalidates queue selection');
+          const select = segment('app.selectIndex = async function', 'const chipText');
+          assert.match(select, /token !== selectToken/, 'stale queue selection must be ignored');
+          assert.match(select, /\+\+playToken/, 'queue selection invalidates pending play click');
+          assert.doesNotMatch(select, /this\.loadLyrics\(this\.currentTrack\)/, 'avoid premature lyric loading');
+          const audio = segment('const resolveAudio =', 'const resolveLyric');
+          assert.match(audio, /audioUrlInflight\.has\(key\)/, 'concurrent resolves deduplicated');
+          assert.match(audio, /audioUrlCache\.get\(key\)/, 'brief URL reuse enabled');
+          console.log('PASS: 9 playback lifecycle invariants');
+          NODE
+      - name: Check audio fallback intent behavior
+        run: |
+          node <<'NODE'
+          const fs = await import('node:fs');
+          const assert = await import('node:assert/strict');
+          const source = fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-native.js', 'utf8');
+          const start = source.indexOf('handleAudioError() {');
+          const end = source.indexOf('    updateCurrentUi() {', start);
+          assert.ok(start >= 0 && end > start);
+          const body = source.slice(start, end);
+          assert.match(body, /const shouldPlay = Boolean\(this\.playbackRequested\)/);
+          assert.match(body, /this\.playbackRequested = false;/);
+          assert.match(body, /if \(shouldPlay\) this\.audio\.play\(\)/);
+          assert.doesNotMatch(body, /!this\.audio\.paused \|\| this\.audio\.currentTime/);
+          console.log('PASS: audio fallback preserves explicit pause and playback intent');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
         run: |
           test -s public/music/index.html
           test -s public/js/smalljia-music-gdstudio.js
-          grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-3' public/music/index.html
+          grep -q 'smalljia-music-gdstudio.js?v=20261021-qq-search-8' public/music/index.html
           grep -q 'source: "tencent"' public/js/smalljia-music-gdstudio.js
+          node --check public/js/smalljia-music-native.js
+          grep -q "smalljia-music-native.js?v=20261021-1" public/music/index.html
           node --check public/js/smalljia-music-gdstudio.js
           node --check public/js/smalljia-music-source-selector.js
           node --check public/js/smalljia-music-source-retry.js
           node --check public/js/smalljia-music-source-compat.js
-          grep -q 'smalljia-music-source-compat.js?v=20261021-2' public/music/index.html
+          grep -q 'smalljia-music-source-compat.js?v=20261021-3' public/music/index.html
           grep -q 'smalljia-music-source-selector.js?v=20261021-2' public/music/index.html
           grep -q 'smalljia-music-source-retry.js?v=20261021-2' public/music/index.html

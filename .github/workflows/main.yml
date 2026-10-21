@@ -127,8 +127,8 @@ jobs:
             echo "Link page must not load any nav music runtime"
             exit 1
           fi
-          grep -q "smalljia-music-native.js?v=20260910-1" public/music/index.html
-          grep -q "smalljia-music-gdstudio.js?v=20261021-qq-search-3" public/music/index.html
+          grep -q "smalljia-music-native.js?v=20261021-1" public/music/index.html
+          grep -q "smalljia-music-gdstudio.js?v=20261021-qq-search-8" public/music/index.html
           grep -q "smalljia-music-personal-playlist.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-library.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-daily-import.js?v=20260910-1" public/music/index.html
@@ -136,7 +136,7 @@ jobs:
           grep -q "smalljia-music-scrollfix.js?v=20260910-1" public/music/index.html
           grep -q "smalljia-music-source-selector.js?v=20261021-2" public/music/index.html
           grep -q "smalljia-music-source-retry.js?v=20261021-2" public/music/index.html
-          grep -q "smalljia-music-source-compat.js?v=20261021-2" public/music/index.html
+          grep -q "smalljia-music-source-compat.js?v=20261021-3" public/music/index.html
           grep -q "smalljia-music-interactions.js?v=20260910-2" public/music/index.html
           grep -q 'id="sjm-volume-value"' public/music/index.html
           grep -q 'id="sjm-fullscreen-volume"' public/music/index.html

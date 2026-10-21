@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-2";
+  const VERSION = "20261021-3";
   if (window.__smallJiaMusicSourceCompatVersion === VERSION) return;
   window.__smallJiaMusicSourceCompatVersion = VERSION;
 
@@ -160,10 +160,14 @@
     if (!app?.audio || !["kuwo", "tencent"].includes(source)) return;
     const current = app.audio.currentSrc || app.audio.src || track?.url || "";
     if (!/^https?:\/\//i.test(current)) return;
+    // Avoid double-wrapping a media proxy URL and duplicating fallback
+    // candidates already supplied by the GD provider.
+    if (current.startsWith(MEDIA_PROXY)) return;
     const fallback = mediaProxyUrl(current);
     if (!fallback) return;
 
     const candidates = Array.isArray(app.audioCandidates) ? app.audioCandidates.slice() : [];
+    if (candidates.includes(fallback)) return;
     if (current.startsWith("http://")) {
       app.audioCandidates = [fallback];
       app.audioCandidateIndex = 0;
