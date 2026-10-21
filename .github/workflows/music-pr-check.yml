@@ -262,6 +262,24 @@ jobs:
               log.push('| '+label+' | '+result+' |');
             }catch(error){log.push('| '+label+' | '+error.name+' |');}
           }
+          // Live candidate audit: never accept a song URL merely because API returns HTTP 200.
+          // Inspect only normal standard-quality results; do not request unblock endpoints.
+          try {
+            const search=await fetch(base+'/cloudsearch?keywords='+encodeURIComponent('纯音乐')+'&limit=8',{signal:AbortSignal.timeout(9000)});
+            const data=await search.json();
+            const ids=(data?.result?.songs||[]).slice(0,6).map(song=>song.id).filter(Boolean);
+            let clear=0,restricted=0,empty=0,errors=0;
+            for(const id of ids){
+              try {
+                const response=await fetch(base+'/song/url/v1?id='+encodeURIComponent(id)+'&level=standard',{signal:AbortSignal.timeout(6500)});
+                const result=await response.json(), song=result?.data?.[0];
+                if (response.ok && result?.code===200 && typeof song?.url==='string' && song.url.startsWith('https://') && Number(song?.fee||0)===0 && !song.freeTrialInfo) clear++;
+                else if (Number(song?.fee||0)>0 || song?.freeTrialInfo) restricted++;
+                else empty++;
+              }catch(e){errors++;}
+            }
+            log.push('| live unrestricted candidates | '+clear+' usable URLs / '+ids.length+' candidates; '+restricted+' restricted, '+empty+' empty, '+errors+' errors |');
+          }catch(e){log.push('| live unrestricted candidates | '+e.name+' |');}
           console.log(log.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,log.join('\n')+'\n');
           NODE
