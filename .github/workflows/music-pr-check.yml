@@ -188,8 +188,8 @@ jobs:
           assert.equal(songs.length,1);
           assert.equal(songs[0].id,'123');
           assert.equal(await adapter.url(123),'https://example.org/test.mp3');
-          assert(requested.some(url=>url.includes('/cloudsearch?')));
-          assert(requested.some(url=>url.includes('/song/url/v1?')));
+          assert.ok(requested.some(url=>url.includes('/cloudsearch?')));
+          assert.ok(requested.some(url=>url.includes('/song/url/v1?')));
           const restricted=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:'https://example.org/paid.mp3',fee:1}]})})});
           assert.equal(await restricted.url(123),'');
           const noAudio=context.SmallJiaNeteaseEnhancedAdapter.create({baseUrl:'https://example.org',fetcher:async()=>({ok:true,json:async()=>({data:[{url:null,fee:0}]})})});
