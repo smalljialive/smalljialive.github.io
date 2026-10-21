@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-qq-search-5";
+  const VERSION = "20261021-qq-search-6";
   if (window.__smallJiaGDStudioProviderVersion === VERSION) return;
   window.__smallJiaGDStudioProviderVersion = VERSION;
 
@@ -29,9 +29,9 @@
     return url.toString();
   };
 
-  const requestAt = async (base, params) => {
+  const requestAt = async (base, params, timeoutMs = FETCH_TIMEOUT) => {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT);
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const response = await fetch(buildUrl(base, params), {
         signal: controller.signal,
@@ -52,7 +52,7 @@
     if (source === "tencent") {
       // Send QQ searches, streaming URLs, lyrics and covers directly to the
       // working Supabase endpoint instead of relying on window.fetch rewrites.
-      const payload = await requestAt(QQ_SEARCH_API, params);
+      const payload = await requestAt(QQ_SEARCH_API, params, params?.types === "url" ? 5500 : FETCH_TIMEOUT);
       if (payload?.error) throw new Error(`QQ Music API: ${payload.error}`);
       return { payload, route: "supabase-tencent" };
     }
@@ -362,7 +362,7 @@
       this.showToast(`正在准备：${track.name}`);
       const resolved = await resolveTrack(track);
       if (!resolved.url) {
-        this.showToast("GD-Studio 没有返回可播放音源");
+        this.showToast("暂时无法获取播放地址，请尝试其他版本或稍后重试");
         return;
       }
       const index = this.queue.findIndex(item => item.key === resolved.key);
