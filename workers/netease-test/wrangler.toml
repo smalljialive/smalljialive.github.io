@@ -1,0 +1,7 @@
+name = "smalljia-netease-test"
+main = "src/index.js"
+compatibility_date = "2026-10-21"
+workers_dev = true
+
+# No secrets or music account cookies in this file.
+# Set NETEASE_PROVIDER_URL only after a permitted HTTPS provider has been tested.
