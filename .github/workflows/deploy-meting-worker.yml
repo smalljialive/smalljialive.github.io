@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: smalljialive/smalljialive.github.io
-          ref: 38833a90d5f239c756727ff26cef676fcf79070c
+          ref: 4d307855167e2083eb896e32de0a70262b74d4af
           persist-credentials: false
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -47,6 +47,8 @@ jobs:
           node --check src/index.js
           grep -q 'EMPTY_UPSTREAM_LIST' src/index.js
           grep -q 'UPSTREAM_ERROR_OR_TIMEOUT' src/index.js
+          grep -q 'PROVIDER_REQUEST_FAILED' src/index.js
+          grep -q 'PROVIDER_HTTP_ERROR' src/index.js
       - name: Verify fixed deployment target
         working-directory: workers/meting-experiment
         run: |
@@ -61,5 +63,5 @@ jobs:
       - name: Deployment summary
         run: |
           echo "Only **smalljia-meting-experiment** was targeted." >> "$GITHUB_STEP_SUMMARY"
-          echo "Source commit: \`38833a90d5f239c756727ff26cef676fcf79070c\`." >> "$GITHUB_STEP_SUMMARY"
+          echo "Source commit: \`4d307855167e2083eb896e32de0a70262b74d4af\`." >> "$GITHUB_STEP_SUMMARY"
           echo "This workflow does not publish Hexo or merge PR #46." >> "$GITHUB_STEP_SUMMARY"
