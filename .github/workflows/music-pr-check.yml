@@ -532,6 +532,16 @@ jobs:
           console.log(rows.join('\n'));
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,rows.join('\n')+'\n');
           NODE
+      - name: Validate new Meting upstream diagnostics
+        run: |
+          node --check workers/meting-experiment/src/index.js
+          node <<'NODE'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const source=fs.readFileSync('workers/meting-experiment/src/index.js','utf8');
+          for(const expected of ['PROVIDER_REQUEST_FAILED','PROVIDER_HTTP_ERROR','EMPTY_UPSTREAM_LIST','upstreamState(client)','messageClass']) assert.ok(source.includes(expected), 'missing '+expected);
+          console.log('PASS new Meting upstream error diagnostic contract');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
