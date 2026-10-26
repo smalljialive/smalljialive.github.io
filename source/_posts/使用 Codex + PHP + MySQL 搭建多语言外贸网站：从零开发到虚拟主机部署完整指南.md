@@ -9,9 +9,9 @@ date: '2026-10-26T16:11:17.188966+08:00'
 tags:
 - Codex
 - 网站建设
-title: '# 使用 Codex + PHP + MySQL 搭建多语言外贸网站：从零开发到虚拟主机部署完整指南'
+title: 使用 Codex + PHP + MySQL 搭建多语言外贸网站：从零开发到虚拟主机部署完整指南
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/e4b9a9acc741b76ed229c4dc641e43b2.png
-updated: '2026-10-26T16:11:20.185+08:00'
+updated: '2026-10-26T16:20:35.040+08:00'
 ---
 # 使用 Codex + PHP + MySQL 搭建多语言外贸网站：从零开发到虚拟主机部署完整指南
 
@@ -22,7 +22,6 @@ updated: '2026-10-26T16:11:20.185+08:00'
 最近，我一直在使用 OpenAI Codex 开发自己的 B2B 外贸独立网站。在整个开发过程中，我逐渐调整了技术架构，从最初计划使用的 Next.js + Node.js，改成了更适合虚拟主机的原生 PHP + MySQL 方案。
 
 这篇文章将分享我的建站思路、技术选型、开发流程以及部署方案，希望能够帮助同样想使用 AI 编程工具搭建外贸网站的朋友。
-
 
 ## 一、为什么最终选择 PHP，而不是 Next.js？
 
