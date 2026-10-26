@@ -11,7 +11,7 @@ tags:
 - 网站建设
 title: 使用 Codex + PHP + MySQL 搭建多语言外贸网站：从零开发到虚拟主机部署完整指南
 top_img: https://cdn.jsdelivr.net/gh/smalljialive/Blogimg@main/img/e4b9a9acc741b76ed229c4dc641e43b2.png
-updated: '2026-10-26T16:20:35.040+08:00'
+updated: '2026-10-26T16:48:54.054+08:00'
 ---
 # 使用 Codex + PHP + MySQL 搭建多语言外贸网站：从零开发到虚拟主机部署完整指南
 
@@ -449,3 +449,5 @@ GEO 则更关注让网站信息清晰、可信、结构化，从而更容易被�
 **关键词：** Codex、PHP 外贸网站、MySQL、多语言独立站、虚拟主机部署、FTP 建站、AI 编程、Google Ads、SEO、GEO、B2B 外贸网站
 
 **文章分类：** AI 编程 / PHP 网站开发 / 外贸独立站 / SEO 优化
+
+[下载 Codex_PHP多语言外贸网站_全流程执行手册_2026.pdf](https://raw.githubusercontent.com/smalljialive/Blogimg/main/files/d7ed69b372193b98003964b80e36bb15.pdf)
