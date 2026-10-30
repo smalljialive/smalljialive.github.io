@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20261021-2";
+  const VERSION = "20261030-multisource-1";
   if (window.__smallJiaMusicSourceSelectorVersion === VERSION) return;
   window.__smallJiaMusicSourceSelectorVersion = VERSION;
 
@@ -70,9 +70,31 @@
   };
 
   const requestApi = async params => {
-    if (params?.source === "tencent") return requestAt(SUPABASE_API, params);
-    try { return await requestAt(DIRECT_API, params); }
-    catch (_) { return requestAt(PROXY_API, params); }
+    // Keep the working Netease route first; Kuwo also gets the signed
+    // Vercel route before falling back to the legacy GD and Supabase APIs.
+    const routes = params?.source === "tencent"
+      ? [SUPABASE_API]
+      : params?.source === "kuwo"
+        ? [PROXY_API, SUPABASE_API, DIRECT_API]
+        : [DIRECT_API, PROXY_API, SUPABASE_API];
+    let lastError;
+    for (const base of routes) {
+      try {
+        const payload = await requestAt(base, params);
+        if (payload && typeof payload === "object" && payload.error) {
+          throw new Error(String(payload.error));
+        }
+        if (params?.types === "search" && listFromPayload(payload).length === 0) {
+          // Do not treat an empty/unsupported legacy upstream as success.
+          continue;
+        }
+        return payload;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    if (lastError) throw lastError;
+    return [];
   };
 
   const listFromPayload = payload => {
@@ -222,7 +244,6 @@
     injectSelector(app.root);
     renderSourceBadge(app);
 
-    const originalSearch = app.search.bind(app);
     const originalPlayTrack = app.playTrack.bind(app);
     const originalSelectIndex = app.selectIndex.bind(app);
 
@@ -230,7 +251,44 @@
       const query = String(rawQuery || "").trim();
       const pref = getPreference();
       if (!query) return this.setSearchStatus?.("请输入歌曲名或歌手名");
-      if (pref === "auto") return originalSearch(rawQuery);
+      if (pref === "auto") {
+        const seq = ++this.searchSeq;
+        const found = new Map();
+        const failed = [];
+        let completed = 0;
+        this.switchView("search");
+        this.searchResults = [];
+        this.renderTrackList(this.dom.searchResults, []);
+        this.setSearchStatus?.("正在并行搜索 QQ音乐、网易云和酷我…");
+        await Promise.all(AUTO_ORDER.map(async source => {
+          try {
+            const list = await searchOneSource(source, query, 20);
+            if (seq !== this.searchSeq || this.destroyed) return;
+            for (const track of list) found.set(track.key, track);
+            this.searchResults = [...found.values()];
+            this.renderTrackList(this.dom.searchResults, this.searchResults);
+          } catch (error) {
+            failed.push(source);
+            console.warn("SmallJia Music: source search failed", source, error);
+          } finally {
+            completed += 1;
+            if (seq !== this.searchSeq || this.destroyed) return;
+            const remaining = AUTO_ORDER.length - completed;
+            const count = found.size;
+            if (remaining) {
+              this.setSearchStatus?.(`已找到 ${count} 个结果，仍在检查 ${remaining} 个音源…`);
+            } else if (count) {
+              this.setSearchStatus?.(`已找到 ${count} 个结果${failed.length ? "（部分音源不可用）" : ""}，可点击尝试播放`);
+            } else {
+              this.setSearchStatus?.(failed.length === AUTO_ORDER.length
+                ? "所有音源搜索暂时不可用，请稍后重试"
+                : `没有找到“${query}”${failed.length ? "，部分音源不可用" : ""}`);
+            }
+          }
+        }));
+        renderSourceBadge(this);
+        return;
+      }
 
       const seq = ++this.searchSeq;
       this.switchView("search");
