@@ -68,6 +68,8 @@ jobs:
           (await import('node:fs')).appendFileSync(process.env.GITHUB_STEP_SUMMARY, report.join('\n') + '\n');
           console.log(report.join('\n'));
           NODE
+      - name: Probe Kuwo search alternatives without deploying
+        run: node scripts/diagnose-kuwo-20261030.mjs
       - name: Diagnose QQ song playability without deploying
         shell: bash
         run: |
