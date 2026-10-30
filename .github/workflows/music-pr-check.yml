@@ -142,6 +142,22 @@ jobs:
           assert.doesNotMatch(body, /!this\.audio\.paused \|\| this\.audio\.currentTime/);
           console.log('PASS: audio fallback preserves explicit pause and playback intent');
           NODE
+      - name: Verify multi-source search and playback routing
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+          const assert = require('node:assert/strict');
+          const selector = fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-source-selector.js', 'utf8');
+          const retry = fs.readFileSync('themes/anzhiyu/source/js/smalljia-music-source-retry.js', 'utf8');
+          const page = fs.readFileSync('themes/anzhiyu/layout/includes/page/music.pug', 'utf8');
+          assert.match(selector, /Promise\.all\(AUTO_ORDER\.map/, 'parallel auto search is wired');
+          for (const source of ['netease', 'kuwo', 'tencent']) assert.match(selector, new RegExp('value: "' + source + '"'));
+          assert.match(selector, /this\.searchResults = \[\.\.\.found\.values\(\)\]/);
+          assert.match(retry, /track\.__gdStudio && \(pref === "auto"/);
+          assert.match(page, /smalljia-music-source-selector\.js.*20261030-multisource-1/);
+          assert.match(page, /smalljia-music-source-retry\.js.*20261030-search-preserve-source-1/);
+          console.log('PASS: multi-source search and playback intent');
+          NODE
       - name: Generate Hexo site
         run: npx hexo generate
       - name: Validate generated music page
